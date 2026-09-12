@@ -4,13 +4,13 @@
     "generated_ts": "2026-09-12T15:48:00+00:00",
     "cutoff_ts": "2026-09-12T15:48:00+00:00",
     "engine_version": "ESPN fantasy API (leaguedefaults/3, PPR)",
-    "generation_id": "espn-thirdparty-2026w02",
+    "generation_id": "espn-thirdparty-2026w01",
     "season": 2026,
-    "week": 2,
+    "week": 1,
     "band": null,
     "source": "espn-thirdparty",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
-    "thirdparty_attribution": "Week 2 projections by ESPN (third-party), fetched 2026-09-12T15:48:00+00:00 from ESPN fantasy API (leaguedefaults/3, PPR). Not the fantasy-edge engine.",
+    "thirdparty_attribution": "Week 1 projections by ESPN (third-party), fetched 2026-09-12T15:48:00+00:00 from ESPN fantasy API (leaguedefaults/3, PPR). Not the fantasy-edge engine.",
     "sources": {
       "projections": "2026-09-12T15:48:00+00:00",
       "schedule": null,
@@ -19,146 +19,146 @@
   },
   "games": [
     {
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NE_SEA",
       "espn_event_id": null,
-      "away": "DET",
-      "home": "BUF",
-      "kickoff": "2026-09-18T00:15:00+00:00",
+      "away": "NE",
+      "home": "SEA",
+      "kickoff": "2026-09-10T00:20:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_SF_LA",
       "espn_event_id": null,
-      "away": "CAR",
-      "home": "ATL",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "away": "SF",
+      "home": "LA",
+      "kickoff": "2026-09-11T00:35:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_ATL_PIT",
       "espn_event_id": null,
-      "away": "CIN",
+      "away": "ATL",
+      "home": "PIT",
+      "kickoff": "2026-09-13T17:00:00+00:00",
+      "ou": null,
+      "spread": null
+    },
+    {
+      "game_id": "2026_01_BAL_IND",
+      "espn_event_id": null,
+      "away": "BAL",
+      "home": "IND",
+      "kickoff": "2026-09-13T17:00:00+00:00",
+      "ou": null,
+      "spread": null
+    },
+    {
+      "game_id": "2026_01_BUF_HOU",
+      "espn_event_id": null,
+      "away": "BUF",
       "home": "HOU",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "kickoff": "2026-09-13T17:00:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CHI_CAR",
+      "espn_event_id": null,
+      "away": "CHI",
+      "home": "CAR",
+      "kickoff": "2026-09-13T17:00:00+00:00",
+      "ou": null,
+      "spread": null
+    },
+    {
+      "game_id": "2026_01_CLE_JAX",
       "espn_event_id": null,
       "away": "CLE",
-      "home": "TB",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "home": "JAX",
+      "kickoff": "2026-09-13T17:00:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_GB_NYJ",
-      "espn_event_id": null,
-      "away": "GB",
-      "home": "NYJ",
-      "kickoff": "2026-09-20T17:00:00+00:00",
-      "ou": null,
-      "spread": null
-    },
-    {
-      "game_id": "2026_02_MIN_CHI",
-      "espn_event_id": null,
-      "away": "MIN",
-      "home": "CHI",
-      "kickoff": "2026-09-20T17:00:00+00:00",
-      "ou": null,
-      "spread": null
-    },
-    {
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "espn_event_id": null,
       "away": "NO",
-      "home": "BAL",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "home": "DET",
+      "kickoff": "2026-09-13T17:00:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "espn_event_id": null,
-      "away": "PHI",
+      "away": "NYJ",
       "home": "TEN",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "kickoff": "2026-09-13T17:00:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_TB_CIN",
       "espn_event_id": null,
-      "away": "PIT",
-      "home": "NE",
-      "kickoff": "2026-09-20T17:00:00+00:00",
+      "away": "TB",
+      "home": "CIN",
+      "kickoff": "2026-09-13T17:00:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_ARI_LAC",
       "espn_event_id": null,
-      "away": "JAX",
-      "home": "DEN",
-      "kickoff": "2026-09-20T20:05:00+00:00",
-      "ou": null,
-      "spread": null
-    },
-    {
-      "game_id": "2026_02_LV_LAC",
-      "espn_event_id": null,
-      "away": "LV",
+      "away": "ARI",
       "home": "LAC",
-      "kickoff": "2026-09-20T20:05:00+00:00",
+      "kickoff": "2026-09-13T20:25:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_GB_MIN",
+      "espn_event_id": null,
+      "away": "GB",
+      "home": "MIN",
+      "kickoff": "2026-09-13T20:25:00+00:00",
+      "ou": null,
+      "spread": null
+    },
+    {
+      "game_id": "2026_01_MIA_LV",
       "espn_event_id": null,
       "away": "MIA",
-      "home": "SF",
-      "kickoff": "2026-09-20T20:25:00+00:00",
+      "home": "LV",
+      "kickoff": "2026-09-13T20:25:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_SEA_ARI",
-      "espn_event_id": null,
-      "away": "SEA",
-      "home": "ARI",
-      "kickoff": "2026-09-20T20:25:00+00:00",
-      "ou": null,
-      "spread": null
-    },
-    {
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "espn_event_id": null,
       "away": "WAS",
-      "home": "DAL",
-      "kickoff": "2026-09-20T20:25:00+00:00",
+      "home": "PHI",
+      "kickoff": "2026-09-13T20:25:00+00:00",
       "ou": null,
       "spread": null
     },
     {
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DAL_NYG",
       "espn_event_id": null,
-      "away": "IND",
+      "away": "DAL",
+      "home": "NYG",
+      "kickoff": "2026-09-14T00:20:00+00:00",
+      "ou": null,
+      "spread": null
+    },
+    {
+      "game_id": "2026_01_DEN_KC",
+      "espn_event_id": null,
+      "away": "DEN",
       "home": "KC",
-      "kickoff": "2026-09-21T00:20:00+00:00",
-      "ou": null,
-      "spread": null
-    },
-    {
-      "game_id": "2026_02_NYG_LA",
-      "espn_event_id": null,
-      "away": "NYG",
-      "home": "LA",
-      "kickoff": "2026-09-22T00:15:00+00:00",
+      "kickoff": "2026-09-15T00:15:00+00:00",
       "ou": null,
       "spread": null
     }
@@ -170,7 +170,7 @@
       "espn_id": "4429795",
       "name": "Jahmyr Gibbs",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -202,7 +202,7 @@
       "espn_id": "4374302",
       "name": "Amon-Ra St. Brown",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -234,7 +234,7 @@
       "espn_id": "4241389",
       "name": "CeeDee Lamb",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -266,7 +266,7 @@
       "espn_id": "4362628",
       "name": "Ja'Marr Chase",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -298,7 +298,7 @@
       "espn_id": "3918298",
       "name": "Josh Allen",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -330,7 +330,7 @@
       "espn_id": "4426515",
       "name": "Puka Nacua",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -362,7 +362,7 @@
       "espn_id": "4430807",
       "name": "Bijan Robinson",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -394,7 +394,7 @@
       "espn_id": "4430878",
       "name": "Jaxon Smith-Njigba",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -426,7 +426,7 @@
       "espn_id": "3117251",
       "name": "Christian McCaffrey",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -458,7 +458,7 @@
       "espn_id": "4379399",
       "name": "James Cook III",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -490,7 +490,7 @@
       "espn_id": "4262921",
       "name": "Justin Jefferson",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -522,7 +522,7 @@
       "espn_id": "4242335",
       "name": "Jonathan Taylor",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -554,7 +554,7 @@
       "espn_id": "4361307",
       "name": "Trey McBride",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -586,7 +586,7 @@
       "espn_id": "3929630",
       "name": "Saquon Barkley",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -618,7 +618,7 @@
       "espn_id": "4429160",
       "name": "De'Von Achane",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -650,7 +650,7 @@
       "espn_id": "3043078",
       "name": "Derrick Henry",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -682,7 +682,7 @@
       "espn_id": "3916387",
       "name": "Lamar Jackson",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -714,7 +714,7 @@
       "espn_id": "4426502",
       "name": "Drake London",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -746,7 +746,7 @@
       "espn_id": "4426354",
       "name": "George Pickens",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -778,7 +778,7 @@
       "espn_id": "4047646",
       "name": "A.J. Brown",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -810,7 +810,7 @@
       "espn_id": "4258173",
       "name": "Nico Collins",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -842,7 +842,7 @@
       "espn_id": "4890973",
       "name": "Ashton Jeanty",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -874,7 +874,7 @@
       "espn_id": "4723086",
       "name": "Colston Loveland",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -906,7 +906,7 @@
       "espn_id": "4685382",
       "name": "Omarion Hampton",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -938,7 +938,7 @@
       "espn_id": "4362238",
       "name": "Chase Brown",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -970,7 +970,7 @@
       "espn_id": "4567048",
       "name": "Kenneth Walker III",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1002,7 +1002,7 @@
       "espn_id": "4428331",
       "name": "Rashee Rice",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1034,7 +1034,7 @@
       "espn_id": "4361370",
       "name": "Chris Olave",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1066,7 +1066,7 @@
       "espn_id": "4431452",
       "name": "Drake Maye",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -1098,7 +1098,7 @@
       "espn_id": "4241478",
       "name": "DeVonta Smith",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1130,7 +1130,7 @@
       "espn_id": "4870808",
       "name": "Jeremiyah Love",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1162,7 +1162,7 @@
       "espn_id": "4431459",
       "name": "Tyler Warren",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -1194,7 +1194,7 @@
       "espn_id": "4361579",
       "name": "Javonte Williams",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1226,7 +1226,7 @@
       "espn_id": "4595348",
       "name": "Malik Nabers",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1258,7 +1258,7 @@
       "espn_id": "4426348",
       "name": "Jayden Daniels",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -1290,7 +1290,7 @@
       "espn_id": "4569618",
       "name": "Garrett Wilson",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1322,7 +1322,7 @@
       "espn_id": "4427366",
       "name": "Breece Hall",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1354,7 +1354,7 @@
       "espn_id": "4430737",
       "name": "Kyren Williams",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1386,7 +1386,7 @@
       "espn_id": "4040715",
       "name": "Jalen Hurts",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -1418,7 +1418,7 @@
       "espn_id": "16800",
       "name": "Davante Adams",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1450,7 +1450,7 @@
       "espn_id": "4685472",
       "name": "Tetairoa McMillan",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1482,7 +1482,7 @@
       "espn_id": "4696981",
       "name": "Cam Skattebo",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1514,7 +1514,7 @@
       "espn_id": "3915511",
       "name": "Joe Burrow",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -1546,7 +1546,7 @@
       "espn_id": "4429615",
       "name": "Zay Flowers",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1578,7 +1578,7 @@
       "espn_id": "4239996",
       "name": "Travis Etienne Jr.",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1610,7 +1610,7 @@
       "espn_id": "4567750",
       "name": "Emeka Egbuka",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1642,7 +1642,7 @@
       "espn_id": "4612826",
       "name": "Ladd McConkey",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1674,7 +1674,7 @@
       "espn_id": "4239993",
       "name": "Tee Higgins",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1706,7 +1706,7 @@
       "espn_id": "4685702",
       "name": "Quinshon Judkins",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1738,7 +1738,7 @@
       "espn_id": "4372016",
       "name": "Jaylen Waddle",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1770,7 +1770,7 @@
       "espn_id": "4360248",
       "name": "Kyle Pitts Sr.",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -1802,7 +1802,7 @@
       "espn_id": "4430027",
       "name": "Sam LaPorta",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -1834,7 +1834,7 @@
       "espn_id": "4596448",
       "name": "Bucky Irving",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1866,7 +1866,7 @@
       "espn_id": "5083076",
       "name": "Harold Fannin Jr.",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -1898,7 +1898,7 @@
       "espn_id": "4259545",
       "name": "D'Andre Swift",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -1930,7 +1930,7 @@
       "espn_id": "3915416",
       "name": "DJ Moore",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1962,7 +1962,7 @@
       "espn_id": "3121422",
       "name": "Terry McLaurin",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -1994,7 +1994,7 @@
       "espn_id": "4426388",
       "name": "Jameson Williams",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2026,7 +2026,7 @@
       "espn_id": "4035538",
       "name": "David Montgomery",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2058,7 +2058,7 @@
       "espn_id": "3040151",
       "name": "George Kittle",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -2090,7 +2090,7 @@
       "espn_id": "4431299",
       "name": "Rome Odunze",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2122,7 +2122,7 @@
       "espn_id": "2577417",
       "name": "Dak Prescott",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2154,7 +2154,7 @@
       "espn_id": "4685512",
       "name": "Jadarian Price",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2186,7 +2186,7 @@
       "espn_id": "4689114",
       "name": "Jaxson Dart",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2218,7 +2218,7 @@
       "espn_id": "4882093",
       "name": "Bhayshul Tuten",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2250,7 +2250,7 @@
       "espn_id": "4038941",
       "name": "Justin Herbert",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2282,7 +2282,7 @@
       "espn_id": "12483",
       "name": "Matthew Stafford",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2314,7 +2314,7 @@
       "espn_id": "4685278",
       "name": "Luther Burden III",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2346,7 +2346,7 @@
       "espn_id": "3128429",
       "name": "Courtland Sutton",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2378,7 +2378,7 @@
       "espn_id": "4569173",
       "name": "Rhamondre Stevenson",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2410,7 +2410,7 @@
       "espn_id": "4871023",
       "name": "Carnell Tate",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2442,7 +2442,7 @@
       "espn_id": "4432708",
       "name": "Marvin Harrison Jr.",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2474,7 +2474,7 @@
       "espn_id": "4047650",
       "name": "DK Metcalf",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2506,7 +2506,7 @@
       "espn_id": "4431611",
       "name": "Caleb Williams",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2538,7 +2538,7 @@
       "espn_id": "3121023",
       "name": "Dallas Goedert",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -2570,7 +2570,7 @@
       "espn_id": "15847",
       "name": "Travis Kelce",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -2602,7 +2602,7 @@
       "espn_id": "4572680",
       "name": "Tucker Kraft",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -2634,7 +2634,7 @@
       "espn_id": "16737",
       "name": "Mike Evans",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2666,7 +2666,7 @@
       "espn_id": "4569987",
       "name": "Jaylen Warren",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2698,7 +2698,7 @@
       "espn_id": "4035687",
       "name": "Michael Pittman Jr.",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2730,7 +2730,7 @@
       "espn_id": "3916148",
       "name": "Tony Pollard",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2762,7 +2762,7 @@
       "espn_id": "4248528",
       "name": "Christian Watson",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2794,7 +2794,7 @@
       "espn_id": "4432620",
       "name": "Parker Washington",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -2826,7 +2826,7 @@
       "espn_id": "4038815",
       "name": "Rico Dowdle",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -2858,7 +2858,7 @@
       "espn_id": "4360310",
       "name": "Trevor Lawrence",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2890,7 +2890,7 @@
       "espn_id": "4426338",
       "name": "Bo Nix",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2922,7 +2922,7 @@
       "espn_id": "3139477",
       "name": "Patrick Mahomes",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -2954,7 +2954,7 @@
       "espn_id": "4242355",
       "name": "Jake Ferguson",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -2986,7 +2986,7 @@
       "espn_id": "4371733",
       "name": "Kenny Gainwell",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3018,7 +3018,7 @@
       "espn_id": "4360761",
       "name": "Michael Wilson",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3050,7 +3050,7 @@
       "espn_id": "4360078",
       "name": "Alec Pierce",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3082,7 +3082,7 @@
       "espn_id": "4241416",
       "name": "Chuba Hubbard",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3114,7 +3114,7 @@
       "espn_id": "4701936",
       "name": "Matthew Golden",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3146,7 +3146,7 @@
       "espn_id": "4361741",
       "name": "Brock Purdy",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -3178,7 +3178,7 @@
       "espn_id": "4678008",
       "name": "Jonathon Brooks",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3210,7 +3210,7 @@
       "espn_id": "4241985",
       "name": "J.K. Dobbins",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3242,7 +3242,7 @@
       "espn_id": "2976212",
       "name": "Stefon Diggs",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3274,7 +3274,7 @@
       "espn_id": "4432773",
       "name": "Brian Thomas Jr.",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3306,7 +3306,7 @@
       "espn_id": "4429023",
       "name": "MarShawn Lloyd",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3338,7 +3338,7 @@
       "espn_id": "3116365",
       "name": "Mark Andrews",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -3370,7 +3370,7 @@
       "espn_id": "4361050",
       "name": "Isaiah Likely",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -3402,7 +3402,7 @@
       "espn_id": "4569587",
       "name": "Wan'Dale Robinson",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3434,7 +3434,7 @@
       "espn_id": "3042519",
       "name": "Aaron Jones Sr.",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3466,7 +3466,7 @@
       "espn_id": "4429205",
       "name": "Jordan Addison",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3498,7 +3498,7 @@
       "espn_id": "3916433",
       "name": "Jakobi Meyers",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3530,7 +3530,7 @@
       "espn_id": "4608686",
       "name": "Kyle Monangai",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3562,7 +3562,7 @@
       "espn_id": "4429096",
       "name": "Blake Corum",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3594,7 +3594,7 @@
       "espn_id": "3116165",
       "name": "Chris Godwin Jr.",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3626,7 +3626,7 @@
       "espn_id": "4568490",
       "name": "RJ Harvey",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3658,7 +3658,7 @@
       "espn_id": "4683062",
       "name": "Xavier Worthy",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3690,7 +3690,7 @@
       "espn_id": "4385690",
       "name": "Dalton Kincaid",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -3722,7 +3722,7 @@
       "espn_id": "4429025",
       "name": "Quentin Johnston",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3754,7 +3754,7 @@
       "espn_id": "4697815",
       "name": "Rachaad White",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3786,7 +3786,7 @@
       "espn_id": "4870795",
       "name": "Makai Lemon",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3818,7 +3818,7 @@
       "espn_id": "4362249",
       "name": "Jayden Reed",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3850,7 +3850,7 @@
       "espn_id": "4575131",
       "name": "Jacory Croskey-Merritt",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -3882,7 +3882,7 @@
       "espn_id": "3046779",
       "name": "Jared Goff",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -3914,7 +3914,7 @@
       "espn_id": "4688813",
       "name": "Josh Downs",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3946,7 +3946,7 @@
       "espn_id": "4373678",
       "name": "Khalil Shakir",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -3978,7 +3978,7 @@
       "espn_id": "3917315",
       "name": "Kyler Murray",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4010,7 +4010,7 @@
       "espn_id": "4360569",
       "name": "Jordan Mason",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4042,7 +4042,7 @@
       "espn_id": "3126486",
       "name": "Deebo Samuel Sr.",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4074,7 +4074,7 @@
       "espn_id": "4710714",
       "name": "De'Zhaun Stribling",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4106,7 +4106,7 @@
       "espn_id": "4685415",
       "name": "Travis Hunter",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4138,7 +4138,7 @@
       "espn_id": "4870653",
       "name": "KC Concepcion",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4170,7 +4170,7 @@
       "espn_id": "4361432",
       "name": "Romeo Doubs",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4202,7 +4202,7 @@
       "espn_id": "4036133",
       "name": "T.J. Hockenson",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -4234,7 +4234,7 @@
       "espn_id": "3052587",
       "name": "Baker Mayfield",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4266,7 +4266,7 @@
       "espn_id": "4429059",
       "name": "Woody Marks",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4298,7 +4298,7 @@
       "espn_id": "4428557",
       "name": "Tyjae Spears",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4330,7 +4330,7 @@
       "espn_id": "3046439",
       "name": "Hunter Henry",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -4362,7 +4362,7 @@
       "espn_id": "3929645",
       "name": "Juwan Johnson",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -4394,7 +4394,7 @@
       "espn_id": "4695883",
       "name": "Jalen Coker",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4426,7 +4426,7 @@
       "espn_id": "4360689",
       "name": "Tyler Shough",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4458,7 +4458,7 @@
       "espn_id": "4032473",
       "name": "Rashid Shaheed",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4490,7 +4490,7 @@
       "espn_id": "4036378",
       "name": "Jordan Love",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4522,7 +4522,7 @@
       "espn_id": "4373626",
       "name": "Tyler Allgeier",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4554,7 +4554,7 @@
       "espn_id": "4686658",
       "name": "Mike Washington Jr.",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4586,7 +4586,7 @@
       "espn_id": "3054850",
       "name": "Alvin Kamara",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4618,7 +4618,7 @@
       "espn_id": "3917792",
       "name": "Daniel Jones",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4650,7 +4650,7 @@
       "espn_id": "5083315",
       "name": "Kenyon Sadiq",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -4682,7 +4682,7 @@
       "espn_id": "4428718",
       "name": "Tre Tucker",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4714,7 +4714,7 @@
       "espn_id": "4362619",
       "name": "Chris Rodriguez Jr.",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4746,7 +4746,7 @@
       "espn_id": "4702555",
       "name": "Jonah Coleman",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4778,7 +4778,7 @@
       "espn_id": "15818",
       "name": "Keenan Allen",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4810,7 +4810,7 @@
       "espn_id": "4570037",
       "name": "Terrance Ferguson",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -4842,7 +4842,7 @@
       "espn_id": "4241463",
       "name": "Jerry Jeudy",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -4874,7 +4874,7 @@
       "espn_id": "3912547",
       "name": "Sam Darnold",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4906,7 +4906,7 @@
       "espn_id": "4241474",
       "name": "Brian Robinson Jr.",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -4938,7 +4938,7 @@
       "espn_id": "4432577",
       "name": "C.J. Stroud",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -4970,7 +4970,7 @@
       "espn_id": "4832800",
       "name": "Denzel Boston",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5002,7 +5002,7 @@
       "espn_id": "4429086",
       "name": "Michael Mayer",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -5034,7 +5034,7 @@
       "espn_id": "4430539",
       "name": "Brenton Strange",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -5066,7 +5066,7 @@
       "espn_id": "3925357",
       "name": "Calvin Ridley",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5098,7 +5098,7 @@
       "espn_id": "4596334",
       "name": "Keaton Mitchell",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5130,7 +5130,7 @@
       "espn_id": "4242512",
       "name": "Malik Willis",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -5162,7 +5162,7 @@
       "espn_id": "3117256",
       "name": "Dalton Schultz",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -5194,7 +5194,7 @@
       "espn_id": "4429013",
       "name": "Tank Bigsby",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5226,7 +5226,7 @@
       "espn_id": "5081397",
       "name": "Dylan Sampson",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5258,7 +5258,7 @@
       "espn_id": "4038441",
       "name": "Justice Hill",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5290,7 +5290,7 @@
       "espn_id": "4870847",
       "name": "Ja'Kobi Lane",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5322,7 +5322,7 @@
       "espn_id": "4429022",
       "name": "Kayshon Boutte",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5354,7 +5354,7 @@
       "espn_id": "4869645",
       "name": "Caleb Douglas",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5386,7 +5386,7 @@
       "espn_id": "4597500",
       "name": "Adonai Mitchell",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5418,7 +5418,7 @@
       "espn_id": "4696044",
       "name": "Kaelon Black",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5450,7 +5450,7 @@
       "espn_id": "4361411",
       "name": "Pat Freiermuth",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -5482,7 +5482,7 @@
       "espn_id": "4382466",
       "name": "Jalen Nailor",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5514,7 +5514,7 @@
       "espn_id": "4685247",
       "name": "Braelon Allen",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5546,7 +5546,7 @@
       "espn_id": "4569559",
       "name": "Devaughn Vele",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5578,7 +5578,7 @@
       "espn_id": "3116389",
       "name": "Samaje Perine",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5610,7 +5610,7 @@
       "espn_id": "4241457",
       "name": "Najee Harris",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5642,7 +5642,7 @@
       "espn_id": "2977187",
       "name": "Cooper Kupp",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5674,7 +5674,7 @@
       "espn_id": "4685720",
       "name": "Bryce Young",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -5706,7 +5706,7 @@
       "espn_id": "3149687",
       "name": "Chris Brooks",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5738,7 +5738,7 @@
       "espn_id": "4428850",
       "name": "Dontayvion Wicks",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5770,7 +5770,7 @@
       "espn_id": "4429501",
       "name": "Ray Davis",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -5802,7 +5802,7 @@
       "espn_id": "4688380",
       "name": "Cam Ward",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -5834,7 +5834,7 @@
       "espn_id": "4360939",
       "name": "Rashod Bateman",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5866,7 +5866,7 @@
       "espn_id": "4682648",
       "name": "Malachi Fields",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5898,7 +5898,7 @@
       "espn_id": "4360635",
       "name": "Chig Okonkwo",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -5930,7 +5930,7 @@
       "espn_id": "3886598",
       "name": "Jauan Jennings",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5962,7 +5962,7 @@
       "espn_id": "4586312",
       "name": "Jaylin Noel",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -5994,7 +5994,7 @@
       "espn_id": "4569603",
       "name": "Malik Washington",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6026,7 +6026,7 @@
       "espn_id": "8439",
       "name": "Aaron Rodgers",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -6058,7 +6058,7 @@
       "espn_id": "4576297",
       "name": "AJ Barner",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6090,7 +6090,7 @@
       "espn_id": "4832955",
       "name": "Emmett Johnson",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6122,7 +6122,7 @@
       "espn_id": "4819231",
       "name": "Kaleb Johnson",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6154,7 +6154,7 @@
       "espn_id": "4869961",
       "name": "Chris Bell",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6186,7 +6186,7 @@
       "espn_id": "4360516",
       "name": "Tyrone Tracy Jr.",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6218,7 +6218,7 @@
       "espn_id": "4685261",
       "name": "Germie Bernard",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6250,7 +6250,7 @@
       "espn_id": "4686728",
       "name": "Gunnar Helm",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6282,7 +6282,7 @@
       "espn_id": "4723820",
       "name": "Omar Cooper Jr.",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6314,7 +6314,7 @@
       "espn_id": "2578570",
       "name": "Jacoby Brissett",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -6346,7 +6346,7 @@
       "espn_id": "3123076",
       "name": "David Njoku",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6378,7 +6378,7 @@
       "espn_id": "4870612",
       "name": "Zachariah Branch",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6410,7 +6410,7 @@
       "espn_id": "4429835",
       "name": "George Holani",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6442,7 +6442,7 @@
       "espn_id": "16733",
       "name": "Odell Beckham Jr.",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6474,7 +6474,7 @@
       "espn_id": "4912218",
       "name": "Cyrus Allen",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6506,7 +6506,7 @@
       "espn_id": "5083754",
       "name": "Ryan Flournoy",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6538,7 +6538,7 @@
       "espn_id": "4686612",
       "name": "Tre' Harris",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6570,7 +6570,7 @@
       "espn_id": "15864",
       "name": "Geno Smith",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -6602,7 +6602,7 @@
       "espn_id": "2576925",
       "name": "Darren Waller",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6634,7 +6634,7 @@
       "espn_id": "4367209",
       "name": "Greg Dulcich",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6666,7 +6666,7 @@
       "espn_id": "14880",
       "name": "Kirk Cousins",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -6698,7 +6698,7 @@
       "espn_id": "4430968",
       "name": "Kimani Vidal",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6730,7 +6730,7 @@
       "espn_id": "3051876",
       "name": "Evan Engram",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6762,7 +6762,7 @@
       "espn_id": "5123663",
       "name": "Isaac TeSlaa",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6794,7 +6794,7 @@
       "espn_id": "4383429",
       "name": "Jacob Saylors",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6826,7 +6826,7 @@
       "espn_id": "4682745",
       "name": "Jaylen Wright",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -6858,7 +6858,7 @@
       "espn_id": "4243331",
       "name": "Cade Otton",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6890,7 +6890,7 @@
       "espn_id": "4595342",
       "name": "Oronde Gadsden",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -6922,7 +6922,7 @@
       "espn_id": "3122840",
       "name": "Deshaun Watson",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -6954,7 +6954,7 @@
       "espn_id": "4635008",
       "name": "Keon Coleman",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -6986,7 +6986,7 @@
       "espn_id": "4430034",
       "name": "Xavier Legette",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7018,7 +7018,7 @@
       "espn_id": "5081432",
       "name": "Antonio Williams",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7050,7 +7050,7 @@
       "espn_id": "4600981",
       "name": "Pat Bryant",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7082,7 +7082,7 @@
       "espn_id": "4040655",
       "name": "Darnell Mooney",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7114,7 +7114,7 @@
       "espn_id": "3676833",
       "name": "KaVontae Turpin",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7146,7 +7146,7 @@
       "espn_id": "4711533",
       "name": "Ollie Gordon II",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7178,7 +7178,7 @@
       "espn_id": "3116164",
       "name": "Mike Gesicki",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7210,7 +7210,7 @@
       "espn_id": "4430802",
       "name": "Darnell Washington",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7242,7 +7242,7 @@
       "espn_id": "4685555",
       "name": "Nicholas Singleton",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7274,7 +7274,7 @@
       "espn_id": "4869748",
       "name": "Zavion Thomas",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7306,7 +7306,7 @@
       "espn_id": "4431268",
       "name": "Chimere Dike",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7338,7 +7338,7 @@
       "espn_id": "4259147",
       "name": "Jake Tonges",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7370,7 +7370,7 @@
       "espn_id": "4242557",
       "name": "Colby Parkinson",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7402,7 +7402,7 @@
       "espn_id": "4361409",
       "name": "Jahan Dotson",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7434,7 +7434,7 @@
       "espn_id": "4431280",
       "name": "Troy Franklin",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7466,7 +7466,7 @@
       "espn_id": "4427095",
       "name": "DeMario Douglas",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7498,7 +7498,7 @@
       "espn_id": "4362478",
       "name": "Emari Demercado",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7530,7 +7530,7 @@
       "espn_id": "4596602",
       "name": "Brashard Smith",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7562,7 +7562,7 @@
       "espn_id": "4686468",
       "name": "Seth McGowan",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7594,7 +7594,7 @@
       "espn_id": "3930086",
       "name": "Dawson Knox",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7626,7 +7626,7 @@
       "espn_id": "4258595",
       "name": "Cole Kmet",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7658,7 +7658,7 @@
       "espn_id": "4249417",
       "name": "Jalen Tolbert",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7690,7 +7690,7 @@
       "espn_id": "4686422",
       "name": "Xavier Hutchinson",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7722,7 +7722,7 @@
       "espn_id": "4686472",
       "name": "Marvin Mims Jr.",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7754,7 +7754,7 @@
       "espn_id": "4362921",
       "name": "Tyquan Thornton",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7786,7 +7786,7 @@
       "espn_id": "5220680",
       "name": "Ted Hurst III",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7818,7 +7818,7 @@
       "espn_id": "4603186",
       "name": "Jack Bech",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7850,7 +7850,7 @@
       "espn_id": "4695404",
       "name": "Isaiah Davis",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7882,7 +7882,7 @@
       "espn_id": "4683153",
       "name": "Skyler Bell",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -7914,7 +7914,7 @@
       "espn_id": "4431545",
       "name": "Will Shipley",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -7946,7 +7946,7 @@
       "espn_id": "4808766",
       "name": "Mason Taylor",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -7978,7 +7978,7 @@
       "espn_id": "4368003",
       "name": "Andrei Iosivas",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8010,7 +8010,7 @@
       "espn_id": "4241372",
       "name": "Hollywood Brown",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8042,7 +8042,7 @@
       "espn_id": "4887558",
       "name": "Emanuel Wilson",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -8074,7 +8074,7 @@
       "espn_id": "4429148",
       "name": "Theo Johnson",
       "team": "NYG",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8106,7 +8106,7 @@
       "espn_id": "4678006",
       "name": "Elijah Arroyo",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8138,7 +8138,7 @@
       "espn_id": "16002",
       "name": "Kyle Juszczyk",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -8170,7 +8170,7 @@
       "espn_id": "2573401",
       "name": "Tyler Higbee",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8202,7 +8202,7 @@
       "espn_id": "4426948",
       "name": "Luke McCaffrey",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8234,7 +8234,7 @@
       "espn_id": "2991662",
       "name": "Mack Hollins",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8266,7 +8266,7 @@
       "espn_id": "4613202",
       "name": "Kyle Williams",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8298,7 +8298,7 @@
       "espn_id": "4240472",
       "name": "Noah Gray",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8330,7 +8330,7 @@
       "espn_id": "4061956",
       "name": "Ashton Dulin",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8362,7 +8362,7 @@
       "espn_id": "4429299",
       "name": "Tahj Brooks",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -8394,7 +8394,7 @@
       "espn_id": "4912274",
       "name": "Sione Vaki",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -8426,7 +8426,7 @@
       "espn_id": "4831959",
       "name": "Eli Raridon",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8458,7 +8458,7 @@
       "espn_id": "4431431",
       "name": "Corey Kiner",
       "team": "NE",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_NE_SEA",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -8490,7 +8490,7 @@
       "espn_id": "4241263",
       "name": "Charlie Kolar",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8522,7 +8522,7 @@
       "espn_id": "5088338",
       "name": "Elijah Sarratt",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8554,7 +8554,7 @@
       "espn_id": "4427834",
       "name": "Erick All Jr.",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8586,7 +8586,7 @@
       "espn_id": "4685307",
       "name": "Kevin Coleman Jr.",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8618,7 +8618,7 @@
       "espn_id": "4431588",
       "name": "Ja'Tavion Sanders",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8650,7 +8650,7 @@
       "espn_id": "4698597",
       "name": "Barion Brown",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8682,7 +8682,7 @@
       "espn_id": "3054212",
       "name": "Jonnu Smith",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8714,7 +8714,7 @@
       "espn_id": "2972515",
       "name": "Cooper Rush",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "QB",
       "injury": null,
       "proj": {
@@ -8746,7 +8746,7 @@
       "espn_id": "4879276",
       "name": "Bryce Lance",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8778,7 +8778,7 @@
       "espn_id": "4242433",
       "name": "Joshua Palmer",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8810,7 +8810,7 @@
       "espn_id": "2973405",
       "name": "Kalif Raymond",
       "team": "CHI",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8842,7 +8842,7 @@
       "espn_id": "4608810",
       "name": "Tez Johnson",
       "team": "TB",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8874,7 +8874,7 @@
       "espn_id": "4372096",
       "name": "Luke Schoonmaker",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -8906,7 +8906,7 @@
       "espn_id": "4431492",
       "name": "Roman Wilson",
       "team": "PIT",
-      "game_id": "2026_02_PIT_NE",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8938,7 +8938,7 @@
       "espn_id": "5150247",
       "name": "Malik Benson",
       "team": "LV",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_MIA_LV",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -8970,7 +8970,7 @@
       "espn_id": "4808839",
       "name": "Isaiah Bond",
       "team": "CLE",
-      "game_id": "2026_02_CLE_TB",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9002,7 +9002,7 @@
       "espn_id": "4372780",
       "name": "Tommy Tremble",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9034,7 +9034,7 @@
       "espn_id": "5092508",
       "name": "Colbie Young",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9066,7 +9066,7 @@
       "espn_id": "4883647",
       "name": "Elic Ayomanor",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9098,7 +9098,7 @@
       "espn_id": "4685553",
       "name": "Brenen Thompson",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9130,7 +9130,7 @@
       "espn_id": "4708486",
       "name": "Jimmy Horn Jr.",
       "team": "CAR",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_CHI_CAR",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9162,7 +9162,7 @@
       "espn_id": "3045523",
       "name": "Kendrick Bourne",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9194,7 +9194,7 @@
       "espn_id": "4569371",
       "name": "Isaiah Williams",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9226,7 +9226,7 @@
       "espn_id": "4242392",
       "name": "Brock Wright",
       "team": "DET",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_NO_DET",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9258,7 +9258,7 @@
       "espn_id": "4569382",
       "name": "Jordan Whittington",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9290,7 +9290,7 @@
       "espn_id": "4383396",
       "name": "Hunter Luepke",
       "team": "DAL",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_DAL_NYG",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -9322,7 +9322,7 @@
       "espn_id": "4426844",
       "name": "Elijah Higgins",
       "team": "ARI",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9354,7 +9354,7 @@
       "espn_id": "4036131",
       "name": "Noah Fant",
       "team": "NO",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_NO_DET",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9386,7 +9386,7 @@
       "espn_id": "3921690",
       "name": "Josh Oliver",
       "team": "MIN",
-      "game_id": "2026_02_MIN_CHI",
+      "game_id": "2026_01_GB_MIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9418,7 +9418,7 @@
       "espn_id": "2576336",
       "name": "Ameer Abdullah",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -9450,7 +9450,7 @@
       "espn_id": "3043116",
       "name": "Demarcus Robinson",
       "team": "SF",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9482,7 +9482,7 @@
       "espn_id": "4600597",
       "name": "Montorie Foster Jr.",
       "team": "SEA",
-      "game_id": "2026_02_SEA_ARI",
+      "game_id": "2026_01_NE_SEA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9514,7 +9514,7 @@
       "espn_id": "4696882",
       "name": "Devontez Walker",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9546,7 +9546,7 @@
       "espn_id": "5082630",
       "name": "Jalen Royals",
       "team": "KC",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_DEN_KC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9578,7 +9578,7 @@
       "espn_id": "3043275",
       "name": "Austin Hooper",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9610,7 +9610,7 @@
       "espn_id": "3127310",
       "name": "Drew Sample",
       "team": "CIN",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_TB_CIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9642,7 +9642,7 @@
       "espn_id": "4567156",
       "name": "Treylon Burks",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9674,7 +9674,7 @@
       "espn_id": "3917914",
       "name": "Olamide Zaccheaus",
       "team": "ATL",
-      "game_id": "2026_02_CAR_ATL",
+      "game_id": "2026_01_ATL_PIT",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9706,7 +9706,7 @@
       "espn_id": "3911853",
       "name": "Adam Trautman",
       "team": "DEN",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_DEN_KC",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9738,7 +9738,7 @@
       "espn_id": "4361577",
       "name": "Dyami Brown",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9770,7 +9770,7 @@
       "espn_id": "4430191",
       "name": "Skyy Moore",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9802,7 +9802,7 @@
       "espn_id": "2998565",
       "name": "Mo Alie-Cox",
       "team": "IND",
-      "game_id": "2026_02_IND_KC",
+      "game_id": "2026_01_BAL_IND",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9834,7 +9834,7 @@
       "espn_id": "4573699",
       "name": "Jackson Hawes",
       "team": "BUF",
-      "game_id": "2026_02_DET_BUF",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9866,7 +9866,7 @@
       "espn_id": "4710855",
       "name": "Konata Mumpfield",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9898,7 +9898,7 @@
       "espn_id": "4386544",
       "name": "Xavier Smith",
       "team": "LA",
-      "game_id": "2026_02_NYG_LA",
+      "game_id": "2026_01_SF_LA",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -9930,7 +9930,7 @@
       "espn_id": "4880236",
       "name": "Will Kacmarek",
       "team": "MIA",
-      "game_id": "2026_02_MIA_SF",
+      "game_id": "2026_01_MIA_LV",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9962,7 +9962,7 @@
       "espn_id": "4426496",
       "name": "Cade Stover",
       "team": "HOU",
-      "game_id": "2026_02_CIN_HOU",
+      "game_id": "2026_01_BUF_HOU",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -9994,7 +9994,7 @@
       "espn_id": "4602667",
       "name": "Jaylin Lane",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -10026,7 +10026,7 @@
       "espn_id": "4430870",
       "name": "KeAndre Lambert-Smith",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "WR",
       "injury": null,
       "proj": {
@@ -10058,7 +10058,7 @@
       "espn_id": "4686248",
       "name": "Nate Boerkircher",
       "team": "JAX",
-      "game_id": "2026_02_JAX_DEN",
+      "game_id": "2026_01_CLE_JAX",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10090,7 +10090,7 @@
       "espn_id": "4690923",
       "name": "Ben Sinnott",
       "team": "WAS",
-      "game_id": "2026_02_WAS_DAL",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10122,7 +10122,7 @@
       "espn_id": "3052897",
       "name": "Durham Smythe",
       "team": "BAL",
-      "game_id": "2026_02_NO_BAL",
+      "game_id": "2026_01_BAL_IND",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10154,7 +10154,7 @@
       "espn_id": "3917668",
       "name": "Alec Ingold",
       "team": "LAC",
-      "game_id": "2026_02_LV_LAC",
+      "game_id": "2026_01_ARI_LAC",
       "pos": "RB",
       "injury": null,
       "proj": {
@@ -10186,7 +10186,7 @@
       "espn_id": "4360086",
       "name": "Josh Whyle",
       "team": "GB",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_GB_MIN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10218,7 +10218,7 @@
       "espn_id": "3052096",
       "name": "Johnny Mundt",
       "team": "PHI",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_WAS_PHI",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10250,7 +10250,7 @@
       "espn_id": "4361372",
       "name": "Jeremy Ruckert",
       "team": "NYJ",
-      "game_id": "2026_02_GB_NYJ",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "TE",
       "injury": null,
       "proj": {
@@ -10282,7 +10282,7 @@
       "espn_id": "4361516",
       "name": "Daniel Bellinger",
       "team": "TEN",
-      "game_id": "2026_02_PHI_TEN",
+      "game_id": "2026_01_NYJ_TEN",
       "pos": "TE",
       "injury": null,
       "proj": {
