@@ -27,12 +27,26 @@ const ESPN_ROOT = "https://site.api.espn.com/apis/site/v2/sports/football/nfl";
 const ESPN_SCOREBOARD = ESPN_ROOT + "/scoreboard";
 const ESPN_SUMMARY = ESPN_ROOT + "/summary";
 
+/* ESPN's season types; 2 is the regular season. The scoreboard
+ * defaults to whatever week ESPN thinks is current, which is not
+ * always the week this board was exported for, so every request is
+ * scoped to the run block's own season and week. */
+const ESPN_SEASONTYPE_REG = 2;
+
 const SOURCE_THIRDPARTY = "espn-thirdparty";
 const BAND_EARLY = "EARLY";
 
 /* The live window (UI_SPEC §7): kickoff − 10 min → final + 10 min,
  * and nothing outside it. MAX_GAME_MS bounds a game we never joined,
- * so a board left open on a Tuesday stops polling on its own. */
+ * so a board left open on a Tuesday stops polling on its own.
+ *
+ * The window governs the RECURRING poll only. A game that was already
+ * final when the page was opened is outside every window and would
+ * never be read at all, so the page would show it projections-only
+ * forever; UI_SPEC §3 says a final card carries its frozen LIVE row
+ * whenever the board is viewed. The load-time pass below is therefore
+ * unconditional, and the loop it may or may not start is what the
+ * window still limits. */
 const POLL_MS = 60000;
 const WINDOW_LEAD_MS = 10 * 60 * 1000;
 const WINDOW_TRAIL_MS = 10 * 60 * 1000;
@@ -184,6 +198,11 @@ const state = {
   box: {},
   finalBox: {},
   polling: false,
+  /* the load-time pass has run (real mode only): the freshness dot
+   * exists from then on, the pulsing LIVE dot only while polling */
+  feedSeen: false,
+  /* true until the load-time pass has been absorbed */
+  firstPass: true,
   stale: false,
   misses: 0,
   feedTs: null,
@@ -474,7 +493,10 @@ function renderHeader() {
     dots.push('<span class="' + cls + '">' + labels[key] + " " +
       esc(text) + "</span>");
   }
-  if (state.polling) {
+  /* The live-feed dot is stamped by the load-time pass and stays; the
+   * pulsing LIVE dot in the run pill above is the one that means the
+   * loop is actively polling. */
+  if (state.polling || state.feedSeen) {
     if (state.stale) {
       dots.push('<span class="bad">live feed stale — rows frozen' +
         "</span>");
@@ -826,6 +848,22 @@ async function getJSON(url) {
   }
 }
 
+/* The scoreboard, scoped to THIS BOARD'S week. Without the scoping
+ * ESPN answers with its own idea of the current week, and a Thursday
+ * game read on Sunday night is simply not in the payload. year /
+ * seasontype / week come off the exported run block — the page still
+ * computes nothing, it only asks for the week it was built for. */
+function scoreboardURL() {
+  const run = (state.board && state.board.run) || {};
+  const year = numberOrNull(run.season);
+  const week = numberOrNull(run.week);
+  if (year === null || week === null) return ESPN_SCOREBOARD;
+  return ESPN_SCOREBOARD +
+    "?year=" + encodeURIComponent(year) +
+    "&seasontype=" + encodeURIComponent(ESPN_SEASONTYPE_REG) +
+    "&week=" + encodeURIComponent(week);
+}
+
 function eventTeams(event) {
   const competition = ((event || {}).competitions || [])[0] || {};
   const out = { away: "", home: "", awayScore: null, homeScore: null };
@@ -887,9 +925,21 @@ function absorbScoreboard(events) {
       awayScore: teams.awayScore,
       homeScore: teams.homeScore,
       eventId: String(event.id || ""),
-      finalAt: previous.finalAt || null
+      finalAt: previous.finalAt || null,
+      finalOnArrival: previous.finalOnArrival || false
     };
-    if (next.state === "post" && !next.finalAt) next.finalAt = now;
+    /* A game we watched go final keeps the ten-minute trailing window
+     * (a stat correction still lands there). A game that was ALREADY
+     * final the first time we looked has no trail to keep open: we
+     * read its box score once, on load, and there is nothing further
+     * to watch. */
+    if (next.state === "post" && !next.finalAt && !next.finalOnArrival) {
+      if (state.firstPass) {
+        next.finalOnArrival = true;
+      } else {
+        next.finalAt = now;
+      }
+    }
     state.live[game.game_id] = next;
   }
 }
@@ -976,15 +1026,19 @@ async function pollSummaries() {
   return good > 0;
 }
 
-async function poll() {
+/* ONE fetch → join → render pass. The load-time pass and the
+ * steady-state loop are the same work; they differ only in what
+ * decides to call them. */
+async function feedPass() {
   let good = false;
   try {
-    const payload = await getJSON(ESPN_SCOREBOARD);
+    const payload = await getJSON(scoreboardURL());
     absorbScoreboard(payload && payload.events);
     good = await pollSummaries();
   } catch (err) {
     good = false;
   }
+  state.feedSeen = true;
   if (good) {
     state.misses = 0;
     state.stale = false;
@@ -996,6 +1050,27 @@ async function poll() {
   /* Unforced: the board is rebuilt only when the feed actually moved,
    * so a quiet minute does not reflow the page under the reader. */
   render();
+  return good;
+}
+
+/* The load-time pass: always, in real mode, whatever the clock says.
+ * This is what backfills a game that finished before the reader ever
+ * opened the page (UI_SPEC §3). */
+async function initialPass() {
+  await feedPass();
+  state.firstPass = false;
+}
+
+/* Every game on the board is final: the slate is over and no amount
+ * of polling will change a number, so no loop is started. */
+function slateOver() {
+  const games = (state.board && state.board.games) || [];
+  if (!games.length) return false;
+  for (const game of games) {
+    const status = state.live[game.game_id];
+    if (!status || status.state !== "post") return false;
+  }
+  return true;
 }
 
 function windowOpen(now) {
@@ -1005,6 +1080,7 @@ function windowOpen(now) {
     if (now < kick - WINDOW_LEAD_MS) continue;
     const status = state.live[game.game_id];
     if (status && status.state === "post") {
+      if (status.finalOnArrival) continue;
       if (status.finalAt && now > status.finalAt + WINDOW_TRAIL_MS) {
         continue;
       }
@@ -1029,7 +1105,7 @@ async function tick() {
     state.polling = true;
     render();
   }
-  await poll();
+  await feedPass();
 }
 
 /* ------------------------------------------------------------------
@@ -1080,7 +1156,14 @@ async function bootLive() {
     return;
   }
   render(true);
-  tick();
+  /* Unconditional, and before any window is consulted: whatever is
+   * already final is read once, here. */
+  await initialPass();
+  /* Nothing left to watch — the page settles on the finals it just
+   * read rather than waking up every minute to re-read them. */
+  if (slateOver()) return;
+  state.polling = windowOpen(Date.now());
+  render();
   setInterval(tick, POLL_MS);
 }
 

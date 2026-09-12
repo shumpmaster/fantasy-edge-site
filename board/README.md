@@ -69,10 +69,20 @@ and `tests/test_web_site.py` asserts it stays that way.
 
 ## The live layer
 
-While any game is inside its window (kickoff − 10 minutes to final
-+ 10 minutes) the page polls ESPN's public scoreboard about every 60
-seconds, plus a per-event summary for the box score. Outside that
-window it makes no requests at all. Games join by `espn_event_id` when
+On load, in real mode only, the page reads ESPN's public scoreboard
+exactly once — scoped to the board's own season and week, so a game
+that finished earlier in the week is in the payload — and pulls a
+per-event summary for every joined game that is live or final. That is
+what puts the frozen FINAL row on a game that was over before the
+reader ever opened the page.
+
+After that pass, while any game is inside its window (kickoff − 10
+minutes to final + 10 minutes) the page polls the same endpoints about
+every 60 seconds. Outside that window it makes no requests at all, and
+if every game was already final on load no loop starts. A game that was
+already final when the page opened has no trailing window: it was read
+once and there is nothing further to watch. Games join by
+`espn_event_id` when
 the contract carries one and otherwise by matched team abbreviations on
 the same UTC kickoff date, through an alias table that mirrors
 `TEAM_ALIASES` in `fantasy_edge/live/board.py`; players join on
