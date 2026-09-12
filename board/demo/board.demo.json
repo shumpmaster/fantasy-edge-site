@@ -1,0 +1,436 @@
+{
+  "_note": "DEMO DATA — visual QA only. Every number in this file is fabricated. It is schema-valid against fantasy_edge.live.board.validate() so the demo renders through the real code path, and it is never deployed as web/data/board.json.",
+  "schema_version": 1,
+  "run": {
+    "generated_ts": "2026-09-13T15:04:00+00:00",
+    "cutoff_ts": "2026-09-13T15:30:00+00:00",
+    "engine_version": "demo-engine",
+    "generation_id": "demo-2026w02",
+    "season": 2026,
+    "week": 2,
+    "band": "EARLY",
+    "source": "engine",
+    "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share −5.6%). Corrections are tested weekly against live results before adoption.",
+    "thirdparty_attribution": null,
+    "sources": {
+      "projections": "2026-09-13T15:04:00+00:00",
+      "schedule": "2026-09-13T11:00:00+00:00",
+      "odds": null
+    }
+  },
+  "games": [
+    {
+      "game_id": "2026_02_BUF_NYJ",
+      "espn_event_id": "401770901",
+      "away": "BUF",
+      "home": "NYJ",
+      "kickoff": "2026-09-13T17:00:00+00:00",
+      "ou": 45.5,
+      "spread": -2.5
+    },
+    {
+      "game_id": "2026_02_DET_PHI",
+      "espn_event_id": "401770902",
+      "away": "DET",
+      "home": "PHI",
+      "kickoff": "2026-09-13T17:00:00+00:00",
+      "ou": 49.5,
+      "spread": 3.0
+    },
+    {
+      "game_id": "2026_02_SF_SEA",
+      "espn_event_id": null,
+      "away": "SF",
+      "home": "SEA",
+      "kickoff": "2026-09-14T00:20:00+00:00",
+      "ou": null,
+      "spread": null
+    }
+  ],
+  "players": [
+    {
+      "player_id": "demo-0001",
+      "gsis_id": "00-9000001",
+      "espn_id": "9000001",
+      "name": "Demo Quarterback",
+      "team": "BUF",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "QB",
+      "injury": null,
+      "proj": {
+        "pass_yds": 248.0,
+        "pass_tds": 1.7,
+        "rush_att": 5.4,
+        "rush_yds": 27.0,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.38
+      },
+      "stat_quantiles": {
+        "pass_yds": [152.0, 201.0, 248.0, 296.0, 351.0],
+        "pass_tds": [0.0, 1.0, 2.0, 2.0, 3.0],
+        "rush_att": [2.0, 4.0, 5.0, 7.0, 9.0],
+        "rush_yds": [3.0, 13.0, 26.0, 40.0, 62.0],
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": [0.0, 0.0, 0.0, 1.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0002",
+      "gsis_id": "00-9000002",
+      "espn_id": "9000002",
+      "name": "Demo Lead Back",
+      "team": "BUF",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "RB",
+      "injury": "Q",
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 15.2,
+        "rush_yds": 66.0,
+        "targets": 3.1,
+        "receptions": 2.4,
+        "rec_yds": 18.0,
+        "anytime_td": 0.55
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [9.0, 12.0, 15.0, 18.0, 22.0],
+        "rush_yds": [21.0, 42.0, 65.0, 90.0, 124.0],
+        "targets": [1.0, 2.0, 3.0, 4.0, 6.0],
+        "receptions": [0.0, 1.0, 2.0, 3.0, 5.0],
+        "rec_yds": [0.0, 6.0, 17.0, 30.0, 47.0],
+        "anytime_td": [0.0, 0.0, 1.0, 1.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0003",
+      "gsis_id": "00-9000003",
+      "espn_id": "9000003",
+      "name": "Demo Wideout",
+      "team": "BUF",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "WR",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 0.3,
+        "rush_yds": 2.0,
+        "targets": 8.7,
+        "receptions": 5.9,
+        "rec_yds": 74.0,
+        "anytime_td": 0.47
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [5.0, 7.0, 9.0, 11.0, 13.0],
+        "receptions": [3.0, 4.0, 6.0, 8.0, 9.0],
+        "rec_yds": [29.0, 50.0, 73.0, 99.0, 136.0],
+        "anytime_td": [0.0, 0.0, 0.0, 1.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0004",
+      "gsis_id": null,
+      "espn_id": "9000004",
+      "name": "Demo Tight End",
+      "team": "NYJ",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "TE",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 5.2,
+        "receptions": 3.8,
+        "rec_yds": 41.0,
+        "anytime_td": 0.31
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": null
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0005",
+      "gsis_id": "00-9000005",
+      "espn_id": "9000005",
+      "name": "Demo Slot Receiver",
+      "team": "NYJ",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "WR",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 6.1,
+        "receptions": 4.2,
+        "rec_yds": null,
+        "anytime_td": 0.29
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [3.0, 5.0, 6.0, 8.0, 10.0],
+        "receptions": [2.0, 3.0, 4.0, 5.0, 7.0],
+        "rec_yds": null,
+        "anytime_td": null
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0006",
+      "gsis_id": "00-9000006",
+      "espn_id": "9000006",
+      "name": "Demo Committee Back",
+      "team": "NYJ",
+      "game_id": "2026_02_BUF_NYJ",
+      "pos": "RB",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 7.4,
+        "rush_yds": 29.0,
+        "targets": 2.2,
+        "receptions": 1.7,
+        "rec_yds": 12.0,
+        "anytime_td": 0.22
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [3.0, 5.0, 7.0, 9.0, 12.0],
+        "rush_yds": [6.0, 16.0, 28.0, 41.0, 60.0],
+        "targets": [0.0, 1.0, 2.0, 3.0, 4.0],
+        "receptions": [0.0, 1.0, 2.0, 2.0, 4.0],
+        "rec_yds": [0.0, 3.0, 11.0, 20.0, 33.0],
+        "anytime_td": [0.0, 0.0, 0.0, 0.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0007",
+      "gsis_id": "00-9000007",
+      "espn_id": "9000007",
+      "name": "Demo Signal Caller",
+      "team": "DET",
+      "game_id": "2026_02_DET_PHI",
+      "pos": "QB",
+      "injury": null,
+      "proj": {
+        "pass_yds": 231.0,
+        "pass_tds": 1.4,
+        "rush_att": 3.2,
+        "rush_yds": 14.0,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.24
+      },
+      "stat_quantiles": {
+        "pass_yds": [138.0, 186.0, 231.0, 277.0, 329.0],
+        "pass_tds": [0.0, 1.0, 1.0, 2.0, 3.0],
+        "rush_att": [1.0, 2.0, 3.0, 4.0, 6.0],
+        "rush_yds": [0.0, 5.0, 13.0, 22.0, 37.0],
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": [0.0, 0.0, 0.0, 0.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0008",
+      "gsis_id": "00-9000008",
+      "espn_id": "9000008",
+      "name": "Demo Workhorse",
+      "team": "PHI",
+      "game_id": "2026_02_DET_PHI",
+      "pos": "RB",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 18.4,
+        "rush_yds": 79.0,
+        "targets": 4.0,
+        "receptions": 3.1,
+        "rec_yds": 24.0,
+        "anytime_td": 0.62
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [11.0, 15.0, 18.0, 22.0, 26.0],
+        "rush_yds": [30.0, 54.0, 78.0, 105.0, 143.0],
+        "targets": [1.0, 3.0, 4.0, 5.0, 7.0],
+        "receptions": [1.0, 2.0, 3.0, 4.0, 6.0],
+        "rec_yds": [0.0, 11.0, 23.0, 37.0, 57.0],
+        "anytime_td": [0.0, 0.0, 1.0, 1.0, 2.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0009",
+      "gsis_id": "00-9000009",
+      "espn_id": null,
+      "name": "Demo Unjoined Receiver",
+      "team": "PHI",
+      "game_id": "2026_02_DET_PHI",
+      "pos": "WR",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 7.3,
+        "receptions": 4.8,
+        "rec_yds": 61.0,
+        "anytime_td": 0.41
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [4.0, 6.0, 7.0, 9.0, 11.0],
+        "receptions": [2.0, 3.0, 5.0, 6.0, 8.0],
+        "rec_yds": [21.0, 40.0, 60.0, 83.0, 115.0],
+        "anytime_td": [0.0, 0.0, 0.0, 1.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0010",
+      "gsis_id": "00-9000010",
+      "espn_id": "9000010",
+      "name": "Demo Fullback",
+      "team": "DET",
+      "game_id": "2026_02_DET_PHI",
+      "pos": "FB",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 1.4,
+        "rush_yds": 4.0,
+        "targets": 1.2,
+        "receptions": 0.9,
+        "rec_yds": 7.0,
+        "anytime_td": 0.11
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": null
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0011",
+      "gsis_id": "00-9000011",
+      "espn_id": "9000011",
+      "name": "Demo Rookie Passer",
+      "team": "SEA",
+      "game_id": "2026_02_SF_SEA",
+      "pos": "QB",
+      "injury": null,
+      "proj": {
+        "pass_yds": 205.0,
+        "pass_tds": 1.1,
+        "rush_att": 6.8,
+        "rush_yds": 34.0,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.33
+      },
+      "stat_quantiles": {
+        "pass_yds": [118.0, 162.0, 205.0, 249.0, 298.0],
+        "pass_tds": [0.0, 0.0, 1.0, 2.0, 3.0],
+        "rush_att": [3.0, 5.0, 7.0, 9.0, 11.0],
+        "rush_yds": [7.0, 19.0, 33.0, 48.0, 71.0],
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": [0.0, 0.0, 0.0, 1.0, 1.0]
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    },
+    {
+      "player_id": "demo-0012",
+      "gsis_id": "00-9000012",
+      "espn_id": "9000012",
+      "name": "Demo Move Tight End",
+      "team": "SF",
+      "game_id": "2026_02_SF_SEA",
+      "pos": "TE",
+      "injury": null,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 5.8,
+        "receptions": 4.1,
+        "rec_yds": 46.0,
+        "anytime_td": 0.28
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [3.0, 4.0, 6.0, 7.0, 9.0],
+        "receptions": [2.0, 3.0, 4.0, 5.0, 7.0],
+        "rec_yds": [15.0, 30.0, 45.0, 63.0, 88.0],
+        "anytime_td": null
+      },
+      "fantasy_quantiles": null,
+      "fantasy_delta": null
+    }
+  ]
+}

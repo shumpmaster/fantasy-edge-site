@@ -1,0 +1,115 @@
+/* m4.1c — the Board site.
+ *
+ * Lifted from docs/design/UI_MOCKUP_v4.html, the binding visual spec.
+ * Every rule for an element the D-075 §0 departures ruled out is
+ * DELETED rather than hidden: the decomposition drawer, the fantasy
+ * points pill and its pace line, and the p10-p90 range strip are not
+ * in this file at all. What remains is the mockup verbatim plus the
+ * blocks m4.1 adds (banners, the disclosure block, the QB box-score
+ * line, the stale indicator, the empty state).
+ */
+
+:root{
+  --bg:#ffffff; --txt:#16283a; --sub:#5b7083; --faint:#8a9bab;
+  --pillbg:#f2f3f7; --divider:#e9edf1;
+  --up:#0da678; --upbg:#e4f6ef;
+  --dn:#e6316e; --dnbg:#fce8f0;
+  --blue:#3d5afe; --bluebg:#eef0ff;
+  --warn:#c77d0a; --warnbg:#fdf2df;
+  --live:#e6316e;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:15px;line-height:1.4}
+.wrap{max-width:640px;margin:0 auto;padding-bottom:60px}
+
+header{padding:18px 20px 6px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.runpill{background:var(--pillbg);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;color:var(--sub);flex-shrink:0}
+.runpill .ld{color:var(--live)}
+.fresh{display:flex;gap:14px;margin-top:10px;font-size:11.5px;color:var(--faint);font-weight:500;flex-wrap:wrap}
+.fresh .ok::before{content:"●";color:var(--up);margin-right:4px;font-size:9px;vertical-align:1px}
+.fresh .st::before{content:"●";color:var(--warn);margin-right:4px;font-size:9px;vertical-align:1px}
+.fresh .bad{color:var(--dn);font-weight:700}
+.fresh .bad::before{content:"●";color:var(--dn);margin-right:4px;font-size:9px;vertical-align:1px}
+
+/* banners — persistent, never dismissible */
+.banner{padding:11px 20px;font-size:12.5px;font-weight:700;line-height:1.5;border-bottom:1px solid var(--divider)}
+.banner.demo{background:var(--dnbg);color:var(--dn)}
+.banner.tp{background:var(--warnbg);color:var(--warn)}
+.banner .sub{display:block;font-weight:500;margin-top:3px}
+
+/* the locked nav stubs: present, inert, labelled */
+.tabs{display:flex;gap:22px;padding:14px 20px 0;border-bottom:1px solid var(--divider)}
+.tab{font-size:15px;font-weight:600;color:var(--faint);padding:8px 2px 10px;position:relative}
+.tab.on{color:var(--txt)}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--txt);border-radius:2px}
+.tab.lock{cursor:default}
+.tab .soon{font-size:9px;font-weight:700;color:var(--faint);vertical-align:6px;margin-left:2px}
+
+/* disclosure block — always visible, top of board, never a modal */
+.disc{margin:14px 20px 0;background:var(--pillbg);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--sub);line-height:1.55}
+.disc b{color:var(--txt);font-weight:700}
+.disc p+p{margin-top:8px}
+/* the third-party banner: persistent, inside the disclosure block,
+   and unmistakably not the engine's framing */
+.disc .tpline{display:block;margin-top:10px;background:var(--warnbg);color:var(--warn);border-radius:8px;padding:9px 11px;font-weight:700}
+
+.filters{display:flex;gap:8px;padding:14px 20px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.seg{display:flex;background:var(--pillbg);border-radius:999px;padding:3px;flex-shrink:0}
+.seg button{border:none;background:transparent;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--sub);padding:7px 15px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:#fff;color:var(--txt);box-shadow:0 1px 4px rgba(22,40,58,.12)}
+.seg button:disabled{color:var(--faint);opacity:.55;cursor:default}
+
+/* game headers */
+.ghead{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);
+padding:12px 20px 10px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px}
+.gbadges{display:flex;flex-shrink:0}
+.gbadge{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
+.gbadge+.gbadge{margin-left:-8px}
+.gmain{flex:1;min-width:0}
+.gtitle{font-size:15px;font-weight:800;letter-spacing:-.015em}
+.gtitle .sc{color:var(--sub);font-weight:700}
+.gmeta{font-size:11.5px;font-weight:600;color:var(--faint);margin-top:1px}
+.gstatus{flex-shrink:0;text-align:right}
+.gspill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;border-radius:999px;padding:5px 11px}
+.gspill.live{background:var(--dnbg);color:var(--live)}
+.gspill.live .dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.4s infinite}
+.gspill.pre{background:var(--pillbg);color:var(--sub)}
+.gspill.final{background:var(--pillbg);color:var(--txt)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* cards — no tap interaction, so no pointer and no press state */
+.card{padding:15px 20px 13px;border-bottom:1px solid var(--divider)}
+.cardtop{display:flex;gap:12px;align-items:flex-start}
+.badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:#fff;flex-shrink:0}
+.cmain{flex:1;min-width:0}
+.teamline{font-size:12px;font-weight:600;color:var(--sub)}
+.pname{font-size:16.5px;font-weight:700;letter-spacing:-.015em;margin:1px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.postag{font-size:10px;font-weight:800;color:var(--sub);background:var(--pillbg);border-radius:6px;padding:2px 6px}
+.qtag{font-size:10.5px;font-weight:800;color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px}
+
+/* stat grid */
+.stats{margin-top:10px;padding-left:54px}
+.srow{display:grid;grid-template-columns:40px repeat(var(--n),minmax(0,1fr));gap:4px 6px;align-items:baseline}
+.srow+.srow{margin-top:4px}
+.shead .cell{font-size:10.5px;font-weight:700;color:var(--faint)}
+.rlab{font-size:9.5px;font-weight:800;color:var(--faint);letter-spacing:.02em}
+.rlab.lv{color:var(--live)}
+.proj .cell{font-size:13.5px;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+.liver .cell{font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums}
+.c-up{color:var(--up)} .c-dn{color:var(--dn)} .c-n{color:var(--txt)}
+
+/* QB live-only box-score line — never a projection, so never in the
+   PROJ/LIVE pair above it */
+.boxline{margin:9px 0 0;padding-left:54px;font-size:11.5px;font-weight:700;color:var(--sub);font-variant-numeric:tabular-nums}
+.boxline .src{color:var(--faint);font-weight:500;font-variant-numeric:normal}
+
+.empty{margin:28px 20px;padding:18px;background:var(--pillbg);border-radius:12px;font-size:13.5px;color:var(--sub);line-height:1.6}
+.empty b{color:var(--txt);font-weight:700;display:block;margin-bottom:4px}
+
+.foot{padding:22px 20px;font-size:11.5px;color:var(--faint);line-height:1.7}
+.foot p+p{margin-top:10px}
+.foot b{color:var(--sub);font-weight:700}
