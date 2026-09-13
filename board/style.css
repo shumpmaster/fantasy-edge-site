@@ -141,6 +141,30 @@ display:flex;align-items:center;justify-content:center;border-radius:999px}
 .postag{font-size:10px;font-weight:800;color:var(--sub);background:var(--pillbg);border-radius:6px;padding:2px 6px}
 .qtag{font-size:10.5px;font-weight:800;color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px}
 
+/* the always-visible pace chip (m4.2b feature 8a) — the card's hot /
+   cold / level state, said in words instead of left to the colour of a
+   number. It takes the pace classes THEMSELVES as its modifier, so the
+   text colour is the very rule the LIVE cells are painted with
+   (.c-up / .c-dn / .c-n above) and only the quiet background is added
+   here: the chip cannot drift away from the numbers because it is not
+   a second treatment of them. Chip shape is the Q tag's, so a card's
+   header row reads as one family. */
+.pchip{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.03em;
+border-radius:6px;padding:2px 6px;flex-shrink:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pchip.c-up{background:var(--upbg)}
+.pchip.c-dn{background:var(--dnbg)}
+/* the neutral state is deliberately the quietest thing on the row: it
+   is present because the indicator is always present, not because it
+   has news */
+.pchip.c-n{background:var(--pillbg);color:var(--faint)}
+
+/* the per-player freshness stamp (m4.2b feature 8b) — how current THIS
+   player's numbers are, in game time. The QB box-score line's muted
+   family again, one step quieter still: it is a footnote to the card,
+   never a thing to read before the numbers */
+.laststat{margin:6px 0 0;padding-left:54px;font-size:11px;font-weight:600;color:var(--faint);
+font-variant-numeric:tabular-nums}
+
 /* the pin star: a 44px tap target drawn as a compact glyph. The
    padding is the target and the negative margin takes it back out of
    the layout, so the thumb gets its square without the card growing */

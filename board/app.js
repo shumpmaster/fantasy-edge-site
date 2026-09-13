@@ -200,6 +200,37 @@ const PACE_SORT_TITLE =
   "Orders a game in progress by how far ahead of — or behind — the " +
   "projected pace each player is running";
 
+/* The always-visible pace chip (m4.2b feature 8a), keyed by the pace
+ * CLASS the LIVE cells are already painted with: [what the chip reads,
+ * what it says out loud]. There is no threshold and no ratio in this
+ * table — `paceClass` decides which of the three a card is in, exactly
+ * as it decides the colour of the numbers above it, so the chip and the
+ * colours cannot disagree and there is no second set of numbers to keep
+ * in step. */
+const PACE_CHIPS = {
+  "c-up": ["▲ HOT", "ahead of pace"],
+  "c-dn": ["▼ COLD", "behind pace"],
+  "c-n": ["– PACE", "on pace"]
+};
+
+/* The neutral chip covers two different truths: a player running level
+ * with his projected pace, and a player whose pace cannot be read at
+ * all (no projection, nothing observed yet, or a stalled feed). Both
+ * look the same — quiet — because neither is news, but the spoken label
+ * never says "on pace" about a number nobody has. */
+const PACE_CHIP_UNREAD = "pace not yet readable";
+
+/* The per-player freshness stamp (m4.2b feature 8b). ONE contiguous
+ * string, like every other label on this page, and in GAME time: it is
+ * followed by the same "Q3 · 7:42" the game header already reads. */
+const LAST_STAT = "last stat ";
+
+/* The box-score fields the QB line renders, which are part of what a
+ * reader sees change on a card and therefore part of the signature the
+ * stamp watches. The LIVE row's own values are the position's schema,
+ * read through the same `liveValue` the row is drawn from. */
+const BOX_LINE_FIELDS = ["cmp", "att", "ints"];
+
 /* A cell that rounds to nothing (the pages renderer's rule). */
 const BLANK = "—";
 
@@ -264,6 +295,23 @@ const state = {
   feedTs: null,
   signature: null
 };
+
+/* What this page has WATCHED change (m4.2b feature 8b) — beside
+ * `state` rather than in it, because `state` is what the board and the
+ * feed said and this is only what we happened to see while we were
+ * looking.
+ *
+ * `sigs` is player_id → the live numbers that player's card was last
+ * drawn with; `stamps` is player_id → the game clock of his game at the
+ * poll those numbers changed. Both are in memory for the life of the
+ * tab and are written NOWHERE: a reload starts with no stamps at all,
+ * which is the honest state, because we cannot know when a stat last
+ * changed before we were watching.
+ *
+ * Both are bare maps: a player_id off the contract is a key from
+ * outside this file, and a plain object would answer to "constructor"
+ * with something that is not a stamp. */
+const FRESH = { sigs: Object.create(null), stamps: Object.create(null) };
 
 /* ------------------------------------------------------------------
  * what this reader kept — pinned players (m4.2b feature 1) and folded
@@ -1192,14 +1240,119 @@ function boxLineHTML(player, status) {
     ' <span class="src">— box score</span></p>';
 }
 
+/* The always-visible pace chip (m4.2b feature 8a).
+ *
+ * Until now a reader inferred hot or cold from the colour of a number,
+ * or by choosing the Hot/Cold sort. The chip says it in words, on every
+ * live card, without being asked — and it says it from the SAME
+ * `paceClass` the LIVE cells are painted with, on the position's
+ * headline stat, so the chip, the colours and the pace sorts are three
+ * views of one ratio rather than three numbers to keep in step.
+ *
+ * Live cards only. Pregame there is no pace to be ahead of, and after
+ * the whistle the frozen FINAL row already says how the day went
+ * against the whole projection — a chip beside it would be a second,
+ * worse answer. A live card whose ratio cannot be read keeps the
+ * neutral chip rather than losing it: the point of the feature is that
+ * the state is always visualised, and "we cannot read this one" is one
+ * of the states.
+ */
+function paceChipHTML(player, status) {
+  if (!status || status.state !== "in") return "";
+  const key = headlineFor(player.pos);
+  const projected = (player.proj || {})[key];
+  const actual = liveValue(boxFor(player), key);
+  const frac = fractionElapsed(status);
+  const cls = paceClass(projected, actual, frac, false);
+  const chip = PACE_CHIPS[cls] || PACE_CHIPS["c-n"];
+  /* The one thing the class alone cannot tell the chip apart: a level
+   * pace and an unreadable one are the same quiet chip, and only the
+   * second must not be called "on pace". */
+  const readable = !state.stale &&
+    paceRatio(projected, actual, frac, false) !== null;
+  const label = cls === "c-n" && !readable ? PACE_CHIP_UNREAD : chip[1];
+  return '<span class="pchip ' + cls + '" role="img" aria-label="' +
+    esc(label) + '">' + chip[0] + "</span>";
+}
+
+/* A player's own id, normalised. A contract that gave us none is a
+ * player nothing can be kept against — no star, no stamp — rather than
+ * one keyed on a blank. */
+function playerKey(player) {
+  const id = (player || {}).player_id;
+  return id === null || id === undefined ? "" : String(id);
+}
+
+/* The live numbers a card is showing, as one comparable string: the
+ * LIVE row's own values, read through the same `liveValue` the row is
+ * drawn from, plus the box-score fields the QB line renders. Nothing
+ * derived and nothing rounded — this is only "are these the same
+ * numbers as last time". */
+function liveSignature(player) {
+  const box = boxFor(player);
+  if (!box) return null;
+  const values = [];
+  for (const column of schemaFor(player.pos)) {
+    values.push(liveValue(box, column[1]));
+  }
+  for (const field of BOX_LINE_FIELDS) {
+    values.push(numberOrNull(box[field]));
+  }
+  return JSON.stringify(values);
+}
+
+/* Called once per feed pass, before the render it feeds: for every
+ * player on the board whose game is in progress, compare the numbers
+ * his card would draw now against the ones it drew last pass, and, when
+ * they have moved, stamp him with the game clock of HIS game at this
+ * poll — the same `liveClockLabel` the game header reads.
+ *
+ * The first pass over a player records his numbers and stamps nothing:
+ * arriving at a card with eighteen carries on it tells us he has
+ * eighteen carries, not when he got the eighteenth. A game that is not
+ * in progress — pregame, or final — has no stamp and no baseline at
+ * all: before kickoff there is nothing to be current about, and after
+ * the whistle the FINAL row takes over.
+ */
+function markFreshness() {
+  for (const player of ((state.board || {}).players) || []) {
+    const id = playerKey(player);
+    if (!id) continue;
+    const status = statusFor(player);
+    if (!status || status.state !== "in") {
+      delete FRESH.sigs[id];
+      delete FRESH.stamps[id];
+      continue;
+    }
+    const signed = liveSignature(player);
+    if (signed === null) continue;
+    const previous = FRESH.sigs[id];
+    FRESH.sigs[id] = signed;
+    /* No baseline yet, or the same numbers as last poll: the stamp this
+     * player already carries is still the truth, so it does not move. */
+    if (previous === undefined || previous === signed) continue;
+    FRESH.stamps[id] = liveClockLabel(status);
+  }
+}
+
+/* The stamp itself: a small muted tag saying, in game time, how current
+ * this player's numbers are. A player we have not yet watched change
+ * renders NOTHING — no placeholder, no em-dash, no "—" — because the
+ * only honest answer before then is silence. */
+function freshStampHTML(player, status) {
+  if (!status || status.state !== "in") return "";
+  const stamp = FRESH.stamps[playerKey(player)];
+  if (!stamp) return "";
+  return '<p class="laststat">' + esc(LAST_STAT + stamp) + "</p>";
+}
+
 /* The star, in the card's own header row. A button, because it is one:
  * it takes focus, it answers the keyboard, and it says out loud which
  * of the two states it is in (aria-pressed) and what pressing it would
  * do (aria-label). A player the contract gave no stable id gets no
  * control at all rather than one that would forget him. */
 function pinStarHTML(player, pins) {
-  const id = player.player_id === null || player.player_id === undefined
-    ? "" : String(player.player_id);
+  const id = playerKey(player);
   if (!id) return "";
   const on = hasPin(pins, id);
   return '<button type="button" class="pin' + (on ? " on" : "") +
@@ -1225,6 +1378,10 @@ function cardHTML(player, game, status, pins) {
    * ended, in the Pinned copies of this card as well, because those
    * are this same card. */
   const chip = playerInRedZone(player, status) ? redZoneChipHTML() : "";
+  /* Built from `status` and the live join on every render too, and for
+   * the same reason: a card's pace state is what the last poll said,
+   * never what the last render happened to leave behind. */
+  const pace = paceChipHTML(player, status);
   return '<div class="card">' +
     '<div class="cardtop">' +
     '<div class="badge" style="background:' + teamColor(team) + '">' +
@@ -1234,11 +1391,12 @@ function cardHTML(player, game, status, pins) {
     "</div>" +
     '<div class="pname">' + esc(player.name) +
     '<span class="postag">' + esc(up(player.pos)) + "</span>" +
-    injury + chip + "</div></div>" +
+    injury + pace + chip + "</div></div>" +
     pinStarHTML(player, pins) + "</div>" +
     statGridHTML(player, status) +
     usageLineHTML(player, status) +
     boxLineHTML(player, status) +
+    freshStampHTML(player, status) +
     "</div>";
 }
 
@@ -1659,6 +1817,10 @@ async function feedPass() {
     state.misses += 1;
     if (state.misses > MISSED_POLLS_STALE) state.stale = true;
   }
+  /* One call, on the one path every poll takes, and before the render
+   * it feeds: a poll that brought nothing back moves no numbers and so
+   * moves no stamp. */
+  markFreshness();
   /* Unforced: the board is rebuilt only when the feed actually moved,
    * so a quiet minute does not reflow the page under the reader. */
   render();
