@@ -105,6 +105,72 @@ in the order the board already had him. With nothing live at all a pace
 sort is simply the board as it already reads: no error, no empty state.
 Nothing about the sort is stored; a reload opens on `Proj`.
 
+## The achievement percentage
+
+Once a game kicks, every card carries one large number on its right:
+**how much of that player's projected stat line has actually landed**,
+as a percentage. `64%` means the box score has delivered 64% of what
+the exporter projected for him. Under it, in small muted type, sits the
+comparison the colour is making — `62% of game played` while the clock
+runs, `final` once it stops.
+
+It is a **percentage, never a point total**, and the page never renders
+either of the two totals it divides. Its colour is the board's own pace
+colour: the same two thresholds the LIVE cells, the usage line and the
+pace chip are painted with, against the same share of the game played
+(and against the whole game once it is final). The hero and the pace
+chip can therefore disagree, and there is exactly one reason they ever
+will — the chip reads the position's **headline stat**, the hero reads
+the **whole stat line**. A receiver short of targets who has already
+scored is behind on one and ahead on the other, and both are true.
+
+It renders only while a game is in progress or final, only when there
+is a projection worth dividing by, and only when the feed has actually
+carried something of his. Pregame there is no hero at all. At the
+whistle the number simply stops moving — it was never pace-scaled, so
+nothing freezes it but the fact that its inputs stopped. Its colour may
+still change there, because the comparison moves from "the share of the
+game played" to "the whole game".
+
+### The weights, disclosed
+
+The two totals are built by collapsing a stat line with a fixed weight
+table. **These numbers are never displayed** — only the ratio between
+the two totals is — but a number on a public page that nobody can check
+is not a number anyone should trust, so here they are:
+
+| stat | weight |
+|---|---|
+| `pass_yds` | × 0.04 |
+| `pass_tds` | × 4 |
+| `rush_yds` | × 0.1 |
+| `rec_yds` | × 0.1 |
+| `receptions` | × 0.5 |
+| `anytime_td` | × 6 |
+
+`rush_att` and `targets` carry **no weight** and are deliberately
+absent: a carry and a target are *opportunities*, not production, and
+the usage line above already reads them as opportunities. Weighting
+them here would count the same football twice.
+
+Two things are worth saying plainly about how the totals are built:
+
+* **The touchdown term is a disclosed approximation.** What the engine
+  publishes under `anytime_td` is `P(at least one TD)` — a probability,
+  not a count — and it is used here as the *projected* touchdown term.
+  That slightly understates a multi-touchdown game on the projected
+  side, which makes the percentage read slightly high for a player who
+  scores twice. It is accepted and said out loud rather than papered
+  over with a second model this page has no business running. On the
+  observed side the term is the player's **actual** touchdowns, read
+  through the same value the LIVE row's `Any TD` cell is drawn from.
+* **A missing number is missing, not zero.** The projected total runs
+  over the weighted keys the contract gave a number for; the observed
+  total runs over the weighted keys the box score has actually carried.
+  In particular, if the live layer carries no touchdown count for a
+  player, that term contributes **0** to what has landed — his hero
+  reads low until the feed catches up, rather than being invented.
+
 ## The live layer
 
 On load, in real mode only, the page reads ESPN's public scoreboard

@@ -158,6 +158,38 @@ border-radius:6px;padding:2px 6px;flex-shrink:0;white-space:nowrap;font-variant-
    has news */
 .pchip.c-n{background:var(--pillbg);color:var(--faint)}
 
+/* the achievement hero number (m4.2b feature 9) — the one large number
+   a card carries: what share of this player's projected statline has
+   actually landed, as a percentage. docs/design/UI_MOCKUP_v5_live.html
+   puts a hero-weight number in exactly this place, on a right-hand rail
+   it calls `.cright`, so the rail keeps that name and the number keeps
+   that visual weight — a compact pill, tabular figures, tight tracking.
+   What the mockup put INSIDE that rail is not what this renders and its
+   probability treatments are not built.
+
+   The numeral takes the pace classes THEMSELVES as its modifier, the
+   way the pace chip does: the colour is the very rule the LIVE cells
+   are painted with (.c-up / .c-dn / .c-n below) and only the quiet
+   background is added here, so the hero cannot drift away from the
+   numbers under it. A final drops the fill for a hairline — the settled
+   reading the FINAL status pill already has — because nothing about
+   that number is going to move again.
+
+   The rail is width-capped rather than nowrapped: on a 400px card the
+   name beside it wraps (it already does) and the hero keeps its
+   footprint, so nothing overflows and the star keeps its 44px edge. */
+.cright{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+max-width:104px;text-align:right}
+.ach{display:inline-block;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.2;
+border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
+.ach.c-up{background:var(--upbg)}
+.ach.c-dn{background:var(--dnbg)}
+.ach.c-n{background:var(--pillbg)}
+.ach.fin{background:transparent;box-shadow:inset 0 0 0 1.5px var(--divider)}
+/* the comparison the colour is making, said in words, in the same muted
+   family every other footnote on the card wears */
+.achsub{font-size:9.5px;font-weight:600;color:var(--faint);font-variant-numeric:tabular-nums}
+
 /* the per-player freshness stamp (m4.2b feature 8b) — how current THIS
    player's numbers are, in game time. The QB box-score line's muted
    family again, one step quieter still: it is a footnote to the card,

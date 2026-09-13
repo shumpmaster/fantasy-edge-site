@@ -178,6 +178,62 @@ USAGE.FB = USAGE.WR;
  * being read as a model claim, and a concatenation would let it drift. */
 const EXPECTED_BY_NOW = "expected by now";
 
+/* ------------------------------------------------------------------
+ * the achievement score weights (m4.2b feature 9)
+ *
+ * THESE NUMBERS ARE NEVER DISPLAYED. They exist for exactly one
+ * purpose: to collapse a projected statline and an observed statline
+ * into two comparable totals, so the card can say what SHARE of the
+ * projection has actually landed. The card renders that share — a
+ * percentage — and never either total, because a total would be a
+ * score, and a score on this page would be a number the pipeline never
+ * published. The same table is disclosed in web/README.md.
+ *
+ *   pass_yds   × 0.04
+ *   pass_tds   × 4
+ *   rush_yds   × 0.1
+ *   rec_yds    × 0.1
+ *   receptions × 0.5
+ *   anytime_td × 6
+ *
+ * `rush_att` and `targets` carry NO weight and are deliberately absent
+ * from this table: a carry and a target are opportunities, not
+ * production, and they are already read as opportunities by the usage
+ * line above. Weighting them would count the same football twice.
+ *
+ * The `anytime_td` term is a DISCLOSED APPROXIMATION. What the engine
+ * publishes under that key is P(≥1 TD) — a probability, not a count —
+ * and it is used here as the projected touchdown term. That slightly
+ * UNDERSTATES a multi-touchdown game on the projected side, which
+ * makes the percentage read slightly high for a player who scores
+ * twice. It is accepted, and said out loud, rather than papered over
+ * with a second model this page has no business running. On the
+ * observed side the term is the player's ACTUAL touchdowns, read
+ * through the same `liveValue` the LIVE row's Any TD cell is drawn
+ * from; a player the live layer carries no touchdown count for
+ * contributes 0 to that term.
+ * ------------------------------------------------------------------ */
+const SCORE_WEIGHTS = {
+  pass_yds: 0.04,
+  pass_tds: 4,
+  rush_yds: 0.1,
+  rec_yds: 0.1,
+  receptions: 0.5,
+  anytime_td: 6
+};
+
+/* The hero's sub-line and its spoken name. Each is ONE contiguous
+ * string, like every other label on this page: they are the sentinels
+ * the site test looks for, and a concatenation would let the wording
+ * drift silently.
+ *
+ * The sub-line is the colour's comparison stated in words — the hero is
+ * coloured against the share of the game that has been played, and the
+ * sub-line says what that share is. */
+const ACH_PLAYED = "% of game played";
+const ACH_FINAL = "final";
+const ACH_ARIA = " percent of projected production";
+
 /* The headline usage each group sorts on (UI_SPEC §4). */
 const HEADLINE = {
   QB: "pass_yds", RB: "rush_att", WR: "targets", TE: "targets",
@@ -632,6 +688,43 @@ function liveValue(box, key) {
     return (rush || 0) + (rec || 0);
   }
   return numberOrNull(box[key]);
+}
+
+/* The two comparable totals behind the achievement hero (m4.2b feature
+ * 9). Neither is ever rendered — only the ratio between them is.
+ *
+ * The projected total runs over every weighted key the contract gave a
+ * number for; a key the exporter left null simply is not in the sum,
+ * rather than being read as a zero.
+ *
+ * The observed total runs over the weighted keys this card actually has
+ * a live value for — the SAME `liveValue` the LIVE row is drawn from,
+ * so nothing here reads a field the page does not already fetch. A key
+ * the box score has not carried is absent from the sum, not zero, and a
+ * card with no weighted live value at all returns `null`: "cannot be
+ * read", never a zero and never a guess. */
+function projectedScore(player) {
+  const proj = (player || {}).proj || {};
+  let total = 0;
+  for (const key in SCORE_WEIGHTS) {
+    const value = numberOrNull(proj[key]);
+    if (value === null) continue;
+    total += SCORE_WEIGHTS[key] * value;
+  }
+  return total;
+}
+
+function achievedScore(box) {
+  if (!box) return null;
+  let total = 0;
+  let seen = 0;
+  for (const key in SCORE_WEIGHTS) {
+    const value = liveValue(box, key);
+    if (value === null) continue;
+    seen += 1;
+    total += SCORE_WEIGHTS[key] * value;
+  }
+  return seen ? total : null;
 }
 
 /* Actual against projection × fraction elapsed — THE ratio on this
@@ -1275,6 +1368,62 @@ function paceChipHTML(player, status) {
     esc(label) + '">' + chip[0] + "</span>";
 }
 
+/* The achievement hero number (m4.2b feature 9).
+ *
+ * ONE large number on the card's right rail: how much of this player's
+ * PROJECTED STATLINE has actually landed, as a percentage. It is
+ * `achievedScore / projectedScore` and nothing else — a share of a
+ * published projection, expressed the way a share is expressed. It is
+ * never a point total, and neither total is ever shown.
+ *
+ * Live or final only, and only when there is something to divide: a
+ * projection worth more than nothing, and at least one weighted live
+ * value on the card. Pregame there is no achievement to state, so there
+ * is no hero at all — not a zero, not a placeholder. At the whistle the
+ * number simply stops moving, because the inputs do.
+ *
+ * The COLOUR is `paceClass` — the very function the LIVE cells, the
+ * usage line, the pace chip and the Hot/Cold sorts already run on, with
+ * the projected total standing in for "the projection" and the achieved
+ * total for "the observed". Same two thresholds, same clock, same
+ * staleness rule: while the game runs the comparison is against the
+ * share of the game played, and at final it is against the whole game.
+ *
+ * So the hero and the pace chip can disagree, and there is exactly ONE
+ * reason they ever will: the chip reads the position's HEADLINE STAT
+ * and the hero reads the WHOLE STATLINE. A receiver short of targets
+ * who has already scored is behind on the chip and ahead on the hero,
+ * and both are true. They cannot disagree about thresholds, about the
+ * clock, or about a stalled feed, because there is only one copy of
+ * each and this function does not carry a second.
+ */
+function achievementHTML(player, status) {
+  if (!status || (status.state !== "in" && status.state !== "post")) {
+    return "";
+  }
+  const isFinal = status.state === "post";
+  const projected = projectedScore(player);
+  /* Nothing weighted was projected for him — there is no denominator,
+   * so there is no percentage and nothing is rendered. */
+  if (!(projected > 0)) return "";
+  const achieved = achievedScore(boxFor(player));
+  /* The feed has carried nothing of his that the projection speaks
+   * about. Silence, rather than a 0% he has not earned. */
+  if (achieved === null) return "";
+
+  const frac = fractionElapsed(status);
+  const cls = paceClass(projected, achieved, frac, isFinal);
+  const share = Math.round(100 * achieved / projected);
+  const sub = isFinal
+    ? ACH_FINAL
+    : Math.round(100 * frac) + ACH_PLAYED;
+  return '<div class="cright">' +
+    '<div class="ach ' + cls + (isFinal ? " fin" : "") +
+    '" role="img" aria-label="' + esc(share + ACH_ARIA) + '">' +
+    esc(share) + "%</div>" +
+    '<div class="achsub">' + esc(sub) + "</div></div>";
+}
+
 /* A player's own id, normalised. A contract that gave us none is a
  * player nothing can be kept against — no star, no stamp — rather than
  * one keyed on a blank. */
@@ -1382,6 +1531,12 @@ function cardHTML(player, game, status, pins) {
    * the same reason: a card's pace state is what the last poll said,
    * never what the last render happened to leave behind. */
   const pace = paceChipHTML(player, status);
+  /* Recomputed on every render for the same reason again: the hero is
+   * a division of two live totals, and it moves whenever they do — in
+   * the Pinned copies of this card as well, because those ARE this
+   * card. It sits before the star so the star keeps the outside edge
+   * and its thumb-sized target is never crowded. */
+  const hero = achievementHTML(player, status);
   return '<div class="card">' +
     '<div class="cardtop">' +
     '<div class="badge" style="background:' + teamColor(team) + '">' +
@@ -1392,7 +1547,7 @@ function cardHTML(player, game, status, pins) {
     '<div class="pname">' + esc(player.name) +
     '<span class="postag">' + esc(up(player.pos)) + "</span>" +
     injury + pace + chip + "</div></div>" +
-    pinStarHTML(player, pins) + "</div>" +
+    hero + pinStarHTML(player, pins) + "</div>" +
     statGridHTML(player, status) +
     usageLineHTML(player, status) +
     boxLineHTML(player, status) +
