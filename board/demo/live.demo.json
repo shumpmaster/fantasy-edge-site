@@ -9,6 +9,8 @@
       "detail": "Q3 4:21",
       "awayScore": "17",
       "homeScore": "20",
+      "possession": "BUF",
+      "redZone": true,
       "eventId": "401770901",
       "finalAt": null
     },
@@ -19,6 +21,8 @@
       "detail": "Final",
       "awayScore": "24",
       "homeScore": "27",
+      "possession": null,
+      "redZone": false,
       "eventId": "401770902",
       "finalAt": null
     },
@@ -29,6 +33,8 @@
       "detail": "Sun 8:20 PM ET",
       "awayScore": null,
       "homeScore": null,
+      "possession": null,
+      "redZone": false,
       "eventId": null,
       "finalAt": null
     }

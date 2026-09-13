@@ -192,7 +192,13 @@ const state = {
   pos: "ALL",
   sort: "proj",
   /* game_id → {state, period, displayClock, detail, awayScore,
-   *            homeScore, eventId, finalAt} */
+   *            homeScore, possession, redZone, eventId, finalAt}
+   *
+   * `possession` is the ABBREVIATION of the team with the ball and
+   * `redZone` is the scoreboard's own `situation.isRedZone`; both are
+   * read off the same scoreboard payload as everything above them, and
+   * both are cleared on any game that is not in progress (m4.2b
+   * features 2 and 3). */
   live: {},
   /* espn_id (string) → box-score fields */
   box: {},
@@ -676,20 +682,38 @@ function renderControls() {
   }
 }
 
+/* The period, as the feed states it: halftime and overtime are what
+ * the feed called them rather than a quarter number we invented, and a
+ * feed that gave us no period at all says nothing here. */
+function periodLabel(status) {
+  const detail = String((status && status.detail) || "").toLowerCase();
+  const period = numberOrNull(status && status.period) || 0;
+  if (detail.indexOf("halftime") >= 0) return "HALF";
+  if (period > 4) return "OT";
+  if (period > 0) return "Q" + period;
+  return "";
+}
+
+/* "Q3 · 7:42" — the quarter and the game clock, in the board's own
+ * separator. Halftime has no clock to show. A payload that carries
+ * neither period nor clock falls back to the feed's own words, and
+ * only a payload with nothing at all says the bare "LIVE"; nothing
+ * here ever renders a placeholder for a field the feed omitted. */
+function liveClockLabel(status) {
+  const label = periodLabel(status);
+  if (label === "HALF") return label;
+  const clock = String((status && status.displayClock) || "").trim();
+  const bits = [];
+  if (label) bits.push(label);
+  if (clock) bits.push(clock);
+  if (bits.length) return bits.join(" · ");
+  return String((status && status.detail) || "").trim() || "LIVE";
+}
+
 function statusPill(status, game) {
   if (status && status.state === "in") {
-    let text = "LIVE";
-    const detail = String((status.detail || "")).toLowerCase();
-    const period = numberOrNull(status.period) || 0;
-    if (detail.indexOf("halftime") >= 0) {
-      text = "HALF";
-    } else if (period > 4) {
-      text = ("OT " + (status.displayClock || "")).trim();
-    } else if (period > 0) {
-      text = ("Q" + period + " " + (status.displayClock || "")).trim();
-    }
     return '<span class="gspill live"><span class="dot"></span>' +
-      esc(text) + "</span>";
+      esc(liveClockLabel(status)) + "</span>";
   }
   if (status && status.state === "post") {
     return '<span class="gspill final">FINAL</span>';
@@ -712,10 +736,55 @@ function gameMeta(game) {
   return bits.join(" · ");
 }
 
-function gameHeadHTML(game, status) {
+/* The ball, next to the team holding it. Only ever rendered for a game
+ * the feed says is in progress, and only when the payload actually
+ * named a possessing team — an absent field draws nothing at all. */
+function possessionHTML(team) {
+  return ' <span class="poss" role="img" aria-label="' + esc(team) +
+    ' has the ball">●</span>';
+}
+
+function possessingTeam(status) {
+  if (!status || status.state !== "in") return "";
+  return up(status.possession);
+}
+
+/* The red-zone chip (m4.2b feature 3): the "look up now" mark, shown
+ * ONLY when the scoreboard's own `situation.isRedZone` said so on a
+ * game that is in progress. Nothing is approximated from a yard line. */
+function inRedZone(status) {
+  return !!(status && status.state === "in" && status.redZone);
+}
+
+function redZoneChipHTML() {
+  return '<span class="rz" role="img" aria-label="Red zone">RZ</span>';
+}
+
+/* A player's own card wears the chip only if HIS team has the ball in
+ * the red zone, so the chip on a card always means "this player's
+ * offense is about to score". No possession in the payload means no
+ * card chips at all — the header chip stands alone rather than being
+ * guessed onto one side. */
+function playerInRedZone(player, status) {
+  if (!inRedZone(status)) return false;
+  const holder = possessingTeam(status);
+  if (!holder) return false;
+  return sameTeam(player.team, holder);
+}
+
+/* AWAY @ HOME, with the live score and the possession mark. The score
+ * is the feed's own away–home pair in the order the title already
+ * reads, and it renders for a game in progress and for a final alike;
+ * a payload missing either side renders no score rather than half of
+ * one. */
+function gameTitleHTML(game, status) {
   const away = up(game.away);
   const home = up(game.home);
-  let title = esc(away) + " @ " + esc(home);
+  const holder = possessingTeam(status);
+  const awayBall = !!holder && sameTeam(holder, away);
+  const homeBall = !!holder && !awayBall && sameTeam(holder, home);
+  let title = esc(away) + (awayBall ? possessionHTML(away) : "") +
+    " @ " + esc(home) + (homeBall ? possessionHTML(home) : "");
   if (status && (status.state === "in" || status.state === "post")) {
     const a = status.awayScore;
     const h = status.homeScore;
@@ -723,15 +792,24 @@ function gameHeadHTML(game, status) {
       title += ' <span class="sc">' + esc(a) + "–" + esc(h) + "</span>";
     }
   }
+  return title;
+}
+
+function gameHeadHTML(game, status) {
+  const away = up(game.away);
+  const home = up(game.home);
+  const chip = inRedZone(status) ? redZoneChipHTML() : "";
   return '<div class="ghead">' +
     '<div class="gbadges">' +
     '<div class="gbadge" style="background:' + teamColor(away) + '">' +
     esc(away) + "</div>" +
     '<div class="gbadge" style="background:' + teamColor(home) + '">' +
     esc(home) + "</div></div>" +
-    '<div class="gmain"><div class="gtitle">' + title + "</div>" +
+    '<div class="gmain"><div class="gtitle">' +
+    gameTitleHTML(game, status) + "</div>" +
     '<div class="gmeta">' + esc(gameMeta(game)) + "</div></div>" +
-    '<div class="gstatus">' + statusPill(status, game) + "</div></div>";
+    '<div class="gstatus">' + chip + statusPill(status, game) +
+    "</div></div>";
 }
 
 function statGridHTML(player, status) {
@@ -827,6 +905,11 @@ function cardHTML(player, game, status, pins) {
     : "@ " + up(game.home);
   const injury = player.injury === "Q"
     ? '<span class="qtag">Q</span>' : "";
+  /* Built from `status` on every render, never cached: the chip is
+   * gone from the next render the moment the feed says the drive
+   * ended, in the Pinned copies of this card as well, because those
+   * are this same card. */
+  const chip = playerInRedZone(player, status) ? redZoneChipHTML() : "";
   return '<div class="card">' +
     '<div class="cardtop">' +
     '<div class="badge" style="background:' + teamColor(team) + '">' +
@@ -836,7 +919,7 @@ function cardHTML(player, game, status, pins) {
     "</div>" +
     '<div class="pname">' + esc(player.name) +
     '<span class="postag">' + esc(up(player.pos)) + "</span>" +
-    injury + "</div></div>" +
+    injury + chip + "</div></div>" +
     pinStarHTML(player, pins) + "</div>" +
     statGridHTML(player, status) +
     boxLineHTML(player, status) +
@@ -1029,19 +1112,45 @@ function scoreboardURL() {
 
 function eventTeams(event) {
   const competition = ((event || {}).competitions || [])[0] || {};
-  const out = { away: "", home: "", awayScore: null, homeScore: null };
+  const out = {
+    away: "", home: "", awayScore: null, homeScore: null,
+    awayId: "", homeId: ""
+  };
   for (const competitor of competition.competitors || []) {
-    const abbr = up(((competitor || {}).team || {}).abbreviation);
+    const team = (competitor || {}).team || {};
+    const abbr = up(team.abbreviation);
+    const id = team.id === undefined || team.id === null
+      ? "" : String(team.id);
     const score = competitor.score;
     if (up(competitor.homeAway) === "HOME") {
       out.home = abbr;
+      out.homeId = id;
       out.homeScore = score === undefined ? null : score;
     } else {
       out.away = abbr;
+      out.awayId = id;
       out.awayScore = score === undefined ? null : score;
     }
   }
   return out;
+}
+
+/* `situation.possession` is the ESPN TEAM ID of the offense, which is
+ * only meaningful against the two competitors of this same event, so
+ * it is resolved here into one of the two abbreviations the rest of
+ * the page already speaks. Some payloads name the team by its
+ * abbreviation instead; that is accepted too. Anything we cannot match
+ * to one of these two teams is no possession at all. */
+function possessionAbbr(situation, teams) {
+  const raw = (situation || {}).possession;
+  if (raw === null || raw === undefined || raw === "") return null;
+  const id = String(raw);
+  if (teams.homeId && id === teams.homeId) return teams.home;
+  if (teams.awayId && id === teams.awayId) return teams.away;
+  const abbr = up(raw);
+  if (abbr && abbr === teams.home) return teams.home;
+  if (abbr && abbr === teams.away) return teams.away;
+  return null;
 }
 
 /* board game ↔ scoreboard event. `espn_event_id` wins whenever the
@@ -1079,6 +1188,10 @@ function absorbScoreboard(events) {
     const teams = eventTeams(event);
     const previous = state.live[game.game_id] || {};
     const feedState = String(type.state || "").toLowerCase();
+    /* The drive block of the SAME scoreboard record everything above
+     * is read from — no second endpoint, no extra request. */
+    const situation = competition.situation || {};
+    const playing = feedState === "in";
     const next = {
       state: feedState === "in" || feedState === "post"
         ? feedState : "pre",
@@ -1087,6 +1200,12 @@ function absorbScoreboard(events) {
       detail: type.shortDetail || type.detail || null,
       awayScore: teams.awayScore,
       homeScore: teams.homeScore,
+      /* Both are live-only. A pregame record has no drive, and a final
+       * one can still carry the last one it had — reading either onto
+       * a game that is not in progress would leave a chip on the page
+       * after the whistle. */
+      possession: playing ? possessionAbbr(situation, teams) : null,
+      redZone: playing && situation.isRedZone === true,
       eventId: String(event.id || ""),
       finalAt: previous.finalAt || null,
       finalOnArrival: previous.finalOnArrival || false

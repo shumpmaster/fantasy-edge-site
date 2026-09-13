@@ -81,6 +81,18 @@ font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
 .gspill.final{background:var(--pillbg);color:var(--txt)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
+/* possession (m4.2b feature 2) — a single mark beside the team holding
+   the ball, in the live colour, and only ever on a game in progress */
+.poss{color:var(--live);font-size:9px;vertical-align:2px}
+
+/* the red-zone chip (m4.2b feature 3) — the board's one "look up now"
+   signal. The mockup does not depict it, so it takes the design
+   system's warn family (the same one the Q tag wears) and reads
+   identically on a game header and on a card */
+.rz{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.03em;
+color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px;flex-shrink:0}
+.gstatus .rz{margin-right:6px;vertical-align:1px}
+
 /* the Pinned group (m4.2b feature 1) — the game header's own rules,
    so the section reads as one more group and not a new kind of thing */
 .phead .gtitle{display:flex;align-items:center;gap:6px}
