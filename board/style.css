@@ -129,6 +129,15 @@ display:flex;align-items:center;justify-content:center;border-radius:999px}
 .liver .cell{font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums}
 .c-up{color:var(--up)} .c-dn{color:var(--dn)} .c-n{color:var(--txt)}
 
+/* usage vs expected-to-now (m4.2b feature 4) — labelled arithmetic on
+   published values. The mockup depicts no treatment for it, so it takes
+   the QB box-score line's muted family: this is information, not an
+   alert, and it must not out-shout the LIVE row it sits under. The
+   observed count alone carries the stat grid's own pace colour, on the
+   same thresholds, so the two never disagree. */
+.usage{margin:9px 0 0;padding-left:54px;font-size:11.5px;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+.usage span{font-weight:800}
+
 /* QB live-only box-score line — never a projection, so never in the
    PROJ/LIVE pair above it */
 .boxline{margin:9px 0 0;padding-left:54px;font-size:11.5px;font-weight:700;color:var(--sub);font-variant-numeric:tabular-nums}

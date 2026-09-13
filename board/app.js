@@ -146,6 +146,27 @@ const SCHEMA = {
 SCHEMA.TE = SCHEMA.WR;
 SCHEMA.FB = SCHEMA.WR;
 
+/* The opportunity stats the usage line compares (m4.2b feature 4), per
+ * position, in the order they read: [contract key, singular, plural].
+ *
+ * Opportunity ONLY — a target and a carry are things that happened to a
+ * player, counted the same way by the projection and by the box score,
+ * which is what makes the subtraction between them plain arithmetic
+ * rather than a claim. Yards and touchdowns are outcomes and are left
+ * to the PROJ/LIVE grid above. A position that is not in this table
+ * (QB) gets no usage line at all.
+ */
+const USAGE = {
+  RB: [["rush_att", "carry", "carries"], ["targets", "target", "targets"]],
+  WR: [["targets", "target", "targets"]]
+};
+USAGE.TE = USAGE.WR;
+USAGE.FB = USAGE.WR;
+
+/* The label, as ONE contiguous string: it is what stops the line from
+ * being read as a model claim, and a concatenation would let it drift. */
+const EXPECTED_BY_NOW = "expected by now";
+
 /* The headline usage each group sorts on (UI_SPEC §4). */
 const HEADLINE = {
   QB: "pass_yds", RB: "rush_att", WR: "targets", TE: "targets",
@@ -850,6 +871,60 @@ function statGridHTML(player, status) {
   return '<div class="stats">' + head + projRow + liveRow + "</div>";
 }
 
+/* Usage vs expected-to-now (m4.2b feature 4, D-077: "labelled
+ * arithmetic on published values").
+ *
+ * ONE compact line, live only: the opportunity count the box score has
+ * already given us, beside the SAME projection the PROJ row above
+ * carries, multiplied by the SAME fraction of the game the pace colours
+ * are already computed from. There is no second clock model here and no
+ * second projection — `fractionElapsed` and `player.proj` are the two
+ * inputs, and the only operation is a multiply.
+ *
+ * It says "expected by now" out loud because that is the whole of what
+ * it means: a share of a published projection, not a forecast of where
+ * the player is heading and not a probability of anything.
+ *
+ * Live only, and deliberately: pregame there is no observation to
+ * compare, and after the whistle the frozen FINAL row already carries
+ * the comparison against the whole projection, so a scaled one would be
+ * a second, worse answer to a question already answered.
+ */
+function usageLineHTML(player, status) {
+  if (!status || status.state !== "in") return "";
+  const rows = USAGE[up(player.pos)];
+  if (!rows) return "";
+  /* A game the feed gave us no position in is a game we cannot scale a
+   * projection into — nothing is rendered rather than a zero. */
+  const frac = fractionElapsed(status);
+  if (!(frac > 0)) return "";
+  const box = boxFor(player);
+  if (!box) return "";
+  const proj = player.proj || {};
+
+  const bits = [];
+  for (const row of rows) {
+    const projected = numberOrNull(proj[row[0]]);
+    const observed = liveValue(box, row[0]);
+    /* Either side missing is silence: no placeholder, no em-dash, no
+     * half a sentence. A projection of zero has no share to take. */
+    if (observed === null || projected === null || !(projected > 0)) {
+      continue;
+    }
+    const expected = projected * frac;
+    const noun = Math.abs(Math.round(observed)) === 1 ? row[1] : row[2];
+    /* The observed number wears the stat grid's own pace class, on the
+     * same thresholds and the same inputs, so the line and the row
+     * above it can never disagree about who is ahead. */
+    bits.push('<span class="' +
+      paceClass(projected, observed, frac, false) + '">' +
+      esc(Math.round(observed)) + "</span> " + esc(noun) + " vs " +
+      esc(expected.toFixed(1)) + " " + EXPECTED_BY_NOW);
+  }
+  if (!bits.length) return "";
+  return '<p class="usage">' + bits.join(" · ") + "</p>";
+}
+
 /* QB only, live or final: the two things the box score carries that
  * the engine has no projection for (D-075 §0). It is a secondary
  * line, never a PROJ/LIVE pair, and it never appears pregame. */
@@ -922,6 +997,7 @@ function cardHTML(player, game, status, pins) {
     injury + chip + "</div></div>" +
     pinStarHTML(player, pins) + "</div>" +
     statGridHTML(player, status) +
+    usageLineHTML(player, status) +
     boxLineHTML(player, status) +
     "</div>";
 }
