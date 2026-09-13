@@ -53,6 +53,12 @@ const WINDOW_TRAIL_MS = 10 * 60 * 1000;
 const MAX_GAME_MS = 4.5 * 60 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 15000;
 
+/* How long the search box waits after the last keystroke before the
+ * board is rebuilt (m4.2b feature 10). Long enough that typing a name
+ * does not reflow the page under the fingers, short enough that the
+ * board answers while the reader is still looking at the box. */
+const SEARCH_DEBOUNCE_MS = 150;
+
 /* §6: stale after more than three missed polls — LIVE rows freeze,
  * the header says so, and pace colors drop to neutral. */
 const MISSED_POLLS_STALE = 3;
@@ -328,6 +334,12 @@ const state = {
    * front of you, not a preference to be remembered, and an empty list
    * is the board as it has always read. */
   gameFilter: [],
+  /* The board search (m4.2b feature 10): what this reader typed into
+   * the search box, verbatim, or "" for the board as it has always
+   * read. Per-visit state exactly like `pos` and `gameFilter` above —
+   * a way of looking at the board in front of you, never written down
+   * and never carried to the next visit. */
+  query: "",
   /* game_id → {state, period, displayClock, detail, awayScore,
    *            homeScore, possession, redZone, eventId, finalAt}
    *
@@ -754,13 +766,120 @@ function paceClass(proj, actual, frac, isFinal) {
 }
 
 /* ------------------------------------------------------------------
+ * the board search (m4.2b feature 10)
+ *
+ * One box, two questions, ONE rule: a player is kept if his NAME
+ * contains what you typed, OR if the game he is in is a game you
+ * named. The two are a union rather than a branch, which is what makes
+ * the rule sayable in a sentence — a query that happens to be both (a
+ * surname that contains a team code) simply keeps both sets, instead
+ * of the box silently deciding which kind of query it thought you
+ * meant.
+ *
+ * A matchup is any one or two team codes with "@" or whitespace
+ * between them, in either order: "buf@nyj", "buf nyj", "nyj@buf",
+ * "buf@" and "@nyj" all name the Buffalo game, because the separator
+ * is a separator and not a direction. Team codes go through the same
+ * alias table the rest of the page uses, so "was" and "wsh" are one
+ * team here exactly as they are everywhere else.
+ *
+ * Matching is on lowercase, trimmed, accent-folded text on BOTH sides,
+ * so "kupp" finds "Kupp" and "kamara" finds "Kamará".
+ * ------------------------------------------------------------------ */
+
+function foldText(value) {
+  const text = String(value === null || value === undefined ? "" : value)
+    .toLowerCase().trim();
+  /* Accent-folding is free where `normalize` exists and skipped where
+   * it does not, rather than shipping a transliteration table. */
+  if (!text.normalize) return text;
+  try {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  } catch (err) {
+    return text;
+  }
+}
+
+/* The games a query NAMES, as game_ids. One or two tokens, each of
+ * which must be a team in that game; anything else (three tokens, a
+ * token that is nobody's code) names no game and leaves the query to
+ * be read as a name. */
+function searchGameIds(query) {
+  const tokens = query.split(/[@\s]+/).filter(function (token) {
+    return token.length > 0;
+  });
+  const ids = [];
+  if (!tokens.length || tokens.length > 2) return ids;
+  for (const game of ((state.board || {}).games || [])) {
+    let all = true;
+    for (const token of tokens) {
+      if (!sameTeam(token, game.away) && !sameTeam(token, game.home)) {
+        all = false;
+        break;
+      }
+    }
+    if (all) ids.push(String(game.game_id));
+  }
+  return ids;
+}
+
+/* The test a player is put to, or null for "no query, no filtering" —
+ * an empty box is the board exactly as it first read. */
+function searchMatcher() {
+  const query = foldText(state.query);
+  if (!query) return null;
+  const ids = searchGameIds(query);
+  return function (player) {
+    if (ids.length && ids.indexOf(String(player.game_id)) >= 0) {
+      return true;
+    }
+    return foldText(player.name).indexOf(query) >= 0;
+  };
+}
+
+function searching() {
+  return foldText(state.query) !== "";
+}
+
+/* The debounce. The box keeps the reader's keystrokes; the BOARD is
+ * rebuilt once they stop. Anything that sets the query outright — the
+ * native clear, Escape — cancels the pending rebuild first, so a
+ * keystroke in flight can never land after it and bring the old query
+ * back. */
+let searchTimer = null;
+
+function setSearch(text) {
+  if (searchTimer !== null) {
+    clearTimeout(searchTimer);
+    searchTimer = null;
+  }
+  const next = String(text === null || text === undefined ? "" : text);
+  if (next === state.query) return;
+  state.query = next;
+  /* Forced, exactly as the filters are: the board did not move, only
+   * what this reader wants to see of it. */
+  render(true);
+}
+
+function queueSearch(text) {
+  if (searchTimer !== null) clearTimeout(searchTimer);
+  searchTimer = setTimeout(function () {
+    searchTimer = null;
+    setSearch(text);
+  }, SEARCH_DEBOUNCE_MS);
+}
+
+/* ------------------------------------------------------------------
  * rendering
  * ------------------------------------------------------------------ */
 
 function shownPlayers() {
   const players = (state.board && state.board.players) || [];
-  if (state.pos === "ALL") return players.slice();
-  return players.filter(function (p) { return up(p.pos) === state.pos; });
+  const match = searchMatcher();
+  return players.filter(function (p) {
+    if (state.pos !== "ALL" && up(p.pos) !== state.pos) return false;
+    return match ? match(p) : true;
+  });
 }
 
 /* The slate in kickoff order — the order the groups read in and the
@@ -1012,7 +1131,38 @@ function renderControls() {
     sortseg.appendChild(button);
   }
 
+  renderSearch();
   renderGameChips();
+}
+
+/* The search box is authored in index.html — it is a real `<input
+ * type="search">` with its own label, not a div this file dresses up —
+ * so all that happens here is the wiring, re-attached on every render
+ * the way every other control on this page is rebuilt on every render.
+ *
+ * Typing is debounced; the native clear (×) and Escape are not, because
+ * both are the reader saying "that is enough of that" and a wait would
+ * read as a stuck box. Escape also empties the field itself, so what
+ * the box says and what the board is showing can never disagree. */
+function renderSearch() {
+  const input = document.getElementById("search");
+  if (!input) return;
+  const shown = String(input.value === null || input.value === undefined
+    ? "" : input.value);
+  /* Only ever written when it has actually drifted from the state (a
+   * fresh element, or Escape from somewhere else): assigning `value`
+   * on every render would move the caret to the end mid-word. */
+  if (shown !== state.query) input.value = state.query;
+  input.oninput = function () { queueSearch(input.value); };
+  /* WebKit fires `search` on the native × and on its own Escape; both
+   * land on the same one-line handler the keyboard path uses. */
+  input.onsearch = function () { setSearch(input.value); };
+  input.onkeydown = function (event) {
+    const key = String((event && event.key) || "");
+    if (key !== "Escape" && key !== "Esc") return;
+    input.value = "";
+    setSearch("");
+  };
 }
 
 /* One chip per game on the board, in kickoff order, behind a leading
@@ -1651,9 +1801,22 @@ function renderGames() {
 }
 
 /* Why the board came out empty, in the reader's own terms: which of
- * the two filters did it, and what to press to get the slate back. */
+ * the three filters did it, and what to press to get the slate back.
+ *
+ * The search is named FIRST when it is in force, because it is the one
+ * a reader typed rather than tapped: a word left in a box is the
+ * easiest of the three to forget about, and the hardest to spot on the
+ * page. When the other two are also narrowing the board it says so,
+ * rather than blaming the search for all of it. */
 function emptyReason() {
   const chosen = state.gameFilter.length > 0;
+  if (searching()) {
+    const also = (chosen || state.pos !== "ALL")
+      ? ", with your other filters still on" : "";
+    return " because nothing on this board matches your search for " +
+      '"' + esc(state.query.trim()) + '"' + also +
+      " — clear the search box to bring the slate back.";
+  }
   if (chosen && state.pos !== "ALL") {
     return " because no game you chose has a " + esc(state.pos) +
       " on the board — tap All to widen the slate.";
@@ -1700,7 +1863,7 @@ function renderFooter() {
 
 function signature() {
   return JSON.stringify([state.pos, state.sort, state.gameFilter,
-    state.polling, state.stale, state.live, state.box]);
+    state.query, state.polling, state.stale, state.live, state.box]);
 }
 
 function render(force) {

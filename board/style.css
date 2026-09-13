@@ -60,6 +60,25 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
    and unmistakably not the engine's framing */
 .disc .tpline{display:block;margin-top:10px;background:var(--warnbg);color:var(--warn);border-radius:8px;padding:9px 11px;font-weight:700}
 
+/* board search (m4.2b feature 10) — one input, above the two segmented
+   controls it composes with, because it is the broadest of the three:
+   it narrows the whole board by name or by matchup and everything below
+   it narrows what is left. The mockup depicts no search field, so the
+   input takes the control family already on the page — the segmented
+   filter's own pill shape, fill and type — at the pin star's 44px
+   height, so a thumb gets a real target. The native type=search clear
+   (×) is deliberately kept: `appearance:none` would take it away with
+   the rest of the platform chrome, so it is handed back explicitly
+   rather than replaced by a button of our own. */
+.search{padding:14px 20px 0}
+.search input{width:100%;-webkit-appearance:none;appearance:none;border:none;background:var(--pillbg);
+border-radius:999px;font-family:inherit;font-size:14px;font-weight:600;color:var(--txt);
+padding:11px 16px;min-height:44px;line-height:1.2}
+.search input::placeholder{color:var(--faint);font-weight:500}
+.search input:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.search input::-webkit-search-cancel-button{-webkit-appearance:searchfield-cancel-button;
+appearance:auto;cursor:pointer}
+
 .filters{display:flex;gap:8px;padding:14px 20px;overflow-x:auto;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
 .seg{display:flex;background:var(--pillbg);border-radius:999px;padding:3px;flex-shrink:0}
