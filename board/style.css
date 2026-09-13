@@ -81,7 +81,13 @@ font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
 .gspill.final{background:var(--pillbg);color:var(--txt)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-/* cards — no tap interaction, so no pointer and no press state */
+/* the Pinned group (m4.2b feature 1) — the game header's own rules,
+   so the section reads as one more group and not a new kind of thing */
+.phead .gtitle{display:flex;align-items:center;gap:6px}
+.pinmark{color:var(--blue);font-size:13px}
+
+/* cards — the card itself still invites no tap, so no pointer and no
+   press state; the star is the one control a card carries */
 .card{padding:15px 20px 13px;border-bottom:1px solid var(--divider)}
 .cardtop{display:flex;gap:12px;align-items:flex-start}
 .badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:#fff;flex-shrink:0}
@@ -90,6 +96,15 @@ font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
 .pname{font-size:16.5px;font-weight:700;letter-spacing:-.015em;margin:1px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .postag{font-size:10px;font-weight:800;color:var(--sub);background:var(--pillbg);border-radius:6px;padding:2px 6px}
 .qtag{font-size:10.5px;font-weight:800;color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px}
+
+/* the pin star: a 44px tap target drawn as a compact glyph. The
+   padding is the target and the negative margin takes it back out of
+   the layout, so the thumb gets its square without the card growing */
+.pin{flex-shrink:0;align-self:center;border:none;background:transparent;font-family:inherit;font-size:18px;
+line-height:1;color:var(--faint);cursor:pointer;padding:11px;margin:-9px -9px -9px 0;min-width:44px;min-height:44px;
+display:flex;align-items:center;justify-content:center;border-radius:999px}
+.pin.on{color:var(--blue)}
+.pin:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
 
 /* stat grid */
 .stats{margin-top:10px;padding-left:54px}

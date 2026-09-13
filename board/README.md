@@ -67,6 +67,26 @@ page the whole time.
 The fixture is schema-valid against `fantasy_edge.live.board.validate()`
 and `tests/test_web_site.py` asserts it stays that way.
 
+## Pinned players
+
+Every card carries a star. Starring a player adds a copy of his card to
+a **Pinned** group above the slate; he also stays exactly where he was
+in his game group, so the game context is never lost, and either star
+unpins from both. Both copies are the same card, rendered by the same
+function — same PROJ/LIVE rows, same pace colours, same live updates. The Pinned group is ordered the way the board is —
+by kickoff, then by the order the players appear — not by the order the
+stars were tapped.
+
+The pins are a list of contract `player_id`s in this browser's
+`localStorage` under `fe.pins.v1` (demo mode uses `fe.pins.demo.v1`, so
+the two can never mix). Nothing is sent anywhere and nothing is
+computed from them. They are global rather than per-week: an id that is
+not on the board in front of you renders nothing and is kept in storage
+untouched, so it comes back when that player does. A browser that
+refuses storage — a private window, where `localStorage` throws rather
+than returning nothing — keeps its pins in memory for the life of the
+tab instead.
+
 ## The live layer
 
 On load, in real mode only, the page reads ESPN's public scoreboard

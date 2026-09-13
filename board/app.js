@@ -210,6 +210,114 @@ const state = {
 };
 
 /* ------------------------------------------------------------------
+ * pinned players (m4.2b feature 1, D-077 workstream 2)
+ *
+ * Display-only, and entirely the reader's own: a list of contract
+ * `player_id`s kept in this browser's localStorage. Nothing is sent
+ * anywhere, nothing is computed from it, and the cards it promotes are
+ * the SAME cards the game groups draw.
+ *
+ * The list is deliberately NOT part of `state`: `state` is what the
+ * board and the feed said, and the pins are what this reader said. It
+ * is read fresh on every render rather than cached in the DOM, so a
+ * poll update, a finals backfill or a filter change all rebuild the
+ * page with the current set instead of a stale copy.
+ *
+ * Pins are global rather than per-week: an id that is not on the board
+ * in front of you is kept in storage untouched and renders nothing, so
+ * it comes back when that player does.
+ * ------------------------------------------------------------------ */
+
+const PIN_KEY = "fe.pins.v1";
+/* Demo mode writes its own key, so fiddling with the fixture can never
+ * disturb a real pin (and the reverse). */
+const PIN_KEY_DEMO = "fe.pins.demo.v1";
+
+/* A private window refuses storage — reading or writing THROWS rather
+ * than returning nothing. The first refusal flips this page to the
+ * in-memory list below: pins keep working for the life of the tab and
+ * simply do not survive a reload, which is the honest degradation. */
+let pinsBroken = false;
+let pinsMemory = [];
+
+function pinKey() {
+  return state.demo ? PIN_KEY_DEMO : PIN_KEY;
+}
+
+/* Strings, non-empty, first occurrence wins — deduplicated on the way
+ * in so a double tap can never leave two copies in storage. */
+function cleanPins(ids) {
+  const out = [];
+  for (const id of ids || []) {
+    if (id === null || id === undefined) continue;
+    const key = String(id);
+    if (!key || out.indexOf(key) >= 0) continue;
+    out.push(key);
+  }
+  return out;
+}
+
+function readPins() {
+  if (pinsBroken) return pinsMemory.slice();
+  try {
+    const raw = window.localStorage.getItem(pinKey());
+    const parsed = raw ? JSON.parse(raw) : [];
+    /* Anything that is not a list of ids — a hand-edited key, another
+     * version's shape — is treated as no pins at all, never guessed
+     * at. */
+    return Array.isArray(parsed) ? cleanPins(parsed) : [];
+  } catch (err) {
+    pinsBroken = true;
+    return pinsMemory.slice();
+  }
+}
+
+function writePins(ids) {
+  const clean = cleanPins(ids);
+  /* Mirrored unconditionally, so storage that breaks on a later write
+   * still has somewhere to fall back to. */
+  pinsMemory = clean;
+  if (pinsBroken) return;
+  try {
+    window.localStorage.setItem(pinKey(), JSON.stringify(clean));
+  } catch (err) {
+    pinsBroken = true;
+  }
+}
+
+function hasPin(pins, playerId) {
+  return (pins || []).indexOf(String(playerId)) >= 0;
+}
+
+/* One id, one list: the star on the pinned card and the star on the
+ * in-group card are two views of the same entry, so either one clears
+ * both. The re-render is forced because the board itself did not move
+ * — only what this reader wants at the top of it. */
+function togglePin(playerId) {
+  const id = String(playerId === null || playerId === undefined
+    ? "" : playerId);
+  if (!id) return;
+  const pins = readPins();
+  const at = pins.indexOf(id);
+  if (at >= 0) {
+    pins.splice(at, 1);
+  } else {
+    pins.push(id);
+  }
+  writePins(pins);
+  render(true);
+}
+
+/* The cards are innerHTML, so the star carries its handler as an
+ * attribute; this is the shim that attribute calls. The id is read
+ * back off the button rather than written into the handler, so a
+ * player id can never be spliced into a script context. */
+function onPinClick(element) {
+  if (!element) return;
+  togglePin(element.getAttribute("data-pin"));
+}
+
+/* ------------------------------------------------------------------
  * small helpers
  * ------------------------------------------------------------------ */
 
@@ -691,7 +799,28 @@ function boxLineHTML(player, status) {
     ' <span class="src">— box score</span></p>';
 }
 
-function cardHTML(player, game, status) {
+/* The star, in the card's own header row. A button, because it is one:
+ * it takes focus, it answers the keyboard, and it says out loud which
+ * of the two states it is in (aria-pressed) and what pressing it would
+ * do (aria-label). A player the contract gave no stable id gets no
+ * control at all rather than one that would forget him. */
+function pinStarHTML(player, pins) {
+  const id = player.player_id === null || player.player_id === undefined
+    ? "" : String(player.player_id);
+  if (!id) return "";
+  const on = hasPin(pins, id);
+  return '<button type="button" class="pin' + (on ? " on" : "") +
+    '" data-pin="' + esc(id) +
+    '" aria-pressed="' + (on ? "true" : "false") +
+    '" aria-label="' + (on ? "Unpin " : "Pin ") + esc(player.name) +
+    '" onclick="onPinClick(this)">' + (on ? "★" : "☆") + "</button>";
+}
+
+/* ONE card renderer. The Pinned section calls exactly this, with
+ * exactly the game and status the group below would pass, so a pinned
+ * card is the same card — same PROJ/LIVE rows, same pace colours, same
+ * live updates — and not a second rendering to keep in step. */
+function cardHTML(player, game, status, pins) {
   const team = up(player.team);
   const opponent = sameTeam(team, game.home)
     ? "vs " + up(game.away)
@@ -707,10 +836,22 @@ function cardHTML(player, game, status) {
     "</div>" +
     '<div class="pname">' + esc(player.name) +
     '<span class="postag">' + esc(up(player.pos)) + "</span>" +
-    injury + "</div></div></div>" +
+    injury + "</div></div>" +
+    pinStarHTML(player, pins) + "</div>" +
     statGridHTML(player, status) +
     boxLineHTML(player, status) +
     "</div>";
+}
+
+/* The Pinned group's header: the game header's shape and rules, with
+ * the slate line replaced by what the group is. */
+function pinnedHeadHTML(count) {
+  const label = count === 1 ? "1 player" : count + " players";
+  return '<div class="ghead phead">' +
+    '<div class="gmain">' +
+    '<div class="gtitle"><span class="pinmark">★</span> Pinned</div>' +
+    '<div class="gmeta">' + esc(label) +
+    " · each one also kept in the slate below</div></div></div>";
 }
 
 function renderGames() {
@@ -751,7 +892,13 @@ function renderGames() {
     return String(a.game_id).localeCompare(String(b.game_id));
   });
 
+  /* Read once per render, never cached in the DOM: whatever rebuilt
+   * the page — a poll, a finals backfill, a filter — rebuilds it
+   * against the pins as they stand now. */
+  const pins = readPins();
+
   const chunks = [];
+  const pinned = [];
   for (const game of ordered) {
     const players = shown.filter(function (p) {
       return String(p.game_id) === String(game.game_id);
@@ -762,11 +909,27 @@ function renderGames() {
     const status = state.live[game.game_id] || null;
     let block = gameHeadHTML(game, status);
     for (const player of players) {
-      block += cardHTML(player, game, status);
+      const card = cardHTML(player, game, status, pins);
+      block += card;
+      /* Collected inside the SAME walk that builds the groups, so the
+       * Pinned section comes out in kickoff order and then in board
+       * order — the order the slate below reads in — rather than in
+       * the order the stars happened to be tapped. A pinned player the
+       * position filter is hiding is hidden here too: the filter
+       * governs the whole board. */
+      if (hasPin(pins, player.player_id)) pinned.push(card);
     }
     chunks.push("<section>" + block + "</section>");
   }
-  host.innerHTML = chunks.join("");
+
+  /* Above the groups when there is anything to show, and absent
+   * entirely when there is not — a pinned id that is not on this
+   * board renders nothing and stays in storage. */
+  const top = pinned.length
+    ? "<section>" + pinnedHeadHTML(pinned.length) + pinned.join("") +
+      "</section>"
+    : "";
+  host.innerHTML = top + chunks.join("");
 
   if (!chunks.length) {
     empty.hidden = false;
