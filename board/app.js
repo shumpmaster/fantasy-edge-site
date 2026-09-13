@@ -235,6 +235,12 @@ const state = {
   error: null,
   pos: "ALL",
   sort: "proj",
+  /* The game filter (m4.2b feature 7a): the game_ids this reader
+   * chose, or an empty list meaning "all of them". Per-visit state,
+   * exactly like `pos` above — it is a way of looking at the board in
+   * front of you, not a preference to be remembered, and an empty list
+   * is the board as it has always read. */
+  gameFilter: [],
   /* game_id → {state, period, displayClock, detail, awayScore,
    *            homeScore, possession, redZone, eventId, finalAt}
    *
@@ -260,22 +266,28 @@ const state = {
 };
 
 /* ------------------------------------------------------------------
- * pinned players (m4.2b feature 1, D-077 workstream 2)
+ * what this reader kept — pinned players (m4.2b feature 1) and folded
+ * games (m4.2b feature 7b), D-077 workstream 2
  *
- * Display-only, and entirely the reader's own: a list of contract
- * `player_id`s kept in this browser's localStorage. Nothing is sent
- * anywhere, nothing is computed from it, and the cards it promotes are
- * the SAME cards the game groups draw.
+ * Both are display-only and entirely the reader's own: a list of ids
+ * kept in this browser's localStorage under a namespaced, versioned
+ * key. Nothing is sent anywhere, nothing is computed from either, and
+ * the cards a pin promotes are the SAME cards the game groups draw.
  *
- * The list is deliberately NOT part of `state`: `state` is what the
- * board and the feed said, and the pins are what this reader said. It
- * is read fresh on every render rather than cached in the DOM, so a
- * poll update, a finals backfill or a filter change all rebuild the
- * page with the current set instead of a stale copy.
+ * Neither list is part of `state`: `state` is what the board and the
+ * feed said, and these are what this reader said. Both are read fresh
+ * on every render rather than cached in the DOM, so a poll update, a
+ * finals backfill or a filter change all rebuild the page against the
+ * lists as they stand now instead of a stale copy.
  *
- * Pins are global rather than per-week: an id that is not on the board
+ * Both are global rather than per-week: an id that is not on the board
  * in front of you is kept in storage untouched and renders nothing, so
- * it comes back when that player does.
+ * it comes back when that player — or that game — does.
+ *
+ * ONE storage path serves them, because they are one shape: a list of
+ * ids, a real key, a demo twin, and the same refusal to fall over when
+ * a browser says no. A second copy of this is a second thing to get
+ * wrong.
  * ------------------------------------------------------------------ */
 
 const PIN_KEY = "fe.pins.v1";
@@ -283,20 +295,27 @@ const PIN_KEY = "fe.pins.v1";
  * disturb a real pin (and the reverse). */
 const PIN_KEY_DEMO = "fe.pins.demo.v1";
 
-/* A private window refuses storage — reading or writing THROWS rather
- * than returning nothing. The first refusal flips this page to the
- * in-memory list below: pins keep working for the life of the tab and
- * simply do not survive a reload, which is the honest degradation. */
-let pinsBroken = false;
-let pinsMemory = [];
+const COLLAPSE_KEY = "fe.collapse.v1";
+const COLLAPSE_KEY_DEMO = "fe.collapse.demo.v1";
 
-function pinKey() {
-  return state.demo ? PIN_KEY_DEMO : PIN_KEY;
+/* A private window refuses storage — reading or writing THROWS rather
+ * than returning nothing. The first refusal flips that list to the
+ * in-memory copy below: it keeps working for the life of the tab and
+ * simply does not survive a reload, which is the honest degradation. */
+function idStore(real, demo) {
+  return { real: real, demo: demo, broken: false, memory: [] };
+}
+
+const PINS = idStore(PIN_KEY, PIN_KEY_DEMO);
+const FOLDS = idStore(COLLAPSE_KEY, COLLAPSE_KEY_DEMO);
+
+function storeKey(store) {
+  return state.demo ? store.demo : store.real;
 }
 
 /* Strings, non-empty, first occurrence wins — deduplicated on the way
  * in so a double tap can never leave two copies in storage. */
-function cleanPins(ids) {
+function cleanIds(ids) {
   const out = [];
   for (const id of ids || []) {
     if (id === null || id === undefined) continue;
@@ -307,55 +326,59 @@ function cleanPins(ids) {
   return out;
 }
 
-function readPins() {
-  if (pinsBroken) return pinsMemory.slice();
+function readIds(store) {
+  if (store.broken) return store.memory.slice();
   try {
-    const raw = window.localStorage.getItem(pinKey());
+    const raw = window.localStorage.getItem(storeKey(store));
     const parsed = raw ? JSON.parse(raw) : [];
     /* Anything that is not a list of ids — a hand-edited key, another
-     * version's shape — is treated as no pins at all, never guessed
+     * version's shape — is treated as an empty list, never guessed
      * at. */
-    return Array.isArray(parsed) ? cleanPins(parsed) : [];
+    return Array.isArray(parsed) ? cleanIds(parsed) : [];
   } catch (err) {
-    pinsBroken = true;
-    return pinsMemory.slice();
+    store.broken = true;
+    return store.memory.slice();
   }
 }
 
-function writePins(ids) {
-  const clean = cleanPins(ids);
+function writeIds(store, ids) {
+  const clean = cleanIds(ids);
   /* Mirrored unconditionally, so storage that breaks on a later write
    * still has somewhere to fall back to. */
-  pinsMemory = clean;
-  if (pinsBroken) return;
+  store.memory = clean;
+  if (store.broken) return;
   try {
-    window.localStorage.setItem(pinKey(), JSON.stringify(clean));
+    window.localStorage.setItem(storeKey(store), JSON.stringify(clean));
   } catch (err) {
-    pinsBroken = true;
+    store.broken = true;
   }
+}
+
+/* One id, one list: the star on the pinned card and the star on the
+ * in-group card are two views of the same entry, so either one clears
+ * both, and the same is true of a game's chevron. The re-render is
+ * forced because the board itself did not move — only what this reader
+ * wants to see of it. */
+function toggleStored(store, value) {
+  const id = String(value === null || value === undefined ? "" : value);
+  if (!id) return;
+  const ids = readIds(store);
+  const at = ids.indexOf(id);
+  if (at >= 0) {
+    ids.splice(at, 1);
+  } else {
+    ids.push(id);
+  }
+  writeIds(store, ids);
+  render(true);
 }
 
 function hasPin(pins, playerId) {
   return (pins || []).indexOf(String(playerId)) >= 0;
 }
 
-/* One id, one list: the star on the pinned card and the star on the
- * in-group card are two views of the same entry, so either one clears
- * both. The re-render is forced because the board itself did not move
- * — only what this reader wants at the top of it. */
 function togglePin(playerId) {
-  const id = String(playerId === null || playerId === undefined
-    ? "" : playerId);
-  if (!id) return;
-  const pins = readPins();
-  const at = pins.indexOf(id);
-  if (at >= 0) {
-    pins.splice(at, 1);
-  } else {
-    pins.push(id);
-  }
-  writePins(pins);
-  render(true);
+  toggleStored(PINS, playerId);
 }
 
 /* The cards are innerHTML, so the star carries its handler as an
@@ -365,6 +388,21 @@ function togglePin(playerId) {
 function onPinClick(element) {
   if (!element) return;
   togglePin(element.getAttribute("data-pin"));
+}
+
+function isCollapsed(folded, gameId) {
+  return (folded || []).indexOf(String(gameId)) >= 0;
+}
+
+function toggleCollapse(gameId) {
+  toggleStored(FOLDS, gameId);
+}
+
+/* The game header is innerHTML too, so the chevron carries its handler
+ * the same way the star does, and reads its game_id back off itself. */
+function onCollapseClick(element) {
+  if (!element) return;
+  toggleCollapse(element.getAttribute("data-fold"));
 }
 
 /* ------------------------------------------------------------------
@@ -584,6 +622,49 @@ function shownPlayers() {
   return players.filter(function (p) { return up(p.pos) === state.pos; });
 }
 
+/* The slate in kickoff order — the order the groups read in and the
+ * order the game chips read in, computed once so the two can never
+ * disagree. A game the contract gave no kickoff sits at the end, in
+ * game_id order, rather than jumping the queue. */
+function orderedGames() {
+  const games = ((state.board || {}).games || []).slice();
+  return games.sort(function (a, b) {
+    const left = ms(a.kickoff);
+    const right = ms(b.kickoff);
+    if (left === null && right === null) {
+      return String(a.game_id).localeCompare(String(b.game_id));
+    }
+    if (left === null) return 1;
+    if (right === null) return -1;
+    if (left !== right) return left - right;
+    return String(a.game_id).localeCompare(String(b.game_id));
+  });
+}
+
+/* The game filter (m4.2b feature 7a). An empty selection is the whole
+ * slate — the board exactly as it has always read — so the filter only
+ * ever narrows, and "All" is the absence of a choice rather than a
+ * thirty-third option to keep in step. */
+function gameShown(gameId) {
+  if (!state.gameFilter.length) return true;
+  return state.gameFilter.indexOf(String(gameId)) >= 0;
+}
+
+function gameChipLabel(game) {
+  return up(game.away) + "@" + up(game.home);
+}
+
+function toggleGameFilter(gameId) {
+  const id = String(gameId);
+  const at = state.gameFilter.indexOf(id);
+  if (at >= 0) {
+    state.gameFilter.splice(at, 1);
+  } else {
+    state.gameFilter.push(id);
+  }
+  render(true);
+}
+
 function anyKicked() {
   for (const key in state.live) {
     const status = state.live[key];
@@ -789,6 +870,51 @@ function renderControls() {
     };
     sortseg.appendChild(button);
   }
+
+  renderGameChips();
+}
+
+/* One chip per game on the board, in kickoff order, behind a leading
+ * "All" (m4.2b feature 7a). Real buttons in the control family the
+ * position filter and the sorts already wear: they take focus, they
+ * answer the keyboard, and each says out loud whether it is chosen
+ * (aria-pressed). The chip's own text is its spoken name — no
+ * aria-label, so what a reader sees and what a reader says are the
+ * same words — and the row it sits in carries the label that makes
+ * "BUF@NYJ" mean a game (index.html: "Filter by game").
+ *
+ * The row is rebuilt on every render from the board's own game list,
+ * so it cannot drift out of step with the groups below it. */
+function chipButton(label, on, handler) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = label;
+  button.className = on ? "on" : "";
+  button.setAttribute("aria-pressed", on ? "true" : "false");
+  button.onclick = handler;
+  return button;
+}
+
+function renderGameChips() {
+  const host = document.getElementById("gameseg");
+  if (!host) return;
+  host.innerHTML = "";
+  const games = orderedGames();
+  if (!games.length) return;
+
+  host.appendChild(chipButton("All", !state.gameFilter.length,
+    function () {
+      state.gameFilter = [];
+      render(true);
+    }));
+
+  for (const game of games) {
+    const id = String(game.game_id);
+    const on = state.gameFilter.indexOf(id) >= 0;
+    host.appendChild(chipButton(gameChipLabel(game), on, function () {
+      toggleGameFilter(id);
+    }));
+  }
 }
 
 /* The period, as the feed states it: halftime and overtime are what
@@ -904,7 +1030,33 @@ function gameTitleHTML(game, status) {
   return title;
 }
 
-function gameHeadHTML(game, status) {
+/* The disclosure control (m4.2b feature 7b), at the end of the game
+ * header. A button, because it is one: it takes focus, it answers the
+ * keyboard, and it says out loud whether the group under it is open
+ * (aria-expanded) and what pressing it would do (aria-label). It sits
+ * AFTER the status block, so everything the header already said stays
+ * where it was — a folded game is still glanceable.
+ *
+ * A game the contract gave no id gets no control at all rather than
+ * one that would forget which game it folded. */
+function collapseToggleHTML(game, collapsed) {
+  const id = game.game_id === null || game.game_id === undefined
+    ? "" : String(game.game_id);
+  if (!id) return "";
+  const label = up(game.away) + " at " + up(game.home);
+  return '<button type="button" class="fold' + (collapsed ? " on" : "") +
+    '" data-fold="' + esc(id) +
+    '" aria-expanded="' + (collapsed ? "false" : "true") +
+    '" aria-label="' + (collapsed ? "Expand " : "Collapse ") + esc(label) +
+    '" onclick="onCollapseClick(this)">' + (collapsed ? "▸" : "▾") +
+    "</button>";
+}
+
+/* ONE game-header renderer. A folded group renders exactly this and
+ * nothing else, so a collapsed game keeps every piece of live context
+ * the open one has — score, clock, possession, red-zone chip, status
+ * pill — and folding is only ever a question about the cards. */
+function gameHeadHTML(game, status, collapsed) {
   const away = up(game.away);
   const home = up(game.home);
   const chip = inRedZone(status) ? redZoneChipHTML() : "";
@@ -918,7 +1070,7 @@ function gameHeadHTML(game, status) {
     gameTitleHTML(game, status) + "</div>" +
     '<div class="gmeta">' + esc(gameMeta(game)) + "</div></div>" +
     '<div class="gstatus">' + chip + statusPill(status, game) +
-    "</div></div>";
+    "</div>" + collapseToggleHTML(game, !!collapsed) + "</div>";
 }
 
 function statGridHTML(player, status) {
@@ -1127,26 +1279,21 @@ function renderGames() {
   empty.hidden = true;
   empty.innerHTML = "";
 
-  const ordered = games.slice().sort(function (a, b) {
-    const left = ms(a.kickoff);
-    const right = ms(b.kickoff);
-    if (left === null && right === null) {
-      return String(a.game_id).localeCompare(String(b.game_id));
-    }
-    if (left === null) return 1;
-    if (right === null) return -1;
-    if (left !== right) return left - right;
-    return String(a.game_id).localeCompare(String(b.game_id));
-  });
+  const ordered = orderedGames();
 
   /* Read once per render, never cached in the DOM: whatever rebuilt
    * the page — a poll, a finals backfill, a filter — rebuilds it
-   * against the pins as they stand now. */
-  const pins = readPins();
+   * against the pins and the folded games as they stand now. */
+  const pins = readIds(PINS);
+  const folded = readIds(FOLDS);
 
   const chunks = [];
   const pinned = [];
   for (const game of ordered) {
+    /* A game the reader did not choose is ABSENT, header and all: the
+     * game filter governs the whole board, exactly as the position
+     * filter does. */
+    if (!gameShown(game.game_id)) continue;
     const players = shown.filter(function (p) {
       return String(p.game_id) === String(game.game_id);
     });
@@ -1154,16 +1301,21 @@ function renderGames() {
     if (!players.length) continue;
     players.sort(comparePlayers);
     const status = state.live[game.game_id] || null;
-    let block = gameHeadHTML(game, status);
+    const shut = isCollapsed(folded, game.game_id);
+    let block = gameHeadHTML(game, status, shut);
     for (const player of players) {
       const card = cardHTML(player, game, status, pins);
-      block += card;
+      /* A folded group is its header alone. The cards are still BUILT,
+       * because a pinned player from a folded game is still this
+       * reader's pinned player: folding a game puts its group away, it
+       * does not take anything out of the Pinned section. */
+      if (!shut) block += card;
       /* Collected inside the SAME walk that builds the groups, so the
        * Pinned section comes out in kickoff order and then in board
        * order — the order the slate below reads in — rather than in
-       * the order the stars happened to be tapped. A pinned player the
-       * position filter is hiding is hidden here too: the filter
-       * governs the whole board. */
+       * the order the stars happened to be tapped. A pinned player a
+       * filter is hiding is hidden here too: the filters govern the
+       * whole board. */
       if (hasPin(pins, player.player_id)) pinned.push(card);
     }
     chunks.push("<section>" + block + "</section>");
@@ -1181,12 +1333,26 @@ function renderGames() {
   if (!chunks.length) {
     empty.hidden = false;
     empty.innerHTML = "<b>No players at this filter.</b>" +
-      "Every game on the slate is hidden" +
-      (state.pos === "ALL"
-        ? ": no player on this board belongs to a game on it."
-        : " because none of them has a " + esc(state.pos) +
-          " on the board.");
+      "Every game on the slate is hidden" + emptyReason();
   }
+}
+
+/* Why the board came out empty, in the reader's own terms: which of
+ * the two filters did it, and what to press to get the slate back. */
+function emptyReason() {
+  const chosen = state.gameFilter.length > 0;
+  if (chosen && state.pos !== "ALL") {
+    return " because no game you chose has a " + esc(state.pos) +
+      " on the board — tap All to widen the slate.";
+  }
+  if (chosen) {
+    return " by the game filter — tap All to bring the slate back.";
+  }
+  if (state.pos !== "ALL") {
+    return " because none of them has a " + esc(state.pos) +
+      " on the board.";
+  }
+  return ": no player on this board belongs to a game on it.";
 }
 
 function renderFooter() {
@@ -1220,8 +1386,8 @@ function renderFooter() {
 }
 
 function signature() {
-  return JSON.stringify([state.pos, state.sort, state.polling,
-    state.stale, state.live, state.box]);
+  return JSON.stringify([state.pos, state.sort, state.gameFilter,
+    state.polling, state.stale, state.live, state.box]);
 }
 
 function render(force) {

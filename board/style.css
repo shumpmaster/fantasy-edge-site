@@ -67,6 +67,22 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
 .seg button.on{background:#fff;color:var(--txt);box-shadow:0 1px 4px rgba(22,40,58,.12)}
 .seg button:disabled{color:var(--faint);opacity:.55;cursor:default}
 
+/* the game filter (m4.2b feature 7a) — one compact chip per game on
+   the board, in kickoff order, behind a leading All. The mockup depicts
+   no such row, so it takes the control family the position filter and
+   the sorts already wear, one size down: these are the board's nouns,
+   not its verbs. The row scrolls sideways on a phone rather than
+   wrapping into a wall of chips, and a slate with no games renders no
+   row at all. */
+.gseg{display:flex;gap:6px;padding:0 20px 14px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gseg::-webkit-scrollbar{display:none}
+.gseg:empty{display:none}
+.gseg button{border:none;background:var(--pillbg);font-family:inherit;font-size:12.5px;font-weight:700;
+color:var(--sub);padding:9px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;flex-shrink:0;
+min-height:38px;letter-spacing:.01em}
+.gseg button.on{background:var(--bluebg);color:var(--blue)}
+.gseg button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
 /* game headers */
 .ghead{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);
 padding:12px 20px 10px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px}
@@ -97,6 +113,17 @@ font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
 .rz{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.03em;
 color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px;flex-shrink:0}
 .gstatus .rz{margin-right:6px;vertical-align:1px}
+
+/* the per-game disclosure (m4.2b feature 7b) — the pin star's own tap
+   discipline, on the game header: a 44px target drawn as a small
+   chevron, with the padding as the target and the negative margin
+   taking it back out of the layout so the header does not grow. A
+   folded game keeps every other thing its header was already saying */
+.fold{flex-shrink:0;align-self:center;border:none;background:transparent;font-family:inherit;font-size:13px;
+line-height:1;color:var(--faint);cursor:pointer;padding:11px;margin:-9px -9px -9px -4px;min-width:44px;min-height:44px;
+display:flex;align-items:center;justify-content:center;border-radius:999px}
+.fold.on{color:var(--txt)}
+.fold:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
 
 /* the Pinned group (m4.2b feature 1) — the game header's own rules,
    so the section reads as one more group and not a new kind of thing */
