@@ -77,6 +77,19 @@ const FRESH_WARN_MS = 6 * 60 * 60 * 1000;
 const FEED_STALLED = "live data stalled · trying again";
 const FEED_CONNECTING = "live feed connecting";
 
+/* What a reader is told when this browser refuses to keep his lists
+ * (m4.2b feature 11, hardening). ONE contiguous string for the same
+ * reason the two above are, and in the SAME amber family as an ageing
+ * source stamp rather than an alarm: the marks on the page in front of
+ * him are all still there and still working — they simply are not
+ * being written down, so the next reload starts without them. It shows
+ * only while that is true and clears itself the moment a write lands.
+ *
+ * Silence here was the bug: a private window, or one quota refusal on
+ * a phone, stopped persistence and the page looked exactly as it does
+ * when everything is fine. */
+const STORAGE_OFF = "marks won't survive a reload in this browser";
+
 /* ------------------------------------------------------------------
  * the disclosures — sentinel strings, rendered on every board
  * ------------------------------------------------------------------ */
@@ -323,7 +336,20 @@ const BOX_BLOCKS = {
  * ------------------------------------------------------------------ */
 
 const state = {
-  demo: false,
+  /* WHICH KEYSPACE THIS TAB WRITES, decided HERE and never again.
+   *
+   * `storeKey` picks the real key or the demo twin off this flag at the
+   * moment of the call, so anything that could read or write a kept
+   * list before the flag was final would read one keyspace and write
+   * the other — which presents to a reader as "my marks were wiped"
+   * while the ids sit safe under the key nobody is looking at. The
+   * answer is not to police the order of the boot: it is to have no
+   * window at all. `isDemo()` reads `location.search` and nothing else,
+   * so it is answered synchronously as `state` is constructed — before
+   * the first render, the first fetch and the first tap, and before any
+   * function in this file has run. (It is a hoisted declaration below;
+   * the boot block only reads the flag back.) */
+  demo: isDemo(),
   board: null,
   error: null,
   pos: "ALL",
@@ -436,17 +462,43 @@ const BETS_KEY = "fe.bets.v1";
 const BETS_KEY_DEMO = "fe.bets.demo.v1";
 
 /* A private window refuses storage — reading or writing THROWS rather
- * than returning nothing. The first refusal flips that list to the
- * in-memory copy below: it keeps working for the life of the tab and
- * simply does not survive a reload, which is the honest degradation. */
+ * than returning nothing — and a phone under pressure can refuse ONE
+ * write and take the next one. Each list therefore carries two facts
+ * about its own storage rather than one latch:
+ *
+ *   broken — the last thing we asked of the key threw. It is a report,
+ *            not a verdict: the next write asks again, so a single
+ *            transient refusal costs one write and not the session.
+ *   dirty  — `memory` holds ids the key has NOT taken. While this is
+ *            true the key is stale and must never be read back over
+ *            memory, or a refused write would silently undo itself on
+ *            the next render.
+ *
+ * `memory` is the last thing we know the list to be — seeded from every
+ * successful read, replaced by every accepted write — so a refusal
+ * never degrades to a blank list, only to the last good one. */
 function idStore(real, demo) {
-  return { real: real, demo: demo, broken: false, memory: [] };
+  return {
+    real: real, demo: demo, broken: false, dirty: false, memory: []
+  };
 }
 
 const PINS = idStore(PIN_KEY, PIN_KEY_DEMO);
 const FOLDS = idStore(COLLAPSE_KEY, COLLAPSE_KEY_DEMO);
 const MY_TEAM = idStore(TEAM_KEY, TEAM_KEY_DEMO);
 const MY_BETS = idStore(BETS_KEY, BETS_KEY_DEMO);
+
+const ID_STORES = [PINS, FOLDS, MY_TEAM, MY_BETS];
+
+/* True while anything this reader kept is living in memory alone. The
+ * header says so (STORAGE_OFF); nothing else in this file behaves
+ * differently because of it. */
+function storageAtRisk() {
+  for (const store of ID_STORES) {
+    if (store.broken || store.dirty) return true;
+  }
+  return false;
+}
 
 function storeKey(store) {
   return state.demo ? store.demo : store.real;
@@ -465,31 +517,78 @@ function cleanIds(ids) {
   return out;
 }
 
+/* The list as it stands, and the ONE place this file reads a key.
+ *
+ * The key is authoritative unless a write has failed since we last
+ * looked at it: then memory is AHEAD of the key — it holds what this
+ * reader has said and storage would not take — and reading the key
+ * back would quietly undo him. */
 function readIds(store) {
-  if (store.broken) return store.memory.slice();
+  if (store.dirty) return store.memory.slice();
   try {
     const raw = window.localStorage.getItem(storeKey(store));
     const parsed = raw ? JSON.parse(raw) : [];
     /* Anything that is not a list of ids — a hand-edited key, another
      * version's shape — is treated as an empty list, never guessed
      * at. */
-    return Array.isArray(parsed) ? cleanIds(parsed) : [];
+    const clean = Array.isArray(parsed) ? cleanIds(parsed) : [];
+    /* Storage answered: it is the truth, and the fallback copy is
+     * re-seeded from it so a LATER refusal degrades to this list
+     * rather than to a blank one. */
+    store.memory = clean;
+    store.broken = false;
+    return clean.slice();
   } catch (err) {
     store.broken = true;
     return store.memory.slice();
   }
 }
 
-function writeIds(store, ids) {
+/* The only place this file writes a key.
+ *
+ * `unmarking` is true only when the caller is a reader taking an id OUT
+ * of a list, and it is the single thing that may empty one. Everything
+ * else — a bug, a bad refactor, a caller with a stale copy — is refused
+ * rather than obeyed: a list this reader filled is not cleared by code
+ * that cannot name the id it just removed. The refusal writes nothing
+ * at all, so the stored list stands, and it says so on the console.
+ *
+ * Returns whether the ids are now written down. */
+function writeIds(store, ids, unmarking) {
   const clean = cleanIds(ids);
-  /* Mirrored unconditionally, so storage that breaks on a later write
-   * still has somewhere to fall back to. */
+  if (!clean.length && !unmarking) {
+    /* Defence in depth, and it should never fire. An empty write is
+     * refused unless the key is KNOWN to be empty already: a list with
+     * ids in it, or one storage would not read back to us, is left
+     * exactly as it stands. Refusing a genuinely empty write costs
+     * nothing — there was nothing to write. */
+    const stored = readIds(store);
+    if (stored.length || store.broken) {
+      if (typeof console !== "undefined" && console && console.warn) {
+        console.warn("fe: refused to clear " + storeKey(store) +
+          " — an empty write nobody asked for");
+      }
+      return false;
+    }
+  }
+  /* Mirrored first, so storage that refuses this write still has the
+   * reader's own list to serve for the rest of the tab. */
   store.memory = clean;
-  if (store.broken) return;
   try {
     window.localStorage.setItem(storeKey(store), JSON.stringify(clean));
+    /* The whole list went down, so whatever earlier refusal left
+     * memory ahead of the key is settled. */
+    store.dirty = false;
+    store.broken = false;
+    return true;
   } catch (err) {
+    /* One refusal is one refusal: the flag is left for the header to
+     * read and for the NEXT write to try again against. A quota hiccup
+     * mid-slate must not stop this browser keeping anything for the
+     * rest of the afternoon. */
     store.broken = true;
+    store.dirty = true;
+    return false;
   }
 }
 
@@ -501,14 +600,23 @@ function writeIds(store, ids) {
 function toggleStored(store, value) {
   const id = String(value === null || value === undefined ? "" : value);
   if (!id) return;
+  /* Read, change, write, in that order and with nothing between them.
+   * The list is read HERE rather than taken from the render that drew
+   * the button, so the change lands on the list as it stands now; and
+   * because the read went to storage (unless storage has already
+   * refused a write), a key that came back after a refusal is picked up
+   * as the base rather than overwritten from a stale copy. */
   const ids = readIds(store);
   const at = ids.indexOf(id);
-  if (at >= 0) {
+  const removing = at >= 0;
+  if (removing) {
     ids.splice(at, 1);
   } else {
     ids.push(id);
   }
-  writeIds(store, ids);
+  /* The ONLY caller that may empty a list, and only by naming the id it
+   * took out. */
+  writeIds(store, ids, removing);
   render(true);
 }
 
@@ -1180,6 +1288,18 @@ function renderHeader() {
           ? esc(FEED_CONNECTING)
           : "updated " + esc(age) + " ago") + "</span>");
     }
+  }
+  /* And, last, what this BROWSER is doing with what the reader kept
+   * (m4.2b feature 11, hardening). It rides the same line as the source
+   * stamps and the feed's own freshness because it is the same kind of
+   * fact — "here is the state of something this page depends on" — and
+   * it is drawn in the ageing-stamp family rather than the alarm one:
+   * nothing on the page is wrong, it just will not come back.
+   *
+   * Shown ONLY once storage has actually refused us, and dropped again
+   * the moment a write lands. */
+  if (storageAtRisk()) {
+    dots.push('<span class="st">' + esc(STORAGE_OFF) + "</span>");
   }
   document.getElementById("fresh").innerHTML = dots.join("");
 }
@@ -2440,7 +2560,11 @@ function isDemo() {
  * the real code path. It NEVER fetches the exported board and NEVER
  * polls, so demo numbers cannot mix with real ones. */
 async function bootDemo() {
-  state.demo = true;
+  /* `state.demo` was decided as `state` was built, before anything in
+   * this file could touch a stored key — it is NOT set here, and
+   * nothing in the boot may set it, because a flag flipped at this
+   * point would mean marks had already been written to the other
+   * keyspace. */
   try {
     state.board = await getJSON(DEMO_BOARD_URL);
   } catch (err) {
@@ -2483,7 +2607,9 @@ async function bootLive() {
 }
 
 function boot() {
-  if (isDemo()) {
+  /* The flag is READ here, not computed here: one answer to "which
+   * keyspace is this tab", taken once. */
+  if (state.demo) {
     bootDemo();
   } else {
     bootLive();
