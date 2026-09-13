@@ -87,6 +87,40 @@ refuses storage — a private window, where `localStorage` throws rather
 than returning nothing — keeps its pins in memory for the life of the
 tab instead.
 
+## My Team and My Bets
+
+A thin tab bar sits at the foot of the page: **Game Slate**, **My
+Team**, **My Bets**. Game Slate is today's board, exactly as it has
+always read, and is where every visit opens. (The nav row at the top of
+the page is untouched: those are the sections this product will grow,
+and this bar is the three ways of reading the one it already has.)
+
+Beside the pin star, every card carries two small toggles — a roster
+mark and a ticket mark. Tapping one puts that player in the matching
+tab; tapping it again takes him out, and either copy of a card (the
+in-group one and the pinned duplicate) toggles both, because there is
+one entry behind them.
+
+The two tabs render the players you marked **as full cards, grouped by
+game, in kickoff order, under their own game headers**, through the very
+same renderer the slate uses — so a marked player keeps his PROJ/LIVE
+rows, his pace colours, his live updates and his game context. A tab is
+one more filter composed with the ones already there: the search box,
+the position filter, the game chips, the sorts and the folds all keep
+working inside it. The Pinned section belongs to the Game Slate, where
+promoting part of the board still says something.
+
+The marks are lists of contract `player_id`s in this browser's
+`localStorage` under `fe.team.v1` and `fe.bets.v1` (demo mode uses
+`fe.team.demo.v1` and `fe.bets.demo.v1`). **What you mark never leaves
+your browser** — nothing is sent anywhere, nothing is computed from
+them, and there is no server on the other end of this page to send them
+to. Like the pins they are global rather than per-week (an id that is
+not on the board in front of you renders nothing and is kept), and a
+browser that refuses storage keeps them in memory for the life of the
+tab. Which tab is open is *not* kept: a reload opens on the Game Slate,
+and everything live keeps polling whichever tab you are looking at.
+
 ## Sorting
 
 The sort control carries four options. `Proj` (the default) and `Live`

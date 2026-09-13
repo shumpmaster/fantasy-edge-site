@@ -340,6 +340,11 @@ const state = {
    * a way of looking at the board in front of you, never written down
    * and never carried to the next visit. */
   query: "",
+  /* Which tab this reader is looking through (m4.2b feature 11):
+   * "slate" — today's board, the default — or one of the two marked
+   * lists. Per-visit state beside `pos`, `gameFilter` and `query`, and
+   * never persisted: a reload opens on the Game Slate. */
+  tab: "slate",
   /* game_id → {state, period, displayClock, detail, awayScore,
    *            homeScore, possession, redZone, eventId, finalAt}
    *
@@ -382,21 +387,23 @@ const state = {
 const FRESH = { sigs: Object.create(null), stamps: Object.create(null) };
 
 /* ------------------------------------------------------------------
- * what this reader kept — pinned players (m4.2b feature 1) and folded
- * games (m4.2b feature 7b), D-077 workstream 2
+ * what this reader kept — pinned players (m4.2b feature 1), folded
+ * games (m4.2b feature 7b) and the two marks (m4.2b feature 11),
+ * D-077 workstream 2
  *
- * Both are display-only and entirely the reader's own: a list of ids
- * kept in this browser's localStorage under a namespaced, versioned
- * key. Nothing is sent anywhere, nothing is computed from either, and
- * the cards a pin promotes are the SAME cards the game groups draw.
+ * All of them are display-only and entirely the reader's own: a list of
+ * ids kept in this browser's localStorage under a namespaced, versioned
+ * key. Nothing is sent anywhere, nothing is computed from any of them,
+ * and the cards a pin or a mark promotes are the SAME cards the game
+ * groups draw.
  *
- * Neither list is part of `state`: `state` is what the board and the
- * feed said, and these are what this reader said. Both are read fresh
- * on every render rather than cached in the DOM, so a poll update, a
- * finals backfill or a filter change all rebuild the page against the
- * lists as they stand now instead of a stale copy.
+ * None of these lists is part of `state`: `state` is what the board and
+ * the feed said, and these are what this reader said. All are read
+ * fresh on every render rather than cached in the DOM, so a poll
+ * update, a finals backfill or a filter change all rebuild the page
+ * against the lists as they stand now instead of a stale copy.
  *
- * Both are global rather than per-week: an id that is not on the board
+ * All are global rather than per-week: an id that is not on the board
  * in front of you is kept in storage untouched and renders nothing, so
  * it comes back when that player — or that game — does.
  *
@@ -414,6 +421,20 @@ const PIN_KEY_DEMO = "fe.pins.demo.v1";
 const COLLAPSE_KEY = "fe.collapse.v1";
 const COLLAPSE_KEY_DEMO = "fe.collapse.demo.v1";
 
+/* The reader's two marks (m4.2b feature 11): the players he counts as
+ * his team, and the ones he has a ticket on.
+ *
+ * WHAT A READER MARKS NEVER LEAVES HIS BROWSER. These four keys are the
+ * only place either list is ever written: no request carries them, no
+ * export sees them, nothing is computed from them, and there is no
+ * server on the other end of this page to send them to. They are kept
+ * between visits because that is the whole point of them, and they are
+ * kept nowhere else. */
+const TEAM_KEY = "fe.team.v1";
+const TEAM_KEY_DEMO = "fe.team.demo.v1";
+const BETS_KEY = "fe.bets.v1";
+const BETS_KEY_DEMO = "fe.bets.demo.v1";
+
 /* A private window refuses storage — reading or writing THROWS rather
  * than returning nothing. The first refusal flips that list to the
  * in-memory copy below: it keeps working for the life of the tab and
@@ -424,6 +445,8 @@ function idStore(real, demo) {
 
 const PINS = idStore(PIN_KEY, PIN_KEY_DEMO);
 const FOLDS = idStore(COLLAPSE_KEY, COLLAPSE_KEY_DEMO);
+const MY_TEAM = idStore(TEAM_KEY, TEAM_KEY_DEMO);
+const MY_BETS = idStore(BETS_KEY, BETS_KEY_DEMO);
 
 function storeKey(store) {
   return state.demo ? store.demo : store.real;
@@ -519,6 +542,78 @@ function toggleCollapse(gameId) {
 function onCollapseClick(element) {
   if (!element) return;
   toggleCollapse(element.getAttribute("data-fold"));
+}
+
+/* ------------------------------------------------------------------
+ * the two marks and the two tabs they fill (m4.2b feature 11)
+ *
+ * ONE table, so the mark on the card, the tab at the foot of the page
+ * and the list in storage are three views of one entry and cannot
+ * drift: `store` is where the ids live and `title` is what the reader
+ * is told the list is called — on the tab, in the mark's spoken label,
+ * and in the empty state that tells him how to fill it.
+ *
+ * The glyphs are geometric rather than emoji: an emoji renders
+ * differently on every platform and would out-shout the star beside it.
+ * The upright block reads as a roster slot, the leaning one as a ticket
+ * stub, and each has a filled state and an outline state exactly as the
+ * star does. Both are drawn quieter than the star, because a pin is
+ * what a reader is watching right now and a mark is what he keeps.
+ * ------------------------------------------------------------------ */
+
+const MARKS = {
+  team: { store: MY_TEAM, title: "My Team", on: "▮", off: "▯" },
+  bets: { store: MY_BETS, title: "My Bets", on: "▰", off: "▱" }
+};
+
+/* The tab bar's own order. The board itself is first and is the
+ * default; the other two take their names from the table above, so a
+ * tab can never be called something a mark is not. */
+const TAB_SLATE = "slate";
+const TABS = [[TAB_SLATE, "Game Slate"], ["team", MARKS.team.title],
+              ["bets", MARKS.bets.title]];
+
+function markFor(kind) {
+  return MARKS[String(kind === null || kind === undefined ? "" : kind)] ||
+    null;
+}
+
+function hasMark(ids, playerId) {
+  return (ids || []).indexOf(String(playerId)) >= 0;
+}
+
+/* One id, one list, through the very path the star and the chevron
+ * already use: either copy of a card toggles both, because there is one
+ * entry behind the two of them. */
+function toggleMark(kind, playerId) {
+  const mark = markFor(kind);
+  if (!mark) return;
+  toggleStored(mark.store, playerId);
+}
+
+/* The cards are innerHTML, so a mark carries its handler as an
+ * attribute exactly as the star does, and reads BOTH which list it is
+ * and whose id it holds back off itself — nothing from the contract is
+ * ever spliced into a script context. */
+function onMarkClick(element) {
+  if (!element) return;
+  toggleMark(element.getAttribute("data-mark"),
+    element.getAttribute("data-mark-id"));
+}
+
+/* Per-visit, never written down: which tab this reader is looking
+ * through right now is a way of looking at the board in front of him,
+ * like `pos`, `gameFilter` and `query` — not a preference to be
+ * remembered. A reload opens on the Game Slate. */
+function setTab(key) {
+  const next = String(key === null || key === undefined ? "" : key);
+  if (!next || next === state.tab) return;
+  state.tab = next;
+  /* Forced, exactly as the filters are: the board did not move, only
+   * what this reader wants to see of it. Everything live keeps polling
+   * regardless of which tab is open — the loop knows nothing about
+   * tabs, and a card in My Team is the same card, still updating. */
+  render(true);
 }
 
 /* ------------------------------------------------------------------
@@ -873,11 +968,33 @@ function queueSearch(text) {
  * rendering
  * ------------------------------------------------------------------ */
 
+/* The test the open tab puts a player to, or null for "the Game Slate,
+ * which is every player there has ever been" (m4.2b feature 11).
+ *
+ * The ids are read HERE, at render time, exactly as the pins and the
+ * folds are: a mark tapped on one card rebuilds the page against the
+ * list as it stands now, never against a copy left in the DOM. */
+function tabMatcher() {
+  const mark = markFor(state.tab);
+  if (!mark) return null;
+  const ids = readIds(mark.store);
+  return function (p) {
+    return hasMark(ids, playerKey(p));
+  };
+}
+
+/* The board, narrowed by everything this reader has said about it. The
+ * tab is ONE MORE composed filter here — not a second renderer and not
+ * a second walk — so My Team is the game slate with a further question
+ * asked of it, and the search, the position filter, the game chips, the
+ * sorts and the folds all keep working inside it unchanged. */
 function shownPlayers() {
   const players = (state.board && state.board.players) || [];
   const match = searchMatcher();
+  const marked = tabMatcher();
   return players.filter(function (p) {
     if (state.pos !== "ALL" && up(p.pos) !== state.pos) return false;
+    if (marked && !marked(p)) return false;
     return match ? match(p) : true;
   });
 }
@@ -1133,6 +1250,39 @@ function renderControls() {
 
   renderSearch();
   renderGameChips();
+  renderTabs();
+}
+
+/* The bottom tab bar (m4.2b feature 11).
+ *
+ * A real tablist: three buttons in a container the page authors as
+ * `role="tablist"`, each saying out loud whether it is the one open
+ * (aria-selected) and what it governs (aria-controls). The tabs are
+ * buttons rather than links because nothing here navigates — the board
+ * is one page and a tab is one more way of looking at it — and the bar
+ * is rebuilt on every render, exactly as every other control on this
+ * page is, so it cannot drift out of step with `state.tab`.
+ *
+ * It sits at the FOOT of the viewport and the locked top nav is not
+ * touched: that row is the sections this product will grow, and this
+ * one is the three views of the board it already has. */
+function renderTabs() {
+  const host = document.getElementById("tabbar");
+  if (!host) return;
+  host.innerHTML = "";
+  for (const entry of TABS) {
+    const key = entry[0];
+    const on = state.tab === key;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = entry[1];
+    button.className = on ? "on" : "";
+    button.setAttribute("role", "tab");
+    button.setAttribute("aria-selected", on ? "true" : "false");
+    button.setAttribute("aria-controls", "games");
+    button.onclick = function () { setTab(key); };
+    host.appendChild(button);
+  }
 }
 
 /* The search box is authored in index.html — it is a real `<input
@@ -1661,11 +1811,37 @@ function pinStarHTML(player, pins) {
     '" onclick="onPinClick(this)">' + (on ? "★" : "☆") + "</button>";
 }
 
+/* The two marks, beside the star (m4.2b feature 11). The star's own
+ * discipline, one step quieter: a real button, a filled and an outline
+ * state, a spoken label saying which list it would add him to or take
+ * him out of, and the same 44px thumb target drawn as a small glyph. A
+ * player the contract gave no stable id gets no control at all, for the
+ * same reason the star does not: there would be nothing to keep. */
+function markHTML(kind, player, ids) {
+  const mark = markFor(kind);
+  const id = playerKey(player);
+  if (!mark || !id) return "";
+  const on = hasMark(ids, id);
+  return '<button type="button" class="mark' + (on ? " on" : "") +
+    '" data-mark="' + esc(kind) + '" data-mark-id="' + esc(id) +
+    '" aria-pressed="' + (on ? "true" : "false") +
+    '" aria-label="' + (on ? "Remove " : "Add ") + esc(player.name) +
+    (on ? " from " : " to ") + esc(mark.title) +
+    '" onclick="onMarkClick(this)">' + (on ? mark.on : mark.off) +
+    "</button>";
+}
+
 /* ONE card renderer. The Pinned section calls exactly this, with
  * exactly the game and status the group below would pass, so a pinned
  * card is the same card — same PROJ/LIVE rows, same pace colours, same
- * live updates — and not a second rendering to keep in step. */
-function cardHTML(player, game, status, pins) {
+ * live updates — and not a second rendering to keep in step. The My
+ * Team and My Bets tabs call exactly this too, for exactly the same
+ * reason: a marked card is that card, not a slimmed copy of it.
+ *
+ * `kept` is what this reader has kept, read once per render: the pins
+ * and the two mark lists, so a card can draw its three controls without
+ * each one going back to storage on its own. */
+function cardHTML(player, game, status, kept) {
   const team = up(player.team);
   const opponent = sameTeam(team, game.home)
     ? "vs " + up(game.away)
@@ -1687,6 +1863,11 @@ function cardHTML(player, game, status, pins) {
    * card. It sits before the star so the star keeps the outside edge
    * and its thumb-sized target is never crowded. */
   const hero = achievementHTML(player, status);
+  /* The two marks sit between the hero and the star: the star keeps the
+   * outside edge it has always had, and the quieter pair reads as one
+   * group beside it rather than as two more stars. */
+  const marks = markHTML("team", player, (kept || {}).team) +
+    markHTML("bets", player, (kept || {}).bets);
   return '<div class="card">' +
     '<div class="cardtop">' +
     '<div class="badge" style="background:' + teamColor(team) + '">' +
@@ -1697,7 +1878,7 @@ function cardHTML(player, game, status, pins) {
     '<div class="pname">' + esc(player.name) +
     '<span class="postag">' + esc(up(player.pos)) + "</span>" +
     injury + pace + chip + "</div></div>" +
-    hero + pinStarHTML(player, pins) + "</div>" +
+    hero + marks + pinStarHTML(player, (kept || {}).pins) + "</div>" +
     statGridHTML(player, status) +
     usageLineHTML(player, status) +
     boxLineHTML(player, status) +
@@ -1745,10 +1926,20 @@ function renderGames() {
   const ordered = orderedGames();
 
   /* Read once per render, never cached in the DOM: whatever rebuilt
-   * the page — a poll, a finals backfill, a filter — rebuilds it
-   * against the pins and the folded games as they stand now. */
-  const pins = readIds(PINS);
+   * the page — a poll, a finals backfill, a filter, a tab — rebuilds it
+   * against the pins, the marks and the folded games as they stand
+   * now. */
+  const kept = {
+    pins: readIds(PINS),
+    team: readIds(MY_TEAM),
+    bets: readIds(MY_BETS)
+  };
   const folded = readIds(FOLDS);
+  /* The Pinned section belongs to the Game Slate. Inside a marked tab
+   * the whole list is already this reader's own choice, so promoting a
+   * second copy of some of it above the rest would say nothing — and a
+   * pin is still a pin on the slate, untouched. */
+  const slate = state.tab === TAB_SLATE;
 
   const chunks = [];
   const pinned = [];
@@ -1767,7 +1958,7 @@ function renderGames() {
     const shut = isCollapsed(folded, game.game_id);
     let block = gameHeadHTML(game, status, shut);
     for (const player of players) {
-      const card = cardHTML(player, game, status, pins);
+      const card = cardHTML(player, game, status, kept);
       /* A folded group is its header alone. The cards are still BUILT,
        * because a pinned player from a folded game is still this
        * reader's pinned player: folding a game puts its group away, it
@@ -1779,7 +1970,9 @@ function renderGames() {
        * the order the stars happened to be tapped. A pinned player a
        * filter is hiding is hidden here too: the filters govern the
        * whole board. */
-      if (hasPin(pins, player.player_id)) pinned.push(card);
+      if (slate && hasPin(kept.pins, player.player_id)) {
+        pinned.push(card);
+      }
     }
     chunks.push("<section>" + block + "</section>");
   }
@@ -1795,9 +1988,31 @@ function renderGames() {
 
   if (!chunks.length) {
     empty.hidden = false;
-    empty.innerHTML = "<b>No players at this filter.</b>" +
-      "Every game on the slate is hidden" + emptyReason();
+    empty.innerHTML = emptyHTML();
   }
+}
+
+/* Why the page came out empty, in the reader's own terms — the same
+ * `#empty` block the board has always used, asked one more question
+ * first (m4.2b feature 11).
+ *
+ * A marked tab with NOTHING in it is not a filter failure and must not
+ * read like one: the reader has simply not marked anybody yet, so the
+ * state says what the list is for and exactly how to fill it. A marked
+ * tab that DOES hold ids and still shows nothing is the ordinary empty
+ * board, named against the list the reader is looking at. */
+function emptyHTML() {
+  const mark = markFor(state.tab);
+  if (mark && !readIds(mark.store).length) {
+    return "<b>Nothing in " + esc(mark.title) + " yet.</b>" +
+      "Tap the " + esc(mark.title) + " mark on any card in Game Slate " +
+      "and the player shows up here, in his game, with the same live " +
+      "row he has on the board.";
+  }
+  return "<b>No players at this filter.</b>" +
+    (mark
+      ? "Every player in " + esc(mark.title) + " is hidden"
+      : "Every game on the slate is hidden") + emptyReason();
 }
 
 /* Why the board came out empty, in the reader's own terms: which of
@@ -1827,6 +2042,13 @@ function emptyReason() {
   if (state.pos !== "ALL") {
     return " because none of them has a " + esc(state.pos) +
       " on the board.";
+  }
+  /* Nothing is filtering, so the only thing left is the tab itself: the
+   * marks are global rather than per-week, and an id that is not on the
+   * board in front of you renders nothing and stays in storage. */
+  if (markFor(state.tab)) {
+    return " because none of the players you marked is on this board — " +
+      "they are kept, and they come back when their games do.";
   }
   return ": no player on this board belongs to a game on it.";
 }
@@ -1863,7 +2085,8 @@ function renderFooter() {
 
 function signature() {
   return JSON.stringify([state.pos, state.sort, state.gameFilter,
-    state.query, state.polling, state.stale, state.live, state.box]);
+    state.query, state.tab, state.polling, state.stale, state.live,
+    state.box]);
 }
 
 function render(force) {

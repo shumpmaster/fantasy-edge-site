@@ -20,7 +20,10 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:15px;line-height:1.4}
-.wrap{max-width:640px;margin:0 auto;padding-bottom:60px}
+/* the bottom tab bar is fixed, so the page keeps a gutter deep enough
+   that the last card and the footer are never under it — the bar's own
+   height plus whatever the phone reserves below it */
+.wrap{max-width:640px;margin:0 auto;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 
 header{padding:18px 20px 6px}
 .toprow{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -51,6 +54,25 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
 .tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--txt);border-radius:2px}
 .tab.lock{cursor:default}
 .tab .soon{font-size:9px;font-weight:700;color:var(--faint);vertical-align:6px;margin-left:2px}
+
+/* the bottom tab bar (m4.2b feature 11) — three views of THIS board,
+   at the foot of the viewport where the thumb already is. A thin little
+   bar and nothing more: the game header's own translucent fill and
+   hairline (turned upside down), the game chips' control family for the
+   tabs themselves, and no shadow, no icons, no badge. The safe-area
+   inset is added to the bottom padding rather than the height, so the
+   bar sits flush on a phone with a home indicator and stays thin on one
+   without. The locked top nav is untouched — this bar is beside it, not
+   instead of it. */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;gap:6px;
+justify-content:center;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);
+border-top:1px solid var(--divider);
+padding:5px 12px calc(5px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1 1 0;max-width:180px;border:none;background:transparent;font-family:inherit;
+font-size:12.5px;font-weight:700;color:var(--faint);padding:8px 10px;border-radius:999px;
+cursor:pointer;white-space:nowrap;min-height:38px}
+.tabbar button.on{background:var(--bluebg);color:var(--blue)}
+.tabbar button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
 
 /* disclosure block — always visible, top of board, never a modal */
 .disc{margin:14px 20px 0;background:var(--pillbg);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--sub);line-height:1.55}
@@ -224,6 +246,21 @@ line-height:1;color:var(--faint);cursor:pointer;padding:11px;margin:-9px -9px -9
 display:flex;align-items:center;justify-content:center;border-radius:999px}
 .pin.on{color:var(--blue)}
 .pin:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+
+/* the two marks (m4.2b feature 11) — My Team and My Bets, beside the
+   star. The star's own tap discipline exactly: the padding is the 44px
+   target and the negative margin takes it back out of the layout, so a
+   thumb gets its square and the card does not grow. They are drawn
+   QUIETER than the star on purpose — a smaller glyph, and the muted
+   subhead colour when set rather than the star's blue — because a pin
+   is what a reader is watching right now and a mark is what he keeps.
+   The horizontal negative margins pull the pair together so the three
+   controls read as one group on the card's edge. */
+.mark{flex-shrink:0;align-self:center;border:none;background:transparent;font-family:inherit;font-size:13px;
+line-height:1;color:var(--faint);cursor:pointer;padding:11px 6px;margin:-9px -5px -9px -5px;min-width:44px;min-height:44px;
+display:flex;align-items:center;justify-content:center;border-radius:999px}
+.mark.on{color:var(--sub)}
+.mark:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
 
 /* stat grid */
 .stats{margin-top:10px;padding-left:54px}

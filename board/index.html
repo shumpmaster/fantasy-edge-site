@@ -53,6 +53,17 @@
 <div class="foot" id="foot"></div>
 
 </div>
+
+<!-- the bottom tab bar (m4.2b feature 11): three views of THIS board,
+     at the foot of the viewport, where a thumb is. It is a real
+     tablist — the buttons are written by app.js on every render, each
+     with role="tab" and its own aria-selected — and it is deliberately
+     separate from the locked top nav above, which names the sections
+     this product will grow rather than the ways of reading the one it
+     already has. -->
+<nav class="tabbar" id="tabbar" role="tablist"
+     aria-label="Board views"></nav>
+
 <script src="./app.js"></script>
 </body>
 </html>
