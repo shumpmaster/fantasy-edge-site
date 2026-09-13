@@ -1,0 +1,239 @@
+/* m4.1c — the Board site.
+ *
+ * Lifted from docs/design/UI_MOCKUP_v4.html, the binding visual spec.
+ * Every rule for an element the D-075 §0 departures ruled out is
+ * DELETED rather than hidden: the decomposition drawer, the fantasy
+ * points pill and its pace line, and the p10-p90 range strip are not
+ * in this file at all. What remains is the mockup verbatim plus the
+ * blocks m4.1 adds (banners, the disclosure block, the QB box-score
+ * line, the stale indicator, the empty state).
+ */
+
+:root{
+  --bg:#ffffff; --txt:#16283a; --sub:#5b7083; --faint:#8a9bab;
+  --pillbg:#f2f3f7; --divider:#e9edf1;
+  --up:#0da678; --upbg:#e4f6ef;
+  --dn:#e6316e; --dnbg:#fce8f0;
+  --blue:#3d5afe; --bluebg:#eef0ff;
+  --warn:#c77d0a; --warnbg:#fdf2df;
+  --live:#e6316e;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:15px;line-height:1.4}
+.wrap{max-width:640px;margin:0 auto;padding-bottom:60px}
+
+header{padding:18px 20px 6px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.runpill{background:var(--pillbg);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;color:var(--sub);flex-shrink:0}
+.runpill .ld{color:var(--live)}
+.fresh{display:flex;gap:14px;margin-top:10px;font-size:11.5px;color:var(--faint);font-weight:500;flex-wrap:wrap}
+.fresh .ok::before{content:"●";color:var(--up);margin-right:4px;font-size:9px;vertical-align:1px}
+.fresh .st::before{content:"●";color:var(--warn);margin-right:4px;font-size:9px;vertical-align:1px}
+/* the live layer's freshness line (m4.2b feature 6) — "updated 12s
+   ago" in the ok family, and "live data stalled · trying again" in the
+   SAME amber family an ageing source stamp already wears. A stalled
+   feed is a fact about the feed, not an alarm: no red, no modal, no
+   latch, and it clears itself on the next poll that answers. The red
+   `.bad` rule this replaced is deleted rather than left behind. */
+.fresh .stall{color:var(--warn);font-weight:600}
+
+/* banners — persistent, never dismissible */
+.banner{padding:11px 20px;font-size:12.5px;font-weight:700;line-height:1.5;border-bottom:1px solid var(--divider)}
+.banner.demo{background:var(--dnbg);color:var(--dn)}
+.banner.tp{background:var(--warnbg);color:var(--warn)}
+.banner .sub{display:block;font-weight:500;margin-top:3px}
+
+/* the locked nav stubs: present, inert, labelled */
+.tabs{display:flex;gap:22px;padding:14px 20px 0;border-bottom:1px solid var(--divider)}
+.tab{font-size:15px;font-weight:600;color:var(--faint);padding:8px 2px 10px;position:relative}
+.tab.on{color:var(--txt)}
+.tab.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2.5px;background:var(--txt);border-radius:2px}
+.tab.lock{cursor:default}
+.tab .soon{font-size:9px;font-weight:700;color:var(--faint);vertical-align:6px;margin-left:2px}
+
+/* disclosure block — always visible, top of board, never a modal */
+.disc{margin:14px 20px 0;background:var(--pillbg);border-radius:12px;padding:12px 14px;font-size:12.5px;color:var(--sub);line-height:1.55}
+.disc b{color:var(--txt);font-weight:700}
+.disc p+p{margin-top:8px}
+/* the third-party banner: persistent, inside the disclosure block,
+   and unmistakably not the engine's framing */
+.disc .tpline{display:block;margin-top:10px;background:var(--warnbg);color:var(--warn);border-radius:8px;padding:9px 11px;font-weight:700}
+
+.filters{display:flex;gap:8px;padding:14px 20px;overflow-x:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.seg{display:flex;background:var(--pillbg);border-radius:999px;padding:3px;flex-shrink:0}
+.seg button{border:none;background:transparent;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--sub);padding:7px 15px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.seg button.on{background:#fff;color:var(--txt);box-shadow:0 1px 4px rgba(22,40,58,.12)}
+.seg button:disabled{color:var(--faint);opacity:.55;cursor:default}
+
+/* the game filter (m4.2b feature 7a) — one compact chip per game on
+   the board, in kickoff order, behind a leading All. The mockup depicts
+   no such row, so it takes the control family the position filter and
+   the sorts already wear, one size down: these are the board's nouns,
+   not its verbs. The row scrolls sideways on a phone rather than
+   wrapping into a wall of chips, and a slate with no games renders no
+   row at all. */
+.gseg{display:flex;gap:6px;padding:0 20px 14px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gseg::-webkit-scrollbar{display:none}
+.gseg:empty{display:none}
+.gseg button{border:none;background:var(--pillbg);font-family:inherit;font-size:12.5px;font-weight:700;
+color:var(--sub);padding:9px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;flex-shrink:0;
+min-height:38px;letter-spacing:.01em}
+.gseg button.on{background:var(--bluebg);color:var(--blue)}
+.gseg button:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+
+/* game headers */
+.ghead{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.97);backdrop-filter:blur(6px);
+padding:12px 20px 10px;border-bottom:1px solid var(--divider);display:flex;align-items:center;gap:10px}
+.gbadges{display:flex;flex-shrink:0}
+.gbadge{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+font-size:9.5px;font-weight:800;color:#fff;border:2px solid #fff}
+.gbadge+.gbadge{margin-left:-8px}
+.gmain{flex:1;min-width:0}
+.gtitle{font-size:15px;font-weight:800;letter-spacing:-.015em}
+.gtitle .sc{color:var(--sub);font-weight:700}
+.gmeta{font-size:11.5px;font-weight:600;color:var(--faint);margin-top:1px}
+.gstatus{flex-shrink:0;text-align:right}
+.gspill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;border-radius:999px;padding:5px 11px}
+.gspill.live{background:var(--dnbg);color:var(--live)}
+.gspill.live .dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.4s infinite}
+.gspill.pre{background:var(--pillbg);color:var(--sub)}
+.gspill.final{background:var(--pillbg);color:var(--txt)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* possession (m4.2b feature 2) — a single mark beside the team holding
+   the ball, in the live colour, and only ever on a game in progress */
+.poss{color:var(--live);font-size:9px;vertical-align:2px}
+
+/* the red-zone chip (m4.2b feature 3) — the board's one "look up now"
+   signal. The mockup does not depict it, so it takes the design
+   system's warn family (the same one the Q tag wears) and reads
+   identically on a game header and on a card */
+.rz{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.03em;
+color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px;flex-shrink:0}
+.gstatus .rz{margin-right:6px;vertical-align:1px}
+
+/* the per-game disclosure (m4.2b feature 7b) — the pin star's own tap
+   discipline, on the game header: a 44px target drawn as a small
+   chevron, with the padding as the target and the negative margin
+   taking it back out of the layout so the header does not grow. A
+   folded game keeps every other thing its header was already saying */
+.fold{flex-shrink:0;align-self:center;border:none;background:transparent;font-family:inherit;font-size:13px;
+line-height:1;color:var(--faint);cursor:pointer;padding:11px;margin:-9px -9px -9px -4px;min-width:44px;min-height:44px;
+display:flex;align-items:center;justify-content:center;border-radius:999px}
+.fold.on{color:var(--txt)}
+.fold:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+
+/* the Pinned group (m4.2b feature 1) — the game header's own rules,
+   so the section reads as one more group and not a new kind of thing */
+.phead .gtitle{display:flex;align-items:center;gap:6px}
+.pinmark{color:var(--blue);font-size:13px}
+
+/* cards — the card itself still invites no tap, so no pointer and no
+   press state; the star is the one control a card carries */
+.card{padding:15px 20px 13px;border-bottom:1px solid var(--divider)}
+.cardtop{display:flex;gap:12px;align-items:flex-start}
+.badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:#fff;flex-shrink:0}
+.cmain{flex:1;min-width:0}
+.teamline{font-size:12px;font-weight:600;color:var(--sub)}
+.pname{font-size:16.5px;font-weight:700;letter-spacing:-.015em;margin:1px 0 0;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.postag{font-size:10px;font-weight:800;color:var(--sub);background:var(--pillbg);border-radius:6px;padding:2px 6px}
+.qtag{font-size:10.5px;font-weight:800;color:var(--warn);background:var(--warnbg);border-radius:6px;padding:2px 6px}
+
+/* the always-visible pace chip (m4.2b feature 8a) — the card's hot /
+   cold / level state, said in words instead of left to the colour of a
+   number. It takes the pace classes THEMSELVES as its modifier, so the
+   text colour is the very rule the LIVE cells are painted with
+   (.c-up / .c-dn / .c-n above) and only the quiet background is added
+   here: the chip cannot drift away from the numbers because it is not
+   a second treatment of them. Chip shape is the Q tag's, so a card's
+   header row reads as one family. */
+.pchip{display:inline-flex;align-items:center;font-size:10px;font-weight:800;letter-spacing:.03em;
+border-radius:6px;padding:2px 6px;flex-shrink:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pchip.c-up{background:var(--upbg)}
+.pchip.c-dn{background:var(--dnbg)}
+/* the neutral state is deliberately the quietest thing on the row: it
+   is present because the indicator is always present, not because it
+   has news */
+.pchip.c-n{background:var(--pillbg);color:var(--faint)}
+
+/* the achievement hero number (m4.2b feature 9) — the one large number
+   a card carries: what share of this player's projected statline has
+   actually landed, as a percentage. docs/design/UI_MOCKUP_v5_live.html
+   puts a hero-weight number in exactly this place, on a right-hand rail
+   it calls `.cright`, so the rail keeps that name and the number keeps
+   that visual weight — a compact pill, tabular figures, tight tracking.
+   What the mockup put INSIDE that rail is not what this renders and its
+   probability treatments are not built.
+
+   The numeral takes the pace classes THEMSELVES as its modifier, the
+   way the pace chip does: the colour is the very rule the LIVE cells
+   are painted with (.c-up / .c-dn / .c-n below) and only the quiet
+   background is added here, so the hero cannot drift away from the
+   numbers under it. A final drops the fill for a hairline — the settled
+   reading the FINAL status pill already has — because nothing about
+   that number is going to move again.
+
+   The rail is width-capped rather than nowrapped: on a 400px card the
+   name beside it wraps (it already does) and the hero keeps its
+   footprint, so nothing overflows and the star keeps its 44px edge. */
+.cright{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:2px;
+max-width:104px;text-align:right}
+.ach{display:inline-block;font-size:20px;font-weight:800;letter-spacing:-.02em;line-height:1.2;
+border-radius:999px;padding:5px 11px;font-variant-numeric:tabular-nums}
+.ach.c-up{background:var(--upbg)}
+.ach.c-dn{background:var(--dnbg)}
+.ach.c-n{background:var(--pillbg)}
+.ach.fin{background:transparent;box-shadow:inset 0 0 0 1.5px var(--divider)}
+/* the comparison the colour is making, said in words, in the same muted
+   family every other footnote on the card wears */
+.achsub{font-size:9.5px;font-weight:600;color:var(--faint);font-variant-numeric:tabular-nums}
+
+/* the per-player freshness stamp (m4.2b feature 8b) — how current THIS
+   player's numbers are, in game time. The QB box-score line's muted
+   family again, one step quieter still: it is a footnote to the card,
+   never a thing to read before the numbers */
+.laststat{margin:6px 0 0;padding-left:54px;font-size:11px;font-weight:600;color:var(--faint);
+font-variant-numeric:tabular-nums}
+
+/* the pin star: a 44px tap target drawn as a compact glyph. The
+   padding is the target and the negative margin takes it back out of
+   the layout, so the thumb gets its square without the card growing */
+.pin{flex-shrink:0;align-self:center;border:none;background:transparent;font-family:inherit;font-size:18px;
+line-height:1;color:var(--faint);cursor:pointer;padding:11px;margin:-9px -9px -9px 0;min-width:44px;min-height:44px;
+display:flex;align-items:center;justify-content:center;border-radius:999px}
+.pin.on{color:var(--blue)}
+.pin:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+
+/* stat grid */
+.stats{margin-top:10px;padding-left:54px}
+.srow{display:grid;grid-template-columns:40px repeat(var(--n),minmax(0,1fr));gap:4px 6px;align-items:baseline}
+.srow+.srow{margin-top:4px}
+.shead .cell{font-size:10.5px;font-weight:700;color:var(--faint)}
+.rlab{font-size:9.5px;font-weight:800;color:var(--faint);letter-spacing:.02em}
+.rlab.lv{color:var(--live)}
+.proj .cell{font-size:13.5px;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+.liver .cell{font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums}
+.c-up{color:var(--up)} .c-dn{color:var(--dn)} .c-n{color:var(--txt)}
+
+/* usage vs expected-to-now (m4.2b feature 4) — labelled arithmetic on
+   published values. The mockup depicts no treatment for it, so it takes
+   the QB box-score line's muted family: this is information, not an
+   alert, and it must not out-shout the LIVE row it sits under. The
+   observed count alone carries the stat grid's own pace colour, on the
+   same thresholds, so the two never disagree. */
+.usage{margin:9px 0 0;padding-left:54px;font-size:11.5px;font-weight:600;color:var(--sub);font-variant-numeric:tabular-nums}
+.usage span{font-weight:800}
+
+/* QB live-only box-score line — never a projection, so never in the
+   PROJ/LIVE pair above it */
+.boxline{margin:9px 0 0;padding-left:54px;font-size:11.5px;font-weight:700;color:var(--sub);font-variant-numeric:tabular-nums}
+.boxline .src{color:var(--faint);font-weight:500;font-variant-numeric:normal}
+
+.empty{margin:28px 20px;padding:18px;background:var(--pillbg);border-radius:12px;font-size:13.5px;color:var(--sub);line-height:1.6}
+.empty b{color:var(--txt);font-weight:700;display:block;margin-bottom:4px}
+
+.foot{padding:22px 20px;font-size:11.5px;color:var(--faint);line-height:1.7}
+.foot p+p{margin-top:10px}
+.foot b{color:var(--sub);font-weight:700}
