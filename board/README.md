@@ -87,6 +87,24 @@ refuses storage — a private window, where `localStorage` throws rather
 than returning nothing — keeps its pins in memory for the life of the
 tab instead.
 
+## Sorting
+
+The sort control carries four options. `Proj` (the default) and `Live`
+order each game group by the position's headline stat, as they always
+did. `Hot` and `Cold` order by **pace**: the live count divided by the
+projection times the share of the game played — the same ratio the LIVE
+cells are already coloured on, so the ordering and the colours can
+never disagree. Hot reads down from the player furthest ahead of his
+projected pace, Cold up from the one furthest behind.
+
+A pace can only be read for a game in progress, and only where there is
+both a projection and a live count. Everyone else — pregame, final, a
+stat the exporter could not project, a box score that has not carried a
+number yet — keeps his place below the players whose pace can be read,
+in the order the board already had him. With nothing live at all a pace
+sort is simply the board as it already reads: no error, no empty state.
+Nothing about the sort is stored; a reload opens on `Proj`.
+
 ## The live layer
 
 On load, in real mode only, the page reads ESPN's public scoreboard
@@ -109,6 +127,14 @@ the same UTC kickoff date, through an alias table that mirrors
 `espn_id`. A failing or stale feed freezes the LIVE rows, says so in
 the header, and drops the pace colours to neutral — it never invents a
 number.
+
+The header carries one line for the live layer's freshness: `updated
+12s ago`, restated by every poll (the poll loop is its only clock —
+there is no second timer). After three missed polls in a row it reads
+`live data stalled · trying again` in the same amber the export's own
+ageing stamps wear: the rows on the page are the last known ones, the
+next poll is already coming, and the line clears itself the moment one
+answers. There is nothing to dismiss and nothing to act on.
 
 ## Deploy
 

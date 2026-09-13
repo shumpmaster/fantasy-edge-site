@@ -60,6 +60,17 @@ const MISSED_POLLS_STALE = 3;
 /* A source stamp older than this wears the amber dot. */
 const FRESH_WARN_MS = 6 * 60 * 60 * 1000;
 
+/* The live layer's own freshness line (m4.2b feature 6). Each is ONE
+ * contiguous string: they are the sentinels the site test looks for,
+ * and a concatenation would let the wording drift silently.
+ *
+ * "Stalled" rather than "broken", and in the amber family rather than
+ * the red one, because that is the truth of the state: the last known
+ * values are still on the page, frozen, and the next poll is already
+ * on its way. It clears itself the moment one answers. */
+const FEED_STALLED = "live data stalled · trying again";
+const FEED_CONNECTING = "live feed connecting";
+
 /* ------------------------------------------------------------------
  * the disclosures — sentinel strings, rendered on every board
  * ------------------------------------------------------------------ */
@@ -175,7 +186,19 @@ const HEADLINE = {
 
 const POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
 const POS_FILTERS = ["ALL", "QB", "RB", "WR", "TE"];
-const SORTS = [["proj", "Proj"], ["live", "Live"]];
+const SORTS = [["proj", "Proj"], ["live", "Live"], ["hot", "Hot"],
+               ["cold", "Cold"]];
+
+/* The two pace sorts (m4.2b feature 5) and which end of the ratio each
+ * one puts first: Hot reads down from the player furthest ahead of his
+ * projected pace, Cold reads up from the one furthest behind. The
+ * ratio is the SAME one the LIVE cells are already coloured on — the
+ * sorts add an ordering, not a number. */
+const PACE_SORTS = { hot: -1, cold: 1 };
+
+const PACE_SORT_TITLE =
+  "Orders a game in progress by how far ahead of — or behind — the " +
+  "projected pace each player is running";
 
 /* A cell that rounds to nothing (the pages renderer's rule). */
 const BLANK = "—";
@@ -525,17 +548,27 @@ function liveValue(box, key) {
   return numberOrNull(box[key]);
 }
 
-/* LIVE cells only: actual against projection × fraction elapsed. */
-function paceClass(proj, actual, frac, isFinal) {
-  if (state.stale) return "c-n";
+/* Actual against projection × fraction elapsed — THE ratio on this
+ * page. The LIVE cells take their colour from it, the usage line takes
+ * the same colour from it, and the Hot/Cold sorts order by it, so a
+ * card's colour and its place on the board can never disagree.
+ *
+ * `null` means "cannot be read": no projection, a projection of zero,
+ * or nothing observed yet. It is never a zero and never a guess. */
+function paceRatio(proj, actual, frac, isFinal) {
   const projected = numberOrNull(proj);
   const got = numberOrNull(actual);
-  if (projected === null || projected === 0 || got === null) {
-    return "c-n";
-  }
+  if (projected === null || projected === 0 || got === null) return null;
   const expected = isFinal ? projected : projected * frac;
-  if (!(expected > 0)) return "c-n";
-  const ratio = got / expected;
+  if (!(expected > 0)) return null;
+  return got / expected;
+}
+
+/* LIVE cells only: the ratio above, in the board's three bands. */
+function paceClass(proj, actual, frac, isFinal) {
+  if (state.stale) return "c-n";
+  const ratio = paceRatio(proj, actual, frac, isFinal);
+  if (ratio === null) return "c-n";
   if (ratio >= 1.12) return "c-up";
   if (ratio <= 0.72) return "c-dn";
   return "c-n";
@@ -569,7 +602,43 @@ function sortValue(player) {
   return numberOrNull((player.proj || {})[key]);
 }
 
+/* The value a Hot/Cold sort orders on (m4.2b feature 5): the pace
+ * ratio, on the position's headline stat — the same stat every other
+ * sort already reads — through the same `paceRatio` the colours run
+ * on. There is no second clock model and no second projection here.
+ *
+ * A pace sort is a question that only a game in progress can answer:
+ * pregame there is nothing observed, and after the whistle the ratio
+ * would be against the whole projection rather than a share of it,
+ * which is a different question with the same shape. Both, and any
+ * player the feed or the contract left a hole in, return null — and
+ * null is what puts a player BELOW the sortable ones in his group
+ * rather than ranking him on a number nobody has. */
+function paceSortValue(player) {
+  const status = statusFor(player);
+  if (!status || status.state !== "in") return null;
+  const key = headlineFor(player.pos);
+  return paceRatio((player.proj || {})[key],
+    liveValue(boxFor(player), key), fractionElapsed(status), false);
+}
+
 function comparePlayers(a, b) {
+  /* Hot/Cold first, and across the whole group: "who is running hot"
+   * is a question about the game in front of you, not about one
+   * position at a time, so the position rank below does not apply to
+   * the players a ratio can be read for. Everyone else falls straight
+   * through to the board's own order, unchanged, underneath them. */
+  const direction = PACE_SORTS[state.sort];
+  if (direction) {
+    const paceA = paceSortValue(a);
+    const paceB = paceSortValue(b);
+    if (paceA !== null && paceB !== null) {
+      if (paceA !== paceB) return direction * (paceA - paceB);
+      return String(a.name).localeCompare(String(b.name));
+    }
+    if (paceA !== null) return -1;
+    if (paceB !== null) return 1;
+  }
   const orderA = POS_ORDER.indexOf(up(a.pos));
   const orderB = POS_ORDER.indexOf(up(b.pos));
   const rankA = orderA < 0 ? POS_ORDER.length : orderA;
@@ -628,17 +697,30 @@ function renderHeader() {
     dots.push('<span class="' + cls + '">' + labels[key] + " " +
       esc(text) + "</span>");
   }
-  /* The live-feed dot is stamped by the load-time pass and stays; the
-   * pulsing LIVE dot in the run pill above is the one that means the
-   * loop is actively polling. */
+  /* The live layer's own freshness line (m4.2b feature 6), beside the
+   * export's source stamps and in the same family: how long ago the
+   * feed last answered, restated by every poll because every poll
+   * re-renders this header. No timer of its own — the poll loop is the
+   * clock, and a second one would be a second thing to get wrong.
+   *
+   * It is stamped by the load-time pass and stays; the pulsing LIVE
+   * dot in the run pill above is the one that means the loop is
+   * actively polling. */
   if (state.polling || state.feedSeen) {
     if (state.stale) {
-      dots.push('<span class="bad">live feed stale — rows frozen' +
+      /* Three missed polls in a row (MISSED_POLLS_STALE): the LIVE
+       * rows are frozen on their last known values and the colours
+       * have already dropped to neutral, so the line says what is
+       * happening and that it is still trying. The next poll that
+       * answers clears it silently — nothing here latches. */
+      dots.push('<span class="st stall">' + esc(FEED_STALLED) +
         "</span>");
     } else {
       const age = ageLabel(state.feedTs, now);
-      dots.push('<span class="ok">live feed ' +
-        esc(age === null ? "connecting" : age) + "</span>");
+      dots.push('<span class="ok">' +
+        (age === null
+          ? esc(FEED_CONNECTING)
+          : "updated " + esc(age) + " ago") + "</span>");
     }
   }
   document.getElementById("fresh").innerHTML = dots.join("");
@@ -695,6 +777,12 @@ function renderControls() {
       button.disabled = true;
       button.title = "Live sorting opens once a game has kicked off";
     }
+    /* The pace sorts are never locked. `Live` is, because with nothing
+     * kicked off it would sort a column of nulls and can only be
+     * wrong; Hot and Cold have an honest answer with nothing live —
+     * the board exactly as it already reads — so they degrade to it
+     * instead of going dark and coming back. */
+    if (PACE_SORTS[key]) button.title = PACE_SORT_TITLE;
     button.onclick = function () {
       state.sort = key;
       render(true);
