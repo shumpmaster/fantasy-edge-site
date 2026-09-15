@@ -90,6 +90,30 @@ const FEED_CONNECTING = "live feed connecting";
  * when everything is fine. */
 const STORAGE_OFF = "marks won't survive a reload in this browser";
 
+/* The projection snapshot's own "as of" stamp (D-083). Projections no
+ * longer come out once before kickoff: they live here all week and
+ * refresh daily, so the board has to say WHEN the numbers in front of
+ * the reader were generated, and WHICH snapshot they are.
+ *
+ * It rides the freshness line — same container, same muted family,
+ * same renderer — rather than inventing a second place for a
+ * timestamp, and it is UTC on purpose: the cadence the reader is
+ * learning ("Tuesday, Wednesday... and the Sunday one is the graded
+ * one") is a UTC cadence, so a local-time rendering would blur exactly
+ * the thing the line exists to make legible. No dot: the source stamps
+ * beside it already carry the ageing signal.
+ *
+ * ABSENT WHEN UNKNOWN (§6). A board whose run block has no readable
+ * `generated_ts` renders no line at all rather than a guessed one, and
+ * an unlabelled snapshot (the empty state, a third-party week) renders
+ * the time without a kind rather than claiming to be final. */
+const ASOF_PREFIX = "projections as of ";
+const ASOF_KIND_FINAL = " · final";
+const ASOF_KIND_REFRESH = " · refresh";
+const ASOF_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const SNAPSHOT_FINAL = "final";
+const SNAPSHOT_REFRESH = "refresh";
+
 /* ------------------------------------------------------------------
  * the disclosures — sentinel strings, rendered on every board
  * ------------------------------------------------------------------ */
@@ -809,6 +833,30 @@ function kickoffLabel(iso) {
   }
 }
 
+/* "Tue 13:10Z" — the day and the UTC clock of a generation, and
+ * nothing else. Null when the stamp cannot be read, which is what
+ * keeps the line absent rather than invented. */
+function asOfLabel(iso) {
+  const at = ms(iso);
+  if (at === null) return null;
+  const when = new Date(at);
+  return ASOF_DAYS[when.getUTCDay()] + " " +
+    when.toISOString().slice(11, 16) + "Z";
+}
+
+/* The whole muted line, or "" when there is no readable stamp. One
+ * renderer, called from the header and from nowhere else. */
+function asOfLine(run) {
+  const label = asOfLabel((run || {}).generated_ts);
+  if (label === null) return "";
+  const kind = (run || {}).snapshot_kind;
+  let suffix = "";
+  if (kind === SNAPSHOT_FINAL) suffix = ASOF_KIND_FINAL;
+  else if (kind === SNAPSHOT_REFRESH) suffix = ASOF_KIND_REFRESH;
+  return '<span class="asof">' + esc(ASOF_PREFIX + label + suffix) +
+    "</span>";
+}
+
 function stampLabel(iso) {
   const at = ms(iso);
   if (at === null) return iso ? String(iso) : "unrecorded";
@@ -1301,6 +1349,12 @@ function renderHeader() {
   if (storageAtRisk()) {
     dots.push('<span class="st">' + esc(STORAGE_OFF) + "</span>");
   }
+  /* And last, on a line of its own inside the same container, the
+   * projection snapshot's own "as of" stamp (D-083). It goes last
+   * because `.fresh .asof` takes a full row: anything after it would
+   * be pushed onto a third line for no reason. Display-only — it
+   * names a time and a kind and changes no number on the board. */
+  dots.push(asOfLine(run));
   document.getElementById("fresh").innerHTML = dots.join("");
 }
 

@@ -9,6 +9,7 @@
     "season": 2026,
     "week": 2,
     "band": "EARLY",
+    "snapshot_kind": "final",
     "source": "engine",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share −5.6%). Corrections are tested weekly against live results before adoption.",
     "thirdparty_attribution": null,

@@ -28,6 +28,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 header{padding:18px 20px 6px}
 .toprow{display:flex;align-items:center;justify-content:space-between;gap:10px}
 h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
+/* the product-status label (D-098) — the public board is an explicitly
+   ALPHA product, so the page says so wherever it says its own name, and
+   permanently: never dismissible, never a banner that scrolls away.
+   It rides INSIDE the h1, the way the locked nav's LOCKED/M4.2 tags
+   ride inside their own tabs, so the top row is still the two flex
+   children it always was and nothing else moves. Shape, size and weight
+   are the card tags' (.postag / .qtag); the colour is the board's blue
+   accent rather than the amber warn family, because the label is a fact
+   about the interface, not a warning about the numbers. On a narrow
+   phone the h1 wraps and the pill comes to rest under the title —
+   still beside the name, still on the first thing a reader sees. */
+.alpha{display:inline-block;vertical-align:4px;margin-left:6px;font-size:9.5px;font-weight:800;
+letter-spacing:.05em;color:var(--blue);background:var(--bluebg);border-radius:6px;padding:2px 5px;
+white-space:nowrap}
 .runpill{background:var(--pillbg);border-radius:999px;padding:7px 14px;font-size:12.5px;font-weight:700;color:var(--sub);flex-shrink:0}
 .runpill .ld{color:var(--live)}
 .fresh{display:flex;gap:14px;margin-top:10px;font-size:11.5px;color:var(--faint);font-weight:500;flex-wrap:wrap}
@@ -40,6 +54,11 @@ h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
    latch, and it clears itself on the next poll that answers. The red
    `.bad` rule this replaced is deleted rather than left behind. */
 .fresh .stall{color:var(--warn);font-weight:600}
+/* the projection snapshot's "as of" stamp (D-083) — the same muted
+   family as the source stamps beside it, on a row of its own inside
+   the same flex line. No dot: the stamps above already carry the
+   ageing signal, and this one names a time, not a health. */
+.fresh .asof{flex-basis:100%;margin-top:2px}
 
 /* banners — persistent, never dismissible */
 .banner{padding:11px 20px;font-size:12.5px;font-weight:700;line-height:1.5;border-bottom:1px solid var(--divider)}
