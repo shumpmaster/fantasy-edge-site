@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasy Edge — alpha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="./app.css" rel="stylesheet">
+</head>
+
+<!-- U1 — THE APP SHELL (UI_ALPHA_SPEC sec 3, realising
+     docs/design/FANTASY_EDGE_UI_HANDOFF.md).
+
+     THE APP LIVES HERE AND NOWHERE ELSE. `web/app/` is a NEW surface
+     inside the board's existing rsync (board-deploy.yml copies all of
+     `web/` into `board/`), so it is served at /board/app/ the moment
+     it lands and NO workflow changed to put it there. The board
+     (`web/index.html`) and the lab (`web/lab/`) are untouched: this
+     directory force-fits nothing and inherits nothing from them
+     except their engineering idioms — vanilla, no build step, no
+     module, sentinel constants, honest arms, everything the page says
+     on disk before a script runs.
+
+     WHAT U1 IS. The shell: the sec 3 visual system as custom
+     properties, the five-slot tab bar with per-tab stacks, the sec
+     2.5 transition set (every one of them at most 300ms and every one
+     of them off under prefers-reduced-motion), the sec 5.1 hero with
+     its ring art, the + sheet, the sec 5.3 Projections placeholder,
+     and honest stubs at every other route so the navigation of board
+     16 works end to end. The CONTENT of those stubs arrives in
+     U2-U7; each one says so in its own words rather than pretending.
+
+     NOTHING IS FETCHED. There is no exporter behind this surface yet
+     and no data contract to read, so the shell is driven by fixtures
+     written into `app.js` under one clearly-marked block, with
+     FABRICATED names. The Sample-data tag in the hero's top row says
+     so on screen for as long as that is true, and a test pins that
+     this directory contains no `fetch(` at all. -->
+
+<body>
+
+<!-- THE TWO SENTINELS, written into the page itself and not only by
+     the script, so they are on screen before anything runs and stay
+     there if the script never does. `app.js` re-renders these same
+     elements from its own constants, and a test asserts the page and
+     the constants say the same strings.
+
+     THE ALPHA LINE is the D-098 idiom in the app's own words: the
+     numbers are the engine's certified projections, and the INTERFACE
+     around them is under active development. It may be reworded only
+     where D-098 is rewritten, never softened here. -->
+<div class="app">
+
+  <div class="viewport" id="viewport">
+    <main class="screen" id="screen" tabindex="-1"></main>
+    <footer class="alpha" id="alpha" data-sample-tag="Sample data">ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098). Sample data drives this build.</footer>
+  </div>
+
+  <!-- The tab bar is chrome, not a screen: it is rendered once per
+       navigation and it never scrolls away. -->
+  <nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+
+  <!-- The sec 2.5 toast, above the tab bar, and the sec 2.4 sheet
+       over its scrim. Both are empty and hidden until something asks
+       for them. -->
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div class="overlay" id="overlay" hidden></div>
+
+</div>
+
+<script src="./app.js"></script>
+</body>
+</html>

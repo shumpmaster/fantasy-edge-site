@@ -1,0 +1,622 @@
+/* U1 — THE APP SHELL'S VISUAL SYSTEM.
+ *
+ * docs/design/FANTASY_EDGE_UI_HANDOFF.md sec 3, taken VERBATIM: the
+ * token table below is the owner-approved palette at the hexes the
+ * handoff lists, and the type scale is its own sec 3.2 list. Nothing
+ * here is a substitution, an approximation or a nearby shade — when a
+ * colour or a size changes it changes in the handoff first and here
+ * second, and the tests in tests/test_web_site.py pin both tables
+ * against that document.
+ *
+ * THE LAB'S VARIABLES ARE NOT IMPORTED. The stylesheets under
+ * `web/lab/` belong to the sandbox pages and `web/style.css` belongs
+ * to the board; this directory is the APP and it shares no stylesheet
+ * with either. Nor does it share their wording: the retired word
+ * (D-123 item 4) appears nowhere under `web/app/` at all — not on the
+ * screen, not in a class name, not in a comment — because this
+ * surface was built after the rename and has no file names to keep.
+ *
+ * MOTION. Every animation in this file is one of the eight named in
+ * sec 2.5 — push, tab, sheet, drop, swap, grow, toast, pulse — at the
+ * distance, duration and easing that table gives, none of them longer
+ * than 300ms, and the whole set is killed by the reduced-motion query
+ * at the bottom. There is no ambient motion anywhere: nothing loops.
+ */
+
+:root{
+  /* --- sec 3.1 neutrals ---------------------------------------- */
+  --ground:#F5F5F3;         /* app background, inner panels */
+  --surface:#FFFFFF;        /* cards, table */
+  --ink:#1C1F23;            /* primary text, primary buttons, active tab */
+  --text-2:#3F444A;         /* secondary body text */
+  --muted:#5F656D;          /* labels, meta, axis text */
+  --subtle:#8B9097;         /* inactive tabs, the "@" separator */
+  --rule:#E9EAEC;           /* dividers, segmented-control track */
+  --rule-2:#E6E7E9;         /* card borders */
+  --track:#D5D8DC;          /* empty bars, inactive dots */
+  --border-strong:#C6CACF;  /* outlined buttons, uncertainty bands */
+  --disabled:#B4B8BE;       /* dashes in empty table cells */
+  --row-alt:#FAFAFA;        /* alternate table rows */
+  --panel:#F0F1F2;          /* skeletons, quiet fills */
+
+  /* --- sec 3.1 meaning colours: solid, text-on-tint, tint -------
+     Colour always MEANS something here; decoration stays neutral. */
+  --positive:#2E7D5B;
+  --positive-text:#22604A;
+  --positive-tint:#E7F2EC;
+  --positive-cell:#EDF5F0;  /* the table cell's own lighter tint */
+  --negative:#A8352C;
+  --negative-text:#8A2A22;
+  --negative-tint:#F7E9E7;
+  --read:#4A6285;
+  --read-text:#33496A;
+  --read-tint:#E9EDF3;
+  --heating:#B06A2C;
+  --heating-text:#80501F;
+  --heating-tint:#F5ECE2;
+
+  /* --- sec 3.1 hero only ---------------------------------------- */
+  --hero-angle:170deg;
+  --hero-from:#2F353D;
+  --hero-to:#1B1F24;
+  --hero-glow:#A9B6C6;
+  --hero-glow-opacity:0.22;
+
+  /* the sec 2.5 sheet scrim: 45% INK, which is the ink token and not
+     a fourth grey */
+  --scrim:rgba(28,31,35,0.45);
+
+  /* --- sec 3.2 type --------------------------------------------- */
+  --text:'IBM Plex Sans','Helvetica Neue',sans-serif;
+  --w-regular:400;
+  --w-medium:500;
+  --w-semibold:600;
+  --type-page:24px;        /* page title, 600 */
+  --type-section:20px;     /* section title, 600 */
+  --type-card:17px;        /* card heading, 15-17/600 */
+  --type-body:14px;        /* body, 13-15/400 */
+  --type-cell:13px;        /* table cells, 12-13 */
+  --type-meta:11px;        /* meta and captions, 11-12 */
+  --type-overline:11px;    /* overline labels, 11-12/600 uppercase */
+  --track-overline:0.08em;
+  /* sec 3.2 data display sizes */
+  --type-live:46px;        /* live card % */
+  --type-total:30px;       /* fantasy totals */
+  --type-row:22px;         /* row percentages and "Needs N" */
+
+  /* --- sec 3.3 shape, spacing, elevation ------------------------ */
+  --r-card:16px;
+  --r-row:14px;
+  --r-panel:10px;
+  --r-button:22px;
+  --r-full:999px;
+  --gutter:16px;           /* page gutters */
+  --gutter-table:10px;     /* the home table card's own */
+  --cardgap:12px;
+  /* ONE soft shadow, on the home table card and overlays only */
+  --shadow-card:0 4px 16px rgba(28,31,35,0.06);
+
+  /* --- sec 2.5 motion: names, distances, durations, easings -----
+     Every one of these is at most 300ms, which is the rule the table
+     states before it states any of them. */
+  --dur-push:280ms;        /* push / back, slide 48px + fade */
+  --dur-tab:180ms;         /* tab switch and the Bets toggle, crossfade */
+  --dur-sheet:300ms;       /* sheet rise from the bottom */
+  --dur-drop:240ms;        /* game-search panel drops 12px + fade */
+  --dur-swap:240ms;        /* game switcher, table slides 14px */
+  --dur-grow:200ms;        /* new rows rise 8px + fade (200-360ms) */
+  --dur-grow-long:300ms;
+  --dur-toast:220ms;       /* toast rises 16px above the tab bar */
+  --dur-pulse:900ms;       /* one ring pulse on a new play, never a loop */
+  --ease-push:cubic-bezier(.2,.8,.2,1);
+  --stagger:80ms;          /* list items, sec 2.5 Grow */
+
+  --dist-push:48px;
+  --dist-drop:12px;
+  --dist-swap:14px;
+  --dist-grow:8px;
+  --dist-toast:16px;
+
+  /* the shell's own furniture */
+  --tabbar-height:80px;
+  --hero-height:360px;
+  --hero-fade:90px;
+  --card-overlap:-56px;
+}
+
+*{box-sizing:border-box}
+
+html,body{margin:0;padding:0;height:100%}
+
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--text);
+  font-size:var(--type-body);
+  font-weight:var(--w-regular);
+  /* sec 3.2: everywhere, so live numbers do not jitter */
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* --------------------------------------------------------------------
+   THE SHELL. A phone-shaped column, centred on anything wider. The tab
+   bar is fixed to its bottom and the viewport above it is the only
+   thing that scrolls, so the bar never scrolls away and the toast
+   always has a known edge to sit above.
+   -------------------------------------------------------------------- */
+
+.app{
+  position:relative;
+  max-width:430px;
+  margin:0 auto;
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+  background:var(--ground);
+}
+
+.viewport{
+  position:absolute;
+  left:0;right:0;top:0;
+  bottom:var(--tabbar-height);
+  overflow-y:auto;
+  overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+
+.screen{display:block;outline:none}
+
+/* the alpha disclosure, under every screen */
+.alpha{
+  padding:18px var(--gutter) 24px;
+  font-size:var(--type-meta);
+  line-height:1.5;
+  color:var(--muted);
+  border-top:1px solid var(--rule);
+  margin-top:20px;
+}
+
+/* --------------------------------------------------------------------
+   SHARED PIECES — sec 4, only the ones the shell itself needs. The
+   rest of the component library (probability bar, distribution chart,
+   claim chip, range bar, sparklines) arrives with the screens that
+   use it, U2-U6.
+   -------------------------------------------------------------------- */
+
+.page{
+  display:flex;
+  flex-direction:column;
+  gap:var(--cardgap);
+  padding:0 var(--gutter) 8px;
+}
+
+.pagehead{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  min-height:60px;
+}
+
+.pagetitle{
+  flex-grow:1;
+  font-size:var(--type-page);
+  font-weight:var(--w-semibold);
+}
+
+.pagemeta{font-size:12px;color:var(--muted)}
+
+/* the slate's own header line, sec 5.4 */
+.slatehead{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.slatehead .slatetitle{font-size:15px;font-weight:var(--w-semibold)}
+
+.overline{
+  font-size:var(--type-overline);
+  font-weight:var(--w-semibold);
+  letter-spacing:var(--track-overline);
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.card{
+  background:var(--surface);
+  border-radius:var(--r-card);
+  padding:16px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.cardhead{font-size:var(--type-card);font-weight:var(--w-semibold);line-height:1.35}
+.cardbody{font-size:var(--type-body);color:var(--text-2);line-height:1.5}
+
+/* sec 4 skeleton row — panel-coloured bars, and never announced */
+.skeleton{
+  background:var(--surface);
+  border-radius:var(--r-card);
+  padding:14px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.skelrow{display:flex;align-items:center;gap:10px;min-height:36px}
+.skelbar{height:10px;border-radius:5px;background:var(--panel)}
+.skelbar.lead{width:28px;background:var(--rule)}
+.skelbar.tail{width:44px;background:var(--rule);margin-left:auto}
+
+/* a stub row that is also a real button: it is labelled as a stub and
+   it opens the route it will one day carry */
+.stubrow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  min-width:44px;
+  min-height:64px;
+  padding:12px 14px;
+  border:1px solid var(--rule-2);
+  border-radius:var(--r-row);
+  background:var(--surface);
+  color:var(--ink);
+  font-family:inherit;
+  font-size:var(--type-body);
+  text-align:left;
+  cursor:pointer;
+}
+.stubrow .stubname{font-weight:var(--w-semibold);font-size:15px}
+.stubrow .stubnote{font-size:12px;color:var(--muted)}
+.stubrow .stubcol{display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0}
+.stubrow .stubmark{
+  font-size:var(--type-meta);
+  font-weight:var(--w-semibold);
+  color:var(--muted);
+  background:var(--panel);
+  border-radius:var(--r-full);
+  padding:3px 8px;
+  flex-shrink:0;
+}
+
+/* sec 4 segmented control — rule-coloured track, white active pill,
+   40px tall buttons */
+.seg{
+  display:flex;
+  gap:4px;
+  background:var(--rule);
+  border-radius:var(--r-button);
+  padding:3px;
+}
+.seg button{
+  flex:1;
+  min-width:44px;
+  min-height:44px;
+  border:none;
+  border-radius:20px;
+  background:transparent;
+  color:var(--text-2);
+  font-family:inherit;
+  font-size:var(--type-cell);
+  font-weight:var(--w-medium);
+  cursor:pointer;
+}
+.seg button[aria-pressed="true"]{
+  background:var(--surface);
+  color:var(--ink);
+  font-weight:var(--w-semibold);
+  box-shadow:0 1px 3px rgba(28,31,35,0.08);
+}
+
+.backbtn{
+  width:44px;height:44px;
+  min-width:44px;min-height:44px;
+  margin-left:-12px;
+  border:none;background:transparent;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+
+/* --------------------------------------------------------------------
+   SEC 5.1 — THE HERO. 360px tall, full bleed inside the shell, the
+   bottom 90px fading to ground, and the matchup card overlapping it by
+   56px. The art is white-only line work on one gradient: no second
+   hue anywhere in it.
+   -------------------------------------------------------------------- */
+
+.hero{
+  position:relative;
+  height:var(--hero-height);
+  background:linear-gradient(var(--hero-angle),var(--hero-from) 0%,var(--hero-to) 100%);
+  color:var(--surface);
+  overflow:hidden;
+}
+
+.heroart{position:absolute;left:0;top:0;width:100%;height:100%}
+
+.herofade{
+  position:absolute;left:0;right:0;bottom:0;
+  height:var(--hero-fade);
+  background:linear-gradient(to bottom,rgba(245,245,243,0),var(--ground));
+}
+
+.herotop{
+  position:absolute;left:var(--gutter);right:6px;top:36px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+
+.sampletag{
+  width:88px;
+  font-size:10px;
+  font-weight:var(--w-semibold);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  opacity:0.85;
+}
+
+.wordmark{font-size:19px;font-weight:var(--w-semibold)}
+
+/* the two top-row icons sit side by side, not stacked */
+.heroicons{display:flex;align-items:center}
+
+.iconbtn{
+  width:44px;height:44px;
+  min-width:44px;min-height:44px;
+  border:none;background:transparent;color:currentColor;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+
+/* sec 4 nav ring — text only, no numbers. White text on the hero,
+   10-12% white fill. */
+.ring{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,0.10);
+  color:var(--surface);
+  font-family:inherit;
+  font-weight:var(--w-semibold);
+  cursor:pointer;
+  padding:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.ring.side{
+  width:88px;height:88px;
+  min-width:44px;min-height:44px;
+  top:140px;
+  border:3px solid rgba(255,255,255,0.9);
+  font-size:16px;
+}
+.ring.left{left:6px}
+.ring.right{right:6px}
+.ring.centre{
+  left:50%;
+  transform:translateX(-50%);
+  top:86px;
+  width:196px;height:196px;
+  min-width:44px;min-height:44px;
+  border:5px solid var(--surface);
+  background:rgba(255,255,255,0.12);
+  font-size:25px;
+  letter-spacing:-0.01em;
+}
+
+/* the matchup card: the ONE card that carries the sec 3.3 shadow */
+.matchcard{
+  position:relative;
+  margin:var(--card-overlap) var(--gutter-table) 0;
+  background:var(--surface);
+  border-radius:var(--r-card);
+  padding:6px 0 10px;
+  box-shadow:var(--shadow-card);
+  display:flex;
+  flex-direction:column;
+}
+
+/* sec 4 game switcher */
+.switcher{display:flex;align-items:center;justify-content:space-between;padding:0 4px}
+.switcher .arrow{
+  width:44px;height:44px;
+  min-width:44px;min-height:44px;
+  border:none;background:transparent;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.switcher .matchup{
+  flex-grow:1;
+  min-height:52px;
+  border:none;background:transparent;cursor:pointer;
+  font-family:inherit;color:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+}
+.switcher .matchup .teams{font-size:var(--type-section);font-weight:var(--w-semibold);line-height:1.1}
+.switcher .matchup .at{color:var(--subtle)}
+.switcher .matchup .when{
+  font-size:var(--type-overline);
+  font-weight:var(--w-semibold);
+  letter-spacing:0.1em;
+  color:var(--muted);
+}
+
+.dots{display:flex;gap:5px;justify-content:center}
+.dots span{width:6px;height:6px;border-radius:3px;background:var(--track);transition:width 200ms}
+.dots span.on{width:16px;background:var(--ink)}
+
+.tablestub{margin:8px 6px 0;padding:0 6px}
+
+.legend{font-size:var(--type-meta);color:var(--muted);line-height:1.45;padding:8px 12px 0}
+
+/* --------------------------------------------------------------------
+   THE TAB BAR — sec 2.2. Five slots, the centre one a raised 54px ink
+   circle, the active tab in ink and the inactive ones in subtle grey.
+   -------------------------------------------------------------------- */
+
+.tabbar{
+  position:absolute;left:0;right:0;bottom:0;
+  height:var(--tabbar-height);
+  background:var(--surface);
+  border-top:1px solid var(--rule);
+  display:flex;align-items:flex-start;
+  padding:6px 6px 0;
+}
+
+.tab{
+  flex:1;
+  min-width:44px;
+  min-height:50px;
+  border:none;background:transparent;cursor:pointer;
+  font-family:inherit;
+  color:var(--subtle);
+  font-weight:var(--w-medium);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+}
+.tab[aria-current="page"]{color:var(--ink);font-weight:var(--w-semibold)}
+.tab .tablabel{font-size:var(--type-overline)}
+
+.tabadd{flex:1;display:flex;justify-content:center}
+.addbtn{
+  width:54px;height:54px;
+  min-width:44px;min-height:44px;
+  border-radius:27px;border:none;
+  background:var(--ink);color:var(--surface);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+  box-shadow:0 4px 12px rgba(28,31,35,0.25);
+}
+
+/* --------------------------------------------------------------------
+   THE TOAST — sec 2.5. Ink background, ground text, one optional pill
+   action, a dismiss, and it sits ABOVE the tab bar.
+   -------------------------------------------------------------------- */
+
+.toast{
+  position:absolute;
+  left:var(--gutter);right:var(--gutter);
+  bottom:calc(var(--tabbar-height) + 10px);
+  background:var(--ink);color:var(--ground);
+  border-radius:var(--r-row);
+  padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+  font-size:var(--type-cell);
+  line-height:1.4;
+  box-shadow:0 6px 20px rgba(28,31,35,0.18);
+}
+.toast[hidden]{display:none}
+.toast.motion-toast{animation:toastIn var(--dur-toast) ease-out}
+.toast .toasttext{flex-grow:1}
+.toast .toastact{
+  min-width:44px;min-height:44px;
+  padding:0 12px;border-radius:var(--r-button);border:none;
+  background:var(--ground);color:var(--ink);
+  font-family:inherit;font-size:var(--type-cell);font-weight:var(--w-semibold);
+  cursor:pointer;flex-shrink:0;
+}
+.toast .toastclose{
+  width:44px;height:44px;
+  min-width:44px;min-height:44px;
+  border:none;background:transparent;color:var(--border-strong);
+  cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* --------------------------------------------------------------------
+   THE SHEET — sec 2.4 and sec 4. White, 20px top corners, a grab
+   handle, rising over a 45% ink scrim; tapping the scrim closes it.
+   -------------------------------------------------------------------- */
+
+.overlay{position:absolute;inset:0}
+.overlay[hidden]{display:none}
+
+.scrim{
+  position:absolute;inset:0;
+  background:var(--scrim);
+  border:none;padding:0;margin:0;
+  width:100%;height:100%;
+  cursor:pointer;
+  animation:fadeIn var(--dur-tab) ease-out;
+}
+
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;
+  background:var(--surface);
+  border-radius:20px 20px 0 0;
+  padding:12px var(--gutter) 28px;
+  display:flex;flex-direction:column;gap:8px;
+  animation:sheetUp var(--dur-sheet) var(--ease-push);
+}
+.sheet .handle{
+  width:40px;height:4px;border-radius:2px;
+  background:var(--track);
+  align-self:center;margin-bottom:6px;
+}
+.sheet .sheettitle{font-size:var(--type-section);font-weight:var(--w-semibold);padding:0 4px 4px}
+.sheet .action{
+  min-height:64px;
+  min-width:44px;
+  border:1px solid var(--rule);
+  border-radius:var(--r-row);
+  background:var(--surface);
+  color:var(--ink);
+  font-family:inherit;
+  text-align:left;
+  padding:10px 14px;
+  display:flex;align-items:center;gap:12px;
+  cursor:pointer;
+}
+.sheet .action .dot{width:12px;height:12px;border-radius:6px;flex-shrink:0}
+.sheet .action .actiontitle{font-weight:var(--w-semibold);font-size:15px}
+.sheet .action .actionsub{font-size:12px;color:var(--muted)}
+.sheet .action .actioncol{display:flex;flex-direction:column;gap:2px}
+
+/* --------------------------------------------------------------------
+   SEC 2.5 — THE TRANSITION SET, all eight by name. Push and Tab are
+   what a screen change wears; Sheet, Toast and Swap ride their own
+   elements; Grow staggers list items by 80ms. Drop belongs to the game
+   search and Pulse to the live "now" dot — both are declared here at
+   the handoff's numbers and both are first USED by the screens that
+   own them (U2 and U4), so the table is one thing in one place rather
+   than two half-copies.
+   -------------------------------------------------------------------- */
+
+@keyframes pushIn{from{transform:translateX(48px);opacity:0}to{transform:none;opacity:1}}
+@keyframes popIn{from{transform:translateX(-48px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes drop{from{transform:translateY(-12px);opacity:0}to{transform:none;opacity:1}}
+@keyframes swapNext{from{transform:translateX(14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes swapPrev{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
+@keyframes grow{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}
+@keyframes toastIn{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+@keyframes pulse{from{transform:scale(1);opacity:.7}to{transform:scale(3);opacity:0}}
+
+.motion-push{animation:pushIn var(--dur-push) var(--ease-push)}
+.motion-pop{animation:popIn var(--dur-push) var(--ease-push)}
+.motion-tab{animation:fadeIn var(--dur-tab) ease-out}
+.motion-drop{animation:drop var(--dur-drop) var(--ease-push)}
+.motion-swap-next{animation:swapNext var(--dur-swap) ease-out}
+.motion-swap-prev{animation:swapPrev var(--dur-swap) ease-out}
+.motion-pulse{animation:pulse var(--dur-pulse) ease-out 1}
+
+/* Grow, with the sec 2.5 stagger: each item declares its index and the
+   delay is that index times 80ms. `both` so a staggered item is not
+   drawn before its turn. */
+.grow{animation:grow var(--dur-grow-long) ease-out both;animation-delay:calc(var(--i,0) * var(--stagger))}
+
+/* --------------------------------------------------------------------
+   AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
+   OFF when the reader has asked for reduced motion — not shortened,
+   not softened, off. Nothing in this app depends on an animation to
+   become readable, so the page is complete without a single one of
+   them, and a test pins this block.
+   -------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation:none !important;
+    transition:none !important;
+    animation-duration:0s !important;
+    transition-duration:0s !important;
+  }
+}
+
+/* A narrow phone: the gutters give, nothing else does. */
+@media (max-width: 359px){
+  .ring.centre{width:176px;height:176px;font-size:22px}
+  .matchcard{margin-left:6px;margin-right:6px}
+}
