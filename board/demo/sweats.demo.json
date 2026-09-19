@@ -37,6 +37,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -563,6 +569,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -1194,6 +1206,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -1917,6 +1935,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -2715,6 +2739,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -3605,6 +3635,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -4519,6 +4555,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -5479,6 +5521,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -6531,6 +6579,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -7675,6 +7729,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -8888,6 +8948,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -10136,6 +10202,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -11443,6 +11515,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {
@@ -12825,6 +12903,12 @@
      "axis_max_s": 3600
     },
     "p_pregame": 0.46,
+    "projection": 4.6,
+    "p_vs_projection": 0.58,
+    "band_vs_projection": [
+     0.55,
+     0.6
+    ],
     "p_source": "model",
     "calibrated": false,
     "actual": {

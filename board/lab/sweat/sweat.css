@@ -154,6 +154,30 @@ text-overflow:ellipsis;white-space:nowrap}
 .tile .tval{font-family:var(--display);font-size:26px;font-weight:700;
 line-height:1}
 
+/* --------------------------------------------------------------------
+   L3f — THE TWO CONTROLS. The reference toggle and the stat chips take
+   the page's own tokens (surface on ground, the full radius, the
+   muted label colour) and the brief's sec 8 target size: every one of
+   them is at least 44px tall, and the chosen one is ink-on-white
+   rather than a colour this page would have had to invent.
+   -------------------------------------------------------------------- */
+.controls{display:flex;flex-direction:column;gap:8px;
+margin-bottom:var(--cardgap)}
+.seg{display:flex;align-self:flex-start;max-width:100%;
+background:var(--surface);border-radius:var(--r-full);padding:3px}
+.segbtn{min-height:44px;padding:0 14px;border-radius:var(--r-full);
+font-size:13px;font-weight:600;color:var(--muted);white-space:nowrap;
+min-width:0}
+.segbtn.on{background:var(--ink);color:#FFFFFF}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.statchip{min-height:44px;padding:0 12px;border-radius:var(--r-full);
+border:1px solid var(--rule);background:var(--surface);font-size:12.5px;
+font-weight:600;color:var(--muted);white-space:nowrap;min-width:0}
+.statchip.on{background:var(--ink);border-color:var(--ink);color:#FFFFFF}
+/* the one line that says what the projection view means */
+.refnote{background:var(--surface);border-radius:var(--r-panel);
+padding:10px 12px;font-size:12px;line-height:1.5;color:var(--muted)}
+
 .sect{margin-bottom:var(--cardgap)}
 .secthead{display:flex;align-items:baseline;justify-content:space-between;
 gap:8px;flex-wrap:wrap;padding:0 2px 8px;font-size:11px;font-weight:600;

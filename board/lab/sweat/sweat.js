@@ -46,6 +46,27 @@
  * `state` field as it finds it. That is honesty rule sec 6.4, and it
  * holds in the sandbox exactly as it would in the product.
  *
+ * L3f — THE TWO CONTROLS, AND WHY THEY COMPUTE NOTHING EITHER.
+ *
+ *   THE REFERENCE TOGGLE (vs line · vs projection) PICKS BETWEEN TWO
+ *   NUMBERS THE FILE ALREADY CARRIES. `p_pregame` is P(stat >= the
+ *   book's line) and `p_vs_projection` is P(stat >= our own projected
+ *   value), both read by the exporter off one distribution by one
+ *   method. The toggle changes which stored number is read; it derives
+ *   no third one, and a row the exporter left without the projection
+ *   fields shows the dash rather than a number this page worked out.
+ *   In the projection view the AMERICAN PRICE IS NOT DRAWN AT ALL:
+ *   our own number is not a market's, and printing a price beside it
+ *   would imply a bet somebody is offering at that threshold.
+ *
+ *   THE STAT CHIPS come out of the FILE — one chip per market actually
+ *   present in the snapshot, so a market the exporter starts carrying
+ *   appears here the day its rows do and this page never holds a list
+ *   of markets that can go stale. They filter rows and nothing else.
+ *
+ * Both are PRESENTATION STATE, held in `ui` beside the replay position
+ * and never written anywhere.
+ *
  * NOTHING HERE HAS GRADUATED. The board is untouched by this file, and
  * nothing moves from the sandbox to the product without the owner's
  * word on the design.
@@ -148,6 +169,49 @@ const SOURCE_LABELS = {
   blend: "blended model and market, not yet calibrated"
 };
 
+/* ------------------------------------------------------------------
+ * L3f — the two controls' own words. The toggle's two references, the
+ * one sentence that says what the second one means, and the chips'
+ * "All". Every one of them is a contiguous string for the same reason
+ * the banners are.
+ * ------------------------------------------------------------------ */
+
+const REF_LINE = "line";
+const REF_PROJECTION = "projection";
+
+const REF_LEGEND = "Reference";
+const REF_LINE_LABEL = "Vs line";
+const REF_PROJECTION_LABEL = "Vs projection";
+
+/* Said once, above the board, whenever the projection view is on. It
+ * is the whole definition: the same distribution, a different
+ * threshold. */
+const VS_PROJECTION_NOTE =
+  "Vs projection: chance of reaching our projected value, from the same distribution.";
+
+/* ...and what the big number says when the row carries no projection
+ * to be read against. The dash is the number; this is the reason. */
+const NO_PROJECTION = "no projected value on this row";
+
+const MARKET_LEGEND = "Stat";
+const ALL_MARKETS_LABEL = "All";
+
+/* The Exp. hits tile is a BET count and always answers the bet's own
+ * question, so it is the one number on the board the reference toggle
+ * does not move. It says so on itself. */
+const EXP_HITS_TITLE =
+  "Bets already cashed, plus the chance of each live and pregame bet against ITS OWN LINE. A bet settles against its line, so this total never follows the vs-projection toggle.";
+
+/* The measured markets' unit, abbreviated, and the reason the wording
+ * differs: a yardage bet clears a THRESHOLD ("88.5+ yds") while a
+ * counted one needs whole things ("2 catches"). The unit comes off the
+ * row, so no market list lives here. */
+const YARD_UNITS = { yard: "yds", yards: "yds" };
+
+/* The chart's dashed reference line, per view. */
+const PREGAME_MARK = "Pregame ";
+const PROJECTION_MARK = "Projection ";
+
 /* The state's word, so colour is never the only signal (sec 8). */
 const STATE_LABELS = {
   pregame: "Pregame",
@@ -199,6 +263,11 @@ const ui = {
   pulse: false,
   bet: null,          // the bet_id the card screen is showing, or null
   pinned: null,       // an event index the reader chose, or null = auto
+  /* L3f. Presentation state, both of them: which stored number the
+   * page reads, and which market's rows the board shows. They default
+   * to the bet's own reference and to everything. */
+  reference: REF_LINE,
+  market: "",
   boardScroll: 0,
   error: ""
 };
@@ -278,14 +347,40 @@ function sweats() {
   return (now && Array.isArray(now.sweats)) ? now.sweats : [];
 }
 
-/* THE CHANCE A ROW SHOWS. `p_now` when the exporter published one, and
- * the pregame chance when it did not — which is the same number before
- * kickoff, honestly named. It is a READ of two stored fields and never
- * a computation: nothing here averages them, moves one toward the
- * other or fills in a missing one with arithmetic. */
-function chanceOf(bet) {
+/* THE CHANCE A ROW SHOWS, and the ONE place any of them is read.
+ *
+ * VS THE LINE (the default): `p_now` when the exporter published one,
+ * and the pregame chance when it did not — which is the same number
+ * before kickoff, honestly named.
+ *
+ * VS THE PROJECTION: `p_vs_projection`, the exporter's own read of the
+ * same distribution at our projected value. There is no fallback: a
+ * row without it has no such number and the page shows the dash.
+ *
+ * It is a READ of stored fields and never a computation: nothing here
+ * averages them, moves one toward the other or fills in a missing one
+ * with arithmetic. `reference` lets a caller ask for a view other than
+ * the toggled one, which the Exp. hits tile does because a bet settles
+ * against its line whatever the reader is looking at. */
+function chanceOf(bet, reference) {
+  const which = reference ? reference : ui.reference;
+  if (which === REF_PROJECTION) return numberOrNull(bet.p_vs_projection);
   const now = numberOrNull(bet.p_now);
   return now === null ? numberOrNull(bet.p_pregame) : now;
+}
+
+/* ...and the band that belongs to that same number. Read, never
+ * widened, never narrowed: honesty rule sec 6.1 holds in both views
+ * because the exporter published a band for each. */
+function bandOf(bet) {
+  return ui.reference === REF_PROJECTION
+    ? bet.band_vs_projection : bet.band;
+}
+
+/* Is the page reading our own number rather than the bet's? One place
+ * answers it, so no renderer decides for itself. */
+function vsProjection() {
+  return ui.reference === REF_PROJECTION;
 }
 
 function findBet(betId) {
@@ -296,11 +391,19 @@ function findBet(betId) {
   return null;
 }
 
-/* The game strip, repeated on every row of the same game (sec 7). */
+/* The game strip, repeated on every row of the same game (sec 7).
+ *
+ * A GAME THAT HAS NOT KICKED OFF HAS NO SCORE. The exporter says so by
+ * sending null, and a null printed into a string reads "DET null"; the
+ * matchup is drawn without scores instead, which is the truth of a
+ * board before kickoff. */
 function gameLine(game) {
   if (!game) return "";
-  const score = game.away + " " + game.away_score + " · " +
-    game.home + " " + game.home_score;
+  const away = numberOrNull(game.away_score);
+  const home = numberOrNull(game.home_score);
+  const score = (away === null || home === null)
+    ? game.away + " @ " + game.home
+    : game.away + " " + away + " · " + game.home + " " + home;
   let when = "";
   if (game.status === "pre") {
     when = "kickoff";
@@ -314,20 +417,59 @@ function gameLine(game) {
   return score + " · " + when;
 }
 
+/* THE PRICE IS THE LINE VIEW'S, AND ONLY THE LINE VIEW'S (L3f). This
+ * is the one place the American price is read on this page, so the
+ * rule is kept in one branch: our own projection is not a market, and a
+ * price printed beside it would imply a bet being offered at that
+ * threshold by somebody. */
 function metaLine(bet) {
+  /* THE PROJECTION VIEW IS ABOUT THE STAT, not about the bet: it names
+   * the market and stops. Carrying "Receiving yards 88.5+" beside a
+   * percentage that answers 74.2 would invite exactly the misreading
+   * the toggle exists to avoid, and the price would invent a market
+   * for our own number. */
+  if (vsProjection()) {
+    return [bet.player.pos, marketWords(bet.market)].join(" · ");
+  }
   const parts = [bet.player.pos, bet.market_label];
   const odds = numberOrNull(bet.odds_american);
   if (odds !== null) parts.push((odds > 0 ? "+" : "") + odds);
   return parts.join(" · ");
 }
 
+/* THE THRESHOLD THE BIG NUMBER ANSWERS, as the chart titles it: the
+ * bet's own line label, or our projected value in the projection
+ * view. */
+function thresholdLabel(bet) {
+  if (!vsProjection()) return bet.line_label;
+  const value = numberOrNull(bet.projection);
+  return value === null ? BLANK : value + "+";
+}
+
+/* WHAT THE BET STILL ASKS FOR, in the stat's own words. A MEASURED
+ * market clears a threshold and says so ("Needs 88.5+ yds"); a COUNTED
+ * one needs whole things ("Needs 2 catches"). Which it is comes off
+ * the row's own `need_unit`, so this page holds no market list. */
+function needWords(value, unit) {
+  const number = numberOrNull(value);
+  if (number === null) return BLANK;
+  const yards = YARD_UNITS[String(unit)];
+  if (yards) return "Needs " + number + "+ " + yards;
+  return "Needs " + number + " " + unit;
+}
+
+/* The threshold the headline names: the BET's need in the line view,
+ * OUR OWN PROJECTED VALUE in the projection view — because that is the
+ * number the percentage beside it answers. */
+function needValue(bet) {
+  return vsProjection() ? bet.projection : bet.need;
+}
+
 function needLine(bet) {
   if (bet.state === "void") return "Voided";
   if (bet.state === "cashed") return "Cashed";
   if (bet.state === "lost") return "Did not hit";
-  const need = numberOrNull(bet.need);
-  if (need === null) return "";
-  return "Needs " + need + " " + bet.need_unit;
+  return needWords(needValue(bet), bet.need_unit);
 }
 
 /* Honesty rule sec 6.2, as a line of words under the number. */
@@ -384,24 +526,34 @@ function sparkline(bet) {
       '" height="' + SPARK_H + '"></rect>');
   }
 
-  /* 2. the dashed pregame reference */
-  const pre = at.y(numberOrNull(bet.p_pregame) || 0).toFixed(1);
-  layers.push('<line class="preline" x1="0" y1="' + pre + '" x2="' +
-    SPARK_W + '" y2="' + pre + '"></line>');
+  /* 2. the dashed reference: the pregame chance against the line, and
+   *    in the projection view the stored chance against our own value.
+   *    Absent draws nothing rather than a line at zero. */
+  const mark = vsProjection() ? chanceOf(bet) : numberOrNull(bet.p_pregame);
+  if (mark !== null) {
+    const pre = at.y(mark).toFixed(1);
+    layers.push('<line class="preline" x1="0" y1="' + pre + '" x2="' +
+      SPARK_W + '" y2="' + pre + '"></line>');
+  }
 
-  /* 3. the trace, once there is more than a kickoff point */
-  if (trace.length > 1) {
+  /* 3. the trace, once there is more than a kickoff point. THE TRACE
+   *    IS THE BET'S HISTORY AGAINST ITS LINE and there is no stored
+   *    history against the projection, so the projection view draws
+   *    none rather than re-labelling this one. */
+  if (trace.length > 1 && !vsProjection()) {
     layers.push('<polyline class="trace" points="' +
       points(trace, at, "p") + '"></polyline>');
   }
 
-  /* 4. the now dot, in the state colour. A void bet has no chance to
-   *    mark, so it gets no dot at all. */
+  /* 4. the now dot, in the state colour, at whichever stored chance is
+   *    being read. A void bet has no chance to mark, so it gets no dot
+   *    at all — and neither does a row with no number in this view. */
   const last = trace[trace.length - 1];
-  if (last && bet.state !== "void") {
+  const dot = vsProjection() ? mark : (last ? numberOrNull(last.p) : null);
+  if (last && dot !== null && bet.state !== "void") {
     layers.push('<circle class="nowdot' + (ui.pulse ? " pulse" : "") +
       '" cx="' + at.x(last.t).toFixed(1) + '" cy="' +
-      at.y(last.p).toFixed(1) + '" r="3.5"></circle>');
+      at.y(dot).toFixed(1) + '" r="3.5"></circle>');
   }
 
   return '<svg class="spark" width="' + SPARK_W + '" height="' +
@@ -443,14 +595,18 @@ const DOT_CLASSES = {
 const DOT_RADIUS = { "d-hit": 4.5, "d-miss": 4.5, "d-zone": 5.5, "d-note": 4.5 };
 
 function chartAria(bet) {
-  const who = bet.player.name + ", " + bet.market_label;
+  const who = bet.player.name + ", " +
+    (vsProjection()
+      ? marketWords(bet.market) + " " + thresholdLabel(bet)
+      : bet.market_label);
   if (bet.state === "void") {
     return who + ": voided, no chance is shown.";
   }
   const parts = [who + ": " + pct(chanceOf(bet)) + " chance"];
-  if (Array.isArray(bet.band)) {
-    parts.push("range " + pctNumber(bet.band[0]) + " to " +
-      pctNumber(bet.band[1]));
+  const band = bandOf(bet);
+  if (Array.isArray(band)) {
+    parts.push("range " + pctNumber(band[0]) + " to " +
+      pctNumber(band[1]));
   }
   parts.push(STATE_LABELS[bet.state] || bet.state);
   parts.push(gameLine(bet.game));
@@ -502,24 +658,34 @@ function cardChart(bet) {
     CHART_BOTTOM + '" x2="' + (CHART_L + PLOT_W) + '" y2="' +
     CHART_BOTTOM + '"></line>');
 
-  /* 3. the dashed pregame line, labelled */
-  const pregame = numberOrNull(bet.p_pregame);
-  if (pregame !== null) {
-    const line = at.y(pregame).toFixed(1);
+  /* 3. the dashed reference line, labelled with what it IS: the
+   *    pregame chance against the line, or the stored chance against
+   *    our own projected value when that is what is being read. */
+  const marked = vsProjection() ? chanceOf(bet) : numberOrNull(bet.p_pregame);
+  if (marked !== null) {
+    const word = vsProjection() ? PROJECTION_MARK : PREGAME_MARK;
+    const line = at.y(marked).toFixed(1);
     layers.push('<line class="preline" x1="' + CHART_L + '" y1="' + line +
       '" x2="' + (CHART_L + PLOT_W) + '" y2="' + line + '"></line>');
     const label = Math.min(CHART_BOTTOM - 4,
-      Math.max(CHART_T + 9, at.y(pregame) - 5));
+      Math.max(CHART_T + 9, at.y(marked) - 5));
     layers.push('<text class="prelabel" x="' + (CHART_L + PLOT_W) +
       '" y="' + label.toFixed(1) + '" text-anchor="end">' +
-      esc("Pregame " + pct(pregame)) + "</text>");
+      esc(word + pct(marked)) + "</text>");
   }
+
+  /* THE HISTORY LAYERS BELONG TO THE LINE. The trace, its band, the
+   * guide and the swing dots are all the stored history of the bet
+   * against its line; the file carries no such history against the
+   * projection, so the projection view draws the reference line above
+   * and nothing that would have to be invented. */
+  const swings = vsProjection() ? [] : events;
 
   /* 4. THE BAND. Honesty rule sec 6.1: while a bet is live this is
    *    always drawn, so a bare point estimate is never what the reader
    *    sees. On a settled bet the stored band has collapsed and the
    *    path draws as the flat line it now is. */
-  if (trace.length > 1) {
+  if (trace.length > 1 && !vsProjection()) {
     const up = trace.map(function (point) {
       return at.x(point.t).toFixed(1) + "," + at.y(point.hi).toFixed(1);
     });
@@ -531,13 +697,13 @@ function cardChart(bet) {
   }
 
   /* 5. the trace */
-  if (trace.length > 1) {
+  if (trace.length > 1 && !vsProjection()) {
     layers.push('<polyline class="trace big" points="' +
       points(trace, at, "p") + '"></polyline>');
   }
 
   /* 6. the selected swing's guide, dropped to the axis */
-  if (chosen >= 0) {
+  if (chosen >= 0 && !vsProjection()) {
     const here = traceAt(bet, events[chosen].t);
     if (here) {
       const line = at.x(events[chosen].t).toFixed(1);
@@ -549,7 +715,7 @@ function cardChart(bet) {
 
   /* 7. the event dots */
   const hits = [];
-  events.forEach(function (event, index) {
+  swings.forEach(function (event, index) {
     const here = traceAt(bet, event.t);
     if (!here) return;
     const family = DOT_CLASSES[event.type] || "d-note";
@@ -627,8 +793,19 @@ function section(title, note, rows) {
  * live bets closest to cashing first, then what has not kicked off, by
  * kickoff, then everything settled. Ordering moves nothing and infers
  * nothing — the state each row shows is the one the snapshot stored. */
-function ordered() {
+/* THE CHIP FILTER, applied to the BOARD and to nothing else: a card
+ * reached by its own link is still findable while a chip is on, and
+ * the summary tiles stay the file's own counts. */
+function shown() {
   const all = sweats();
+  if (!ui.market) return all;
+  return all.filter(function (bet) {
+    return String(bet.market) === ui.market;
+  });
+}
+
+function ordered() {
+  const all = shown();
   const live = all.filter(function (bet) {
     return isOneOf(LIVE_STATES, bet.state);
   }).sort(function (a, b) {
@@ -639,7 +816,10 @@ function ordered() {
   }).sort(function (a, b) {
     const kick = String(a.game.kickoff).localeCompare(String(b.game.kickoff));
     if (kick) return kick;
-    return (numberOrNull(b.p_pregame) || 0) - (numberOrNull(a.p_pregame) || 0);
+    /* the tiebreak follows whichever chance is being read, so the
+     * ordering is about the numbers on screen and not about a number
+     * the reader cannot see */
+    return (chanceOf(b) || 0) - (chanceOf(a) || 0);
   });
   const settled = all.filter(function (bet) {
     return isOneOf(SETTLED_STATES, bet.state);
@@ -649,20 +829,112 @@ function ordered() {
   return { live: live, pregame: pregame, settled: settled };
 }
 
+/* FRAME 1's THIRD TILE. The exporter's number when it published one;
+ * otherwise the board's own total, which is the brief's own rule:
+ * every bet already cashed counts one, and every bet still running or
+ * not yet kicked off counts its chance. It is summed AGAINST THE LINE
+ * whatever the reference toggle shows, because a bet settles against
+ * its line and against nothing else — the tile's title says so. */
+function expHits() {
+  const now = snapshot();
+  const tiles = (now && now.summary) || {};
+  const stored = numberOrNull(tiles.exp_hits);
+  if (stored !== null) return stored.toFixed(1);
+  const all = sweats();
+  if (!all.length) return BLANK;
+  let total = 0;
+  all.forEach(function (bet) {
+    if (bet.state === "cashed") {
+      total += 1;
+      return;
+    }
+    if (bet.state === "pregame" || isOneOf(LIVE_STATES, bet.state)) {
+      total += numberOrNull(chanceOf(bet, REF_LINE)) || 0;
+    }
+  });
+  return total.toFixed(1);
+}
+
 function summaryTiles() {
   const now = snapshot();
   const tiles = (now && now.summary) || {};
-  const cells = [
-    ["Live", tiles.live],
-    ["Cashed", tiles.cashed],
-    ["Exp. hits", tiles.exp_hits]
-  ];
-  return '<div class="tiles">' + cells.map(function (cell) {
+  const counts = [["Live", tiles.live], ["Cashed", tiles.cashed]];
+  const cells = counts.map(function (cell) {
     const value = numberOrNull(cell[1]);
-    return '<div class="tile"><span class="tlab">' + esc(cell[0]) +
-      '</span><span class="tval">' +
-      esc(value === null ? BLANK : value) + "</span></div>";
+    return [cell[0], value === null ? BLANK : String(value), ""];
+  });
+  cells.push(["Exp. hits", expHits(), EXP_HITS_TITLE]);
+  return '<div class="tiles">' + cells.map(function (cell) {
+    return '<div class="tile"' +
+      (cell[2] ? ' title="' + esc(cell[2]) + '"' : "") +
+      '><span class="tlab">' + esc(cell[0]) +
+      '</span><span class="tval">' + esc(cell[1]) + "</span></div>";
   }).join("") + "</div>";
+}
+
+/* ------------------------------------------------------------------
+ * L3f — THE TWO CONTROLS. A segmented toggle and a chip row, both of
+ * them real buttons with `aria-pressed`, both 44px in the stylesheet,
+ * and neither of them holding a number or a market list of its own.
+ * ------------------------------------------------------------------ */
+
+function referenceToggle() {
+  const options = [[REF_LINE, REF_LINE_LABEL],
+                   [REF_PROJECTION, REF_PROJECTION_LABEL]];
+  return '<div class="seg" role="group" aria-label="' + esc(REF_LEGEND) +
+    '">' + options.map(function (option) {
+      const on = ui.reference === option[0];
+      return '<button type="button" class="segbtn' + (on ? " on" : "") +
+        '" data-reference="' + esc(option[0]) + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(option[1]) + "</button>";
+    }).join("") + "</div>";
+}
+
+/* THE CHIPS COME OUT OF THE FILE. One per market actually present in
+ * the snapshot, in the words the exporter wrote, so a market that
+ * starts appearing in the rows appears here the same day and this page
+ * never carries a list that can go stale. */
+function marketsPresent() {
+  const seen = [];
+  sweats().forEach(function (bet) {
+    const market = String(bet.market === undefined ? "" : bet.market);
+    if (market && seen.indexOf(market) === -1) seen.push(market);
+  });
+  return seen.sort();
+}
+
+function marketWords(market) {
+  const text = String(market);
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function statChips() {
+  const chips = [["", ALL_MARKETS_LABEL]].concat(
+    marketsPresent().map(function (market) {
+      return [market, marketWords(market)];
+    }));
+  /* A row of "All" plus one market filters nothing, so it is not
+   * drawn: a control that cannot change what is on screen is chrome. */
+  if (chips.length < 3) return "";
+  return '<div class="chips" role="group" aria-label="' +
+    esc(MARKET_LEGEND) + '">' + chips.map(function (chip) {
+      const on = ui.market === chip[0];
+      return '<button type="button" class="statchip' + (on ? " on" : "") +
+        '" data-market="' + esc(chip[0]) + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(chip[1]) + "</button>";
+    }).join("") + "</div>";
+}
+
+/* The one line that says what the projection view means. It is shown
+ * once, above the board, and only while that view is on. */
+function referenceNote() {
+  if (!vsProjection()) return "";
+  return '<div class="refnote">' + esc(VS_PROJECTION_NOTE) + "</div>";
+}
+
+function controls() {
+  return '<div class="controls">' + referenceToggle() + statChips() +
+    "</div>" + referenceNote();
 }
 
 /* The sentence the exporter wrote on a file with nothing on it. A
@@ -686,7 +958,7 @@ function renderBoard() {
     (reason ? esc(reason) : "") + "</div>";
   return '<div class="titlerow"><h1>' + esc(BOARD_TITLE) +
     '</h1><span class="samplechip">' + esc(chipText()) + "</span></div>" +
-    summaryTiles() + body + empty;
+    summaryTiles() + controls() + body + empty;
 }
 
 /* ------------------------------------------------------------------
@@ -703,10 +975,12 @@ function headline(bet) {
   if (bet.state === "lost") {
     return '<span class="hbig">Did not hit</span>';
   }
-  const need = numberOrNull(bet.need);
-  if (need === null) return "";
-  return '<span class="hbig">Needs ' + esc(need) +
-    '</span><span class="hunit">' + esc(bet.need_unit) + "</span>";
+  const need = numberOrNull(needValue(bet));
+  if (need === null) return '<span class="hbig">' + esc(BLANK) + "</span>";
+  const yards = YARD_UNITS[String(bet.need_unit)];
+  return '<span class="hbig">Needs ' + esc(yards ? need + "+" : need) +
+    '</span><span class="hunit">' +
+    esc(yards ? yards : bet.need_unit) + "</span>";
 }
 
 function bigChance(bet) {
@@ -714,11 +988,15 @@ function bigChance(bet) {
     return '<div class="bigpct">' + esc(BLANK) +
       '</div><div class="bsub">no chance is shown on a voided bet</div>';
   }
-  const parts = ['<div class="bigpct">' + esc(pct(chanceOf(bet))) + "</div>"];
-  if (bet.settled_at_s !== null && bet.settled_at_s !== undefined) {
+  const chance = chanceOf(bet);
+  const parts = ['<div class="bigpct">' + esc(pct(chance)) + "</div>"];
+  if (chance === null && vsProjection()) {
+    /* the dash is the number; this says why there is no number */
+    parts.push('<div class="bsub">' + esc(NO_PROJECTION) + "</div>");
+  } else if (bet.settled_at_s !== null && bet.settled_at_s !== undefined) {
     parts.push('<div class="bsub">settled</div>');
   } else {
-    const band = bandText(bet.band);
+    const band = bandText(bandOf(bet));
     if (band) parts.push('<div class="bsub">' + esc(band) + "</div>");
   }
   const source = sourceLabel(bet);
@@ -778,8 +1056,8 @@ function renderCard(bet) {
   const delta = numberOrNull(bet.delta_pregame_pts);
   const running = isOneOf(LIVE_STATES, bet.state) || bet.state === "pregame";
   const head = '<div class="chead"><span class="ctitle">' +
-    esc((running ? CHART_TITLE_LIVE : CHART_TITLE_DONE) + bet.line_label) +
-    "</span>" +
+    esc((running ? CHART_TITLE_LIVE : CHART_TITLE_DONE) +
+      thresholdLabel(bet)) + "</span>" +
     (delta === null ? "" : '<span class="cdelta ' + deltaFamily(delta) +
       '">' + esc(signed(delta)) + "</span>") + "</div>";
   return '<div class="topbar"><a class="back" href="#/board" aria-label="' +
@@ -1041,6 +1319,21 @@ document.addEventListener("click", function (event) {
     } else {
       play();
     }
+    return;
+  }
+  /* L3f. Both controls do one thing: they set a presentation field and
+   * re-render. Nothing is stored, nothing is fetched and no number is
+   * worked out on the way. */
+  const reference = target.closest("[data-reference]");
+  if (reference) {
+    ui.reference = reference.dataset.reference;
+    render(null);
+    return;
+  }
+  const chip = target.closest("[data-market]");
+  if (chip) {
+    ui.market = chip.dataset.market;
+    render(null);
     return;
   }
   const swing = target.closest("[data-swing]");
