@@ -7,9 +7,9 @@
     "snapshot_kind": "refresh",
     "source": "engine",
     "engine_version": "m1.2b-2 + m1.2i top-cell raise (D-070 build; live shadow m1.2e / D-074; D-084 adopt)",
-    "generation_id": "2026w02-20260919T142726Z",
-    "generated_ts": "2026-09-19T14:27:26.500438+00:00",
-    "cutoff_ts": "2026-09-19T14:27:26.500438+00:00",
+    "generation_id": "2026w02-20260919T162559Z",
+    "generated_ts": "2026-09-19T16:25:59.998510+00:00",
+    "cutoff_ts": "2026-09-19T16:25:59.998510+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w02-20260915T153354Z",
     "week_open_generated_ts": "2026-09-15T15:33:54.590276+00:00"
@@ -90,7 +90,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w02-20260919T142726Z",
+    "generation_id": "2026w02-20260919T162559Z",
     "absent_reason": null
   },
   "players": [
@@ -294,7 +294,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0775
+      "p_ceiling": 0.0725
     },
     {
       "player_id": "00-0035208",
@@ -698,7 +698,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.13
+      "p_ceiling": 0.1375
     },
     {
       "player_id": "00-0037238",
@@ -900,7 +900,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.185
+      "p_ceiling": 0.1875
     },
     {
       "player_id": "00-0037741",
@@ -1102,7 +1102,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.22
+      "p_ceiling": 0.21
     },
     {
       "player_id": "00-0037746",
@@ -1304,7 +1304,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1125
+      "p_ceiling": 0.12
     },
     {
       "player_id": "00-0038542",
@@ -1506,7 +1506,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.7075
+      "p_ceiling": 0.715
     },
     {
       "player_id": "00-0031610",
@@ -1708,7 +1708,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0775
+      "p_ceiling": 0.075
     },
     {
       "player_id": "00-0036265",
@@ -2112,7 +2112,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1075
+      "p_ceiling": 0.105
     },
     {
       "player_id": "00-0037005",
@@ -2718,7 +2718,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.13
+      "p_ceiling": 0.125
     },
     {
       "player_id": "00-0039342",
@@ -2920,7 +2920,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0275
+      "p_ceiling": 0.03
     },
     {
       "player_id": "00-0039344",
@@ -3122,7 +3122,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0575
+      "p_ceiling": 0.0625
     },
     {
       "player_id": "00-0039491",
@@ -3728,7 +3728,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0475
+      "p_ceiling": 0.045
     },
     {
       "player_id": "00-0040218",
@@ -3930,7 +3930,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.025
+      "p_ceiling": 0.02
     }
   ]
 }

@@ -1,9 +1,20 @@
-/* LAB ITERATION L3 — THE SWEAT SANDBOX.
+/* LAB ITERATION L3 — THE LIVE SANDBOX.
  *
- * The two screens of docs/design/SWEAT_UI_BRIEF.md — the LIVE SWEATS
- * BOARD and the chart-first SWEAT CARD — built as one page, in the
- * lab's idiom: vanilla, no framework, no build step, no module, one
- * fetch of one bundled file.
+ * The two screens of docs/design/SWEAT_UI_BRIEF.md — the LIVE BOARD
+ * and the chart-first card — built as one page, in the lab's idiom:
+ * vanilla, no framework, no build step, no module, one fetch.
+ *
+ * D-123 ITEM (4) — THE RENAME. What the reader sees says "Live"; the
+ * plumbing keeps every spelling it had — this file's name and path,
+ * `sweats.json`, `bet_id`, the `#/sweat/...` route — because renaming
+ * files would churn the exporters, the deploy and every link for no
+ * reader's benefit. Wording, not plumbing.
+ *
+ * R0b — THE CAPTURE BOX (READS_LAB_SPEC §6). The card gained the one
+ * control on this page that WRITES: "Add your read" posts the reader's
+ * own words to the reads service and shows them back with their time.
+ * No category, no chip, no impact number — the hierarchy is internal
+ * (brief Addendum 2) and R0 moves no probability at all.
  *
  * WHAT THIS PAGE IS FED — TWO BOOTS, NEVER MIXED (L3b, D-122).
  *
@@ -135,12 +146,12 @@ const FETCH_TIMEOUT_MS = 15000;
 const SWEAT_IN_PROGRESS =
   "LAB — IN PROGRESS: design sandbox; presentation is experimental";
 
-/* THE SAMPLE-SWEATS SENTINEL. It rides the top of the page always, on
+/* THE SAMPLE SENTINEL. It rides the top of the page always, on
  * every screen, and it is the one string on this page that may never
  * be softened: every bet, every price and every number below it was
  * made up for design work. */
 const SAMPLE_SWEATS =
-  "SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation";
+  "SAMPLE LIVE BOARD — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation";
 
 /* THE ALPHA SENTINEL — real mode's own, and the sample one's opposite
  * number. It names exactly what the numbers are: lines and prices as
@@ -149,26 +160,32 @@ const SAMPLE_SWEATS =
  * signed off as finished. It rides the same slot, always visible, and
  * it may never be softened either. */
 const ALPHA_SWEATS =
-  "ALPHA SWEATS — real lines and engine probabilities; model, not yet calibrated; experimental presentation (D-122)";
+  "ALPHA LIVE BOARD — real lines and engine probabilities; model, not yet calibrated; experimental presentation (D-122)";
 
 const SAMPLE_CHIP = "Sample data";
 const ALPHA_CHIP = "Alpha";
 
-const BOARD_TITLE = "LIVE SWEATS";
-const CARD_TITLE = "SWEAT";
-const BACK_LABEL = "Back to the live sweats board";
+/* D-123 item (4) — THE RENAME. The surface the reader sees is LIVE.
+ * The wording retires "sweat"; the plumbing does not move, because a
+ * file rename would churn the exporters, the deploy and every link
+ * for no reader's benefit. Identifiers, file names, JSON names,
+ * bet_id spellings and the `#/sweat/...` route fragment are therefore
+ * unchanged on purpose — the ledger records that scoping. */
+const BOARD_TITLE = "LIVE";
+const CARD_TITLE = "LIVE";
+const BACK_LABEL = "Back to the live board";
 
 const LIVE_HEAD = "LIVE · CLOSEST TO CASHING";
 const PREGAME_HEAD = "PREGAME · BY KICKOFF";
 const SETTLED_HEAD = "SETTLED";
 const DASHED_NOTE = "Dashed = pregame";
 
-/* The brief's sec 7 empty board, word for word. */
+/* The brief's sec 7 empty board, in the renamed surface's words. */
 const EMPTY_BOARD =
-  "No live sweats. Bets you track show up here at kickoff.";
+  "Nothing live right now. Bets you track show up here at kickoff.";
 
 const NO_FILE =
-  "The sweat file could not be read, so there is nothing to show. This page renders the one document it was pointed at and never invents a bet.";
+  "The live board file could not be read, so there is nothing to show. This page renders the one document it was pointed at and never invents a bet.";
 
 /* Frame 9. The needle freezes and the page says so; it never carries a
  * value forward to cover the gap. */
@@ -250,7 +267,7 @@ const RETRO_SWEATS =
 const RETRO_CHIP = "Retro";
 const RETRO_TITLE = "WEEK 1 RETRO";
 const RETRO_LINK = "Week 1 retro ›";
-const BOARD_LINK = "‹ Live sweats";
+const BOARD_LINK = "‹ Live board";
 const RETRO_BACK_LABEL = "Back to the week 1 retrospective";
 
 /* The one line under the card's drawing that says what its axis IS.
@@ -291,6 +308,56 @@ const RETRO_LOADING = "Reading the week-1 retrospective…";
  * does not move. It says so on itself. */
 const EXP_HITS_TITLE =
   "Bets already cashed, plus the chance of each live and pregame bet against ITS OWN LINE. A bet settles against its line, so this total never follows the vs-projection toggle.";
+
+/* ------------------------------------------------------------------
+ * R0b — THE CAPTURE BOX (READS_LAB_SPEC §6, brief Addendum 2)
+ *
+ * The reader types what he knows about this player and it is BANKED.
+ * That is the whole feature in R0: no chips, no categories, no node
+ * labels, and no impact number anywhere — the hierarchy is internal
+ * only (Addendum 2) and there is no effect library to draw from yet
+ * (R1). What comes back is HIS OWN TEXT with a timestamp.
+ *
+ * THE ONE HOST THIS PAGE NAMES. Everything else here reads bundled
+ * files; the reads service is a service the owner deploys, so its URL
+ * is a page constant. Until it is pinned it is the placeholder below,
+ * and while it is the placeholder — or while the service does not
+ * answer — the box says so in one line rather than posting into the
+ * void. That is the no-file arm's own idiom, applied to a writer.
+ * ------------------------------------------------------------------ */
+
+const SERVICE_PLACEHOLDER = "https://reads.fantasy-edge.example";
+const SERVICE_URL = SERVICE_PLACEHOLDER;
+
+/* The token is the reader's own, kept in HIS browser under the house
+ * key shape (`fe.<what>.v<n>`), asked for once, and sent to the reads
+ * service and nowhere else. Every touch is guarded: a private window
+ * THROWS rather than answering, and an unguarded read would take the
+ * card down with it. */
+const READS_KEY = "fe.reads.token.v1";
+
+const READ_TITLE = "Add your read";
+const READ_PLACEHOLDER = "What do you know about this player?";
+const READ_SAVE = "Save read";
+const READ_SAVING = "Saving…";
+
+/* Said under every saved read. It is the whole promise R0 makes: the
+ * read is banked and it will be graded, and nothing on this page
+ * claims it moved a number, because nothing did. */
+const READ_SAVED_NOTE = "Saved — graded after the game.";
+
+/* The honest arm. The service is not pinned yet, or it did not answer:
+ * the box stays on screen and says this, and nothing is silently
+ * dropped. */
+const READS_OFFLINE = "reads are offline right now";
+
+/* ...and the fabricated board's own arm. A made-up page must not write
+ * a real read, so the box renders and the save is off. */
+const READS_DEMO_NOTE =
+  "Sample data — reads are not saved from a fabricated board.";
+
+const READ_TOKEN_PROMPT =
+  "Paste the reads token. It is kept in this browser only and sent to the reads service.";
 
 /* The measured markets' unit, abbreviated, and the reason the wording
  * differs: a yardage bet clears a THRESHOLD ("88.5+ yds") while a
@@ -375,7 +442,18 @@ const ui = {
   retroError: "",
   retroAsked: false,
   checkpoint: 0,
-  focus: ""
+  focus: "",
+  /* R0b. What the reader has typed but not yet sent (kept across a
+   * re-render so a poll does not eat a sentence), the reads the
+   * service has handed back per player, which players have been asked
+   * about already, and whether the last attempt reached the service.
+   * None of it is a bet and none of it is written to this browser —
+   * the reads themselves live in the ledger, which is their home. */
+  readsDraft: "",
+  reads: {},
+  readsAsked: {},
+  readsSaving: false,
+  readsOffline: false
 };
 
 /* ------------------------------------------------------------------
@@ -1344,6 +1422,173 @@ function ladderStrip(bet) {
     rungs.length + ',1fr)">' + cells + "</div></section>";
 }
 
+/* ------------------------------------------------------------------
+ * R0b — THE CAPTURE BOX ITSELF
+ * ------------------------------------------------------------------ */
+
+/* Whether the service URL has been pinned to a real deploy yet. While
+ * it is the placeholder there is nothing to post to, and the box says
+ * so instead of failing silently on a click. */
+function readsConfigured() {
+  return SERVICE_URL !== SERVICE_PLACEHOLDER;
+}
+
+/* THE READER'S TOKEN, kept in his own browser. Both touches are
+ * guarded: storage that refuses (a private window, blocked site data)
+ * leaves him able to type a token per visit rather than leaving the
+ * card broken. */
+function readToken() {
+  try {
+    return window.localStorage.getItem(READS_KEY) || "";
+  } catch (err) {
+    return "";
+  }
+}
+
+function writeToken(token) {
+  try {
+    window.localStorage.setItem(READS_KEY, token);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+/* Asked ONCE, on the first save (single user, one token — D-123 item
+ * 2). Nothing is prompted merely to LOOK at saved reads. */
+function askToken() {
+  const held = readToken();
+  if (held) return held;
+  let typed = "";
+  try {
+    typed = window.prompt(READ_TOKEN_PROMPT) || "";
+  } catch (err) {
+    typed = "";
+  }
+  typed = typed.trim();
+  if (typed) writeToken(typed);
+  return typed;
+}
+
+function readWhen(stamp) {
+  try {
+    const when = new Date(String(stamp));
+    if (isNaN(when.getTime())) return String(stamp);
+    return when.toLocaleString();
+  } catch (err) {
+    return String(stamp);
+  }
+}
+
+/* HIS OWN WORDS BACK, with the time they were banked and the one
+ * sentence R0 can honestly say about them. No category, no chip, no
+ * number: there is nothing else to show and the taxonomy is not the
+ * reader's business (Addendum 2). */
+function savedReads(list) {
+  if (!list.length) return "";
+  return '<ul class="rlist">' + list.map(function (read) {
+    return '<li class="ritem"><span class="rtext">' +
+      esc(read.text) + '</span><span class="rwhen">' +
+      esc(readWhen(read.created_at)) + " · " +
+      esc(READ_SAVED_NOTE) + "</span></li>";
+  }).join("") + "</ul>";
+}
+
+function readBox(entry) {
+  const id = String(entry.player_id === undefined ? "" : entry.player_id);
+  const off = DEMO ? " disabled" : "";
+  const note = DEMO ? READS_DEMO_NOTE
+    : ((!readsConfigured() || ui.readsOffline) ? READS_OFFLINE : "");
+  return '<section class="reads"><div class="rhead">' +
+    esc(READ_TITLE) + "</div>" +
+    '<textarea class="rbox" id="readtext" rows="3" ' +
+    'aria-label="' + esc(READ_TITLE) + '" ' +
+    'data-read-draft placeholder="' + esc(READ_PLACEHOLDER) + '"' +
+    off + ">" + esc(ui.readsDraft) + "</textarea>" +
+    '<div class="ractions"><button type="button" class="rsave" ' +
+    'data-read-save="' + esc(id) + '"' + off + ">" +
+    esc(ui.readsSaving ? READ_SAVING : READ_SAVE) + "</button>" +
+    (note ? '<span class="rnote">' + esc(note) + "</span>" : "") +
+    "</div>" + savedReads(ui.reads[id] || []) + "</section>";
+}
+
+/* The two calls this page makes to the service, and the only two. Both
+ * carry the bearer token and nothing else about the reader, and both
+ * go through the page's ONE fetch (`getJSON`), because a second one
+ * would be a second timeout, a second error shape and a second thing
+ * to get wrong. */
+async function readsAsk(url, token, body) {
+  const headers = { Authorization: "Bearer " + token };
+  if (body) headers["Content-Type"] = "application/json";
+  return getJSON(url, {
+    method: body ? "POST" : "GET",
+    headers: headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+}
+
+/* A card that opens asks for that player's reads ONCE. It is the same
+ * one-shot ask the retrospective's file gets, and it asks for nothing
+ * at all on the fabricated board or before the service is pinned. */
+async function askReads(playerId) {
+  if (DEMO || !readsConfigured() || !playerId) return;
+  if (ui.readsAsked[playerId]) return;
+  ui.readsAsked[playerId] = true;
+  const token = readToken();
+  if (!token) return;
+  try {
+    const answer = await readsAsk(
+      SERVICE_URL + "/reads?player_id=" + encodeURIComponent(playerId),
+      token, null);
+    ui.reads[playerId] = Array.isArray(answer && answer.reads)
+      ? answer.reads : [];
+    ui.readsOffline = false;
+  } catch (err) {
+    ui.readsOffline = true;
+  }
+  render(null);
+}
+
+/* THE SAVE. Synchronous from the reader's side: the read appears under
+ * the box only once the service says it is banked, because "saved" on
+ * this page means the ledger has it. */
+async function saveRead(playerId) {
+  if (DEMO || ui.readsSaving) return;
+  const text = String(ui.readsDraft || "").trim();
+  if (!text) return;
+  if (!readsConfigured()) {
+    ui.readsOffline = true;
+    render(null);
+    return;
+  }
+  const token = askToken();
+  if (!token) return;
+  const entry = ui.bet ? findPlayer(ui.bet) : null;
+  const bet = entry ? leadStat(entry, leadChance) : null;
+  const body = { player_id: playerId, text: text };
+  if (bet) {
+    body.market = bet.market;
+    body.line = numberOrNull(bet.line);
+  }
+  ui.readsSaving = true;
+  render(null);
+  try {
+    const saved = await readsAsk(SERVICE_URL + "/read", token, body);
+    ui.reads[playerId] = [{
+      read_id: saved.read_id, text: saved.text,
+      created_at: saved.created_at
+    }].concat(ui.reads[playerId] || []);
+    ui.readsDraft = "";
+    ui.readsOffline = false;
+  } catch (err) {
+    /* Never a silent drop: the words stay in the box and the line
+     * under it says the service is not answering. */
+    ui.readsOffline = true;
+  }
+  ui.readsSaving = false;
+  render(null);
+}
+
 /* THE CARD IS A PLAYER'S TOO (L3g). His whole statline rides the
  * header with the focused number emphasised, and the pills under it
  * switch which stat the chart, the threshold, the needs headline and
@@ -1371,7 +1616,8 @@ function renderCard(entry) {
       esc(gameLine(entry.game)) + "</div>" +
       '<div class="hhead"><span class="hbig">' + esc(BLANK) +
       "</span></div>" + statline + "</div></section>" + pills +
-      '<div class="empty">' + esc(NO_LINE_NEED) + "</div></article>";
+      '<div class="empty">' + esc(NO_LINE_NEED) + "</div>" +
+      readBox(entry) + "</article>";
   }
   const delta = numberOrNull(bet.delta_pregame_pts);
   const running = isOneOf(LIVE_STATES, bet.state) || bet.state === "pregame";
@@ -1396,7 +1642,7 @@ function renderCard(entry) {
     pills +
     '<section class="chartcard">' + head + cardChart(entry, bet) +
     explanation(bet) + "</section>" +
-    ladderStrip(bet) + "</article>";
+    ladderStrip(bet) + readBox(entry) + "</article>";
 }
 
 /* ------------------------------------------------------------------
@@ -2055,7 +2301,18 @@ function readRoute() {
     if (wanted && !ui.bet) ui.boardScroll = window.scrollY;
     ui.bet = wanted;
     ui.pinned = null;
+    /* R0b. A half-typed read belongs to the player it was typed on,
+     * so it does not follow the reader to the next card. */
+    ui.readsDraft = "";
   }
+}
+
+/* R0b. The card that just opened asks the service for that player's
+ * own reads, once. It is the retrospective's one-shot ask, applied to
+ * the other document this page can read. */
+function askReadsForCard() {
+  const entry = ui.bet ? findPlayer(ui.bet) : null;
+  if (entry) askReads(String(entry.player_id));
 }
 
 function route() {
@@ -2065,6 +2322,7 @@ function route() {
   /* the retrospective's own file, asked for once, on the route that
    * needs it — never on a route that does not */
   if (ui.retro) askRetro();
+  if (ui.bet) askReadsForCard();
   if (ui.bet || ui.retro) {
     window.scrollTo(0, 0);
   } else if (goingBack) {
@@ -2198,6 +2456,24 @@ document.addEventListener("click", function (event) {
   if (target.closest("[data-latest]")) {
     ui.pinned = null;
     render(null);
+    return;
+  }
+  /* R0b. The one control on this page that WRITES, and it writes to
+   * the reads service alone — never to a file this page reads, never
+   * to sweats.json, and never on the fabricated board. */
+  const save = target.closest("[data-read-save]");
+  if (save) {
+    saveRead(save.dataset.readSave);
+  }
+});
+
+/* The box keeps what has been typed across a re-render: the page
+ * redraws on every poll, and a sentence eaten by a redraw is a read
+ * the reader has to write twice. */
+document.addEventListener("input", function (event) {
+  const box = event.target;
+  if (box && box.dataset && box.dataset.readDraft !== undefined) {
+    ui.readsDraft = String(box.value === undefined ? "" : box.value);
   }
 });
 
@@ -2221,14 +2497,18 @@ window.addEventListener("hashchange", route);
  * boot — one fetch of one bundled file, and no second path
  * ------------------------------------------------------------------ */
 
-async function getJSON(url) {
+/* ONE fetch for this page: the board's own document, the
+ * retrospective's, and R0b's two calls to the reads service all come
+ * through here, so there is one timeout and one error shape. `init` is
+ * how the reads service's method, headers and body ride along; the
+ * file reads pass none. */
+async function getJSON(url, init) {
   const controller = new AbortController();
   const timer = window.setTimeout(function () { controller.abort(); },
     FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(url, {
-      signal: controller.signal, cache: "no-store"
-    });
+    const response = await fetch(url, Object.assign(
+      { signal: controller.signal, cache: "no-store" }, init || {}));
     if (!response.ok) throw new Error("HTTP " + response.status);
     return await response.json();
   } finally {
@@ -2265,6 +2545,9 @@ async function boot() {
    * route makes, so arriving at #/retro and navigating to it behave
    * identically. */
   if (ui.retro) askRetro();
+  /* ...and a reader who LANDED on a card wants the reads he has
+   * already banked on that player, for the same reason. */
+  if (ui.bet) askReadsForCard();
   /* the paused-feed banner has to be able to appear while nothing else
    * is happening, so one second-hand ticks for it and for nothing else */
   ui.ticker = window.setInterval(renderStale, 1000);

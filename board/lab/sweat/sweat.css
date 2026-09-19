@@ -442,3 +442,35 @@ line-height:1}
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important}
 }
+
+/* --------------------------------------------------------------------
+   R0b — THE CAPTURE BOX (READS_LAB_SPEC sec 6)
+
+   It takes the card's own surface family and nothing new: the panel is
+   a surface on the ground, the note is the muted family every honest
+   line on this page already wears, and the saved reads are the
+   reader's own words at body size. There is no state colour anywhere
+   on it, because a read is not a bet and has no state to be in.
+   -------------------------------------------------------------------- */
+.reads{background:var(--surface);border-radius:var(--r-card);
+padding:14px 12px;display:flex;flex-direction:column;gap:10px}
+.reads .rhead{font-size:11px;font-weight:600;letter-spacing:.06em;
+text-transform:uppercase;color:var(--muted)}
+.reads .rbox{width:100%;box-sizing:border-box;min-height:88px;
+border:1px solid var(--rule-strong);border-radius:var(--r-panel);
+background:var(--ground);color:var(--ink);padding:10px 12px;
+font:inherit;font-size:14px;line-height:1.5;resize:vertical}
+.reads .rbox[disabled]{opacity:.5}
+.reads .ractions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.reads .rsave{min-height:44px;padding:0 16px;border:0;
+border-radius:var(--r-full);background:var(--ink);color:#FFFFFF;
+font-size:13px;font-weight:600}
+.reads .rsave[disabled]{opacity:.35;cursor:default}
+.reads .rnote{font-size:12px;line-height:1.5;color:var(--muted);
+min-width:0}
+.reads .rlist{list-style:none;margin:0;padding:0;display:flex;
+flex-direction:column;gap:8px}
+.reads .ritem{background:var(--ground);border-radius:var(--r-panel);
+padding:10px 12px;display:flex;flex-direction:column;gap:4px}
+.reads .rtext{font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.reads .rwhen{font-size:11.5px;font-weight:500;color:var(--muted)}
