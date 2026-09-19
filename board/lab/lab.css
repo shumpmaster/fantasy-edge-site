@@ -23,9 +23,15 @@
   --warn:#c77d0a; --warnbg:#fdf2df;
   /* the two densities the switcher moves between */
   --rowpad:9px; --numsize:12.5px; --labsize:11.5px;
+  /* L2 — the likeliness strip's four weights. Thin means thin: the
+     track is a hairline, the p10–p90 span is a little more than one,
+     the p25–p75 core is the only band with any body to it, and the
+     mean's dot is small enough to sit inside that band. */
+  --trackh:2px; --spanh:4px; --coreh:7px; --meandot:7px;
 }
 body[data-density="compact"]{
   --rowpad:5px; --numsize:11.5px; --labsize:10.5px;
+  --trackh:1px; --spanh:3px; --coreh:5px; --meandot:5px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -120,6 +126,43 @@ text-align:left}
 .q{color:var(--sub)}
 .mv.up{color:var(--up)} .mv.dn{color:var(--dn)} .mv.flat{color:var(--faint)}
 .mvsub{display:block;font-size:9.5px;font-weight:600;color:var(--faint)}
+
+/* L2 — THE LIKELINESS STRIP.
+   The numeric columns are evenly spaced whatever the numbers say. This
+   is the row beneath them that is drawn TO SCALE, on that stat's own
+   axis: 0 to the wider of p90 and the mean. It is pure CSS boxes placed
+   by percentage — no drawing surface, no library, nothing to build.
+   A stat with no strip (the degenerate rows) simply has no such row,
+   and the table around it is exactly what it was. */
+.statrow.withlike th,.statrow.withlike td{border-bottom:none}
+.likerow th,.likerow td{padding-top:1px;padding-bottom:var(--rowpad)}
+.likelab{font-size:var(--labsize);font-weight:600;color:var(--faint);
+letter-spacing:.02em;text-transform:none}
+.like{display:flex;align-items:center;gap:7px}
+/* the "0" that makes it read as an axis rather than as decoration */
+.like .zero{font-size:9.5px;font-weight:700;color:var(--faint);
+line-height:1;flex-shrink:0}
+.like .track{position:relative;flex:1 1 auto;min-width:110px;
+height:var(--meandot)}
+/* the hairline the whole domain sits on */
+.like .track::before{content:"";position:absolute;left:0;right:0;top:50%;
+transform:translateY(-50%);height:var(--trackh);background:var(--divider);
+border-radius:999px}
+/* p10–p90: present, but only just */
+.like .span{position:absolute;top:50%;transform:translateY(-50%);
+height:var(--spanh);background:var(--bluebg);border-radius:999px}
+/* p25–p75: the core, the one band with weight */
+.like .core{position:absolute;top:50%;transform:translateY(-50%);
+height:var(--coreh);background:var(--blue);opacity:.32;border-radius:999px}
+/* p50 */
+.like .tick{position:absolute;top:50%;
+transform:translate(-50%,-50%);width:1.5px;
+height:calc(var(--coreh) + 4px);background:var(--sub);border-radius:1px}
+/* the mean — a different shape, so it is never mistaken for a quantile */
+.like .dot{position:absolute;top:50%;
+transform:translate(-50%,-50%);width:var(--meandot);height:var(--meandot);
+border-radius:50%;background:var(--blue);
+box-shadow:0 0 0 1.5px var(--bg)}
 
 /* the elements table: one row per link in the chain, the label as the
    row header, the value or the reason the generation stored */

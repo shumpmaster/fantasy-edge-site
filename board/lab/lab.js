@@ -5,12 +5,20 @@
  * written by `fantasy_edge.live.lab` — and everything on the page is
  * read off that file.
  *
- * THIS PAGE COMPUTES NOTHING. It does not project, it does not score,
+ * THIS PAGE PROJECTS NOTHING. It does not forecast, it does not score,
  * it does not poll a feed and it contacts no host but the one the
- * stylesheet's font comes from. The single piece of arithmetic on the
- * page is the exporter's own signed movement, which it carries
- * ready-made. A number that is absent renders as absent, with the
- * reason the generation stored beside it.
+ * stylesheet's font comes from. There are exactly TWO carve-outs to
+ * that, both named here rather than left to be discovered:
+ *   1. the exporter's own signed movement, which the file carries
+ *      ready-made and this page only prints;
+ *   2. the likeliness strip's POSITIONING ARITHMETIC (L2) — each
+ *      stat's five stored points and its stored mean divided by that
+ *      row's own domain, max(p90, mean), to get the percentages the
+ *      CSS places the marks at. It is presentation only: it produces
+ *      no new quantity, it is never shown as a number, and every
+ *      figure on the page is still the one the generation stored.
+ * A number that is absent renders as absent, with the reason the
+ * generation stored beside it.
  *
  * WHAT IT SHOWS, per the owner's ask: for one game of the current run,
  * a player's projected results as a straight table (mean and the
@@ -82,6 +90,17 @@ const CHAIN_NOTE =
   "In chain order: the game line the volume model read, the team's volume, this player's shares, his opportunities, then the rates applied to them.";
 
 const MOVEMENT_NOTE = "Movement is this generation's mean minus the same mean in the week's first generation.";
+
+/* L2 — the owner's "thin line labeled 'likeliness' that serves as an
+ * almost axis". It is the row header of the strip under each stat, and
+ * it is a sentinel because it is the one word on the page that names
+ * the whole idea. */
+const LIKELINESS_LABEL = "likeliness";
+
+/* What the strip is, for the reader who wants it said in words rather
+ * than inferred from a drawing. */
+const LIKELINESS_NOTE =
+  "Each stat's strip is its own axis, 0 to the wider of p90 and the mean: the light span is p10–p90, the darker core is p25–p75, the tick is p50 and the dot is the mean. A stat whose range is a single value draws no strip.";
 
 const BLANK = "—";
 
@@ -303,9 +322,16 @@ function resultsTable(player) {
       const value = Array.isArray(grid) ? grid[index] : null;
       return '<td class="q">' + esc(fmt(value, places)) + "</td>";
     }).join("");
-    return "<tr><th scope=\"row\">" + esc(label) + "</th>" +
+    /* The strip is built FIRST, because whether there is one decides
+     * how the numbers above it are ruled off: a stat and its strip are
+     * one unit and share one divider, and a degenerate stat keeps the
+     * divider it has always had. */
+    const strip = likelinessRow(grid, player.proj[key]);
+    return '<tr class="statrow' + (strip ? " withlike" : "") +
+      '"><th scope="row">' + esc(label) + "</th>" +
       '<td class="mean">' + esc(fmt(player.proj[key], places)) +
-      "</td>" + cells + movementCell(player, key, places) + "</tr>";
+      "</td>" + cells + movementCell(player, key, places) + "</tr>" +
+      strip;
   }).join("");
   if (!rows) {
     return '<p class="tnote">' +
@@ -318,6 +344,67 @@ function resultsTable(player) {
     }).join("") +
     "<th>Moved</th></tr></thead><tbody>" + rows +
     "</tbody></table></div>";
+}
+
+/* L2 — THE LIKELINESS STRIP, the second row under a stat's numbers.
+ *
+ * The numeric columns are evenly spaced whatever the numbers say; this
+ * strip is where the shape of the distribution becomes visible, because
+ * it is drawn TO SCALE on the row's own axis: domain 0 → max(p90,
+ * mean), with a small "0" anchoring the left end so it reads as an
+ * axis rather than as decoration.
+ *
+ * DEGENERATE ROWS DRAW NOTHING, and that is the point of the guard
+ * below rather than an accident of it. A missing grid, a non-numeric
+ * point, no mean, an axis with nothing above zero, or p10 === p90 —
+ * the Any TD row whose whole visible range is 0 — would all draw a
+ * strip that asserts a spread the generation never produced. In every
+ * one of those cases this returns "" and the stat row renders exactly
+ * as it did before L2. A chance-of-at-least-one treatment for the
+ * rare-event case is a separate iteration, not a mark placed here.
+ *
+ * The arithmetic is the file preamble's second carve-out: a division
+ * by the row's own domain, per mark, to a percentage the stylesheet
+ * positions with. No result of it is ever shown as a number. */
+function likelinessRow(grid, mean) {
+  if (!Array.isArray(grid)) return "";
+  const at10 = numberOrNull(grid[0]);
+  const at25 = numberOrNull(grid[1]);
+  const at50 = numberOrNull(grid[2]);
+  const at75 = numberOrNull(grid[3]);
+  const at90 = numberOrNull(grid[4]);
+  const centre = numberOrNull(mean);
+  const points = [at10, at25, at50, at75, at90, centre];
+  for (let i = 0; i < points.length; i += 1) {
+    if (points[i] === null) return "";
+  }
+  if (at10 === at90) return "";
+  const top = Math.max(at90, centre);
+  if (!(top > 0)) return "";
+  const span = at90 - at10;
+  const core = at75 - at25;
+  const cell = 1 + QUANTILE_COLUMNS.length + 1;
+  return '<tr class="likerow"><th scope="row" class="likelab">' +
+    esc(LIKELINESS_LABEL) + '</th><td class="likecell" colspan="' +
+    cell + '"><div class="like"><span class="zero">0</span>' +
+    '<span class="track">' +
+    '<span class="span" style="left:' + axisShare(at10, top) +
+    ';width:' + axisShare(span, top) + '"></span>' +
+    '<span class="core" style="left:' + axisShare(at25, top) +
+    ';width:' + axisShare(core, top) + '"></span>' +
+    '<span class="tick" style="left:' + axisShare(at50, top) + '"></span>' +
+    '<span class="dot" style="left:' + axisShare(centre, top) + '"></span>' +
+    "</span></div></td></tr>";
+}
+
+/* One mark's place on one row's axis, as a CSS percentage: the stored
+ * number over the row's domain, clamped so a mean above p90 cannot
+ * push a mark off the end of the track it belongs to. Two decimals is
+ * more than a phone can resolve and keeps the markup short. */
+function axisShare(value, top) {
+  const part = (value / top) * 100;
+  const held = Math.min(100, Math.max(0, part));
+  return held.toFixed(2) + "%";
 }
 
 function movementCell(player, key, places) {
@@ -475,6 +562,7 @@ function renderDetail() {
     '<div class="dmeta">' + meta.join(" · ") + "</div>" +
     '<div class="tsec"><div class="thead">All projected results</div>' +
     '<p class="tnote">' + esc(MOVEMENT_NOTE) + "</p>" +
+    '<p class="tnote">' + esc(LIKELINESS_NOTE) + "</p>" +
     resultsTable(player) + "</div>" +
     '<div class="tsec"><div class="thead">The context</div>' +
     '<p class="tnote">' + esc(CONTEXT_NOTE) + "</p>" +

@@ -1759,7 +1759,7 @@
         "targets": 2.2,
         "receptions": 1.7,
         "rec_yds": 14.1,
-        "anytime_td": null
+        "anytime_td": 0.0
       },
       "stat_quantiles": {
         "pass_yds": null,
@@ -1787,7 +1787,13 @@
           17.36,
           20.91
         ],
-        "anytime_td": null
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
       },
       "week_open": {
         "pass_yds": null,
@@ -1797,7 +1803,7 @@
         "targets": 2.23,
         "receptions": 1.64,
         "rec_yds": 13.01,
-        "anytime_td": null
+        "anytime_td": 0.0
       },
       "movement": {
         "pass_yds": null,
@@ -1807,7 +1813,7 @@
         "targets": -0.029999999999999805,
         "receptions": 0.06000000000000005,
         "rec_yds": 1.0899999999999999,
-        "anytime_td": null
+        "anytime_td": 0.0
       },
       "context": {
         "opponent": {
