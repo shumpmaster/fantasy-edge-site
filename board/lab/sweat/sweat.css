@@ -1,0 +1,367 @@
+/* LAB ITERATION L3 — THE SWEAT SANDBOX.
+ *
+ * docs/design/SWEAT_UI_BRIEF.md sec 4, the visual system, taken
+ * VERBATIM: these are the owner-approved tokens and the owner-approved
+ * state colours, at the hexes the brief lists. Nothing here is a
+ * substitution, an approximation or a nearby shade — when a colour
+ * changes it changes in the brief first.
+ *
+ * The lab's own variables are NOT imported. `web/lab/lab.css` belongs
+ * to the lab page and `web/style.css` belongs to the board; neither may
+ * be moved by this sandbox being iterated on.
+ *
+ * No shadows anywhere. Separation is surface against ground, which is
+ * the whole of the brief's sec 4 shape rule.
+ */
+
+:root{
+  /* --- sec 4 colour tokens ------------------------------------- */
+  --ground:#F4F2EC;
+  --surface:#FFFFFF;
+  --ink:#16181B;
+  --muted:#5B6068;
+  --rule:#E7E5DF;
+  --rule-strong:#B9B5AC;
+  --pip-used:#D9D6CE;
+  --down:#B42318;
+  /* the brief gives green one hex and one job: catch dots and the Hit
+     rung always use it, whatever state the bet is in. A positive delta
+     is the same green rather than a sixth colour. */
+  --up:#0E7C5A;
+
+  /* --- sec 4 radii --------------------------------------------- */
+  --r-card:16px;
+  --r-row:14px;
+  --r-panel:12px;
+  --r-rung:10px;
+  --r-full:999px;
+
+  /* --- sec 4 spacing ------------------------------------------- */
+  --gutter:16px;
+  --cardgap:12px;
+  --rowgap:10px;
+
+  /* the two type families, with the brief's own fallbacks */
+  --display:'Barlow Condensed','Arial Narrow',sans-serif;
+  --text:'IBM Plex Sans','Helvetica Neue',sans-serif;
+
+  /* a state's three colours, defaulted to the neutral family so a
+     state the fixture has not coloured is quiet rather than wrong */
+  --acc:#5B6068; --tint:#ECEBE7; --chiptxt:#3B3F45;
+}
+
+/* --------------------------------------------------------------------
+   THE STATE TABLE — sec 4, hex for hex. `accent` colours dots, the big
+   %, and the bet's own ladder outline; `tint` is the chip ground and
+   the band fill; `chiptxt` is the chip's own text, so the state is
+   always readable as a WORD and never as a colour alone (sec 8).
+
+   The brief's table has no row for `pregame` — nothing has happened
+   yet, so there is no heat to claim. It takes the neutral family, and
+   the chip carries the word "Pregame".
+   -------------------------------------------------------------------- */
+.sw[data-state="pregame"]{--acc:#5B6068;--tint:#ECEBE7;--chiptxt:#3B3F45}
+.sw[data-state="alive"]{--acc:#2B59C3;--tint:#E3EAF9;--chiptxt:#1E3F8C}
+.sw[data-state="heating"]{--acc:#C2410C;--tint:#FCE6DC;--chiptxt:#9A2F06}
+.sw[data-state="long_shot"]{--acc:#5B6068;--tint:#ECEBE7;--chiptxt:#3B3F45}
+.sw[data-state="cashed"]{--acc:#0E7C5A;--tint:#DDF1E8;--chiptxt:#0B5E44}
+.sw[data-state="lost"]{--acc:#5B6068;--tint:#ECEBE7;--chiptxt:#3B3F45}
+.sw[data-state="void"]{--acc:#5B6068;--tint:#ECEBE7;--chiptxt:#3B3F45}
+
+/* a settled row sits at reduced emphasis, as the brief's table says */
+.sw.row[data-state="lost"],.sw.row[data-state="void"]{opacity:.72}
+
+*{box-sizing:border-box;margin:0;padding:0;
+font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent}
+
+body{background:var(--ground);color:var(--ink);font-family:var(--text);
+font-size:15px;line-height:1.4;overflow-x:hidden;
+font-variant-numeric:tabular-nums}
+
+/* phone first at 390, holding 360 to 430; centred at 430 on a desktop */
+.wrap{max-width:430px;margin:0 auto;padding:0 var(--gutter) 48px}
+
+a{color:inherit}
+button{font-family:inherit;font-size:inherit;color:inherit;border:none;
+background:transparent;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* --------------------------------------------------------------------
+   the banners — persistent, never dismissible. The sample-sweats
+   sentinel rides the very top on every screen and is sticky, because a
+   reader who lands here from a link must know within one glance that
+   every bet below it was made up.
+   -------------------------------------------------------------------- */
+.banner{padding:11px var(--gutter);font-size:12px;font-weight:600;
+line-height:1.45;border-bottom:1px solid var(--rule)}
+/* the loudest thing on the page, on purpose. It is the `down` token
+   used as a ground rather than a fifth colour invented for it. */
+.banner.sample{background:var(--down);color:#FFFFFF;
+position:sticky;top:0;z-index:30;border-bottom:none}
+.banner.lab{background:#ECEBE7;color:var(--ink)}
+
+/* Frame 9 — the paused feed. It says how old the last update is and it
+   says that nothing is being carried forward to cover the gap. */
+.stale{padding:10px var(--gutter);background:#FCE6DC;color:#9A2F06;
+font-size:12px;line-height:1.45;border-bottom:1px solid var(--rule)}
+.stale b{font-weight:600;display:block}
+.stale .sub{display:block;font-weight:400;margin-top:2px;color:#9A2F06}
+/* the needle is frozen where the last snapshot left it, and looks it */
+body[data-frozen="yes"] .nowdot{stroke:var(--rule-strong)}
+
+/* --------------------------------------------------------------------
+   SANDBOX CHROME. Deliberately unlike the designed surface: square
+   corners, the page's ground, a plain label saying what it is.
+   -------------------------------------------------------------------- */
+.replay{padding:10px var(--gutter);background:#16181B;color:#F4F2EC;
+max-width:430px;margin:0 auto}
+.replay .rlab{font-size:10px;font-weight:600;letter-spacing:.08em;
+text-transform:uppercase;color:#B9B5AC}
+.replay .rctl{display:flex;align-items:center;gap:8px;margin-top:6px;
+flex-wrap:wrap}
+.replay .rbtn{min-width:44px;min-height:44px;border:1px solid #5B6068;
+border-radius:8px;color:#F4F2EC;font-size:14px;font-weight:600;
+padding:0 12px}
+.replay .rbtn[disabled]{opacity:.35;cursor:default}
+.replay .rbtn.play{min-width:76px}
+/* sandbox chrome, so it gets out of the way rather than widening the
+   bar: it wraps to its own line and breaks a long stamp if it has to */
+.replay .rat{font-size:11px;color:#B9B5AC;min-width:0;
+overflow-wrap:anywhere}
+.replay .rnote{margin-top:6px;font-size:10.5px;line-height:1.5;
+color:#B9B5AC}
+
+/* --------------------------------------------------------------------
+   sec 3.1 — THE LIVE SWEATS BOARD
+   -------------------------------------------------------------------- */
+.titlerow{height:58px;display:flex;align-items:center;
+justify-content:space-between;gap:10px}
+h1{font-family:var(--display);font-size:26px;font-weight:700;
+letter-spacing:.02em;text-transform:uppercase;min-width:0;
+overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.samplechip{font-size:11px;font-weight:600;color:var(--muted);
+background:var(--surface);border:1px solid var(--rule);
+border-radius:var(--r-full);padding:4px 10px;white-space:nowrap;
+flex-shrink:0}
+
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+margin-bottom:var(--cardgap)}
+.tile{background:var(--surface);border-radius:var(--r-panel);
+padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.tile .tlab{font-size:11px;font-weight:600;color:var(--muted);
+letter-spacing:.02em;min-width:0;overflow:hidden;
+text-overflow:ellipsis;white-space:nowrap}
+.tile .tval{font-family:var(--display);font-size:26px;font-weight:700;
+line-height:1}
+
+.sect{margin-bottom:var(--cardgap)}
+.secthead{display:flex;align-items:baseline;justify-content:space-between;
+gap:8px;flex-wrap:wrap;padding:0 2px 8px;font-size:11px;font-weight:600;
+letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.secthead>span{min-width:0}
+.secthead .sectnote{text-transform:none;letter-spacing:0;font-weight:400}
+
+/* THE ROW'S TRACKS. Only the sparkline is a fixed width, because it is
+   a drawing of a fixed size. The text column takes minmax(0,1fr) so it
+   SHRINKS and ellipsises rather than pushing the row wide, and the big
+   % takes minmax(54px,auto) so 54px is its floor and never its limit
+   — a hard 54px track clips the glyphs of "100%" the moment the
+   condensed webfont has not arrived, at every viewport width. */
+.row{display:grid;
+grid-template-columns:minmax(0,1fr) 110px minmax(54px,auto);
+grid-template-areas:"top top top" "meta meta meta" "game game game"
+"need spark pct";
+column-gap:8px;row-gap:2px;align-items:center;min-height:88px;
+padding:12px;background:var(--surface);border-radius:var(--r-row);
+text-decoration:none;color:var(--ink)}
+.row+.row{margin-top:var(--rowgap)}
+.rtop{grid-area:top;display:flex;align-items:center;gap:8px;min-width:0}
+.rname{font-size:16px;font-weight:600;letter-spacing:-.01em;min-width:0;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rmeta{grid-area:meta;font-size:12px;color:var(--muted);min-width:0;
+overflow-wrap:anywhere}
+.rgame{grid-area:game;font-size:12px;color:var(--muted);min-width:0;
+overflow-wrap:anywhere}
+/* "Needs 1 touchdown" is the headline of the whole row, so it WRAPS
+   rather than ellipsising: at 360 the longest unit word does not fit on
+   one line beside the sparkline, and a truncated need is a lost fact. */
+.rneed{grid-area:need;font-size:13px;font-weight:600;margin-top:4px;
+min-width:0;line-height:1.25;overflow-wrap:anywhere}
+.rspark{grid-area:spark;margin-top:4px;line-height:0}
+.rpct{grid-area:pct;margin-top:4px;text-align:right;
+font-family:var(--display);font-size:30px;font-weight:700;line-height:1;
+color:var(--acc);white-space:nowrap}
+
+.chip{font-size:11px;font-weight:600;line-height:1;padding:4px 8px;
+border-radius:var(--r-full);background:var(--tint);color:var(--chiptxt);
+white-space:nowrap;flex-shrink:0}
+
+.empty{background:var(--surface);border-radius:var(--r-card);
+padding:20px 16px;font-size:13px;color:var(--muted);line-height:1.6}
+.empty b{display:block;color:var(--ink);font-weight:600;font-size:15px}
+
+/* --------------------------------------------------------------------
+   sec 3.2 — THE SWEAT CARD
+   -------------------------------------------------------------------- */
+.topbar{display:flex;align-items:center;gap:8px;height:58px}
+.back{width:44px;height:44px;display:flex;align-items:center;
+justify-content:center;font-size:26px;line-height:1;text-decoration:none;
+color:var(--ink);border-radius:var(--r-full);margin-left:-10px}
+.topbar .ttl{flex:1;text-align:center;font-family:var(--display);
+font-size:20px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+
+.card{display:block}
+/* THE HEADER'S TWO TRACKS. The right one is BOUNDED, and that bound is
+   the fix for a real defect: an `auto` track sizes to its widest child's
+   max-content, so the uncalibrated-source sentence laid itself out on
+   one line and squeezed the name column to 70px at 360. The 48% is an
+   UPPER BOUND and not a width: the track still sizes to its content, so
+   with Barlow Condensed loaded the number takes the ~95px it needs and
+   the header is exactly the approved design. The bound only ever bites
+   when the condensed webfont has not arrived and the fallback sets the
+   same "100%" half again as wide — and a stepped-back number is worth
+   more than a clipped one. */
+.hdr{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,48%);
+gap:10px;background:var(--surface);border-radius:var(--r-card);
+padding:14px;margin-bottom:var(--cardgap)}
+.hleft{min-width:0}
+.hname{display:flex;align-items:center;gap:8px;font-size:17px;
+font-weight:600;letter-spacing:-.01em;min-width:0}
+.hwho{min-width:0;overflow:hidden;text-overflow:ellipsis;
+white-space:nowrap}
+.hmeta{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.5;
+min-width:0;overflow-wrap:anywhere}
+.hsit{margin-top:2px;font-size:12px;color:var(--muted);min-width:0;
+overflow-wrap:anywhere}
+.hhead{margin-top:10px;display:flex;align-items:baseline;gap:6px;
+flex-wrap:wrap;min-width:0}
+.hbig{font-family:var(--display);font-size:40px;font-weight:700;
+line-height:1}
+.hunit{font-size:13px;font-weight:500;color:var(--muted)}
+.hright{text-align:right;min-width:0;flex-shrink:0}
+.bigpct{font-family:var(--display);font-size:60px;font-weight:700;
+line-height:.95;color:var(--acc)}
+.bsub{margin-top:2px;font-size:12px;color:var(--muted)}
+/* honesty rule sec 6.2 — the source, in plain words, under the number */
+.bsrc{margin-top:4px;font-size:11px;font-weight:500;color:var(--muted);
+line-height:1.35}
+
+.chartcard{background:var(--surface);border-radius:var(--r-card);
+padding:14px 12px;margin-bottom:var(--cardgap)}
+.chead{display:flex;align-items:baseline;justify-content:space-between;
+gap:8px;flex-wrap:wrap;padding:0 2px 8px}
+.ctitle{font-size:13px;font-weight:600;min-width:0}
+.cdelta,.pdelta{font-size:13px;font-weight:600}
+.cdelta.up,.pdelta.up{color:var(--up)}
+.cdelta.dn,.pdelta.dn{color:var(--down)}
+.cdelta.flat,.pdelta.flat{color:var(--muted)}
+
+.chartwrap{position:relative;max-width:330px;margin:0 auto}
+.chart{display:block;width:100%;height:auto}
+/* sec 8 — every swing is a real button, 44x44, with its own label.
+   The class is `swinghit` and not `hit` on purpose: a bare `.hit` also
+   matched the ladder's cleared rung (`.lcell.hit`, the brief's own
+   word), which absolutely positioned three rungs on top of each other.
+   A global positioned rule needs a name nothing else wants. */
+.swinghit{position:absolute;width:44px;height:44px;
+border-radius:var(--r-full);background:transparent;padding:0}
+.swinghit:focus-visible{outline:2px solid var(--ink);outline-offset:-4px}
+
+/* the drawing itself: classes, not attributes, so the state's accent
+   reaches the marks through the same custom properties as the text */
+.future{fill:var(--ground)}
+.preline{fill:none;stroke:var(--rule-strong);stroke-width:1;
+stroke-dasharray:3 3}
+.trace{fill:none;stroke:var(--ink);stroke-width:1.6;
+stroke-linejoin:round;stroke-linecap:round}
+.trace.big{stroke-width:2}
+.nowdot{fill:var(--acc);stroke:#FFFFFF;stroke-width:1.5}
+.chart .grid{stroke:var(--rule);stroke-width:1}
+.chart .axis{stroke:var(--rule-strong);stroke-width:1}
+/* honesty rule sec 6.1 — the band, in the state's own soft tint */
+.chart .band{fill:var(--tint);stroke:none}
+.chart .guide{stroke:var(--ink);stroke-width:1;stroke-dasharray:2 3;
+opacity:.5}
+.chart .prelabel,.chart .qlabel{fill:var(--muted);font-family:var(--text);
+font-size:9px;font-weight:500}
+/* the dot styles of sec 3.2. Green is green whatever the state is. */
+.chart .dot.d-hit{fill:#0E7C5A;stroke:#FFFFFF;stroke-width:1}
+.chart .dot.d-miss{fill:#FFFFFF;stroke:var(--muted);stroke-width:1.4}
+.chart .dot.d-zone{fill:var(--acc);stroke:#FFFFFF;stroke-width:1}
+.chart .dot.d-note{fill:#FFFFFF;stroke:var(--rule-strong);stroke-width:1.4}
+.chart .ring{fill:none;stroke:var(--ink);stroke-width:3;
+transition:stroke-width 150ms ease}
+
+.panel{margin-top:10px;background:var(--ground);
+border-radius:var(--r-panel);padding:12px}
+.prow{display:flex;align-items:baseline;justify-content:space-between;
+gap:8px;flex-wrap:wrap}
+.prow>span{min-width:0}
+.pclock{font-size:12px;font-weight:600;color:var(--muted)}
+.ptitle{margin-top:4px;font-size:15px;font-weight:600;line-height:1.35;
+min-width:0;overflow-wrap:anywhere}
+.pwhy{margin:6px 0 0 16px;font-size:12.5px;color:var(--muted);
+line-height:1.6;overflow-wrap:anywhere}
+.pnav{display:flex;align-items:center;gap:8px;margin-top:10px;
+flex-wrap:wrap;min-width:0}
+.pnav>*{min-width:0}
+.step{width:44px;height:44px;border-radius:var(--r-full);
+border:1px solid var(--rule-strong);font-size:18px;line-height:1;
+background:var(--surface)}
+.step[disabled]{opacity:.35;cursor:default}
+.pcount{font-size:11.5px;color:var(--muted)}
+.newswing{margin-left:auto;min-height:44px;padding:0 12px;
+border-radius:var(--r-full);background:var(--ink);color:#FFFFFF;
+font-size:12.5px;font-weight:600}
+
+/* sec 3.2.4 — the ladder strip */
+.ladder{background:var(--surface);border-radius:var(--r-card);padding:14px 12px}
+.lhead{display:flex;align-items:baseline;justify-content:space-between;
+gap:8px;flex-wrap:wrap;padding:0 2px 10px;font-size:11px;font-weight:600;
+letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.lhead>span{min-width:0}
+.lhead .lnote{text-transform:none;letter-spacing:0;font-weight:400;
+text-align:right;overflow-wrap:anywhere}
+.lcells{display:grid;gap:6px}
+.lcell{border-radius:var(--r-rung);background:var(--ground);padding:8px 2px;
+text-align:center;display:flex;flex-direction:column;gap:2px;
+min-height:52px;justify-content:center;min-width:0}
+.lcell>span{min-width:0;overflow:hidden;text-overflow:ellipsis;
+white-space:nowrap}
+.lcell .lline{font-family:var(--display);font-size:20px;font-weight:600;
+line-height:1}
+.lcell .lval{font-size:11.5px;font-weight:500;color:var(--muted)}
+/* a cleared rung says "Hit" as well as turning green (sec 8) */
+.lcell.hit{background:#DDF1E8}
+.lcell.hit .lval{color:#0B5E44;font-weight:600}
+.lcell.bet{outline:2px solid var(--acc);outline-offset:-2px}
+.lcell.bet .lval{color:var(--acc);font-weight:600}
+
+/* --------------------------------------------------------------------
+   MOTION — the three the brief allows and nothing else. The now dot
+   pulses ONCE when a swing arrives; a board row slides when it changes
+   place; the selected ring transitions. Under prefers-reduced-motion
+   every one of them becomes an instant change.
+   -------------------------------------------------------------------- */
+/* BELOW THE DESIGN WIDTH. At 390 and up every display size is the
+   brief's own (sec 4: big % 60, "Needs N" 40). Under 390 they step
+   back one notch, because that is the width at which the fallback
+   face — half again as wide as Barlow Condensed — stops fitting, and
+   a number that has been stepped back is readable where a number that
+   has been cut in half is not. */
+@media (max-width: 389px){
+  .bigpct{font-size:50px}
+  .hbig{font-size:34px}
+  h1{font-size:23px}
+}
+
+@keyframes nowpulse{
+  0%{stroke-width:1.5}
+  40%{stroke-width:5}
+  100%{stroke-width:1.5}
+}
+.nowdot.pulse{animation:nowpulse 600ms ease-out 1}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}

@@ -1,0 +1,1028 @@
+/* LAB ITERATION L3 — THE SWEAT SANDBOX.
+ *
+ * The two screens of docs/design/SWEAT_UI_BRIEF.md — the LIVE SWEATS
+ * BOARD and the chart-first SWEAT CARD — built as one page, in the
+ * lab's idiom: vanilla, no framework, no build step, no module, one
+ * fetch of one bundled file.
+ *
+ * WHAT THIS PAGE IS FED. One file: `../../demo/sweats.demo.json`, an
+ * ARRAY of poll snapshots, each one a complete data-contract document
+ * (the brief's sec 5). Every entity in it is FABRICATED. There is no
+ * exporter, no bet source, no live feed and no pick behind this page —
+ * the brief's two blocking questions are unruled (its sec 10.1 and
+ * 10.2), so a recording is the page's only data path. The replay
+ * control walks that recording and stands in for the poll loop.
+ *
+ * WHAT THIS PAGE COMPUTES: nothing that is a claim. The snapshot
+ * carries `state`, `p_now`, `band`, `delta_pregame_pts`, the ladder
+ * rung chances, the summary tiles and every `why` line ready-made, as
+ * the contract assigns them to the exporter. This file does two kinds
+ * of arithmetic and no other:
+ *   1. GEOMETRY — a stored `t` and a stored `p` divided by the axis the
+ *      snapshot declares, to get the x and y a mark is drawn at. It
+ *      produces no quantity and is never shown as a number.
+ *   2. PRESENTATION ROUNDING — 0.74 printed as "74%", a stored band
+ *      printed as "66-81".
+ * It NEVER infers a state. There is no threshold in this file: the
+ * brief's proposed cut-offs (its sec 10.3) are unruled, they live in
+ * the fixture that authored the states, and the client renders the
+ * `state` field as it finds it. That is honesty rule sec 6.4, and it
+ * holds in the sandbox exactly as it would in the product.
+ *
+ * NOTHING HERE HAS GRADUATED. The board is untouched by this file, and
+ * nothing moves from the sandbox to the product without the owner's
+ * word on the design.
+ */
+"use strict";
+
+const BODY = document.body;
+const SWEATS_URL = BODY.dataset.sweats || "../../demo/sweats.demo.json";
+const FETCH_TIMEOUT_MS = 15000;
+
+/* ------------------------------------------------------------------
+ * the sentinels — each ONE contiguous string, the lab's idiom, so the
+ * wording cannot drift silently. The two banners are written into
+ * index.html as well; a test asserts the page and these constants say
+ * the same thing.
+ * ------------------------------------------------------------------ */
+
+const SWEAT_IN_PROGRESS =
+  "LAB — IN PROGRESS: design sandbox; presentation is experimental";
+
+/* THE SAMPLE-SWEATS SENTINEL. It rides the top of the page always, on
+ * every screen, and it is the one string on this page that may never
+ * be softened: every bet, every price and every number below it was
+ * made up for design work. */
+const SAMPLE_SWEATS =
+  "SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation";
+
+const SAMPLE_CHIP = "Sample data";
+
+const BOARD_TITLE = "LIVE SWEATS";
+const CARD_TITLE = "SWEAT";
+const BACK_LABEL = "Back to the live sweats board";
+
+const LIVE_HEAD = "LIVE · CLOSEST TO CASHING";
+const PREGAME_HEAD = "PREGAME · BY KICKOFF";
+const SETTLED_HEAD = "SETTLED";
+const DASHED_NOTE = "Dashed = pregame";
+
+/* The brief's sec 7 empty board, word for word. */
+const EMPTY_BOARD =
+  "No live sweats. Bets you track show up here at kickoff.";
+
+const NO_FILE =
+  "The bundled sweat fixture could not be read, so there is nothing to show. This page renders web/demo/sweats.demo.json and never invents a bet.";
+
+/* Frame 9. The needle freezes and the page says so; it never carries a
+ * value forward to cover the gap. */
+const STALE_HEAD = "Live data paused · last update ";
+const STALE_TAIL = " ago";
+const STALE_NOTE =
+  "The trace and the now dot are frozen where the last snapshot left them. Nothing is extrapolated.";
+
+/* The chart's own title. It says "Live chance" only while the bet is
+ * live: on a settled or voided bet the number is history, and calling
+ * it live would be the page dressing up a fact it was handed. */
+const CHART_TITLE_LIVE = "Live chance · ";
+const CHART_TITLE_DONE = "Chance · ";
+
+const NEW_SWING = "New swing ›";
+const SWING_TAIL = " · tap any dot";
+const NO_SWINGS = "No swings yet — the chart starts at the pregame chance.";
+
+/* The replay control is SANDBOX CHROME. It is labelled as such so it
+ * is never read as part of the designed surface. */
+const REPLAY_LABEL = "REPLAY — sandbox control, not part of the design";
+const REPLAY_NOTE =
+  "Play walks the recorded snapshots; pause long enough and the paused-feed banner appears, because a stopped replay is exactly the stale case.";
+
+/* Honesty rule sec 6.2 — the source is declared in plain words
+ * whenever the snapshot says the source has not passed its calibration
+ * gate. The wording is per `p_source` and nothing else. */
+const SOURCE_LABELS = {
+  model: "model, not yet calibrated",
+  market: "market-implied",
+  blend: "blended model and market, not yet calibrated"
+};
+
+/* The state's word, so colour is never the only signal (sec 8). */
+const STATE_LABELS = {
+  pregame: "Pregame",
+  alive: "Alive",
+  heating: "Heating",
+  long_shot: "Long shot",
+  cashed: "Cashed",
+  lost: "Lost",
+  void: "Void"
+};
+
+/* The three groupings the board draws, named by the states that fall
+ * in each. This is an ORDERING, read off the state the snapshot
+ * stored; it never changes a state and never invents one. */
+const LIVE_STATES = ["alive", "heating", "long_shot"];
+const SETTLED_STATES = ["cashed", "lost", "void"];
+
+const BLANK = "—";
+const FULL_GAME_S = 3600;
+
+/* The only motions the brief allows, in milliseconds. */
+const PULSE_MS = 600;
+const SLIDE_MS = 250;
+const REPLAY_MS = 2000;
+
+const REDUCED = (function () {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (err) {
+    return false;
+  }
+})();
+
+/* ------------------------------------------------------------------
+ * the page's own memory — never a bet's
+ * ------------------------------------------------------------------ */
+
+const ui = {
+  snapshots: [],
+  index: 0,
+  playing: false,
+  timer: null,
+  ticker: null,
+  advancedAt: Date.now(),
+  pulse: false,
+  bet: null,          // the bet_id the card screen is showing, or null
+  pinned: null,       // an event index the reader chose, or null = auto
+  boardScroll: 0,
+  error: ""
+};
+
+/* ------------------------------------------------------------------
+ * small helpers — the lab's, spelled the same way
+ * ------------------------------------------------------------------ */
+
+function esc(value) {
+  return String(value === null || value === undefined ? "" : value)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+function numberOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "boolean") return null;
+  const number = Number(value);
+  return Number.isFinite(number) ? number : null;
+}
+
+/* A stored chance, printed. Rounding is presentation: 0.74 is the
+ * number the snapshot carries and "74%" is how it is read. */
+function pct(value) {
+  const number = numberOrNull(value);
+  if (number === null) return BLANK;
+  return Math.round(number * 100) + "%";
+}
+
+function pctNumber(value) {
+  const number = numberOrNull(value);
+  if (number === null) return BLANK;
+  return String(Math.round(number * 100));
+}
+
+function bandText(band) {
+  if (!Array.isArray(band) || band.length < 2) return "";
+  return "range " + pctNumber(band[0]) + "–" + pctNumber(band[1]);
+}
+
+function signed(points) {
+  const number = numberOrNull(points);
+  if (number === null) return BLANK;
+  return (number > 0 ? "+" : "") + number + " pts";
+}
+
+function deltaFamily(points) {
+  const number = numberOrNull(points);
+  if (number === null || number === 0) return "flat";
+  return number > 0 ? "up" : "dn";
+}
+
+function elapsedWords(seconds) {
+  const whole = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(whole / 60);
+  const rest = whole % 60;
+  return minutes + ":" + (rest < 10 ? "0" : "") + rest;
+}
+
+function isOneOf(list, value) {
+  return list.indexOf(value) !== -1;
+}
+
+/* The time of day out of a stored stamp. It slices the string the
+ * snapshot carries; it parses nothing and computes no time. */
+function clockOf(stamp) {
+  const split = String(stamp).indexOf("T");
+  return split === -1 ? String(stamp) : String(stamp).slice(split + 1);
+}
+
+function snapshot() {
+  return ui.snapshots[ui.index] || null;
+}
+
+function sweats() {
+  const now = snapshot();
+  return (now && Array.isArray(now.sweats)) ? now.sweats : [];
+}
+
+function findBet(betId) {
+  const all = sweats();
+  for (let i = 0; i < all.length; i += 1) {
+    if (all[i].bet_id === betId) return all[i];
+  }
+  return null;
+}
+
+/* The game strip, repeated on every row of the same game (sec 7). */
+function gameLine(game) {
+  if (!game) return "";
+  const score = game.away + " " + game.away_score + " · " +
+    game.home + " " + game.home_score;
+  let when = "";
+  if (game.status === "pre") {
+    when = "kickoff";
+  } else if (game.status === "final") {
+    when = "FINAL";
+  } else if (game.period >= 5) {
+    when = "OT " + game.clock;
+  } else {
+    when = "Q" + game.period + " " + game.clock;
+  }
+  return score + " · " + when;
+}
+
+function metaLine(bet) {
+  const parts = [bet.player.pos, bet.market_label];
+  const odds = numberOrNull(bet.odds_american);
+  if (odds !== null) parts.push((odds > 0 ? "+" : "") + odds);
+  return parts.join(" · ");
+}
+
+function needLine(bet) {
+  if (bet.state === "void") return "Voided";
+  if (bet.state === "cashed") return "Cashed";
+  if (bet.state === "lost") return "Did not hit";
+  const need = numberOrNull(bet.need);
+  if (need === null) return "";
+  return "Needs " + need + " " + bet.need_unit;
+}
+
+/* Honesty rule sec 6.2, as a line of words under the number. */
+function sourceLabel(bet) {
+  if (bet.calibrated !== false) return "";
+  return SOURCE_LABELS[bet.p_source] || String(bet.p_source);
+}
+
+/* ------------------------------------------------------------------
+ * GEOMETRY — the first of this file's two kinds of arithmetic. A
+ * stored `t` over the axis the snapshot declares, and a stored `p` over
+ * the height. No result of it is ever printed as a number.
+ * ------------------------------------------------------------------ */
+
+function axisOf(bet) {
+  return numberOrNull(bet.game && bet.game.axis_max_s) || FULL_GAME_S;
+}
+
+function scaler(axis, left, width, top, height) {
+  return {
+    x: function (t) { return left + (t / axis) * width; },
+    y: function (p) { return top + (1 - p) * height; }
+  };
+}
+
+function points(trace, at, key) {
+  return trace.map(function (point) {
+    return at.x(point.t).toFixed(1) + "," + at.y(point[key]).toFixed(1);
+  }).join(" ");
+}
+
+/* ------------------------------------------------------------------
+ * THE SPARKLINE (sec 3.1) — 110x44, four layers, no event markers, and
+ * aria-hidden because the row's own text carries every number on it.
+ * ------------------------------------------------------------------ */
+
+const SPARK_W = 110;
+const SPARK_H = 44;
+
+function sparkline(bet) {
+  const axis = axisOf(bet);
+  /* inset by the now dot's own radius, so a bet still at kickoff draws
+   * its dot at t=0 whole instead of half outside the drawing */
+  const at = scaler(axis, 4, SPARK_W - 8, 4, SPARK_H - 8);
+  const trace = Array.isArray(bet.trace) ? bet.trace : [];
+  const layers = [];
+
+  /* 1. the unplayed game */
+  const played = numberOrNull(bet.game && bet.game.elapsed_s) || 0;
+  const edge = at.x(played);
+  if (edge < SPARK_W) {
+    layers.push('<rect class="future" x="' + edge.toFixed(1) +
+      '" y="0" width="' + (SPARK_W - edge).toFixed(1) +
+      '" height="' + SPARK_H + '"></rect>');
+  }
+
+  /* 2. the dashed pregame reference */
+  const pre = at.y(numberOrNull(bet.p_pregame) || 0).toFixed(1);
+  layers.push('<line class="preline" x1="0" y1="' + pre + '" x2="' +
+    SPARK_W + '" y2="' + pre + '"></line>');
+
+  /* 3. the trace, once there is more than a kickoff point */
+  if (trace.length > 1) {
+    layers.push('<polyline class="trace" points="' +
+      points(trace, at, "p") + '"></polyline>');
+  }
+
+  /* 4. the now dot, in the state colour. A void bet has no chance to
+   *    mark, so it gets no dot at all. */
+  const last = trace[trace.length - 1];
+  if (last && bet.state !== "void") {
+    layers.push('<circle class="nowdot' + (ui.pulse ? " pulse" : "") +
+      '" cx="' + at.x(last.t).toFixed(1) + '" cy="' +
+      at.y(last.p).toFixed(1) + '" r="3.5"></circle>');
+  }
+
+  return '<svg class="spark" width="' + SPARK_W + '" height="' +
+    SPARK_H + '" viewBox="0 0 ' + SPARK_W + " " + SPARK_H +
+    '" aria-hidden="true" focusable="false">' + layers.join("") +
+    "</svg>";
+}
+
+/* ------------------------------------------------------------------
+ * THE CARD CHART (sec 3.2) — 330x200, seven layers, quarter gridlines,
+ * and one transparent 44x44 button per event dot.
+ * ------------------------------------------------------------------ */
+
+const CHART_W = 330;
+const CHART_H = 200;
+const CHART_L = 8;
+const CHART_T = 14;
+const CHART_BOTTOM = 172;
+const PLOT_W = CHART_W - CHART_L * 2;
+const PLOT_H = CHART_BOTTOM - CHART_T;
+
+const QUARTERS = [
+  [900, 450, "Q1"], [1800, 1350, "Q2"],
+  [2700, 2250, "Q3"], [3600, 3150, "Q4"]
+];
+const OT_CENTRE = 3900;
+const OT_LABEL = "OT";
+
+const DOT_CLASSES = {
+  catch: "d-hit",
+  carry: "d-hit",
+  target: "d-miss",
+  drop: "d-miss",
+  red_zone: "d-zone",
+  drive_start: "d-note",
+  injury_note: "d-note"
+};
+
+const DOT_RADIUS = { "d-hit": 4.5, "d-miss": 4.5, "d-zone": 5.5, "d-note": 4.5 };
+
+function chartAria(bet) {
+  const who = bet.player.name + ", " + bet.market_label;
+  if (bet.state === "void") {
+    return who + ": voided, no chance is shown.";
+  }
+  const parts = [who + ": " + pct(bet.p_now) + " chance"];
+  if (Array.isArray(bet.band)) {
+    parts.push("range " + pctNumber(bet.band[0]) + " to " +
+      pctNumber(bet.band[1]));
+  }
+  parts.push(STATE_LABELS[bet.state] || bet.state);
+  parts.push(gameLine(bet.game));
+  return parts.join(", ") + ".";
+}
+
+function selectedIndex(bet) {
+  const events = Array.isArray(bet.events) ? bet.events : [];
+  if (!events.length) return -1;
+  if (ui.pinned === null) return events.length - 1;
+  return Math.min(Math.max(0, ui.pinned), events.length - 1);
+}
+
+function traceAt(bet, t) {
+  const trace = Array.isArray(bet.trace) ? bet.trace : [];
+  for (let i = 0; i < trace.length; i += 1) {
+    if (trace[i].t === t) return trace[i];
+  }
+  return trace[trace.length - 1] || null;
+}
+
+function cardChart(bet) {
+  const axis = axisOf(bet);
+  const at = scaler(axis, CHART_L, PLOT_W, CHART_T, PLOT_H);
+  const trace = Array.isArray(bet.trace) ? bet.trace : [];
+  const events = Array.isArray(bet.events) ? bet.events : [];
+  const chosen = selectedIndex(bet);
+  const layers = [];
+
+  /* 1. the unplayed game — over the overtime span too, but only once
+   *    the snapshot says overtime has actually started (sec 7). */
+  const played = numberOrNull(bet.game && bet.game.elapsed_s) || 0;
+  const edge = at.x(played);
+  if (edge < CHART_L + PLOT_W) {
+    layers.push('<rect class="future" x="' + edge.toFixed(1) +
+      '" y="' + CHART_T + '" width="' +
+      (CHART_L + PLOT_W - edge).toFixed(1) + '" height="' + PLOT_H +
+      '"></rect>');
+  }
+
+  /* 2. quarter gridlines and the axis */
+  QUARTERS.forEach(function (quarter) {
+    if (quarter[0] > axis) return;
+    const line = at.x(quarter[0]).toFixed(1);
+    layers.push('<line class="grid" x1="' + line + '" y1="' + CHART_T +
+      '" x2="' + line + '" y2="' + CHART_BOTTOM + '"></line>');
+  });
+  layers.push('<line class="axis" x1="' + CHART_L + '" y1="' +
+    CHART_BOTTOM + '" x2="' + (CHART_L + PLOT_W) + '" y2="' +
+    CHART_BOTTOM + '"></line>');
+
+  /* 3. the dashed pregame line, labelled */
+  const pregame = numberOrNull(bet.p_pregame);
+  if (pregame !== null) {
+    const line = at.y(pregame).toFixed(1);
+    layers.push('<line class="preline" x1="' + CHART_L + '" y1="' + line +
+      '" x2="' + (CHART_L + PLOT_W) + '" y2="' + line + '"></line>');
+    const label = Math.min(CHART_BOTTOM - 4,
+      Math.max(CHART_T + 9, at.y(pregame) - 5));
+    layers.push('<text class="prelabel" x="' + (CHART_L + PLOT_W) +
+      '" y="' + label.toFixed(1) + '" text-anchor="end">' +
+      esc("Pregame " + pct(pregame)) + "</text>");
+  }
+
+  /* 4. THE BAND. Honesty rule sec 6.1: while a bet is live this is
+   *    always drawn, so a bare point estimate is never what the reader
+   *    sees. On a settled bet the stored band has collapsed and the
+   *    path draws as the flat line it now is. */
+  if (trace.length > 1) {
+    const up = trace.map(function (point) {
+      return at.x(point.t).toFixed(1) + "," + at.y(point.hi).toFixed(1);
+    });
+    const down = trace.slice().reverse().map(function (point) {
+      return at.x(point.t).toFixed(1) + "," + at.y(point.lo).toFixed(1);
+    });
+    layers.push('<path class="band" d="M' + up.join(" L ") + " L " +
+      down.join(" L ") + ' Z"></path>');
+  }
+
+  /* 5. the trace */
+  if (trace.length > 1) {
+    layers.push('<polyline class="trace big" points="' +
+      points(trace, at, "p") + '"></polyline>');
+  }
+
+  /* 6. the selected swing's guide, dropped to the axis */
+  if (chosen >= 0) {
+    const here = traceAt(bet, events[chosen].t);
+    if (here) {
+      const line = at.x(events[chosen].t).toFixed(1);
+      layers.push('<line class="guide" x1="' + line + '" y1="' +
+        at.y(here.p).toFixed(1) + '" x2="' + line + '" y2="' +
+        CHART_BOTTOM + '"></line>');
+    }
+  }
+
+  /* 7. the event dots */
+  const hits = [];
+  events.forEach(function (event, index) {
+    const here = traceAt(bet, event.t);
+    if (!here) return;
+    const family = DOT_CLASSES[event.type] || "d-note";
+    const cx = at.x(event.t);
+    const cy = at.y(here.p);
+    if (index === chosen) {
+      layers.push('<circle class="ring" cx="' + cx.toFixed(1) + '" cy="' +
+        cy.toFixed(1) + '" r="7"></circle>');
+    }
+    layers.push('<circle class="dot ' + family + '" cx="' + cx.toFixed(1) +
+      '" cy="' + cy.toFixed(1) + '" r="' + DOT_RADIUS[family] +
+      '"></circle>');
+    /* the 44x44 tap target, placed as a SHARE of the drawing so it
+     * keeps its dot when the chart is scaled down on a 360px phone,
+     * and clamped so a dot at the very edge of the axis cannot hang
+     * its button outside the chart it belongs to */
+    hits.push('<button type="button" class="swinghit" data-swing="' + index +
+      '" style="left:clamp(0px,calc(' +
+      ((cx / CHART_W) * 100).toFixed(2) +
+      '% - 22px),calc(100% - 44px));top:clamp(0px,calc(' +
+      ((cy / CHART_H) * 100).toFixed(2) +
+      '% - 22px),calc(100% - 44px))" aria-label="' +
+      esc(event.clock + ", " + event.title) + '"' +
+      (index === chosen ? ' aria-current="true"' : "") + "></button>");
+  });
+
+  /* the quarter labels, under the axis */
+  const marks = QUARTERS.filter(function (quarter) {
+    return quarter[0] <= axis;
+  }).map(function (quarter) {
+    return '<text class="qlabel" x="' + at.x(quarter[1]).toFixed(1) +
+      '" y="' + (CHART_BOTTOM + 15) + '" text-anchor="middle">' +
+      esc(quarter[2]) + "</text>";
+  });
+  if (axis > FULL_GAME_S) {
+    marks.push('<text class="qlabel" x="' + at.x(OT_CENTRE).toFixed(1) +
+      '" y="' + (CHART_BOTTOM + 15) + '" text-anchor="middle">' +
+      esc(OT_LABEL) + "</text>");
+  }
+
+  return '<div class="chartwrap"><svg class="chart" viewBox="0 0 ' +
+    CHART_W + " " + CHART_H + '" role="img" aria-label="' +
+    esc(chartAria(bet)) + '">' + layers.join("") + marks.join("") +
+    "</svg>" + hits.join("") + "</div>";
+}
+
+/* ------------------------------------------------------------------
+ * THE BOARD (sec 3.1)
+ * ------------------------------------------------------------------ */
+
+function boardRow(bet) {
+  const chance = bet.state === "void" ? BLANK : pct(bet.p_now);
+  return '<a class="sw row" data-state="' + esc(bet.state) +
+    '" data-bet="' + esc(bet.bet_id) + '" href="#/sweat/' +
+    encodeURIComponent(bet.bet_id) + '">' +
+    '<span class="rtop"><span class="rname">' + esc(bet.player.name) +
+    '</span><span class="chip">' +
+    esc(STATE_LABELS[bet.state] || bet.state) + "</span></span>" +
+    '<span class="rmeta">' + esc(metaLine(bet)) + "</span>" +
+    '<span class="rgame">' + esc(gameLine(bet.game)) + "</span>" +
+    '<span class="rneed">' + esc(needLine(bet)) + "</span>" +
+    '<span class="rspark">' + sparkline(bet) + "</span>" +
+    '<span class="rpct">' + esc(chance) + "</span></a>";
+}
+
+function section(title, note, rows) {
+  if (!rows.length) return "";
+  return '<section class="sect"><div class="secthead"><span>' +
+    esc(title) + "</span>" +
+    (note ? '<span class="sectnote">' + esc(note) + "</span>" : "") +
+    "</div>" + rows.map(boardRow).join("") + "</section>";
+}
+
+/* The board's ORDER, off the stored state and the stored chance: the
+ * live bets closest to cashing first, then what has not kicked off, by
+ * kickoff, then everything settled. Ordering moves nothing and infers
+ * nothing — the state each row shows is the one the snapshot stored. */
+function ordered() {
+  const all = sweats();
+  const live = all.filter(function (bet) {
+    return isOneOf(LIVE_STATES, bet.state);
+  }).sort(function (a, b) {
+    return (numberOrNull(b.p_now) || 0) - (numberOrNull(a.p_now) || 0);
+  });
+  const pregame = all.filter(function (bet) {
+    return bet.state === "pregame";
+  }).sort(function (a, b) {
+    const kick = String(a.game.kickoff).localeCompare(String(b.game.kickoff));
+    if (kick) return kick;
+    return (numberOrNull(b.p_pregame) || 0) - (numberOrNull(a.p_pregame) || 0);
+  });
+  const settled = all.filter(function (bet) {
+    return isOneOf(SETTLED_STATES, bet.state);
+  }).sort(function (a, b) {
+    return SETTLED_STATES.indexOf(a.state) - SETTLED_STATES.indexOf(b.state);
+  });
+  return { live: live, pregame: pregame, settled: settled };
+}
+
+function summaryTiles() {
+  const now = snapshot();
+  const tiles = (now && now.summary) || {};
+  const cells = [
+    ["Live", tiles.live],
+    ["Cashed", tiles.cashed],
+    ["Exp. hits", tiles.exp_hits]
+  ];
+  return '<div class="tiles">' + cells.map(function (cell) {
+    const value = numberOrNull(cell[1]);
+    return '<div class="tile"><span class="tlab">' + esc(cell[0]) +
+      '</span><span class="tval">' +
+      esc(value === null ? BLANK : value) + "</span></div>";
+  }).join("") + "</div>";
+}
+
+function renderBoard() {
+  const groups = ordered();
+  const body = section(LIVE_HEAD, DASHED_NOTE, groups.live) +
+    section(PREGAME_HEAD, "", groups.pregame) +
+    section(SETTLED_HEAD, "", groups.settled);
+  const empty = body ? "" :
+    '<div class="empty"><b>' + esc(EMPTY_BOARD) + "</b></div>";
+  return '<div class="titlerow"><h1>' + esc(BOARD_TITLE) +
+    '</h1><span class="samplechip">' + esc(SAMPLE_CHIP) + "</span></div>" +
+    summaryTiles() + body + empty;
+}
+
+/* ------------------------------------------------------------------
+ * THE CARD (sec 3.2)
+ * ------------------------------------------------------------------ */
+
+function headline(bet) {
+  if (bet.state === "void") {
+    return '<span class="hbig">Void</span>';
+  }
+  if (bet.state === "cashed") {
+    return '<span class="hbig">Cashed</span>';
+  }
+  if (bet.state === "lost") {
+    return '<span class="hbig">Did not hit</span>';
+  }
+  const need = numberOrNull(bet.need);
+  if (need === null) return "";
+  return '<span class="hbig">Needs ' + esc(need) +
+    '</span><span class="hunit">' + esc(bet.need_unit) + "</span>";
+}
+
+function bigChance(bet) {
+  if (bet.state === "void") {
+    return '<div class="bigpct">' + esc(BLANK) +
+      '</div><div class="bsub">no chance is shown on a voided bet</div>';
+  }
+  const parts = ['<div class="bigpct">' + esc(pct(bet.p_now)) + "</div>"];
+  if (bet.settled_at_s !== null && bet.settled_at_s !== undefined) {
+    parts.push('<div class="bsub">settled</div>');
+  } else {
+    const band = bandText(bet.band);
+    if (band) parts.push('<div class="bsub">' + esc(band) + "</div>");
+  }
+  const source = sourceLabel(bet);
+  if (source) {
+    parts.push('<div class="bsrc">' + esc(source) + "</div>");
+  }
+  return parts.join("");
+}
+
+function explanation(bet) {
+  const events = Array.isArray(bet.events) ? bet.events : [];
+  const chosen = selectedIndex(bet);
+  if (chosen < 0) {
+    return '<div class="panel"><div class="ptitle">' + esc(NO_SWINGS) +
+      "</div></div>";
+  }
+  const event = events[chosen];
+  const why = (Array.isArray(event.why) ? event.why : []).map(
+    function (line) { return "<li>" + esc(line) + "</li>"; }).join("");
+  const behind = ui.pinned !== null && chosen < events.length - 1;
+  return '<div class="panel">' +
+    '<div class="prow"><span class="pclock">' + esc(event.clock) +
+    '</span><span class="pdelta ' + deltaFamily(event.delta_pts) + '">' +
+    esc(signed(event.delta_pts)) + "</span></div>" +
+    '<div class="ptitle">' + esc(event.title) + "</div>" +
+    (why ? '<ul class="pwhy">' + why + "</ul>" : "") +
+    '<div class="pnav">' +
+    '<button type="button" class="step" data-step="-1" aria-label="Previous swing"' +
+    (chosen <= 0 ? " disabled" : "") + ">‹</button>" +
+    '<button type="button" class="step" data-step="1" aria-label="Next swing"' +
+    (chosen >= events.length - 1 ? " disabled" : "") + ">›</button>" +
+    '<span class="pcount">' + esc("Swing " + (chosen + 1) + " of " +
+      events.length + SWING_TAIL) + "</span>" +
+    (behind ? '<button type="button" class="newswing" data-latest="1">' +
+      esc(NEW_SWING) + "</button>" : "") +
+    "</div></div>";
+}
+
+function ladderStrip(bet) {
+  const rungs = Array.isArray(bet.ladder) ? bet.ladder : [];
+  if (!rungs.length) return "";
+  const cells = rungs.map(function (rung) {
+    const isBet = rung.line === bet.line;
+    const value = rung.cleared ? "Hit" : pct(rung.p);
+    return '<div class="lcell' + (rung.cleared ? " hit" : "") +
+      (isBet ? " bet" : "") + '"><span class="lline">' +
+      esc(rung.line) + '</span><span class="lval">' + esc(value) +
+      "</span></div>";
+  }).join("");
+  return '<section class="ladder"><div class="lhead"><span>Ladder</span>' +
+    '<span class="lnote">' + esc(bet.ladder_note || "") + "</span></div>" +
+    '<div class="lcells" style="grid-template-columns:repeat(' +
+    rungs.length + ',1fr)">' + cells + "</div></section>";
+}
+
+function renderCard(bet) {
+  const delta = numberOrNull(bet.delta_pregame_pts);
+  const running = isOneOf(LIVE_STATES, bet.state) || bet.state === "pregame";
+  const head = '<div class="chead"><span class="ctitle">' +
+    esc((running ? CHART_TITLE_LIVE : CHART_TITLE_DONE) + bet.line_label) +
+    "</span>" +
+    (delta === null ? "" : '<span class="cdelta ' + deltaFamily(delta) +
+      '">' + esc(signed(delta)) + "</span>") + "</div>";
+  return '<div class="topbar"><a class="back" href="#/board" aria-label="' +
+    esc(BACK_LABEL) + '">‹</a><span class="ttl">' + esc(CARD_TITLE) +
+    '</span><span class="samplechip">' + esc(SAMPLE_CHIP) + "</span></div>" +
+    '<article class="sw card" data-state="' + esc(bet.state) + '">' +
+    '<section class="hdr"><div class="hleft">' +
+    '<div class="hname"><span class="hwho">' + esc(bet.player.name) +
+    '</span><span class="chip">' +
+    esc(STATE_LABELS[bet.state] || bet.state) + "</span></div>" +
+    '<div class="hmeta">' + esc(metaLine(bet)) + " · " +
+    esc(gameLine(bet.game)) + "</div>" +
+    (bet.game && bet.game.situation
+      ? '<div class="hsit">' + esc(bet.game.situation) + "</div>" : "") +
+    '<div class="hhead">' + headline(bet) + "</div></div>" +
+    '<div class="hright">' + bigChance(bet) + "</div></section>" +
+    '<section class="chartcard">' + head + cardChart(bet) +
+    explanation(bet) + "</section>" +
+    ladderStrip(bet) + "</article>";
+}
+
+/* ------------------------------------------------------------------
+ * THE REPLAY CONTROL — sandbox chrome, plainly labelled as such
+ * ------------------------------------------------------------------ */
+
+function renderReplay() {
+  const total = ui.snapshots.length;
+  const now = snapshot();
+  if (!total) {
+    document.getElementById("replay").innerHTML = "";
+    return;
+  }
+  /* the position, and the recording's own clock. The stamp is shown as
+   * its time of day — the whole ISO string is sandbox chrome that would
+   * only crowd the bar, so it rides the control's title instead. */
+  const full = (now && now.generated_at) ? String(now.generated_at) : "";
+  const at = "Snapshot " + (ui.index + 1) + " of " + total +
+    (full ? " · " + clockOf(full) : "");
+  document.getElementById("replay").innerHTML =
+    '<div class="rlab">' + esc(REPLAY_LABEL) + "</div>" +
+    '<div class="rctl">' +
+    '<button type="button" class="rbtn" data-move="-1" aria-label="Step back one snapshot"' +
+    (ui.index <= 0 ? " disabled" : "") + ">‹</button>" +
+    '<button type="button" class="rbtn play" data-play="1" aria-pressed="' +
+    (ui.playing ? "true" : "false") + '">' +
+    (ui.playing ? "Pause" : "Play") + "</button>" +
+    '<button type="button" class="rbtn" data-move="1" aria-label="Step on one snapshot"' +
+    (ui.index >= total - 1 ? " disabled" : "") + ">›</button>" +
+    '<span class="rat" title="' + esc(full) + '">' + esc(at) +
+    "</span></div>" +
+    '<div class="rnote">' + esc(REPLAY_NOTE) + "</div>";
+}
+
+/* Frame 9. Staleness is measured against WALL TIME since the replay
+ * last advanced, against twice the recording's own poll interval — a
+ * stopped replay IS the stale case. Nothing is carried forward to
+ * cover the gap; the trace and the now dot stay exactly where the last
+ * snapshot left them. */
+function renderStale() {
+  const node = document.getElementById("stale");
+  const now = snapshot();
+  const interval = numberOrNull(now && now.poll_interval_s);
+  if (!now || interval === null) {
+    node.hidden = true;
+    return;
+  }
+  const since = (Date.now() - ui.advancedAt) / 1000;
+  if (since <= interval * 2) {
+    node.hidden = true;
+    node.textContent = "";
+    BODY.dataset.frozen = "no";
+    return;
+  }
+  node.hidden = false;
+  BODY.dataset.frozen = "yes";
+  node.innerHTML = "<b>" + esc(STALE_HEAD + elapsedWords(since) +
+    STALE_TAIL) + '</b><span class="sub">' + esc(STALE_NOTE) + "</span>";
+}
+
+/* ------------------------------------------------------------------
+ * render and route
+ * ------------------------------------------------------------------ */
+
+function renderBanners() {
+  document.getElementById("samplebanner").textContent = SAMPLE_SWEATS;
+  document.getElementById("labbanner").textContent = SWEAT_IN_PROGRESS;
+}
+
+function boardTops() {
+  const map = {};
+  document.querySelectorAll("[data-bet]").forEach(function (node) {
+    map[node.dataset.bet] = node.getBoundingClientRect().top;
+  });
+  return map;
+}
+
+/* The board's one motion (sec 4): a row that changed place slides to
+ * it, about 250ms. Under prefers-reduced-motion it simply arrives. */
+function slideRows(before) {
+  if (REDUCED || !before) return;
+  document.querySelectorAll("[data-bet]").forEach(function (node) {
+    const was = before[node.dataset.bet];
+    if (was === undefined) return;
+    const shift = was - node.getBoundingClientRect().top;
+    if (!shift) return;
+    node.style.transition = "none";
+    node.style.transform = "translateY(" + shift.toFixed(1) + "px)";
+    window.requestAnimationFrame(function () {
+      node.style.transition = "transform " + SLIDE_MS + "ms ease";
+      node.style.transform = "";
+    });
+  });
+}
+
+function render(before) {
+  renderBanners();
+  renderReplay();
+  renderStale();
+  const screen = document.getElementById("screen");
+  if (ui.error) {
+    screen.innerHTML = '<div class="empty"><b>Nothing to show</b>' +
+      esc(ui.error) + "</div>";
+    return;
+  }
+  if (ui.bet) {
+    const bet = findBet(ui.bet);
+    if (bet) {
+      screen.innerHTML = renderCard(bet);
+      return;
+    }
+    /* a bet that is not in this snapshot is not invented back */
+    ui.bet = null;
+  }
+  screen.innerHTML = renderBoard();
+  slideRows(before);
+}
+
+function readRoute() {
+  const hash = String(window.location.hash || "");
+  const match = hash.match(/^#\/sweat\/(.+)$/);
+  const wanted = match ? decodeURIComponent(match[1]) : null;
+  if (wanted !== ui.bet) {
+    if (wanted && !ui.bet) ui.boardScroll = window.scrollY;
+    ui.bet = wanted;
+    ui.pinned = null;
+  }
+}
+
+function route() {
+  const goingBack = ui.bet !== null;
+  readRoute();
+  render(null);
+  if (ui.bet) {
+    window.scrollTo(0, 0);
+  } else if (goingBack) {
+    window.scrollTo(0, ui.boardScroll);
+  }
+}
+
+/* ------------------------------------------------------------------
+ * the replay itself
+ * ------------------------------------------------------------------ */
+
+/* How many swings the whole snapshot carries. Frame 5's pulse belongs
+ * to a swing ARRIVING, so a poll that reported nothing new does not
+ * get one — the page has no ambient motion. */
+function swingCount(index) {
+  const snap = ui.snapshots[index];
+  if (!snap || !Array.isArray(snap.sweats)) return 0;
+  let total = 0;
+  snap.sweats.forEach(function (bet) {
+    total += (Array.isArray(bet.events) ? bet.events.length : 0);
+  });
+  return total;
+}
+
+function advance(step) {
+  const next = ui.index + step;
+  if (next < 0 || next >= ui.snapshots.length) {
+    stop();
+    return;
+  }
+  const before = ui.bet ? null : boardTops();
+  /* the "now" dot pulses ONCE, about 600ms, and then stops (sec 4) */
+  ui.pulse = !REDUCED && swingCount(next) !== swingCount(ui.index);
+  ui.index = next;
+  ui.advancedAt = Date.now();
+  if (ui.pinned !== null) {
+    const bet = ui.bet ? findBet(ui.bet) : null;
+    const events = (bet && Array.isArray(bet.events)) ? bet.events : [];
+    if (ui.pinned >= events.length) ui.pinned = null;
+  }
+  render(before);
+  if (ui.pulse) {
+    window.setTimeout(function () {
+      ui.pulse = false;
+      document.querySelectorAll(".nowdot.pulse").forEach(function (node) {
+        node.classList.remove("pulse");
+      });
+    }, PULSE_MS);
+  }
+}
+
+function stop() {
+  ui.playing = false;
+  if (ui.timer) {
+    window.clearInterval(ui.timer);
+    ui.timer = null;
+  }
+  renderReplay();
+}
+
+function play() {
+  if (ui.index >= ui.snapshots.length - 1) ui.index = 0;
+  ui.playing = true;
+  ui.advancedAt = Date.now();
+  if (ui.timer) window.clearInterval(ui.timer);
+  ui.timer = window.setInterval(function () { advance(1); }, REPLAY_MS);
+  render(null);
+}
+
+/* ------------------------------------------------------------------
+ * the controls
+ * ------------------------------------------------------------------ */
+
+document.addEventListener("click", function (event) {
+  const target = event.target;
+  if (!target || !target.closest) return;
+
+  const move = target.closest("[data-move]");
+  if (move) {
+    stop();
+    advance(Number(move.dataset.move));
+    return;
+  }
+  if (target.closest("[data-play]")) {
+    if (ui.playing) {
+      stop();
+    } else {
+      play();
+    }
+    return;
+  }
+  const swing = target.closest("[data-swing]");
+  if (swing) {
+    pick(Number(swing.dataset.swing));
+    return;
+  }
+  const step = target.closest("[data-step]");
+  if (step) {
+    const bet = ui.bet ? findBet(ui.bet) : null;
+    if (bet) pick(selectedIndex(bet) + Number(step.dataset.step));
+    return;
+  }
+  if (target.closest("[data-latest]")) {
+    ui.pinned = null;
+    render(null);
+  }
+});
+
+/* Frame 5's rule, in one place: choosing the newest swing leaves the
+ * selection on automatic, so it keeps following the feed; choosing an
+ * older one pins it, and the "New swing" pill is how the reader comes
+ * back to the front. */
+function pick(index) {
+  const bet = ui.bet ? findBet(ui.bet) : null;
+  if (!bet) return;
+  const events = Array.isArray(bet.events) ? bet.events : [];
+  if (!events.length) return;
+  const held = Math.min(Math.max(0, index), events.length - 1);
+  ui.pinned = (held === events.length - 1) ? null : held;
+  render(null);
+}
+
+window.addEventListener("hashchange", route);
+
+/* ------------------------------------------------------------------
+ * boot — one fetch of one bundled file, and no second path
+ * ------------------------------------------------------------------ */
+
+async function getJSON(url) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(function () { controller.abort(); },
+    FETCH_TIMEOUT_MS);
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal, cache: "no-store"
+    });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
+async function boot() {
+  renderBanners();
+  try {
+    const loaded = await getJSON(SWEATS_URL);
+    /* an empty recording is not a broken one: it renders the empty
+     * board's own words and invents nothing to fill the screen */
+    ui.snapshots = Array.isArray(loaded) ? loaded : [];
+  } catch (err) {
+    ui.error = NO_FILE + " (" + err.message + ")";
+  }
+  ui.advancedAt = Date.now();
+  readRoute();
+  render(null);
+  /* the paused-feed banner has to be able to appear while nothing else
+   * is happening, so one second-hand ticks for it and for nothing else */
+  ui.ticker = window.setInterval(renderStale, 1000);
+}
+
+boot();

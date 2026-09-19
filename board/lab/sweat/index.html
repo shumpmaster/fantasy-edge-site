@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fantasy Edge — Sweat sandbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="./sweat.css" rel="stylesheet">
+</head>
+
+<!-- LAB ITERATION L3 — THE SWEAT SANDBOX (SWEAT_LAB_SPEC, realising
+     docs/design/SWEAT_UI_BRIEF.md frames 1-9). Two screens — the live
+     sweats board and the chart-first sweat card — as one page with
+     client-side navigation.
+
+     IT READS ONE FILE: ../../demo/sweats.demo.json, an array of poll
+     snapshots, every one of them fabricated. There is no exporter, no
+     feed, no database and no pick behind this page; the brief's two
+     blocking questions (its sec 10.1 and 10.2) are unruled, so the
+     sandbox is fed by a recording and by nothing else. -->
+<body data-sweats="../../demo/sweats.demo.json">
+
+<!-- THE TWO BANNERS, written into the page itself and not only by the
+     script, so they are on screen before anything is fetched and stay
+     there if the fetch never answers. `sweat.js` re-renders these same
+     elements from its own constants, and a test asserts the page and
+     the constants say the same thing. The sample-sweats sentinel rides
+     at the very top, always. -->
+<div class="banner sample" id="samplebanner">SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation</div>
+<div class="banner lab" id="labbanner">LAB — IN PROGRESS: design sandbox; presentation is experimental</div>
+
+<!-- Frame 9's paused banner. Hidden until the replay has stood still
+     for longer than twice the recording's own poll interval. -->
+<div class="stale" id="stale" hidden></div>
+
+<!-- SANDBOX CHROME, not the designed surface: the replay control that
+     stands in for the poll loop. -->
+<div class="replay" id="replay"></div>
+
+<main class="wrap" id="screen"></main>
+
+<script src="./sweat.js"></script>
+</body>
+</html>
