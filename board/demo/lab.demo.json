@@ -1,0 +1,1920 @@
+{
+  "lab_schema": "lab-2",
+  "run": {
+    "season": 2026,
+    "week": 2,
+    "band": "EARLY",
+    "snapshot_kind": "refresh",
+    "source": "engine",
+    "engine_version": "m1.2b-2",
+    "generation_id": "gen-2026w02-demo-b",
+    "generated_ts": "2026-09-19T15:04:00+00:00",
+    "cutoff_ts": "2026-09-19T15:30:00+00:00",
+    "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
+    "week_open_generation_id": "gen-2026w02-demo-a",
+    "week_open_generated_ts": "2026-09-16T15:02:00+00:00"
+  },
+  "game": {
+    "game_id": "2026_02_DAL_PHI",
+    "espn_event_id": null,
+    "away": "DAL",
+    "home": "PHI",
+    "kickoff": "2026-09-20T20:25:00+00:00",
+    "ou": 48.5,
+    "spread": -3.0
+  },
+  "context": {
+    "order": [
+      "opponent",
+      "kickoff_ts",
+      "injury_designation",
+      "injury_trend",
+      "line_label"
+    ],
+    "labels": {
+      "opponent": "opponent (TeamEnvironment.opponent)",
+      "kickoff_ts": "kickoff (the live bundle's own stamp, UTC)",
+      "injury_designation": "T-90 designation the eligible set consumed",
+      "injury_trend": "T-90 practice trend the eligible set consumed",
+      "line_label": "the market snapshot label the forecast read"
+    }
+  },
+  "elements": {
+    "order": [
+      "line_spread",
+      "line_total",
+      "line_implied_total",
+      "team_plays",
+      "team_p_dropback",
+      "team_dropbacks",
+      "team_attempt_rate",
+      "team_attempts",
+      "team_targets",
+      "team_carries",
+      "target_share",
+      "carry_share",
+      "qb_attempt_weight",
+      "catch_rate",
+      "yards_per_reception",
+      "yards_per_carry",
+      "yards_per_attempt",
+      "td_rates",
+      "td_rate_receiving",
+      "td_rate_rushing"
+    ],
+    "labels": {
+      "line_spread": "game line: spread, the team's own handicap (negative = favoured)",
+      "line_total": "game line: total",
+      "line_implied_total": "game line: this team's implied total \u2014 what the plays model reads",
+      "team_plays": "forecast team plays (TeamVolume.plays)",
+      "team_p_dropback": "pass rate \u2014 p(dropback) (TeamVolume.p_dropback)",
+      "team_dropbacks": "team dropbacks (TeamVolume.dropbacks)",
+      "team_attempt_rate": "attempt rate: attempts per dropback (VolumeFit.attempt_rate)",
+      "team_attempts": "team pass attempts (TeamVolume.attempts)",
+      "team_targets": "team targets (TeamVolume.team_targets)",
+      "team_carries": "team carries: the rush-opportunity pool (TeamVolume.rush_opps), the official-carry denominator the carry share multiplies (\u00a70A)",
+      "target_share": "his target share as allocated (TeamAllocation.shares)",
+      "carry_share": "his carry share as allocated (TeamAllocation.carry_shares)",
+      "qb_attempt_weight": "his share of the team's pass attempts (the chain's passer split)",
+      "catch_rate": "catch rate per target (PlayerMeans.catch_rate)",
+      "yards_per_reception": "yards per RECEPTION (PlayerMeans.yards_per_reception) \u2014 not per target",
+      "yards_per_carry": "yards per carry (PlayerMeans.yards_per_carry)",
+      "yards_per_attempt": "yards per pass ATTEMPT (the m1.2z per-attempt rate)",
+      "td_rates": "touchdown conversion by FIELD POSITION (league rates, pooled \u2014 D-086): {profile: {bucket: rate}} as ChainFit.td_rate holds it, applied by the chain as a mixture over the player's own bucket exposure",
+      "td_rate_receiving": "receiving touchdown conversion as ONE number (league rate) \u2014 never stored, because the chain has no such scalar",
+      "td_rate_rushing": "rushing touchdown conversion as ONE number (league rate) \u2014 never stored, because the chain has no such scalar"
+    },
+    "pooled": [
+      "td_rates",
+      "td_rate_receiving",
+      "td_rate_rushing"
+    ],
+    "pooled_label": "league rate",
+    "generation_id": "gen-2026w02-demo-b",
+    "absent_reason": null
+  },
+  "players": [
+    {
+      "player_id": "demo-00",
+      "name": "Demo Passer",
+      "team": "DAL",
+      "pos": "QB",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 261.4,
+        "pass_tds": 1.62,
+        "rush_att": 3.1,
+        "rush_yds": 14.8,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.21
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          151.61,
+          206.51,
+          261.4,
+          321.78,
+          387.66
+        ],
+        "pass_tds": [
+          0.73,
+          1.17,
+          1.62,
+          2.11,
+          2.64
+        ],
+        "rush_att": [
+          1.8,
+          2.45,
+          3.1,
+          3.82,
+          4.6
+        ],
+        "rush_yds": [
+          8.58,
+          11.69,
+          14.8,
+          18.22,
+          21.95
+        ],
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": [
+          0.09,
+          0.15,
+          0.21,
+          0.27,
+          0.34
+        ]
+      },
+      "week_open": {
+        "pass_yds": 257.39,
+        "pass_tds": 1.69,
+        "rush_att": 3.11,
+        "rush_yds": 14.05,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.22
+      },
+      "movement": {
+        "pass_yds": 4.009999999999991,
+        "pass_tds": -0.06999999999999984,
+        "rush_att": -0.009999999999999787,
+        "rush_yds": 0.75,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": -0.010000000000000009
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.183
+    },
+    {
+      "player_id": "demo-01",
+      "name": "Demo Backup Passer",
+      "team": "PHI",
+      "pos": "QB",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 238.9,
+        "pass_tds": 1.41,
+        "rush_att": 5.6,
+        "rush_yds": 27.4,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.29
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          138.56,
+          188.73,
+          238.9,
+          294.09,
+          354.29
+        ],
+        "pass_tds": [
+          0.63,
+          1.02,
+          1.41,
+          1.84,
+          2.3
+        ],
+        "rush_att": [
+          3.25,
+          4.42,
+          5.6,
+          6.89,
+          8.3
+        ],
+        "rush_yds": [
+          15.89,
+          21.65,
+          27.4,
+          33.73,
+          40.63
+        ],
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": [
+          0.13,
+          0.21,
+          0.29,
+          0.38,
+          0.47
+        ]
+      },
+      "week_open": {
+        "pass_yds": 256.27,
+        "pass_tds": 1.36,
+        "rush_att": 5.78,
+        "rush_yds": 25.97,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.29
+      },
+      "movement": {
+        "pass_yds": -17.369999999999976,
+        "pass_tds": 0.04999999999999982,
+        "rush_att": -0.1800000000000006,
+        "rush_yds": 1.4299999999999997,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": 0.0
+      },
+      "context": {
+        "opponent": {
+          "value": "DAL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.146
+    },
+    {
+      "player_id": "demo-02",
+      "name": "Demo Lead Back",
+      "team": "DAL",
+      "pos": "RB",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 15.8,
+        "rush_yds": 68.2,
+        "targets": 3.4,
+        "receptions": 2.7,
+        "rec_yds": 21.0,
+        "anytime_td": 0.58
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [
+          9.16,
+          12.48,
+          15.8,
+          19.45,
+          23.43
+        ],
+        "rush_yds": [
+          39.56,
+          53.88,
+          68.2,
+          83.95,
+          101.14
+        ],
+        "targets": [
+          1.97,
+          2.69,
+          3.4,
+          4.19,
+          5.04
+        ],
+        "receptions": [
+          1.57,
+          2.13,
+          2.7,
+          3.32,
+          4.0
+        ],
+        "rec_yds": [
+          12.18,
+          16.59,
+          21.0,
+          25.85,
+          31.14
+        ],
+        "anytime_td": [
+          0.26,
+          0.42,
+          0.58,
+          0.76,
+          0.95
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 14.76,
+        "rush_yds": 64.04,
+        "targets": 3.42,
+        "receptions": 2.49,
+        "rec_yds": 20.23,
+        "anytime_td": 0.62
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 1.040000000000001,
+        "rush_yds": 4.159999999999997,
+        "targets": -0.020000000000000018,
+        "receptions": 0.20999999999999996,
+        "rec_yds": 0.7699999999999996,
+        "anytime_td": -0.040000000000000036
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.241
+    },
+    {
+      "player_id": "demo-03",
+      "name": "Demo Change Of Pace",
+      "team": "DAL",
+      "pos": "RB",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 6.2,
+        "rush_yds": 25.1,
+        "targets": 2.1,
+        "receptions": 1.6,
+        "rec_yds": 12.4,
+        "anytime_td": 0.19
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [
+          3.6,
+          4.9,
+          6.2,
+          7.63,
+          9.19
+        ],
+        "rush_yds": [
+          14.56,
+          19.83,
+          25.1,
+          30.9,
+          37.22
+        ],
+        "targets": [
+          1.22,
+          1.66,
+          2.1,
+          2.59,
+          3.11
+        ],
+        "receptions": [
+          0.93,
+          1.26,
+          1.6,
+          1.97,
+          2.37
+        ],
+        "rec_yds": [
+          7.19,
+          9.8,
+          12.4,
+          15.26,
+          18.39
+        ],
+        "anytime_td": [
+          0.09,
+          0.14,
+          0.19,
+          0.25,
+          0.31
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 5.99,
+        "rush_yds": 25.41,
+        "targets": 1.99,
+        "receptions": 1.62,
+        "rec_yds": 11.72,
+        "anytime_td": 0.18
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 0.20999999999999996,
+        "rush_yds": -0.3099999999999987,
+        "targets": 0.1100000000000001,
+        "receptions": -0.020000000000000018,
+        "rec_yds": 0.6799999999999997,
+        "anytime_td": 0.010000000000000009
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.071
+    },
+    {
+      "player_id": "demo-04",
+      "name": "Demo Bell Cow",
+      "team": "PHI",
+      "pos": "RB",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 18.4,
+        "rush_yds": 84.6,
+        "targets": 2.8,
+        "receptions": 2.2,
+        "rec_yds": 16.8,
+        "anytime_td": 0.66
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": [
+          10.67,
+          14.54,
+          18.4,
+          22.65,
+          27.29
+        ],
+        "rush_yds": [
+          49.07,
+          66.83,
+          84.6,
+          104.14,
+          125.46
+        ],
+        "targets": [
+          1.62,
+          2.21,
+          2.8,
+          3.45,
+          4.15
+        ],
+        "receptions": [
+          1.28,
+          1.74,
+          2.2,
+          2.71,
+          3.26
+        ],
+        "rec_yds": [
+          9.74,
+          13.27,
+          16.8,
+          20.68,
+          24.91
+        ],
+        "anytime_td": [
+          0.3,
+          0.48,
+          0.66,
+          0.86,
+          1.08
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 16.72,
+        "rush_yds": 84.93,
+        "targets": 2.63,
+        "receptions": 2.3,
+        "rec_yds": 15.89,
+        "anytime_td": 0.69
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": 1.6799999999999997,
+        "rush_yds": -0.3300000000000125,
+        "targets": 0.16999999999999993,
+        "receptions": -0.09999999999999964,
+        "rec_yds": 0.9100000000000001,
+        "anytime_td": -0.029999999999999916
+      },
+      "context": {
+        "opponent": {
+          "value": "DAL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.312
+    },
+    {
+      "player_id": "demo-05",
+      "name": "Demo Alpha Wideout",
+      "team": "DAL",
+      "pos": "WR",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 9.6,
+        "receptions": 6.3,
+        "rec_yds": 81.7,
+        "anytime_td": 0.44
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [
+          5.57,
+          7.58,
+          9.6,
+          11.82,
+          14.24
+        ],
+        "receptions": [
+          3.65,
+          4.98,
+          6.3,
+          7.76,
+          9.34
+        ],
+        "rec_yds": [
+          47.39,
+          64.54,
+          81.7,
+          100.57,
+          121.16
+        ],
+        "anytime_td": [
+          0.2,
+          0.32,
+          0.44,
+          0.57,
+          0.72
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 8.78,
+        "receptions": 5.74,
+        "rec_yds": 73.84,
+        "anytime_td": 0.41
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 0.8200000000000003,
+        "receptions": 0.5599999999999996,
+        "rec_yds": 7.859999999999999,
+        "anytime_td": 0.030000000000000027
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.288
+    },
+    {
+      "player_id": "demo-06",
+      "name": "Demo Slot Wideout",
+      "team": "DAL",
+      "pos": "WR",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 5.8,
+        "receptions": 4.1,
+        "rec_yds": 43.2,
+        "anytime_td": 0.19
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [
+          3.36,
+          4.58,
+          5.8,
+          7.14,
+          8.6
+        ],
+        "receptions": [
+          2.38,
+          3.24,
+          4.1,
+          5.05,
+          6.08
+        ],
+        "rec_yds": [
+          25.06,
+          34.13,
+          43.2,
+          53.18,
+          64.07
+        ],
+        "anytime_td": [
+          0.09,
+          0.14,
+          0.19,
+          0.25,
+          0.31
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": null
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": null,
+        "receptions": null,
+        "rec_yds": null,
+        "anytime_td": null
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.092
+    },
+    {
+      "player_id": "demo-07",
+      "name": "Demo Deep Threat",
+      "team": "PHI",
+      "pos": "WR",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 7.1,
+        "receptions": 4.2,
+        "rec_yds": 62.9,
+        "anytime_td": 0.31
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [
+          4.12,
+          5.61,
+          7.1,
+          8.74,
+          10.53
+        ],
+        "receptions": [
+          2.44,
+          3.32,
+          4.2,
+          5.17,
+          6.23
+        ],
+        "rec_yds": [
+          36.48,
+          49.69,
+          62.9,
+          77.43,
+          93.28
+        ],
+        "anytime_td": [
+          0.14,
+          0.22,
+          0.31,
+          0.4,
+          0.51
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 7.11,
+        "receptions": 4.16,
+        "rec_yds": 59.07,
+        "anytime_td": 0.28
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": -0.010000000000000675,
+        "receptions": 0.040000000000000036,
+        "rec_yds": 3.8299999999999983,
+        "anytime_td": 0.02999999999999997
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.174
+    },
+    {
+      "player_id": "demo-08",
+      "name": "Demo Starting End",
+      "team": "PHI",
+      "pos": "TE",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 6.4,
+        "receptions": 4.8,
+        "rec_yds": 48.3,
+        "anytime_td": 0.27
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [
+          3.71,
+          5.06,
+          6.4,
+          7.88,
+          9.49
+        ],
+        "receptions": [
+          2.78,
+          3.79,
+          4.8,
+          5.91,
+          7.12
+        ],
+        "rec_yds": [
+          28.01,
+          38.16,
+          48.3,
+          59.46,
+          71.63
+        ],
+        "anytime_td": [
+          0.12,
+          0.2,
+          0.27,
+          0.35,
+          0.44
+        ]
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 6.82,
+        "receptions": 4.39,
+        "rec_yds": 49.89,
+        "anytime_td": 0.27
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": -0.41999999999999993,
+        "receptions": 0.41000000000000014,
+        "rec_yds": -1.5900000000000034,
+        "anytime_td": 0.0
+      },
+      "context": {
+        "opponent": {
+          "value": "DAL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.131
+    },
+    {
+      "player_id": "demo-09",
+      "name": "Demo Blocking End",
+      "team": "DAL",
+      "pos": "TE",
+      "game_id": "2026_02_DAL_PHI",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 2.2,
+        "receptions": 1.7,
+        "rec_yds": 14.1,
+        "anytime_td": null
+      },
+      "stat_quantiles": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": [
+          1.28,
+          1.74,
+          2.2,
+          2.71,
+          3.26
+        ],
+        "receptions": [
+          0.99,
+          1.34,
+          1.7,
+          2.09,
+          2.52
+        ],
+        "rec_yds": [
+          8.18,
+          11.14,
+          14.1,
+          17.36,
+          20.91
+        ],
+        "anytime_td": null
+      },
+      "week_open": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": 2.23,
+        "receptions": 1.64,
+        "rec_yds": 13.01,
+        "anytime_td": null
+      },
+      "movement": {
+        "pass_yds": null,
+        "pass_tds": null,
+        "rush_att": null,
+        "rush_yds": null,
+        "targets": -0.029999999999999805,
+        "receptions": 0.06000000000000005,
+        "rec_yds": 1.0899999999999999,
+        "anytime_td": null
+      },
+      "context": {
+        "opponent": {
+          "value": "PHI",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T20:25:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "t90",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -3.0,
+          "reason": null
+        },
+        "line_total": {
+          "value": 48.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 25.75,
+          "reason": null
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "the attempt rate is a VolumeFit scalar and this forecast carries no fit scalars; TeamVolume holds attempts and dropbacks but not the rate between them, and dividing one by the other would be a number this layer derived rather than one the pass used"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "the forward pass kept no TeamVolume for this team-week: the forecast it returned holds no reference to the objects its per-game loop built, so the \u00a70A composition is not at the seam and is NOT recomputed here"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "the forward pass kept no TeamAllocation for this team-week: FoldForecast.allocations is the field a pass fills to record what the simulator was handed, and this forecast carries none for this game, so the allocated shares are not at the seam and are NOT recomputed here"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "the forward pass kept no passer split for this team-week: the split is built inside chain.player_means and survives only on its optional observation slot, which this forecast did not carry \u2014 and a team-week the allocation gave no passer has none to carry; PlayerMeans holds the attempts, not the weight"
+        },
+        "catch_rate": {
+          "value": 0.68,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 11.9,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.4,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this forecast carries no per-attempt rate: chain.player_means multiplies attempts by fit.player_ypa_hat and stores the PRODUCT (passing yards), so with the fit's own rate absent at the seam dividing that product back out would be this layer's arithmetic rather than the pass's rate"
+        },
+        "td_rates": {
+          "value": "{\"rb\": {\"inside_5\": 0.42, \"5_to_20\": 0.081, \"outside_20\": 0.021}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "this forecast carries no touchdown conversion at all: the rates live on ChainFit and the pass recorded none of its fit scalars, so the mapping is not at the seam; PlayerMeans holds the expected touchdowns the pooled rates produced, not the rates"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": null
+    }
+  ]
+}

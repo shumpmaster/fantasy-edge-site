@@ -241,3 +241,52 @@ answers. There is nothing to dismiss and nothing to act on.
 Not here. Publishing this directory to GitHub Pages is **m4.1d**, and
 until that sprint lands the only way to see the board is the local
 server above.
+
+## The Lab (m4.4L)
+
+`lab/` is a **design sandbox on live engine data**, not part of the
+product. It is reached by URL — `/board/lab/` on the deployed site,
+`http://localhost:8000/lab/` locally — and the board gains no tab for
+it. A permanent, unmissable in-progress banner sits at the top of the
+page saying exactly that: the numbers are real, the presentation is
+experimental, and nothing moves from the lab to the board without a
+decision to move it (PLAYER_BREAKDOWN_SPEC amendment).
+
+Three files again, and the same no-build rule:
+
+| file | what it is |
+|---|---|
+| `lab/index.html` | the page skeleton and the paths it reads |
+| `lab/lab.css` | the board's design language, 16px gutters, tables |
+| `lab/lab.js` | load and render — no live layer, no polling, no feed |
+| `data/lab.json` | the exported lab contract (written by the pipeline) |
+| `demo/lab.demo.json` | the bundled fixture for visual QA |
+
+It renders ONE game of the current run: per player, a straight table of
+every projected stat (mean, the five-point range, and what moved since
+the week's first generation of this slate) and a second table of the
+tangible elements in chain order — the game line the volume model read,
+the team's volume, the player's shares, his opportunities, the rates
+applied to them — each with the truthful label the persistence layer
+declared, and, where the forward pass carried no object, the reason it
+stored instead of a number. The engine's ceiling probability rides as
+one labelled row where a row exists for that generation. **No fantasy
+point of any kind appears anywhere on the page.**
+
+Export the file the same way the board is exported:
+
+```
+python -m fantasy_edge.live.lab export --season 2026 --week 2
+python -m fantasy_edge.live.lab export --teams BUF@NYJ
+```
+
+With no `--teams` the export takes the first upcoming game of the
+slate by kickoff. With no `data/lab.json` present the page renders the
+honest "could not be read" state rather than anything invented, and
+`?demo=1` loads `demo/lab.demo.json` behind its own DEMO banner —
+demo data never mixes with an exported file.
+
+The **Density: comfortable / compact** control is the variant
+switcher's scaffold: a data attribute on `<body>` and a block of CSS
+variables, so trying a second treatment side by side is a block of CSS
+rather than a second renderer.

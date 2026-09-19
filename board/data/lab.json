@@ -1,0 +1,3936 @@
+{
+  "lab_schema": "lab-2",
+  "run": {
+    "season": 2026,
+    "week": 2,
+    "band": "EARLY",
+    "snapshot_kind": "refresh",
+    "source": "engine",
+    "engine_version": "m1.2b-2 + m1.2i top-cell raise (D-070 build; live shadow m1.2e / D-074; D-084 adopt)",
+    "generation_id": "2026w02-20260918T170355Z",
+    "generated_ts": "2026-09-18T17:03:55.378784+00:00",
+    "cutoff_ts": "2026-09-18T17:03:55.378784+00:00",
+    "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
+    "week_open_generation_id": "2026w02-20260915T153354Z",
+    "week_open_generated_ts": "2026-09-15T15:33:54.590276+00:00"
+  },
+  "game": {
+    "game_id": "2026_02_CAR_ATL",
+    "espn_event_id": null,
+    "away": "CAR",
+    "home": "ATL",
+    "kickoff": "2026-09-20T17:00:00+00:00",
+    "ou": null,
+    "spread": null
+  },
+  "context": {
+    "order": [
+      "opponent",
+      "kickoff_ts",
+      "injury_designation",
+      "injury_trend",
+      "line_label"
+    ],
+    "labels": {
+      "opponent": "opponent (TeamEnvironment.opponent)",
+      "kickoff_ts": "kickoff (the live bundle's own stamp, UTC)",
+      "injury_designation": "T-90 designation the eligible set consumed",
+      "injury_trend": "T-90 practice trend the eligible set consumed",
+      "line_label": "the market snapshot label the forecast read"
+    }
+  },
+  "elements": {
+    "order": [
+      "line_spread",
+      "line_total",
+      "line_implied_total",
+      "team_plays",
+      "team_p_dropback",
+      "team_dropbacks",
+      "team_attempt_rate",
+      "team_attempts",
+      "team_targets",
+      "team_carries",
+      "target_share",
+      "carry_share",
+      "qb_attempt_weight",
+      "catch_rate",
+      "yards_per_reception",
+      "yards_per_carry",
+      "yards_per_attempt",
+      "td_rates",
+      "td_rate_receiving",
+      "td_rate_rushing"
+    ],
+    "labels": {
+      "line_spread": "game line: spread, the team's own handicap (negative = favoured)",
+      "line_total": "game line: total",
+      "line_implied_total": "game line: this team's implied total \u2014 what the plays model reads",
+      "team_plays": "forecast team plays (TeamVolume.plays)",
+      "team_p_dropback": "pass rate \u2014 p(dropback) (TeamVolume.p_dropback)",
+      "team_dropbacks": "team dropbacks (TeamVolume.dropbacks)",
+      "team_attempt_rate": "attempt rate: attempts per dropback (VolumeFit.attempt_rate)",
+      "team_attempts": "team pass attempts (TeamVolume.attempts)",
+      "team_targets": "team targets (TeamVolume.team_targets)",
+      "team_carries": "team carries: the rush-opportunity pool (TeamVolume.rush_opps), the official-carry denominator the carry share multiplies (\u00a70A)",
+      "target_share": "his target share as allocated (TeamAllocation.shares)",
+      "carry_share": "his carry share as allocated (TeamAllocation.carry_shares)",
+      "qb_attempt_weight": "his share of the team's pass attempts (the chain's passer split)",
+      "catch_rate": "catch rate per target (PlayerMeans.catch_rate)",
+      "yards_per_reception": "yards per RECEPTION (PlayerMeans.yards_per_reception) \u2014 not per target",
+      "yards_per_carry": "yards per carry (PlayerMeans.yards_per_carry)",
+      "yards_per_attempt": "yards per pass ATTEMPT (the m1.2z per-attempt rate)",
+      "td_rates": "touchdown conversion by FIELD POSITION (league rates, pooled \u2014 D-086): {profile: {bucket: rate}} as ChainFit.td_rate holds it, applied by the chain as a mixture over the player's own bucket exposure",
+      "td_rate_receiving": "receiving touchdown conversion as ONE number (league rate) \u2014 never stored, because the chain has no such scalar",
+      "td_rate_rushing": "rushing touchdown conversion as ONE number (league rate) \u2014 never stored, because the chain has no such scalar"
+    },
+    "pooled": [
+      "td_rates",
+      "td_rate_receiving",
+      "td_rate_rushing"
+    ],
+    "pooled_label": "league rate",
+    "generation_id": null,
+    "absent_reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+  },
+  "players": [
+    {
+      "player_id": "00-0033662",
+      "name": "Cooper Rush",
+      "team": "ATL",
+      "pos": "QB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 211.9175,
+        "pass_tds": 1.5225,
+        "rush_att": 1.5,
+        "rush_yds": 6.598829236751101,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.0675
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          123.0,
+          161.0,
+          203.0,
+          257.0,
+          311.0
+        ],
+        "pass_tds": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rush_att": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          3.9513947525455677,
+          9.87848688136392,
+          17.781276386455055
+        ],
+        "targets": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 210.6975,
+        "pass_tds": 1.43,
+        "rush_att": 1.41,
+        "rush_yds": 5.99130229354722,
+        "targets": 0.005,
+        "receptions": 0.005,
+        "rec_yds": 0.03,
+        "anytime_td": 0.0775
+      },
+      "movement": {
+        "pass_yds": 1.2199999999999989,
+        "pass_tds": 0.09250000000000003,
+        "rush_att": 0.09000000000000008,
+        "rush_yds": 0.6075269432038803,
+        "targets": -0.005,
+        "receptions": -0.005,
+        "rec_yds": -0.03,
+        "anytime_td": -0.009999999999999995
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.08
+    },
+    {
+      "player_id": "00-0035208",
+      "name": "Olamide Zaccheaus",
+      "team": "ATL",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0375,
+        "rush_yds": 0.0804656799099801,
+        "targets": 4.01,
+        "receptions": 3.09,
+        "rec_yds": 32.5775,
+        "anytime_td": 0.37
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "receptions": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "rec_yds": [
+          7.0,
+          16.0,
+          28.0,
+          44.0,
+          64.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0625,
+        "rush_yds": 0.25346689171643727,
+        "targets": 4.0675,
+        "receptions": 3.01,
+        "rec_yds": 33.715,
+        "anytime_td": 0.305
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.025,
+        "rush_yds": -0.17300121180645717,
+        "targets": -0.05750000000000011,
+        "receptions": 0.08000000000000007,
+        "rec_yds": -1.1375000000000028,
+        "anytime_td": 0.065
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.1475
+    },
+    {
+      "player_id": "00-0036970",
+      "name": "Kyle Pitts",
+      "team": "ATL",
+      "pos": "TE",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 3.2175,
+        "receptions": 1.615,
+        "rec_yds": 29.32,
+        "anytime_td": 0.1875
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          6.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          5.0,
+          23.0,
+          44.0,
+          69.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0075,
+        "rush_yds": 0.02903596468449753,
+        "targets": 3.035,
+        "receptions": 1.685,
+        "rec_yds": 27.975,
+        "anytime_td": 0.2
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0075,
+        "rush_yds": -0.02903596468449753,
+        "targets": 0.18249999999999966,
+        "receptions": -0.07000000000000006,
+        "rec_yds": 1.3449999999999989,
+        "anytime_td": -0.012500000000000011
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.1475
+    },
+    {
+      "player_id": "00-0037238",
+      "name": "Drake London",
+      "team": "ATL",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.7375,
+        "rush_yds": 2.7166381535749906,
+        "targets": 6.1325,
+        "receptions": 3.715,
+        "rec_yds": 40.0425,
+        "anytime_td": 0.27
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          3.305415243893521,
+          9.089891920707183
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "receptions": [
+          1.0,
+          2.0,
+          4.0,
+          5.0,
+          6.0
+        ],
+        "rec_yds": [
+          10.0,
+          19.0,
+          36.0,
+          53.0,
+          78.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.6825,
+        "rush_yds": 2.5554991604351813,
+        "targets": 6.03,
+        "receptions": 3.7925,
+        "rec_yds": 40.64,
+        "anytime_td": 0.2725
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.05500000000000005,
+        "rush_yds": 0.16113899313980928,
+        "targets": 0.10250000000000004,
+        "receptions": -0.07750000000000012,
+        "rec_yds": -0.5975000000000037,
+        "anytime_td": -0.0025000000000000022
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.185
+    },
+    {
+      "player_id": "00-0037741",
+      "name": "Jahan Dotson",
+      "team": "ATL",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.035,
+        "rush_yds": 0.1126519518739721,
+        "targets": 5.655,
+        "receptions": 2.4475,
+        "rec_yds": 56.655,
+        "anytime_td": 0.2175
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          6.0,
+          7.0,
+          9.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          5.0
+        ],
+        "rec_yds": [
+          0.0,
+          22.0,
+          51.0,
+          81.0,
+          111.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0325,
+        "rush_yds": 0.09655881589197608,
+        "targets": 5.3375,
+        "receptions": 2.3825,
+        "rec_yds": 53.415,
+        "anytime_td": 0.1925
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0025000000000000022,
+        "rush_yds": 0.01609313598199602,
+        "targets": 0.3174999999999999,
+        "receptions": 0.06499999999999995,
+        "rec_yds": 3.240000000000002,
+        "anytime_td": 0.024999999999999994
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.2225
+    },
+    {
+      "player_id": "00-0037746",
+      "name": "Brian Robinson",
+      "team": "ATL",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 8.845,
+        "rush_yds": 37.86632331541251,
+        "targets": 1.6175,
+        "receptions": 1.25,
+        "rec_yds": 9.065,
+        "anytime_td": 0.4975
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          5.0,
+          7.0,
+          9.0,
+          11.0,
+          13.0
+        ],
+        "rush_yds": [
+          14.237244008802811,
+          21.830440813497646,
+          34.16938562112675,
+          49.355779230516404,
+          64.54217283990609
+        ],
+        "targets": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          5.0,
+          14.0,
+          24.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 8.91,
+        "rush_yds": 37.79513709536851,
+        "targets": 1.7075,
+        "receptions": 1.3525,
+        "rec_yds": 8.9675,
+        "anytime_td": 0.4775
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0649999999999995,
+        "rush_yds": 0.0711862200439981,
+        "targets": -0.09000000000000008,
+        "receptions": -0.10250000000000004,
+        "rec_yds": 0.09750000000000014,
+        "anytime_td": 0.020000000000000018
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.11
+    },
+    {
+      "player_id": "00-0038542",
+      "name": "Bijan Robinson",
+      "team": "ATL",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 17.3475,
+        "rush_yds": 73.53659824831664,
+        "targets": 8.3375,
+        "receptions": 6.5275,
+        "rec_yds": 44.2575,
+        "anytime_td": 0.77
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          12.0,
+          14.0,
+          17.0,
+          21.0,
+          24.0
+        ],
+        "rush_yds": [
+          38.36024947747345,
+          53.70434926846282,
+          70.96646153332587,
+          92.06459874593627,
+          111.244723484673
+        ],
+        "targets": [
+          4.0,
+          7.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "receptions": [
+          3.0,
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "rec_yds": [
+          18.0,
+          27.0,
+          42.0,
+          58.0,
+          74.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          2.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 17.03,
+        "rush_yds": 70.78425034830786,
+        "targets": 8.6,
+        "receptions": 6.79,
+        "rec_yds": 45.955,
+        "anytime_td": 0.78
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.317499999999999,
+        "rush_yds": 2.752347900008772,
+        "targets": -0.2624999999999993,
+        "receptions": -0.2625000000000002,
+        "rec_yds": -1.697499999999998,
+        "anytime_td": -0.010000000000000009
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.7125
+    },
+    {
+      "player_id": "00-0031610",
+      "name": "Darren Waller",
+      "team": "CAR",
+      "pos": "TE",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0075,
+        "rush_yds": 0.04782394183329006,
+        "targets": 2.3525,
+        "receptions": 1.9325,
+        "rec_yds": 14.9675,
+        "anytime_td": 0.1725
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rec_yds": [
+          0.0,
+          4.0,
+          11.0,
+          23.0,
+          34.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.005,
+        "rush_yds": 0.02391197091664503,
+        "targets": 2.465,
+        "receptions": 2.085,
+        "rec_yds": 14.8,
+        "anytime_td": 0.2225
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0024999999999999996,
+        "rush_yds": 0.02391197091664503,
+        "targets": -0.11249999999999982,
+        "receptions": -0.15249999999999986,
+        "rec_yds": 0.16749999999999865,
+        "anytime_td": -0.05000000000000002
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.09
+    },
+    {
+      "player_id": "00-0036265",
+      "name": "AJ Dillon",
+      "team": "CAR",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 6.6325,
+        "rush_yds": 29.458462922739713,
+        "targets": 1.08,
+        "receptions": 0.8075,
+        "rec_yds": 5.4025,
+        "anytime_td": 0.28
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          3.0,
+          5.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "rush_yds": [
+          9.479794987205052,
+          14.746347757874526,
+          25.279453299213472,
+          38.9724905029541,
+          55.82545936909642
+        ],
+        "targets": [
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          2.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          0.0,
+          9.0,
+          15.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 6.355,
+        "rush_yds": 31.02262909562855,
+        "targets": 1.1725,
+        "receptions": 0.925,
+        "rec_yds": 6.3925,
+        "anytime_td": 0.2925
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.27749999999999986,
+        "rush_yds": -1.5641661728888359,
+        "targets": -0.09250000000000003,
+        "receptions": -0.11750000000000005,
+        "rec_yds": -0.9900000000000002,
+        "anytime_td": -0.012499999999999956
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.0225
+    },
+    {
+      "player_id": "00-0036555",
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 9.89,
+        "rush_yds": 44.695659733322174,
+        "targets": 2.2775,
+        "receptions": 1.905,
+        "rec_yds": 12.275,
+        "anytime_td": 0.4025
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          6.0,
+          8.0,
+          10.0,
+          12.0,
+          14.0
+        ],
+        "rush_yds": [
+          17.67037710387158,
+          28.064716576737208,
+          40.53792394417597,
+          57.16886710076098,
+          74.83924420463256
+        ],
+        "targets": [
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rec_yds": [
+          0.0,
+          3.0,
+          9.0,
+          18.0,
+          28.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 9.53,
+        "rush_yds": 42.115264959183335,
+        "targets": 2.415,
+        "receptions": 2.0025,
+        "rec_yds": 13.31,
+        "anytime_td": 0.48
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.3600000000000012,
+        "rush_yds": 2.5803947741388384,
+        "targets": -0.13750000000000018,
+        "receptions": -0.09749999999999992,
+        "rec_yds": -1.0350000000000001,
+        "anytime_td": -0.07749999999999996
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.115
+    },
+    {
+      "player_id": "00-0037005",
+      "name": "Tommy Tremble",
+      "team": "CAR",
+      "pos": "TE",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.005,
+        "rush_yds": 0.010247987535705012,
+        "targets": 3.4825,
+        "receptions": 2.42,
+        "rec_yds": 21.2925,
+        "anytime_td": 0.175
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          2.0,
+          3.0,
+          5.0,
+          6.0
+        ],
+        "receptions": [
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rec_yds": [
+          0.0,
+          9.0,
+          19.0,
+          30.0,
+          43.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 3.8125,
+        "receptions": 2.6925,
+        "rec_yds": 25.4175,
+        "anytime_td": 0.1425
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.005,
+        "rush_yds": 0.010247987535705012,
+        "targets": -0.33000000000000007,
+        "receptions": -0.27249999999999996,
+        "rec_yds": -4.125,
+        "anytime_td": 0.0325
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.115
+    },
+    {
+      "player_id": "00-0038102",
+      "name": "Kenny Pickett",
+      "team": "CAR",
+      "pos": "QB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 6.226250000000004,
+        "pass_tds": 0.0375,
+        "rush_att": 2.1275,
+        "rush_yds": 11.729879377795175,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.16
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          3.894736842105263,
+          4.868421052631579,
+          6.078947368421052,
+          7.394736842105263,
+          8.763157894736842
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rush_yds": [
+          0.0,
+          2.321599085164804,
+          6.964797255494412,
+          16.25119359615363,
+          27.85918902197765
+        ],
+        "targets": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 7.184411764705881,
+        "pass_tds": 0.0575,
+        "rush_att": 2.1325,
+        "rush_yds": 10.389155906112496,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.1425
+      },
+      "movement": {
+        "pass_yds": -0.9581617647058769,
+        "pass_tds": -0.020000000000000004,
+        "rush_att": -0.004999999999999893,
+        "rush_yds": 1.3407234716826792,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.017500000000000016
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.0
+    },
+    {
+      "player_id": "00-0039150",
+      "name": "Bryce Young",
+      "team": "CAR",
+      "pos": "QB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 230.37125,
+        "pass_tds": 1.585,
+        "rush_att": 2.6825,
+        "rush_yds": 12.216077978095637,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.09
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          144.10526315789474,
+          180.13157894736844,
+          224.92105263157896,
+          273.60526315789474,
+          324.2368421052632
+        ],
+        "pass_tds": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rush_att": [
+          1.0,
+          1.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "rush_yds": [
+          0.0,
+          2.997197622922666,
+          9.990658743075553,
+          17.983185737535994,
+          25.97571273199644
+        ],
+        "targets": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 237.08558823529427,
+        "pass_tds": 1.6075,
+        "rush_att": 2.7475,
+        "rush_yds": 13.015330677541678,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.09
+      },
+      "movement": {
+        "pass_yds": -6.714338235294264,
+        "pass_tds": -0.022499999999999964,
+        "rush_att": -0.06499999999999995,
+        "rush_yds": -0.7992526994460416,
+        "targets": 0.0,
+        "receptions": 0.0,
+        "rec_yds": 0.0,
+        "anytime_td": 0.0
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.1375
+    },
+    {
+      "player_id": "00-0039342",
+      "name": "Xavier Legette",
+      "team": "CAR",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0325,
+        "rush_yds": 0.11466359387172162,
+        "targets": 2.915,
+        "receptions": 1.435,
+        "rec_yds": 19.595,
+        "anytime_td": 0.1325
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          16.0,
+          30.0,
+          48.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.05,
+        "rush_yds": 0.1005820998874751,
+        "targets": 3.0275,
+        "receptions": 1.4725,
+        "rec_yds": 21.265,
+        "anytime_td": 0.1425
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0175,
+        "rush_yds": 0.014081493984246518,
+        "targets": -0.11249999999999982,
+        "receptions": -0.03749999999999987,
+        "rec_yds": -1.6700000000000017,
+        "anytime_td": -0.009999999999999981
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.0275
+    },
+    {
+      "player_id": "00-0039344",
+      "name": "Jonathon Brooks",
+      "team": "CAR",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 5.6675,
+        "rush_yds": 24.37756217687946,
+        "targets": 1.7925,
+        "receptions": 1.1225,
+        "rec_yds": 15.0275,
+        "anytime_td": 0.355
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          3.0,
+          4.0,
+          5.0,
+          7.0,
+          9.0
+        ],
+        "rush_yds": [
+          5.876471396596093,
+          12.73235469262487,
+          21.54706178751901,
+          31.341180781845832,
+          46.03235927333607
+        ],
+        "targets": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          9.0,
+          21.0,
+          39.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 5.7775,
+        "rush_yds": 25.408393201032364,
+        "targets": 1.8575,
+        "receptions": 1.17,
+        "rec_yds": 14.985,
+        "anytime_td": 0.385
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.10999999999999943,
+        "rush_yds": -1.0308310241529028,
+        "targets": -0.06499999999999995,
+        "receptions": -0.047499999999999876,
+        "rec_yds": 0.042500000000000426,
+        "anytime_td": -0.030000000000000027
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.065
+    },
+    {
+      "player_id": "00-0039491",
+      "name": "Jalen Coker",
+      "team": "CAR",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0475,
+        "rush_yds": 0.13075672985371764,
+        "targets": 5.805,
+        "receptions": 4.6125,
+        "rec_yds": 62.8125,
+        "anytime_td": 0.27
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          8.0,
+          9.0
+        ],
+        "receptions": [
+          2.0,
+          3.0,
+          4.0,
+          6.0,
+          7.0
+        ],
+        "rec_yds": [
+          19.0,
+          33.0,
+          56.0,
+          84.0,
+          115.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.04,
+        "rush_yds": 0.1850710637929542,
+        "targets": 5.97,
+        "receptions": 4.6075,
+        "rec_yds": 60.9775,
+        "anytime_td": 0.255
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0075,
+        "rush_yds": -0.05431433393923657,
+        "targets": -0.16500000000000004,
+        "receptions": 0.004999999999999893,
+        "rec_yds": 1.8350000000000009,
+        "anytime_td": 0.015000000000000013
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.3275
+    },
+    {
+      "player_id": "00-0040124",
+      "name": "Tetairoa McMillan",
+      "team": "CAR",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.025,
+        "rush_yds": 0.04023283995499005,
+        "targets": 5.545,
+        "receptions": 3.3875,
+        "rec_yds": 57.29,
+        "anytime_td": 0.2075
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          3.0,
+          4.0,
+          5.0,
+          7.0,
+          9.0
+        ],
+        "receptions": [
+          1.0,
+          2.0,
+          3.0,
+          5.0,
+          6.0
+        ],
+        "rec_yds": [
+          10.0,
+          27.0,
+          50.0,
+          80.0,
+          109.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0475,
+        "rush_yds": 0.13880329784471565,
+        "targets": 5.4075,
+        "receptions": 3.375,
+        "rec_yds": 57.63,
+        "anytime_td": 0.1825
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0225,
+        "rush_yds": -0.0985704578897256,
+        "targets": 0.13750000000000018,
+        "receptions": 0.012500000000000178,
+        "rec_yds": -0.3400000000000034,
+        "anytime_td": 0.024999999999999994
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.2475
+    },
+    {
+      "player_id": "00-0040187",
+      "name": "Mitchell Evans",
+      "team": "CAR",
+      "pos": "TE",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 2.2725,
+        "receptions": 1.5725,
+        "rec_yds": 13.39,
+        "anytime_td": 0.1175
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          3.0,
+          9.0,
+          20.0,
+          32.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0025,
+        "rush_yds": 0.0068319916904700075,
+        "targets": 2.4675,
+        "receptions": 1.7425,
+        "rec_yds": 14.2025,
+        "anytime_td": 0.1475
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0025,
+        "rush_yds": -0.0068319916904700075,
+        "targets": -0.19499999999999984,
+        "receptions": -0.16999999999999993,
+        "rec_yds": -0.8125,
+        "anytime_td": -0.03
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.05
+    },
+    {
+      "player_id": "00-0040218",
+      "name": "Jimmy Horn Jr.",
+      "team": "CAR",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.04,
+        "rush_yds": 0.13276837185146714,
+        "targets": 2.49,
+        "receptions": 1.6025,
+        "rec_yds": 14.545,
+        "anytime_td": 0.21
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          5.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          1.0,
+          10.0,
+          22.0,
+          35.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.035,
+        "rush_yds": 0.1086286678784731,
+        "targets": 2.5825,
+        "receptions": 1.605,
+        "rec_yds": 15.29,
+        "anytime_td": 0.225
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0049999999999999975,
+        "rush_yds": 0.024139703972994045,
+        "targets": -0.0924999999999998,
+        "receptions": -0.0024999999999999467,
+        "rec_yds": -0.7449999999999992,
+        "anytime_td": -0.015000000000000013
+      },
+      "context": {
+        "opponent": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "kickoff_ts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_label": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "line_implied_total": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_plays": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_p_dropback": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_dropbacks": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempt_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_attempts": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_targets": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "team_carries": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "target_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "carry_share": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "catch_rate": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_reception": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_carry": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rates": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "no explain rows exist for this generation, so the tangible chain is not available for these players. The elements are persisted at generation time and are never reconstructed afterwards, so a generation that stored none has none"
+        }
+      },
+      "td_rates_pooled": null,
+      "p_ceiling": 0.0275
+    }
+  ]
+}

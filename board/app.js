@@ -138,6 +138,18 @@ const PUBLIC_EXPOSURE =
   "data, and no odds beyond the informational game line already " +
   "published everywhere.";
 
+/* The footer's one link out (m4.4L, PLAYER_BREAKDOWN_SPEC amendment,
+ * which allows "at most a small footer link"). THE LAB IS NOT THIS
+ * PAGE: it is a design sandbox on the same live numbers, where the
+ * player breakdown is being worked on, and the link says so rather
+ * than reading as another section of the product. Its own sentinels,
+ * each ONE contiguous string — the disclosure strings above are
+ * untouched by it. */
+const LAB_HREF = "./lab/";
+const LAB_LINK = "Lab ↗";
+const LAB_LINK_NOTE =
+  "— an in-progress design sandbox on these same numbers. Nothing there has shipped.";
+
 const DEMO_BANNER = "DEMO DATA — visual QA only";
 const DEMO_SUB =
   "Every number below is fabricated and no live feed is polled. " +
@@ -2254,6 +2266,11 @@ function renderFooter() {
     "is live actuals from the public box score, colored against the " +
     "share of the game played. " + esc(BLANK) +
     " means the number rounds to nothing.</p>");
+  /* The one link off this page (m4.4L). It is a link and nothing more
+   * — no tab, no preview, no shared state — and it says what it leads
+   * to, because what it leads to is explicitly not the product. */
+  parts.push('<p><a class="lablink" href="' + esc(LAB_HREF) + '">' +
+    esc(LAB_LINK) + "</a> " + esc(LAB_LINK_NOTE) + "</p>");
   document.getElementById("foot").innerHTML = parts.join("");
 }
 
