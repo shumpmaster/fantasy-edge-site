@@ -62,10 +62,33 @@
  *   THE STAT CHIPS come out of the FILE — one chip per market actually
  *   present in the snapshot, so a market the exporter starts carrying
  *   appears here the day its rows do and this page never holds a list
- *   of markets that can go stale. They filter rows and nothing else.
+ *   of markets that can go stale.
  *
  * Both are PRESENTATION STATE, held in `ui` beside the replay position
  * and never written anywhere.
+ *
+ * L3g — THE STATLINE PIVOT, AND WHY THE PILLS STOPPED FILTERING.
+ *
+ *   A ROW IS A PLAYER. The exporter groups his lined markets onto one
+ *   entry, so a row carries his WHOLE projected statline — every stat
+ *   with a captured line, its projected value and the market's own
+ *   short word — and the page never joins rows back together by name.
+ *
+ *   THE PILLS FOCUS, THEY DO NOT FILTER. Choosing a stat emphasises
+ *   that number in every statline and makes it the row's LEAD: the big
+ *   %, the needs headline, the sparkline and the state colour all
+ *   follow it, in whichever reference the toggle selects. A player
+ *   with no captured line for the focused stat KEEPS HIS ROW with his
+ *   statline intact and the focused slot dashed, because his statline
+ *   is still true; what is missing is a bet, and a bet is never
+ *   invented to fill the slot. It is the same `ui.focus` the
+ *   retrospective has always used, through the same helpers.
+ *
+ *   WITH NO PILL CHOSEN each row leads with its own CLOSEST TO
+ *   CASHING stat — the largest chance the file already stored for him
+ *   under the current reference. That is a display ordering over
+ *   stored numbers and not a third kind of arithmetic: nothing is
+ *   added, averaged or scaled to arrive at it.
  *
  * NOTHING HERE HAS GRADUATED. The board is untouched by this file, and
  * nothing moves from the sandbox to the product without the owner's
@@ -203,8 +226,12 @@ const VS_PROJECTION_NOTE =
  * to be read against. The dash is the number; this is the reason. */
 const NO_PROJECTION = "no projected value on this row";
 
-const MARKET_LEGEND = "Stat";
 const ALL_MARKETS_LABEL = "All";
+
+/* L3g. The state a row takes when the FOCUSED stat is one this player
+ * has no line for: the neutral family, because there is no bet to be
+ * in a state about and colouring it as one would be a claim. */
+const NO_LEAD_STATE = "pregame";
 
 /* ------------------------------------------------------------------
  * L3e — THE WEEK-1 RETROSPECTIVE'S OWN WORDS. Every one of them is a
@@ -240,7 +267,11 @@ const FOCUS_LEGEND = "Focus";
  * stored at that checkpoint and this page assigns none of them. */
 const RETRO_CASHED_HEAD = "CASHED BY THIS POINT";
 const RETRO_OPEN_HEAD = "STILL RUNNING AT THIS POINT";
-const RETRO_NO_LINE_HEAD = "NO LINE CAPTURED FOR THIS STAT";
+
+/* ...and the grouping BOTH boards draw since L3g, for the players a
+ * chosen pill leaves without a bet. One heading, one wording, because
+ * it is one fact on either screen. */
+const NO_LINE_HEAD = "NO LINE CAPTURED FOR THIS STAT";
 
 /* "Cashed (Q2)" — the checkpoint it crossed at, off the row. */
 const CASHED_AT_OPEN = "Cashed (";
@@ -326,18 +357,18 @@ const ui = {
   pulse: false,
   bet: null,          // the bet_id the card screen is showing, or null
   pinned: null,       // an event index the reader chose, or null = auto
-  /* L3f. Presentation state, both of them: which stored number the
-   * page reads, and which market's rows the board shows. They default
-   * to the bet's own reference and to everything. */
+  /* L3f/L3g. Presentation state: which stored number the page reads.
+   * The other control, the stat pills, is `focus` below — ONE field
+   * for both boards, because a pill means the same thing on each. */
   reference: REF_LINE,
-  market: "",
   boardScroll: 0,
   error: "",
-  /* L3e. The retrospective's own screen, its own document and its own
-   * two presentation fields. `checkpoint` is a position in the FILE's
-   * own checkpoint list and `focus` is the market whose number is
-   * emphasised in every statline — neither is a filter and neither is
-   * ever written anywhere. */
+  /* L3e. The retrospective's own screen and its own document.
+   * `checkpoint` is a position in the FILE's own checkpoint list.
+   * `focus` is the market whose number is emphasised in every
+   * statline and led with — the retrospective's since L3e and the
+   * LIVE BOARD'S since L3g, because one pill row means one thing.
+   * Neither is a filter and neither is ever written anywhere. */
   retro: false,
   retroPlayer: null,
   retroDoc: null,
@@ -417,9 +448,38 @@ function snapshot() {
   return ui.snapshots[ui.index] || null;
 }
 
-function sweats() {
+/* THE ROWS OF THE LIVE BOARD, and they are PLAYERS (L3g). The file's
+ * top-level array is `players`; each entry carries the player, his
+ * game and his statline. */
+function boardPlayers() {
   const now = snapshot();
-  return (now && Array.isArray(now.sweats)) ? now.sweats : [];
+  return (now && Array.isArray(now.players)) ? now.players : [];
+}
+
+/* One entry's statline, however it arrived. Shared by both boards,
+ * because the retrospective's entries are shaped the same way. */
+function statsOf(entry) {
+  return (entry && Array.isArray(entry.stats)) ? entry.stats : [];
+}
+
+/* ONE stat of one entry, by market — the pill's own lookup. */
+function statOf(entry, market) {
+  const stats = statsOf(entry);
+  for (let i = 0; i < stats.length; i += 1) {
+    if (String(stats[i].market) === String(market)) return stats[i];
+  }
+  return null;
+}
+
+/* Every bet on the live board, flat. The tiles count BETS and the
+ * chips are read off bets, so the one place that flattens the
+ * grouping is here. */
+function allStats() {
+  const out = [];
+  boardPlayers().forEach(function (entry) {
+    statsOf(entry).forEach(function (stat) { out.push(stat); });
+  });
+  return out;
 }
 
 /* THE CHANCE A ROW SHOWS, and the ONE place any of them is read.
@@ -458,12 +518,27 @@ function vsProjection() {
   return ui.reference === REF_PROJECTION;
 }
 
-function findBet(betId) {
-  const all = sweats();
+/* THE CARD'S SUBJECT, from the address in the hash: the PLAYER whose
+ * statline carries that bet. The card then leads with whichever stat
+ * the pills say, exactly as his row did — the two screens read the
+ * same lead through the same helper, so a card can never show a
+ * different stat from the row that was tapped. */
+function findPlayer(betId) {
+  const all = boardPlayers();
   for (let i = 0; i < all.length; i += 1) {
-    if (all[i].bet_id === betId) return all[i];
+    const stats = statsOf(all[i]);
+    for (let j = 0; j < stats.length; j += 1) {
+      if (stats[j].bet_id === betId) return all[i];
+    }
   }
   return null;
+}
+
+/* ...and the ONE stat that card is currently about — the swing panel
+ * and its buttons belong to it, not to the player. */
+function cardStat() {
+  const entry = ui.bet ? findPlayer(ui.bet) : null;
+  return entry ? leadStat(entry, leadChance) : null;
 }
 
 /* The game strip, repeated on every row of the same game (sec 7).
@@ -497,16 +572,16 @@ function gameLine(game) {
  * rule is kept in one branch: our own projection is not a market, and a
  * price printed beside it would imply a bet being offered at that
  * threshold by somebody. */
-function metaLine(bet) {
+function metaLine(entry, bet) {
   /* THE PROJECTION VIEW IS ABOUT THE STAT, not about the bet: it names
    * the market and stops. Carrying "Receiving yards 88.5+" beside a
    * percentage that answers 74.2 would invite exactly the misreading
    * the toggle exists to avoid, and the price would invent a market
    * for our own number. */
   if (vsProjection()) {
-    return [bet.player.pos, marketWords(bet.market)].join(" · ");
+    return [entry.player.pos, marketWords(bet.market)].join(" · ");
   }
-  const parts = [bet.player.pos, bet.market_label];
+  const parts = [entry.player.pos, bet.market_label];
   const odds = numberOrNull(bet.odds_american);
   if (odds !== null) parts.push((odds > 0 ? "+" : "") + odds);
   return parts.join(" · ");
@@ -579,8 +654,8 @@ function sourceLabel(bet) {
  * the height. No result of it is ever printed as a number.
  * ------------------------------------------------------------------ */
 
-function axisOf(bet) {
-  return numberOrNull(bet.game && bet.game.axis_max_s) || FULL_GAME_S;
+function axisOf(game) {
+  return numberOrNull(game && game.axis_max_s) || FULL_GAME_S;
 }
 
 function scaler(axis, left, width, top, height) {
@@ -604,8 +679,8 @@ function points(trace, at, key) {
 const SPARK_W = 110;
 const SPARK_H = 44;
 
-function sparkline(bet) {
-  const axis = axisOf(bet);
+function sparkline(game, bet) {
+  const axis = axisOf(game);
   /* inset by the now dot's own radius, so a bet still at kickoff draws
    * its dot at t=0 whole instead of half outside the drawing */
   const at = scaler(axis, 4, SPARK_W - 8, 4, SPARK_H - 8);
@@ -613,7 +688,7 @@ function sparkline(bet) {
   const layers = [];
 
   /* 1. the unplayed game */
-  const played = numberOrNull(bet.game && bet.game.elapsed_s) || 0;
+  const played = numberOrNull(game && game.elapsed_s) || 0;
   const edge = at.x(played);
   if (edge < SPARK_W) {
     layers.push('<rect class="future" x="' + edge.toFixed(1) +
@@ -689,8 +764,8 @@ const DOT_CLASSES = {
 
 const DOT_RADIUS = { "d-hit": 4.5, "d-miss": 4.5, "d-zone": 5.5, "d-note": 4.5 };
 
-function chartAria(bet) {
-  const who = bet.player.name + ", " +
+function chartAria(entry, bet) {
+  const who = entry.player.name + ", " +
     (vsProjection()
       ? marketWords(bet.market) + " " + thresholdLabel(bet)
       : bet.market_label);
@@ -704,7 +779,7 @@ function chartAria(bet) {
       pctNumber(band[1]));
   }
   parts.push(STATE_LABELS[bet.state] || bet.state);
-  parts.push(gameLine(bet.game));
+  parts.push(gameLine(entry.game));
   return parts.join(", ") + ".";
 }
 
@@ -723,8 +798,8 @@ function traceAt(bet, t) {
   return trace[trace.length - 1] || null;
 }
 
-function cardChart(bet) {
-  const axis = axisOf(bet);
+function cardChart(entry, bet) {
+  const axis = axisOf(entry.game);
   const at = scaler(axis, CHART_L, PLOT_W, CHART_T, PLOT_H);
   const trace = Array.isArray(bet.trace) ? bet.trace : [];
   const events = Array.isArray(bet.events) ? bet.events : [];
@@ -733,7 +808,7 @@ function cardChart(bet) {
 
   /* 1. the unplayed game — over the overtime span too, but only once
    *    the snapshot says overtime has actually started (sec 7). */
-  const played = numberOrNull(bet.game && bet.game.elapsed_s) || 0;
+  const played = numberOrNull(entry.game && entry.game.elapsed_s) || 0;
   const edge = at.x(played);
   if (edge < CHART_L + PLOT_W) {
     layers.push('<rect class="future" x="' + edge.toFixed(1) +
@@ -853,26 +928,139 @@ function cardChart(bet) {
 
   return '<div class="chartwrap"><svg class="chart" viewBox="0 0 ' +
     CHART_W + " " + CHART_H + '" role="img" aria-label="' +
-    esc(chartAria(bet)) + '">' + layers.join("") + marks.join("") +
-    "</svg>" + hits.join("") + "</div>";
+    esc(chartAria(entry, bet)) + '">' + layers.join("") +
+    marks.join("") + "</svg>" + hits.join("") + "</div>";
+}
+
+/* ------------------------------------------------------------------
+ * L3g — THE STATLINE AND THE FOCUS, shared by both boards.
+ *
+ * The live board and the retrospective draw the same idiom over two
+ * different files, so they draw it through the SAME functions: what
+ * differs between them is the number in a cell and the score a row is
+ * led and ordered by, and both arrive as arguments. Neither of these
+ * decides anything about a bet — they choose which stored number is
+ * emphasised and print it.
+ * ------------------------------------------------------------------ */
+
+/* THE ROW'S LEAD STAT: the focused one when a pill is chosen — present
+ * or not, because a dashed slot is the honest answer for a player with
+ * no line on it — and otherwise the one the screen's own `score` ranks
+ * highest. `score` reads stored numbers and returns a rank that is
+ * never printed. */
+function leadStat(entry, score) {
+  if (ui.focus) return statOf(entry, ui.focus);
+  const stats = statsOf(entry);
+  let best = null;
+  let mark = -1;
+  stats.forEach(function (stat) {
+    const rank = score(stat);
+    if (rank > mark) {
+      mark = rank;
+      best = stat;
+    }
+  });
+  return best;
+}
+
+/* THE STATLINE — every stat the file carries for this player, with the
+ * focused one emphasised. `valueOf` hands back the number a cell
+ * shows and `noteOf` the small word beside it (the captured line on
+ * the live board; nothing on the retrospective). The short words come
+ * off the rows, so this page holds no market list. */
+function statLine(entry, lead, valueOf, noteOf) {
+  const stats = statsOf(entry);
+  return '<span class="statline">' + stats.map(function (stat) {
+    const on = lead && String(stat.market) === String(lead.market);
+    const value = valueOf(stat);
+    const note = noteOf ? noteOf(stat) : "";
+    return '<span class="stat' + (on ? " on" : "") + '">' +
+      '<span class="sval">' +
+      esc(value === null ? BLANK : value) + "</span>" +
+      '<span class="slab">' + esc(stat.short_label) + "</span>" +
+      (note ? '<span class="sline">' + esc(note) + "</span>" : "") +
+      "</span>";
+  }).join("") + "</span>";
+}
+
+/* THE PILLS. "All" plus one per market the file actually carries, in
+ * the words the exporter wrote. A row of "All" plus one focuses
+ * nothing, so it is not drawn: a control that cannot change what is on
+ * screen is chrome. */
+function focusChips(markets) {
+  const chips = [["", ALL_MARKETS_LABEL]].concat(markets);
+  if (chips.length < 3) return "";
+  return '<div class="chips" role="group" aria-label="' +
+    esc(FOCUS_LEGEND) + '">' + chips.map(function (chip) {
+      const on = ui.focus === chip[0];
+      return '<button type="button" class="statchip' + (on ? " on" : "") +
+        '" data-focus="' + esc(chip[0]) + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(chip[1]) + "</button>";
+    }).join("") + "</div>";
 }
 
 /* ------------------------------------------------------------------
  * THE BOARD (sec 3.1)
  * ------------------------------------------------------------------ */
 
-function boardRow(bet) {
-  const chance = bet.state === "void" ? BLANK : pct(chanceOf(bet));
-  return '<a class="sw row" data-state="' + esc(bet.state) +
-    '" data-bet="' + esc(bet.bet_id) + '" href="#/sweat/' +
-    encodeURIComponent(bet.bet_id) + '">' +
-    '<span class="rtop"><span class="rname">' + esc(bet.player.name) +
-    '</span><span class="chip">' +
-    esc(STATE_LABELS[bet.state] || bet.state) + "</span></span>" +
-    '<span class="rmeta">' + esc(metaLine(bet)) + "</span>" +
-    '<span class="rgame">' + esc(gameLine(bet.game)) + "</span>" +
-    '<span class="rneed">' + esc(needLine(bet)) + "</span>" +
-    '<span class="rspark">' + sparkline(bet) + "</span>" +
+/* HOW CLOSE A BET IS TO CASHING, for the live board: the chance the
+ * file already stored for it under the current reference. Choosing the
+ * largest of a player's own stored numbers is a display ordering, not
+ * arithmetic — nothing is added, scaled or averaged to get it, and the
+ * rank itself is never printed. A row with no number in this view
+ * ranks below every row that has one. */
+function leadChance(bet) {
+  const chance = numberOrNull(chanceOf(bet));
+  return chance === null ? -1 : chance;
+}
+
+/* THE STATLINE'S OWN NUMBER on the live board: OUR PROJECTED VALUE for
+ * the stat, to one decimal, for `needShown`'s reason exactly — a model
+ * quantity printed raw reads "3.9625", which is precision this page
+ * has no business showing. The stored value is untouched. */
+function projectedValue(bet) {
+  const value = numberOrNull(bet.projection);
+  return value === null ? null : value.toFixed(1);
+}
+
+/* ...and the small word beside it: the threshold the book posted for
+ * that stat, so a statline says what each number is being measured
+ * against. */
+function statThreshold(bet) {
+  return typeof bet.line_label === "string" ? bet.line_label : "";
+}
+
+function boardRow(entry) {
+  const lead = leadStat(entry, leadChance);
+  /* A player with no line on the FOCUSED stat keeps his row: his
+   * statline is still true, and what is missing is a bet. The lead
+   * slot dashes and the neutral family colours the row, because there
+   * is no state to be in without a bet to be in it. */
+  const state = lead ? String(lead.state) : NO_LEAD_STATE;
+  const chance = (!lead || lead.state === "void")
+    ? BLANK : pct(chanceOf(lead));
+  const chip = lead ? (STATE_LABELS[lead.state] || lead.state) : BLANK;
+  /* The card is addressed by a BET, and a row the focus leaves without
+   * one is still a player worth opening: it takes the address of the
+   * first bet on his statline, and his card opens with the same slot
+   * dashed and the same pills on it. */
+  const first = statsOf(entry)[0];
+  const address = (lead || first || {}).bet_id;
+  return '<a class="sw row" href="#/sweat/' +
+    encodeURIComponent(address === undefined ? "" : address) +
+    '" data-state="' + esc(state) + '" data-player="' +
+    esc(entry.player_id) + '">' +
+    '<span class="rtop"><span class="rname">' + esc(entry.player.name) +
+    '</span><span class="chip">' + esc(chip) + "</span></span>" +
+    '<span class="rmeta">' +
+    esc(lead ? metaLine(entry, lead) : entry.player.pos) + "</span>" +
+    '<span class="rgame">' + esc(gameLine(entry.game)) + "</span>" +
+    '<span class="rline">' +
+    statLine(entry, lead, projectedValue, statThreshold) + "</span>" +
+    '<span class="rneed">' +
+    esc(lead ? needLine(lead) : NO_LINE_NEED) + "</span>" +
+    '<span class="rspark">' +
+    (lead ? sparkline(entry.game, lead) : "") + "</span>" +
     '<span class="rpct">' + esc(chance) + "</span></a>";
 }
 
@@ -884,44 +1072,51 @@ function section(title, note, rows) {
     "</div>" + rows.map(boardRow).join("") + "</section>";
 }
 
-/* The board's ORDER, off the stored state and the stored chance: the
- * live bets closest to cashing first, then what has not kicked off, by
- * kickoff, then everything settled. Ordering moves nothing and infers
- * nothing — the state each row shows is the one the snapshot stored. */
-/* THE CHIP FILTER, applied to the BOARD and to nothing else: a card
- * reached by its own link is still findable while a chip is on, and
- * the summary tiles stay the file's own counts. */
-function shown() {
-  const all = sweats();
-  if (!ui.market) return all;
-  return all.filter(function (bet) {
-    return String(bet.market) === ui.market;
-  });
-}
-
+/* The board's ORDER, off the stored state and the stored chance of
+ * each row's LEAD stat: the live bets closest to cashing first, then
+ * what has not kicked off, by kickoff, then everything settled, then
+ * the players the focused stat leaves without a bet. Ordering moves
+ * nothing and infers nothing — the state each row shows is the one the
+ * snapshot stored.
+ *
+ * THE PILLS FOCUS AND NEVER FILTER (L3g): every player stays on the
+ * board whichever pill is on, and it is his lead that follows it. */
 function ordered() {
-  const all = shown();
-  const live = all.filter(function (bet) {
-    return isOneOf(LIVE_STATES, bet.state);
+  const all = boardPlayers();
+  const lead = function (entry) { return leadStat(entry, leadChance); };
+  const inState = function (test) {
+    return all.filter(function (entry) {
+      const stat = lead(entry);
+      return Boolean(stat) && test(stat);
+    });
+  };
+  const live = inState(function (stat) {
+    return isOneOf(LIVE_STATES, stat.state);
   }).sort(function (a, b) {
-    return (chanceOf(b) || 0) - (chanceOf(a) || 0);
+    return leadChance(lead(b)) - leadChance(lead(a));
   });
-  const pregame = all.filter(function (bet) {
-    return bet.state === "pregame";
+  const pregame = inState(function (stat) {
+    return stat.state === "pregame";
   }).sort(function (a, b) {
-    const kick = String(a.game.kickoff).localeCompare(String(b.game.kickoff));
+    const kick = String(a.game.kickoff).localeCompare(
+      String(b.game.kickoff));
     if (kick) return kick;
     /* the tiebreak follows whichever chance is being read, so the
      * ordering is about the numbers on screen and not about a number
      * the reader cannot see */
-    return (chanceOf(b) || 0) - (chanceOf(a) || 0);
+    return leadChance(lead(b)) - leadChance(lead(a));
   });
-  const settled = all.filter(function (bet) {
-    return isOneOf(SETTLED_STATES, bet.state);
+  const settled = inState(function (stat) {
+    return isOneOf(SETTLED_STATES, stat.state);
   }).sort(function (a, b) {
-    return SETTLED_STATES.indexOf(a.state) - SETTLED_STATES.indexOf(b.state);
+    return SETTLED_STATES.indexOf(lead(a).state) -
+      SETTLED_STATES.indexOf(lead(b).state);
   });
-  return { live: live, pregame: pregame, settled: settled };
+  const unlined = all.filter(function (entry) {
+    return !lead(entry);
+  });
+  return { live: live, pregame: pregame, settled: settled,
+           unlined: unlined };
 }
 
 /* FRAME 1's THIRD TILE. The exporter's number when it published one;
@@ -935,7 +1130,9 @@ function expHits() {
   const tiles = (now && now.summary) || {};
   const stored = numberOrNull(tiles.exp_hits);
   if (stored !== null) return stored.toFixed(1);
-  const all = sweats();
+  /* A BET COUNT, so it is summed over every stat on the board and not
+   * over the rows: a player with three lines is three bets. */
+  const all = allStats();
   if (!all.length) return BLANK;
   let total = 0;
   all.forEach(function (bet) {
@@ -986,38 +1183,27 @@ function referenceToggle() {
 }
 
 /* THE CHIPS COME OUT OF THE FILE. One per market actually present in
- * the snapshot, in the words the exporter wrote, so a market that
- * starts appearing in the rows appears here the same day and this page
- * never carries a list that can go stale. */
+ * the snapshot, labelled with the SHORT word the exporter wrote beside
+ * it, so a market that starts appearing in the rows appears here the
+ * same day and this page never carries a list that can go stale. */
 function marketsPresent() {
   const seen = [];
-  sweats().forEach(function (bet) {
+  const words = {};
+  allStats().forEach(function (bet) {
     const market = String(bet.market === undefined ? "" : bet.market);
-    if (market && seen.indexOf(market) === -1) seen.push(market);
+    if (market && seen.indexOf(market) === -1) {
+      seen.push(market);
+      words[market] = String(bet.short_label);
+    }
   });
-  return seen.sort();
+  return seen.sort().map(function (market) {
+    return [market, words[market]];
+  });
 }
 
 function marketWords(market) {
   const text = String(market);
   return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-function statChips() {
-  const chips = [["", ALL_MARKETS_LABEL]].concat(
-    marketsPresent().map(function (market) {
-      return [market, marketWords(market)];
-    }));
-  /* A row of "All" plus one market filters nothing, so it is not
-   * drawn: a control that cannot change what is on screen is chrome. */
-  if (chips.length < 3) return "";
-  return '<div class="chips" role="group" aria-label="' +
-    esc(MARKET_LEGEND) + '">' + chips.map(function (chip) {
-      const on = ui.market === chip[0];
-      return '<button type="button" class="statchip' + (on ? " on" : "") +
-        '" data-market="' + esc(chip[0]) + '" aria-pressed="' +
-        (on ? "true" : "false") + '">' + esc(chip[1]) + "</button>";
-    }).join("") + "</div>";
 }
 
 /* The one line that says what the projection view means. It is shown
@@ -1037,8 +1223,9 @@ function retroLink() {
 }
 
 function controls() {
-  return '<div class="controls">' + referenceToggle() + statChips() +
-    retroLink() + "</div>" + referenceNote();
+  return '<div class="controls">' + referenceToggle() +
+    focusChips(marketsPresent()) + retroLink() + "</div>" +
+    referenceNote();
 }
 
 /* The sentence the exporter wrote on a file with nothing on it. A
@@ -1055,7 +1242,8 @@ function renderBoard() {
   const groups = ordered();
   const body = section(LIVE_HEAD, DASHED_NOTE, groups.live) +
     section(PREGAME_HEAD, "", groups.pregame) +
-    section(SETTLED_HEAD, "", groups.settled);
+    section(SETTLED_HEAD, "", groups.settled) +
+    section(NO_LINE_HEAD, "", groups.unlined);
   const reason = emptyReason();
   const empty = body ? "" :
     '<div class="empty"><b>' + esc(EMPTY_BOARD) + "</b>" +
@@ -1156,7 +1344,35 @@ function ladderStrip(bet) {
     rungs.length + ',1fr)">' + cells + "</div></section>";
 }
 
-function renderCard(bet) {
+/* THE CARD IS A PLAYER'S TOO (L3g). His whole statline rides the
+ * header with the focused number emphasised, and the pills under it
+ * switch which stat the chart, the threshold, the needs headline and
+ * the big % are about — the same focus, through the same helpers, as
+ * the row he was tapped from. A pill he has no line for leaves the
+ * chart and the number dashed rather than inventing either. */
+function renderCard(entry) {
+  const bet = leadStat(entry, leadChance);
+  const pills = '<div class="controls">' +
+    focusChips(marketsPresent()) + "</div>";
+  const top = '<div class="topbar"><a class="back" href="#/board" ' +
+    'aria-label="' + esc(BACK_LABEL) + '">‹</a><span class="ttl">' +
+    esc(CARD_TITLE) + '</span><span class="samplechip">' +
+    esc(chipText()) + "</span></div>";
+  const statline = '<div class="hstat">' +
+    statLine(entry, bet, projectedValue, statThreshold) + "</div>";
+  if (!bet) {
+    return top +
+      '<article class="sw card" data-state="' + esc(NO_LEAD_STATE) +
+      '"><section class="hdr"><div class="hleft">' +
+      '<div class="hname"><span class="hwho">' +
+      esc(entry.player.name) + '</span><span class="chip">' +
+      esc(BLANK) + "</span></div>" +
+      '<div class="hmeta">' + esc(entry.player.pos) + " · " +
+      esc(gameLine(entry.game)) + "</div>" +
+      '<div class="hhead"><span class="hbig">' + esc(BLANK) +
+      "</span></div>" + statline + "</div></section>" + pills +
+      '<div class="empty">' + esc(NO_LINE_NEED) + "</div></article>";
+  }
   const delta = numberOrNull(bet.delta_pregame_pts);
   const running = isOneOf(LIVE_STATES, bet.state) || bet.state === "pregame";
   const head = '<div class="chead"><span class="ctitle">' +
@@ -1164,21 +1380,21 @@ function renderCard(bet) {
       thresholdLabel(bet)) + "</span>" +
     (delta === null ? "" : '<span class="cdelta ' + deltaFamily(delta) +
       '">' + esc(signed(delta)) + "</span>") + "</div>";
-  return '<div class="topbar"><a class="back" href="#/board" aria-label="' +
-    esc(BACK_LABEL) + '">‹</a><span class="ttl">' + esc(CARD_TITLE) +
-    '</span><span class="samplechip">' + esc(chipText()) + "</span></div>" +
+  return top +
     '<article class="sw card" data-state="' + esc(bet.state) + '">' +
     '<section class="hdr"><div class="hleft">' +
-    '<div class="hname"><span class="hwho">' + esc(bet.player.name) +
+    '<div class="hname"><span class="hwho">' + esc(entry.player.name) +
     '</span><span class="chip">' +
     esc(STATE_LABELS[bet.state] || bet.state) + "</span></div>" +
-    '<div class="hmeta">' + esc(metaLine(bet)) + " · " +
-    esc(gameLine(bet.game)) + "</div>" +
-    (bet.game && bet.game.situation
-      ? '<div class="hsit">' + esc(bet.game.situation) + "</div>" : "") +
-    '<div class="hhead">' + headline(bet) + "</div></div>" +
+    '<div class="hmeta">' + esc(metaLine(entry, bet)) + " · " +
+    esc(gameLine(entry.game)) + "</div>" +
+    (entry.game && entry.game.situation
+      ? '<div class="hsit">' + esc(entry.game.situation) + "</div>" : "") +
+    '<div class="hhead">' + headline(bet) + "</div>" + statline +
+    "</div>" +
     '<div class="hright">' + bigChance(bet) + "</div></section>" +
-    '<section class="chartcard">' + head + cardChart(bet) +
+    pills +
+    '<section class="chartcard">' + head + cardChart(entry, bet) +
     explanation(bet) + "</section>" +
     ladderStrip(bet) + "</article>";
 }
@@ -1271,6 +1487,12 @@ function renderStale() {
  * because his statline is still true; what is missing is a bet, and a
  * bet is never invented to fill the slot.
  *
+ * SINCE L3g THAT IDIOM IS THE LIVE BOARD'S TOO, and both screens draw
+ * it through the SAME helpers — `leadStat`, `statLine`, `focusChips`
+ * and one `ui.focus` — handed this screen's own numbers (banked at a
+ * checkpoint) and its own ordering (closeness). Nothing about what
+ * this screen shows changed with it.
+ *
  * THE ONLY ARITHMETIC ON THIS SCREEN, beyond the geometry every chart
  * on this page does and the presentation rounding every number does,
  * is ONE RATIO OF TWO STORED NUMBERS — banked over need — used to
@@ -1329,14 +1551,6 @@ function statAt(stat, key) {
   return marks[marks.length - 1] || null;
 }
 
-function statOf(entry, market) {
-  const stats = Array.isArray(entry.stats) ? entry.stats : [];
-  for (let i = 0; i < stats.length; i += 1) {
-    if (String(stats[i].market) === String(market)) return stats[i];
-  }
-  return null;
-}
-
 function hasLine(stat) {
   return Boolean(stat) && stat.line !== null && stat.line !== undefined;
 }
@@ -1358,22 +1572,25 @@ function closeness(stat, key) {
   return at.state === "cashed" ? 1 + share : Math.min(share, 1);
 }
 
-/* THE ROW'S LEAD STAT: the focused one when a pill is chosen — present
- * or not, because a dashed slot is the honest answer for a player with
- * no line on it — and otherwise his own closest to cashing here. */
-function leadStat(entry, key) {
-  if (ui.focus) return statOf(entry, ui.focus);
-  const stats = Array.isArray(entry.stats) ? entry.stats : [];
-  let best = null;
-  let mark = -1;
-  stats.forEach(function (stat) {
-    const score = closeness(stat, key);
-    if (score > mark) {
-      mark = score;
-      best = stat;
-    }
-  });
-  return best;
+/* THE RETROSPECTIVE'S OWN SCORE, handed to the shared `leadStat`: how
+ * close each stat is to cashing AT THIS CHECKPOINT. A screen brings
+ * its ordering and the lead rule is the same one on both. */
+function closenessAt(key) {
+  return function (stat) { return closeness(stat, key); };
+}
+
+/* THE ROW'S LEAD STAT here, at the selected checkpoint. */
+function retroLead(entry, key) {
+  return leadStat(entry, closenessAt(key));
+}
+
+/* ...and the banked value the statline prints at that checkpoint. */
+function bankedAt(key) {
+  return function (stat) {
+    const at = statAt(stat, key);
+    const banked = at ? numberOrNull(at.banked) : null;
+    return banked === null ? null : banked;
+  };
 }
 
 /* The word on a row's chip: the stored state, and for a cashed one the
@@ -1384,22 +1601,6 @@ function retroChip(stat, at) {
     return CASHED_AT_OPEN + stat.cashed_at_label + CASHED_AT_CLOSE;
   }
   return STATE_LABELS[at.state] || String(at.state);
-}
-
-/* THE STATLINE — every tracked stat the file carries for this player,
- * at this checkpoint, with the focused one emphasised. The short words
- * come off the rows, so this page holds no market list. */
-function statLine(entry, key, lead) {
-  const stats = Array.isArray(entry.stats) ? entry.stats : [];
-  return '<span class="statline">' + stats.map(function (stat) {
-    const at = statAt(stat, key);
-    const on = lead && String(stat.market) === String(lead.market);
-    const banked = at ? numberOrNull(at.banked) : null;
-    return '<span class="stat' + (on ? " on" : "") + '">' +
-      '<span class="sval">' +
-      esc(banked === null ? BLANK : banked) + "</span>" +
-      '<span class="slab">' + esc(stat.short_label) + "</span></span>";
-  }).join("") + "</span>";
 }
 
 function retroMeta(entry) {
@@ -1424,7 +1625,7 @@ function retroNeed(stat, at) {
 }
 
 function retroRow(entry, key) {
-  const lead = leadStat(entry, key);
+  const lead = retroLead(entry, key);
   const at = lead ? statAt(lead, key) : null;
   const state = (lead && at && at.state) ? String(at.state) : "open";
   const banked = at ? numberOrNull(at.banked) : null;
@@ -1437,7 +1638,8 @@ function retroRow(entry, key) {
     '<span class="rmeta">' + esc(retroMeta(entry)) + "</span>" +
     '<span class="rgame">' + esc(gameLine(entry.game)) + "</span>" +
     '<span class="rneed">' + esc(retroNeed(lead, at)) + "</span>" +
-    '<span class="rspark">' + statLine(entry, key, lead) + "</span>" +
+    '<span class="rspark">' +
+    statLine(entry, lead, bankedAt(key), null) + "</span>" +
     '<span class="rpct">' +
     esc(banked === null ? BLANK : banked) + "</span></a>";
 }
@@ -1460,7 +1662,7 @@ function retroGroups(key) {
   const settled = [];
   const unlined = [];
   retroPlayers().forEach(function (entry) {
-    const lead = leadStat(entry, key);
+    const lead = retroLead(entry, key);
     const at = lead ? statAt(lead, key) : null;
     if (!hasLine(lead) || at === null || !at.state) {
       unlined.push(entry);
@@ -1473,8 +1675,8 @@ function retroGroups(key) {
     }
   });
   const byCloseness = function (a, b) {
-    const left = closeness(leadStat(a, key), key);
-    const right = closeness(leadStat(b, key), key);
+    const left = closeness(retroLead(a, key), key);
+    const right = closeness(retroLead(b, key), key);
     if (right !== left) return right - left;
     return String(a.player.name).localeCompare(String(b.player.name));
   };
@@ -1505,7 +1707,7 @@ function retroMarkets() {
   const seen = [];
   const words = {};
   retroPlayers().forEach(function (entry) {
-    (Array.isArray(entry.stats) ? entry.stats : []).forEach(
+    statsOf(entry).forEach(
       function (stat) {
         const market = String(stat.market);
         if (market && seen.indexOf(market) === -1) {
@@ -1517,18 +1719,6 @@ function retroMarkets() {
   return seen.map(function (market) {
     return [market, words[market]];
   });
-}
-
-function focusChips() {
-  const chips = [["", ALL_MARKETS_LABEL]].concat(retroMarkets());
-  if (chips.length < 3) return "";
-  return '<div class="chips" role="group" aria-label="' +
-    esc(FOCUS_LEGEND) + '">' + chips.map(function (chip) {
-      const on = ui.focus === chip[0];
-      return '<button type="button" class="statchip' + (on ? " on" : "") +
-        '" data-focus="' + esc(chip[0]) + '" aria-pressed="' +
-        (on ? "true" : "false") + '">' + esc(chip[1]) + "</button>";
-    }).join("") + "</div>";
 }
 
 /* ------------------------------------------------------------------
@@ -1668,7 +1858,7 @@ function retroBoard() {
   const body = retroSection(RETRO_CASHED_HEAD, groups.cashed, key) +
     retroSection(RETRO_OPEN_HEAD, groups.open, key) +
     retroSection(SETTLED_HEAD, groups.settled, key) +
-    retroSection(RETRO_NO_LINE_HEAD, groups.unlined, key);
+    retroSection(NO_LINE_HEAD, groups.unlined, key);
   const reason = typeof retroRun().reason === "string"
     ? retroRun().reason : "";
   const empty = body ? "" :
@@ -1678,7 +1868,7 @@ function retroBoard() {
     'aria-label="' + esc(BACK_LABEL) + '">‹</a><span class="ttl">' +
     esc(BOARD_LINK) + "</span></div>" + retroTitleRow(RETRO_TITLE) +
     retroTiles() +
-    '<div class="controls">' + checkpointSelector() + focusChips() +
+    '<div class="controls">' + checkpointSelector() + focusChips(retroMarkets()) +
     "</div>" + body + empty;
 }
 
@@ -1692,7 +1882,7 @@ function findRetro(playerId) {
 
 function retroCard(entry) {
   const key = retroMarkKey();
-  const lead = leadStat(entry, key);
+  const lead = retroLead(entry, key);
   const at = lead ? statAt(lead, key) : null;
   const state = (lead && at && at.state) ? String(at.state) : "open";
   const banked = at ? numberOrNull(at.banked) : null;
@@ -1715,9 +1905,9 @@ function retroCard(entry) {
     esc(banked === null ? BLANK : banked) +
     '</span><span class="hunit">' +
     esc(lead ? lead.short_label : "") + "</span></div>" +
-    '<div class="hstat">' + statLine(entry, key, lead) + "</div>" +
+    '<div class="hstat">' + statLine(entry, lead, bankedAt(key), null) + "</div>" +
     "</div></section>" +
-    '<div class="controls">' + checkpointSelector() + focusChips() +
+    '<div class="controls">' + checkpointSelector() + focusChips(retroMarkets()) +
     "</div>" +
     '<section class="chartcard"><div class="chead">' +
     '<span class="ctitle">' +
@@ -1788,10 +1978,11 @@ function renderBanners() {
   BODY.dataset.screen = ui.retro ? "retro" : "sweats";
 }
 
+/* WHERE EACH ROW SAT, keyed by the player it is (L3g). */
 function boardTops() {
   const map = {};
-  document.querySelectorAll("[data-bet]").forEach(function (node) {
-    map[node.dataset.bet] = node.getBoundingClientRect().top;
+  document.querySelectorAll("[data-player]").forEach(function (node) {
+    map[node.dataset.player] = node.getBoundingClientRect().top;
   });
   return map;
 }
@@ -1800,8 +1991,8 @@ function boardTops() {
  * it, about 250ms. Under prefers-reduced-motion it simply arrives. */
 function slideRows(before) {
   if (REDUCED || !before) return;
-  document.querySelectorAll("[data-bet]").forEach(function (node) {
-    const was = before[node.dataset.bet];
+  document.querySelectorAll("[data-player]").forEach(function (node) {
+    const was = before[node.dataset.player];
     if (was === undefined) return;
     const shift = was - node.getBoundingClientRect().top;
     if (!shift) return;
@@ -1832,9 +2023,9 @@ function render(before) {
     return;
   }
   if (ui.bet) {
-    const bet = findBet(ui.bet);
-    if (bet) {
-      screen.innerHTML = renderCard(bet);
+    const entry = findPlayer(ui.bet);
+    if (entry) {
+      screen.innerHTML = renderCard(entry);
       return;
     }
     /* a bet that is not in this snapshot is not invented back */
@@ -1890,10 +2081,12 @@ function route() {
  * get one — the page has no ambient motion. */
 function swingCount(index) {
   const snap = ui.snapshots[index];
-  if (!snap || !Array.isArray(snap.sweats)) return 0;
+  if (!snap || !Array.isArray(snap.players)) return 0;
   let total = 0;
-  snap.sweats.forEach(function (bet) {
-    total += (Array.isArray(bet.events) ? bet.events.length : 0);
+  snap.players.forEach(function (entry) {
+    statsOf(entry).forEach(function (bet) {
+      total += (Array.isArray(bet.events) ? bet.events.length : 0);
+    });
   });
   return total;
 }
@@ -1910,7 +2103,7 @@ function advance(step) {
   ui.index = next;
   ui.advancedAt = Date.now();
   if (ui.pinned !== null) {
-    const bet = ui.bet ? findBet(ui.bet) : null;
+    const bet = cardStat();
     const events = (bet && Array.isArray(bet.events)) ? bet.events : [];
     if (ui.pinned >= events.length) ui.pinned = null;
   }
@@ -1974,16 +2167,11 @@ document.addEventListener("click", function (event) {
     render(null);
     return;
   }
-  const chip = target.closest("[data-market]");
-  if (chip) {
-    ui.market = chip.dataset.market;
-    render(null);
-    return;
-  }
-  /* L3e. The retrospective's two controls, and they do the same one
-   * thing: set a presentation field and re-render. The checkpoint is a
+  /* L3e/L3g. The two pill controls, and they do the same one thing:
+   * set a presentation field and re-render. The checkpoint is a
    * position in the file's own list and the focus is a market the file
-   * already carries; neither fetches, stores or works out a number. */
+   * already carries; neither fetches, stores or works out a number,
+   * and the focus is ONE field for both boards. */
   const mark = target.closest("[data-checkpoint]");
   if (mark) {
     ui.checkpoint = Number(mark.dataset.checkpoint);
@@ -2003,7 +2191,7 @@ document.addEventListener("click", function (event) {
   }
   const step = target.closest("[data-step]");
   if (step) {
-    const bet = ui.bet ? findBet(ui.bet) : null;
+    const bet = cardStat();
     if (bet) pick(selectedIndex(bet) + Number(step.dataset.step));
     return;
   }
@@ -2018,7 +2206,7 @@ document.addEventListener("click", function (event) {
  * older one pins it, and the "New swing" pill is how the reader comes
  * back to the front. */
 function pick(index) {
-  const bet = ui.bet ? findBet(ui.bet) : null;
+  const bet = cardStat();
   if (!bet) return;
   const events = Array.isArray(bet.events) ? bet.events : [];
   if (!events.length) return;

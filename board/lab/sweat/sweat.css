@@ -206,9 +206,15 @@ padding-bottom:2px;border-bottom:2px solid transparent}
 line-height:1}
 .stat .slab{font-size:10.5px;font-weight:500;color:var(--muted);
 white-space:nowrap}
+/* L3g — the captured line beside the projected value, on the live
+   board's statline. It is the quietest thing in the cell: the number
+   is ours and this is what the book posted it against. */
+.stat .sline{font-size:10.5px;font-weight:500;color:var(--muted);
+white-space:nowrap;opacity:.8}
 .stat.on{border-bottom-color:var(--acc)}
 .stat.on .sval{color:var(--acc)}
 .stat.on .slab{color:var(--acc);font-weight:600}
+.stat.on .sline{color:var(--acc);opacity:1}
 /* on a retrospective row the statline takes the whole width under the
    headline rather than the sparkline's fixed 110px track */
 .row.retro{grid-template-columns:minmax(0,1fr) minmax(54px,auto);
@@ -237,7 +243,7 @@ letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .row{display:grid;
 grid-template-columns:minmax(0,1fr) 110px minmax(54px,auto);
 grid-template-areas:"top top top" "meta meta meta" "game game game"
-"need spark pct";
+"line line line" "need spark pct";
 column-gap:8px;row-gap:2px;align-items:center;min-height:88px;
 padding:12px;background:var(--surface);border-radius:var(--r-row);
 text-decoration:none;color:var(--ink)}
@@ -254,6 +260,10 @@ overflow-wrap:anywhere}
    one line beside the sparkline, and a truncated need is a lost fact. */
 .rneed{grid-area:need;font-size:13px;font-weight:600;margin-top:4px;
 min-width:0;line-height:1.25;overflow-wrap:anywhere}
+/* L3g — THE PROJECTED STATLINE, across the whole row under the game
+   strip: a row is a player, so his whole statline is on it and the
+   focused stat is the one the lead below answers for. */
+.rline{grid-area:line;margin-top:8px;min-width:0}
 .rspark{grid-area:spark;margin-top:4px;line-height:0}
 .rpct{grid-area:pct;margin-top:4px;text-align:right;
 font-family:var(--display);font-size:30px;font-weight:700;line-height:1;
