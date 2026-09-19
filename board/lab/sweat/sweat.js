@@ -5,13 +5,30 @@
  * lab's idiom: vanilla, no framework, no build step, no module, one
  * fetch of one bundled file.
  *
- * WHAT THIS PAGE IS FED. One file: `../../demo/sweats.demo.json`, an
- * ARRAY of poll snapshots, each one a complete data-contract document
- * (the brief's sec 5). Every entity in it is FABRICATED. There is no
- * exporter, no bet source, no live feed and no pick behind this page —
- * the brief's two blocking questions are unruled (its sec 10.1 and
- * 10.2), so a recording is the page's only data path. The replay
- * control walks that recording and stands in for the poll loop.
+ * WHAT THIS PAGE IS FED — TWO BOOTS, NEVER MIXED (L3b, D-122).
+ *
+ *   REAL (the default). `../../data/sweats.json`, ONE data-contract
+ *   document written by `fantasy_edge.live.sweat`: the current
+ *   generation's own distributions read at the market lines the live
+ *   capture stored, with the American prices as captured. The owner
+ *   ruled full bets with odds onto this surface, scoped to the lab and
+ *   under its ALPHA banner. It is model output, NOT YET CALIBRATED,
+ *   and it is not a pick.
+ *
+ *   DEMO (`?demo=1` only). `../../demo/sweats.demo.json`, an ARRAY of
+ *   poll snapshots, every entity in it FABRICATED, kept exactly as
+ *   built as the design and QA harness — seven states on demand is
+ *   what a fixture is for. The replay control walks that recording and
+ *   stands in for the poll loop.
+ *
+ * ONE URL IS CHOSEN BEFORE ANYTHING IS FETCHED and there is one fetch:
+ * the two paths never blend, and the banner at the top of the page
+ * says which one the reader is looking at.
+ *
+ * A SINGLE DOCUMENT HAS NOTHING TO REPLAY. The discriminator is as
+ * dumb as it can be — an ARRAY is a recording, an OBJECT is one poll —
+ * and the replay bar and the paused-feed banner belong to a recording.
+ * A pregame board has no needle to freeze, so neither is drawn.
  *
  * WHAT THIS PAGE COMPUTES: nothing that is a claim. The snapshot
  * carries `state`, `p_now`, `band`, `delta_pregame_pts`, the ladder
@@ -36,7 +53,22 @@
 "use strict";
 
 const BODY = document.body;
-const SWEATS_URL = BODY.dataset.sweats || "../../demo/sweats.demo.json";
+
+/* THE TWO PATHS. Real is the default (D-122); the fixture is reachable
+ * only by asking for it by name in the query string. */
+const REAL_SWEATS_URL = "../../data/sweats.json";
+const DEMO_SWEATS_URL = "../../demo/sweats.demo.json";
+
+/* The one switch, read once. Anything but `?demo=1` is real mode. */
+const DEMO = (function () {
+  try {
+    return window.location.search.indexOf("demo=1") !== -1;
+  } catch (err) {
+    return false;
+  }
+})();
+
+const SWEATS_URL = DEMO ? DEMO_SWEATS_URL : REAL_SWEATS_URL;
 const FETCH_TIMEOUT_MS = 15000;
 
 /* ------------------------------------------------------------------
@@ -56,7 +88,17 @@ const SWEAT_IN_PROGRESS =
 const SAMPLE_SWEATS =
   "SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation";
 
+/* THE ALPHA SENTINEL — real mode's own, and the sample one's opposite
+ * number. It names exactly what the numbers are: lines and prices as
+ * the books posted them, probabilities the engine read off its own
+ * distributions, an uncalibrated model, and a presentation nobody has
+ * signed off as finished. It rides the same slot, always visible, and
+ * it may never be softened either. */
+const ALPHA_SWEATS =
+  "ALPHA SWEATS — real lines and engine probabilities; model, not yet calibrated; experimental presentation (D-122)";
+
 const SAMPLE_CHIP = "Sample data";
+const ALPHA_CHIP = "Alpha";
 
 const BOARD_TITLE = "LIVE SWEATS";
 const CARD_TITLE = "SWEAT";
@@ -72,7 +114,7 @@ const EMPTY_BOARD =
   "No live sweats. Bets you track show up here at kickoff.";
 
 const NO_FILE =
-  "The bundled sweat fixture could not be read, so there is nothing to show. This page renders web/demo/sweats.demo.json and never invents a bet.";
+  "The sweat file could not be read, so there is nothing to show. This page renders the one document it was pointed at and never invents a bet.";
 
 /* Frame 9. The needle freezes and the page says so; it never carries a
  * value forward to cover the gap. */
@@ -145,6 +187,10 @@ const REDUCED = (function () {
 
 const ui = {
   snapshots: [],
+  /* true when the file was an ARRAY — a recording with something to
+   * replay. A single document has no sequence, so the replay bar and
+   * the paused-feed banner are not drawn at all. */
+  replayable: false,
   index: 0,
   playing: false,
   timer: null,
@@ -230,6 +276,16 @@ function snapshot() {
 function sweats() {
   const now = snapshot();
   return (now && Array.isArray(now.sweats)) ? now.sweats : [];
+}
+
+/* THE CHANCE A ROW SHOWS. `p_now` when the exporter published one, and
+ * the pregame chance when it did not — which is the same number before
+ * kickoff, honestly named. It is a READ of two stored fields and never
+ * a computation: nothing here averages them, moves one toward the
+ * other or fills in a missing one with arithmetic. */
+function chanceOf(bet) {
+  const now = numberOrNull(bet.p_now);
+  return now === null ? numberOrNull(bet.p_pregame) : now;
 }
 
 function findBet(betId) {
@@ -391,7 +447,7 @@ function chartAria(bet) {
   if (bet.state === "void") {
     return who + ": voided, no chance is shown.";
   }
-  const parts = [who + ": " + pct(bet.p_now) + " chance"];
+  const parts = [who + ": " + pct(chanceOf(bet)) + " chance"];
   if (Array.isArray(bet.band)) {
     parts.push("range " + pctNumber(bet.band[0]) + " to " +
       pctNumber(bet.band[1]));
@@ -545,7 +601,7 @@ function cardChart(bet) {
  * ------------------------------------------------------------------ */
 
 function boardRow(bet) {
-  const chance = bet.state === "void" ? BLANK : pct(bet.p_now);
+  const chance = bet.state === "void" ? BLANK : pct(chanceOf(bet));
   return '<a class="sw row" data-state="' + esc(bet.state) +
     '" data-bet="' + esc(bet.bet_id) + '" href="#/sweat/' +
     encodeURIComponent(bet.bet_id) + '">' +
@@ -576,7 +632,7 @@ function ordered() {
   const live = all.filter(function (bet) {
     return isOneOf(LIVE_STATES, bet.state);
   }).sort(function (a, b) {
-    return (numberOrNull(b.p_now) || 0) - (numberOrNull(a.p_now) || 0);
+    return (chanceOf(b) || 0) - (chanceOf(a) || 0);
   });
   const pregame = all.filter(function (bet) {
     return bet.state === "pregame";
@@ -609,15 +665,27 @@ function summaryTiles() {
   }).join("") + "</div>";
 }
 
+/* The sentence the exporter wrote on a file with nothing on it. A
+ * document with no sweats always carries one, and the page shows it
+ * rather than leaving a reader with a blank board and no explanation.
+ * It is READ, never composed here. */
+function emptyReason() {
+  const now = snapshot();
+  const run = (now && now.run) || {};
+  return typeof run.reason === "string" ? run.reason : "";
+}
+
 function renderBoard() {
   const groups = ordered();
   const body = section(LIVE_HEAD, DASHED_NOTE, groups.live) +
     section(PREGAME_HEAD, "", groups.pregame) +
     section(SETTLED_HEAD, "", groups.settled);
+  const reason = emptyReason();
   const empty = body ? "" :
-    '<div class="empty"><b>' + esc(EMPTY_BOARD) + "</b></div>";
+    '<div class="empty"><b>' + esc(EMPTY_BOARD) + "</b>" +
+    (reason ? esc(reason) : "") + "</div>";
   return '<div class="titlerow"><h1>' + esc(BOARD_TITLE) +
-    '</h1><span class="samplechip">' + esc(SAMPLE_CHIP) + "</span></div>" +
+    '</h1><span class="samplechip">' + esc(chipText()) + "</span></div>" +
     summaryTiles() + body + empty;
 }
 
@@ -646,7 +714,7 @@ function bigChance(bet) {
     return '<div class="bigpct">' + esc(BLANK) +
       '</div><div class="bsub">no chance is shown on a voided bet</div>';
   }
-  const parts = ['<div class="bigpct">' + esc(pct(bet.p_now)) + "</div>"];
+  const parts = ['<div class="bigpct">' + esc(pct(chanceOf(bet))) + "</div>"];
   if (bet.settled_at_s !== null && bet.settled_at_s !== undefined) {
     parts.push('<div class="bsub">settled</div>');
   } else {
@@ -716,7 +784,7 @@ function renderCard(bet) {
       '">' + esc(signed(delta)) + "</span>") + "</div>";
   return '<div class="topbar"><a class="back" href="#/board" aria-label="' +
     esc(BACK_LABEL) + '">‹</a><span class="ttl">' + esc(CARD_TITLE) +
-    '</span><span class="samplechip">' + esc(SAMPLE_CHIP) + "</span></div>" +
+    '</span><span class="samplechip">' + esc(chipText()) + "</span></div>" +
     '<article class="sw card" data-state="' + esc(bet.state) + '">' +
     '<section class="hdr"><div class="hleft">' +
     '<div class="hname"><span class="hwho">' + esc(bet.player.name) +
@@ -740,7 +808,10 @@ function renderCard(bet) {
 function renderReplay() {
   const total = ui.snapshots.length;
   const now = snapshot();
-  if (!total) {
+  /* A SINGLE DOCUMENT HAS NOTHING TO WALK. The real file is one poll,
+   * so the bar is not drawn at all rather than drawn with one dead
+   * position in it. */
+  if (!total || !ui.replayable) {
     document.getElementById("replay").innerHTML = "";
     return;
   }
@@ -774,7 +845,11 @@ function renderStale() {
   const node = document.getElementById("stale");
   const now = snapshot();
   const interval = numberOrNull(now && now.poll_interval_s);
-  if (!now || interval === null) {
+  /* The paused banner is about a FROZEN NEEDLE, and staleness here is
+   * measured against the replay's own position. A single document has
+   * no replay and a pregame board has no needle, so there is nothing
+   * to declare frozen and the banner stays down. */
+  if (!ui.replayable || !now || interval === null) {
     node.hidden = true;
     return;
   }
@@ -795,9 +870,22 @@ function renderStale() {
  * render and route
  * ------------------------------------------------------------------ */
 
+/* The top sentinel is the mode's own: the SAMPLE one in demo, the
+ * ALPHA one on the real file. One slot, one string, never both — the
+ * reader is never left guessing which kind of numbers are below it. */
+function topSentinel() {
+  return DEMO ? SAMPLE_SWEATS : ALPHA_SWEATS;
+}
+
+/* ... and the title-row chip says the same thing in two words. */
+function chipText() {
+  return DEMO ? SAMPLE_CHIP : ALPHA_CHIP;
+}
+
 function renderBanners() {
-  document.getElementById("samplebanner").textContent = SAMPLE_SWEATS;
+  document.getElementById("topbanner").textContent = topSentinel();
   document.getElementById("labbanner").textContent = SWEAT_IN_PROGRESS;
+  BODY.dataset.mode = DEMO ? "demo" : "real";
 }
 
 function boardTops() {
@@ -1011,9 +1099,20 @@ async function boot() {
   renderBanners();
   try {
     const loaded = await getJSON(SWEATS_URL);
-    /* an empty recording is not a broken one: it renders the empty
-     * board's own words and invents nothing to fill the screen */
-    ui.snapshots = Array.isArray(loaded) ? loaded : [];
+    /* THE DISCRIMINATOR, and it stays dumb: an ARRAY is a recording of
+     * polls and an OBJECT is one poll. Both render through the same
+     * code; only the replay chrome depends on which arrived.
+     *
+     * An empty recording — and a document with no sweats in it — is
+     * not a broken one: it renders the empty board's own words, plus
+     * whatever reason the exporter wrote, and invents nothing to fill
+     * the screen. */
+    ui.replayable = Array.isArray(loaded);
+    if (ui.replayable) {
+      ui.snapshots = loaded;
+    } else {
+      ui.snapshots = (loaded && typeof loaded === "object") ? [loaded] : [];
+    }
   } catch (err) {
     ui.error = NO_FILE + " (" + err.message + ")";
   }

@@ -16,20 +16,35 @@
      sweats board and the chart-first sweat card — as one page with
      client-side navigation.
 
-     IT READS ONE FILE: ../../demo/sweats.demo.json, an array of poll
-     snapshots, every one of them fabricated. There is no exporter, no
-     feed, no database and no pick behind this page; the brief's two
-     blocking questions (its sec 10.1 and 10.2) are unruled, so the
-     sandbox is fed by a recording and by nothing else. -->
-<body data-sweats="../../demo/sweats.demo.json">
+     IT READS ONE FILE, AND WHICH ONE IS THE MODE (L3b, D-122):
+
+       REAL, THE DEFAULT: ../../data/sweats.json, written by
+       fantasy_edge.live.sweat — the engine's own pregame probabilities
+       against the market lines the live capture stored, with the
+       prices as captured. Owner-ruled onto this lab surface under its
+       ALPHA banner; it is an uncalibrated model and it is not a pick.
+
+       DEMO, ONLY WITH ?demo=1: ../../demo/sweats.demo.json, an array
+       of poll snapshots, every one of them fabricated, kept as the
+       design and QA harness.
+
+     The two never mix: sweat.js picks one URL before it fetches. -->
+<body data-sweats-real="../../data/sweats.json"
+      data-sweats-demo="../../demo/sweats.demo.json">
 
 <!-- THE TWO BANNERS, written into the page itself and not only by the
      script, so they are on screen before anything is fetched and stay
      there if the fetch never answers. `sweat.js` re-renders these same
      elements from its own constants, and a test asserts the page and
-     the constants say the same thing. The sample-sweats sentinel rides
-     at the very top, always. -->
-<div class="banner sample" id="samplebanner">SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation</div>
+     the constants say the same thing.
+
+     The top slot carries the MODE'S OWN sentinel. The page ships with
+     the ALPHA one on it because real is the default; `?demo=1` swaps
+     in the SAMPLE one, which rides here too (`data-sample`) so both
+     strings live on disk beside the script's own and neither can drift
+     from it. One of them is on screen at all times, never both. -->
+<div class="banner sample" id="topbanner"
+     data-sample="SAMPLE SWEATS — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation">ALPHA SWEATS — real lines and engine probabilities; model, not yet calibrated; experimental presentation (D-122)</div>
 <div class="banner lab" id="labbanner">LAB — IN PROGRESS: design sandbox; presentation is experimental</div>
 
 <!-- Frame 9's paused banner. Hidden until the replay has stood still
