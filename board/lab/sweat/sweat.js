@@ -327,7 +327,7 @@ const EXP_HITS_TITLE =
  * ------------------------------------------------------------------ */
 
 const SERVICE_PLACEHOLDER = "https://reads.fantasy-edge.example";
-const SERVICE_URL = SERVICE_PLACEHOLDER;
+const SERVICE_URL = "https://fantasy-edge-production-ab88.up.railway.app";
 
 /* The token is the reader's own, kept in HIS browser under the house
  * key shape (`fe.<what>.v<n>`), asked for once, and sent to the reads
