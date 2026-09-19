@@ -80,6 +80,16 @@ const BODY = document.body;
 const REAL_SWEATS_URL = "../../data/sweats.json";
 const DEMO_SWEATS_URL = "../../demo/sweats.demo.json";
 
+/* L3e — THE THIRD PATH, and it never mixes with either of those two.
+ * `#/retro` reads its OWN document, written by
+ * `fantasy_edge.live.sweat_retro`: 2026 week 1 replayed from the
+ * play-by-play the capture job banked, against the lines the live
+ * capture stored. It is fetched only when that route is opened, it is
+ * held in its own field, and neither the live board nor the fixture
+ * ever reads a row of it. `?demo=1` does not change it: the fixture is
+ * a design harness and this file is the real, finished week. */
+const RETRO_URL = "../../data/sweats_retro_2026w01.json";
+
 /* The one switch, read once. Anything but `?demo=1` is real mode. */
 const DEMO = (function () {
   try {
@@ -196,6 +206,55 @@ const NO_PROJECTION = "no projected value on this row";
 const MARKET_LEGEND = "Stat";
 const ALL_MARKETS_LABEL = "All";
 
+/* ------------------------------------------------------------------
+ * L3e — THE WEEK-1 RETROSPECTIVE'S OWN WORDS. Every one of them is a
+ * contiguous string for the same reason the banners are: the wording
+ * is the contract, and a wording that can be assembled can drift.
+ * ------------------------------------------------------------------ */
+
+/* THE RETROSPECTIVE SENTINEL. It rides the top slot on the `#/retro`
+ * route in place of the mode's own, because this screen is neither the
+ * fabricated fixture nor the live alpha board: it is a finished week
+ * replayed from what was banked, with NO probability anywhere on it.
+ * It is written into index.html as well, and it may not be softened. */
+const RETRO_SWEATS =
+  "RETROSPECTIVE — 2026 week 1 replayed from banked play-by-play; no probabilities existed for this week";
+
+const RETRO_CHIP = "Retro";
+const RETRO_TITLE = "WEEK 1 RETRO";
+const RETRO_LINK = "Week 1 retro ›";
+const BOARD_LINK = "‹ Live sweats";
+const RETRO_BACK_LABEL = "Back to the week 1 retrospective";
+
+/* The one line under the card's drawing that says what its axis IS.
+ * A reader arriving from the live board has just been looking at a
+ * chance trace, and the two drawings look alike. */
+const RETRO_AXIS_NOTE =
+  "The axis is the BANKED STAT against the line at each checkpoint — not a chance. No probability existed for this week.";
+
+const CHECKPOINT_LEGEND = "Checkpoint";
+const FOCUS_LEGEND = "Focus";
+
+/* The three groupings the retrospective board draws, at whichever
+ * checkpoint is selected. They are read off the state the exporter
+ * stored at that checkpoint and this page assigns none of them. */
+const RETRO_CASHED_HEAD = "CASHED BY THIS POINT";
+const RETRO_OPEN_HEAD = "STILL RUNNING AT THIS POINT";
+const RETRO_NO_LINE_HEAD = "NO LINE CAPTURED FOR THIS STAT";
+
+/* "Cashed (Q2)" — the checkpoint it crossed at, off the row. */
+const CASHED_AT_OPEN = "Cashed (";
+const CASHED_AT_CLOSE = ")";
+const NO_LINE_NEED = "No line was captured for this stat";
+
+const RETRO_EMPTY =
+  "No week-1 retrospective rows. This page renders the file it was pointed at and replays nothing itself.";
+
+const RETRO_NO_FILE =
+  "The week-1 retrospective file could not be read, so there is nothing to show. This page renders the one document it was pointed at and never replays a week of its own.";
+
+const RETRO_LOADING = "Reading the week-1 retrospective…";
+
 /* The Exp. hits tile is a BET count and always answers the bet's own
  * question, so it is the one number on the board the reference toggle
  * does not move. It says so on itself. */
@@ -220,7 +279,11 @@ const STATE_LABELS = {
   long_shot: "Long shot",
   cashed: "Cashed",
   lost: "Lost",
-  void: "Void"
+  void: "Void",
+  /* L3e. The retrospective's third word, and the only one it adds:
+   * without a chance model there is no "alive" or "heating" to claim,
+   * so a bet that has neither cashed nor finished is simply open. */
+  open: "Open"
 };
 
 /* The three groupings the board draws, named by the states that fall
@@ -269,7 +332,19 @@ const ui = {
   reference: REF_LINE,
   market: "",
   boardScroll: 0,
-  error: ""
+  error: "",
+  /* L3e. The retrospective's own screen, its own document and its own
+   * two presentation fields. `checkpoint` is a position in the FILE's
+   * own checkpoint list and `focus` is the market whose number is
+   * emphasised in every statline — neither is a filter and neither is
+   * ever written anywhere. */
+  retro: false,
+  retroPlayer: null,
+  retroDoc: null,
+  retroError: "",
+  retroAsked: false,
+  checkpoint: 0,
+  focus: ""
 };
 
 /* ------------------------------------------------------------------
@@ -449,13 +524,16 @@ function thresholdLabel(bet) {
 /* WHAT THE BET STILL ASKS FOR, in the stat's own words. A MEASURED
  * market clears a threshold and says so ("Needs 88.5+ yds"); a COUNTED
  * one needs whole things ("Needs 2 catches"). Which it is comes off
- * the row's own `need_unit`, so this page holds no market list. */
+ * the row's own `need_unit`, so this page holds no market list.
+ *
+ * It is handed the TEXT to print rather than a raw number, because the
+ * two views print the same field to different precision — see
+ * `needShown`. */
 function needWords(value, unit) {
-  const number = numberOrNull(value);
-  if (number === null) return BLANK;
+  if (value === null || value === undefined || value === "") return BLANK;
   const yards = YARD_UNITS[String(unit)];
-  if (yards) return "Needs " + number + "+ " + yards;
-  return "Needs " + number + " " + unit;
+  if (yards) return "Needs " + value + "+ " + yards;
+  return "Needs " + value + " " + unit;
 }
 
 /* The threshold the headline names: the BET's need in the line view,
@@ -465,11 +543,28 @@ function needValue(bet) {
   return vsProjection() ? bet.projection : bet.need;
 }
 
+/* PRESENTATION ROUNDING — the second of this file's two kinds of
+ * arithmetic, and the whole of this one.
+ *
+ * A BET's need is a posted threshold: a whole number or a book's half,
+ * and it is printed exactly as the file carries it. OUR OWN PROJECTED
+ * VALUE is a model quantity with model precision, and printed raw it
+ * reads "Needs 3.9625 catches" — precision this page has no business
+ * showing and the model has no business claiming. In the projection
+ * view it is printed to ONE DECIMAL: "Needs 4.0 catches", "Needs
+ * 236.2+ yds". The stored `projection` is untouched, nothing is
+ * computed from this text, and the line view is exactly what it was. */
+function needShown(value) {
+  const number = numberOrNull(value);
+  if (number === null) return null;
+  return vsProjection() ? number.toFixed(1) : String(number);
+}
+
 function needLine(bet) {
   if (bet.state === "void") return "Voided";
   if (bet.state === "cashed") return "Cashed";
   if (bet.state === "lost") return "Did not hit";
-  return needWords(needValue(bet), bet.need_unit);
+  return needWords(needShown(needValue(bet)), bet.need_unit);
 }
 
 /* Honesty rule sec 6.2, as a line of words under the number. */
@@ -932,9 +1027,18 @@ function referenceNote() {
   return '<div class="refnote">' + esc(VS_PROJECTION_NOTE) + "</div>";
 }
 
+/* L3e. The one way into the retrospective, beside the controls it
+ * belongs with — the same shape the lab's one link to this sandbox
+ * takes. It is a link and nothing else: the tab it opens fetches its
+ * own file. */
+function retroLink() {
+  return '<a class="retrolink" href="#/retro">' + esc(RETRO_LINK) +
+    "</a>";
+}
+
 function controls() {
   return '<div class="controls">' + referenceToggle() + statChips() +
-    "</div>" + referenceNote();
+    retroLink() + "</div>" + referenceNote();
 }
 
 /* The sentence the exporter wrote on a file with nothing on it. A
@@ -975,7 +1079,7 @@ function headline(bet) {
   if (bet.state === "lost") {
     return '<span class="hbig">Did not hit</span>';
   }
-  const need = numberOrNull(needValue(bet));
+  const need = needShown(needValue(bet));
   if (need === null) return '<span class="hbig">' + esc(BLANK) + "</span>";
   const yards = YARD_UNITS[String(bet.need_unit)];
   return '<span class="hbig">Needs ' + esc(yards ? need + "+" : need) +
@@ -1089,7 +1193,7 @@ function renderReplay() {
   /* A SINGLE DOCUMENT HAS NOTHING TO WALK. The real file is one poll,
    * so the bar is not drawn at all rather than drawn with one dead
    * position in it. */
-  if (!total || !ui.replayable) {
+  if (!total || !ui.replayable || ui.retro) {
     document.getElementById("replay").innerHTML = "";
     return;
   }
@@ -1127,7 +1231,7 @@ function renderStale() {
    * measured against the replay's own position. A single document has
    * no replay and a pregame board has no needle, so there is nothing
    * to declare frozen and the banner stays down. */
-  if (!ui.replayable || !now || interval === null) {
+  if (!ui.replayable || !now || interval === null || ui.retro) {
     node.hidden = true;
     return;
   }
@@ -1145,13 +1249,530 @@ function renderStale() {
 }
 
 /* ------------------------------------------------------------------
+ * L3e — THE WEEK-1 RETROSPECTIVE (#/retro)
+ *
+ * A third screen over a third file, and THE ONE THING IT NEVER DOES IS
+ * REPLAY ANYTHING. Every banked value, every needs-remaining, every
+ * state and the checkpoint a bet cashed at are computed by
+ * `fantasy_edge.live.sweat_retro` out of the play-by-play the capture
+ * job banked, and written into the file. This screen renders them as
+ * stored.
+ *
+ * THE ROWS ARE PLAYERS, NOT BETS. The exporter groups a player's whole
+ * banked statline onto one entry, so this page never joins rows back
+ * together by name and never has to decide which of a player's bets a
+ * row "is". A row shows his full statline at the selected checkpoint.
+ *
+ * THE PILLS FOCUS, THEY DO NOT FILTER. Choosing a stat emphasises that
+ * number in every statline and makes it the row's lead — the
+ * needs-remaining, the state colour and the big number on the right
+ * all follow it. A player with no captured line for the focused stat
+ * KEEPS HIS ROW with his statline intact and the focused slot dashed,
+ * because his statline is still true; what is missing is a bet, and a
+ * bet is never invented to fill the slot.
+ *
+ * THE ONLY ARITHMETIC ON THIS SCREEN, beyond the geometry every chart
+ * on this page does and the presentation rounding every number does,
+ * is ONE RATIO OF TWO STORED NUMBERS — banked over need — used to
+ * decide which stat a row leads with when no pill is chosen and in
+ * what order the rows sit. Its result is never printed as a number and
+ * nothing is derived from it.
+ *
+ * AND THERE IS NO CHANCE ON IT AT ALL. Week 1 had no engine
+ * distribution and there is no live model yet, so the file carries no
+ * probability field and this screen draws no percentage, no band and
+ * no chance trace. The banner says so and the card's axis note says so
+ * again, because the drawing looks like the live card's and is a
+ * completely different quantity.
+ * ------------------------------------------------------------------ */
+
+function retroRun() {
+  const doc = ui.retroDoc;
+  return (doc && doc.run) || {};
+}
+
+function retroPlayers() {
+  const doc = ui.retroDoc;
+  return (doc && Array.isArray(doc.players)) ? doc.players : [];
+}
+
+/* THE SELECTOR'S SEGMENTS COME OUT OF THE FILE. The exporter writes
+ * the checkpoints it actually carries, in order, and the OT segment is
+ * there only because some game of that week actually went to overtime.
+ * This page derives none of them and offers none the rows do not
+ * have. */
+function retroMarks() {
+  const marks = retroRun().checkpoints;
+  return Array.isArray(marks) ? marks : [];
+}
+
+function retroMarkIndex() {
+  const marks = retroMarks();
+  if (!marks.length) return 0;
+  return Math.min(Math.max(0, ui.checkpoint), marks.length - 1);
+}
+
+function retroMarkKey() {
+  const mark = retroMarks()[retroMarkIndex()];
+  return mark ? String(mark.key) : "";
+}
+
+/* One stat's record AT a checkpoint. A game that never went to
+ * overtime has no OT checkpoint, and its LAST one — the end of its
+ * game — is what stood while another game was still playing. That is a
+ * lookup of a stored record, not a value worked out for the gap. */
+function statAt(stat, key) {
+  const marks = Array.isArray(stat.checkpoints) ? stat.checkpoints : [];
+  for (let i = 0; i < marks.length; i += 1) {
+    if (String(marks[i].key) === String(key)) return marks[i];
+  }
+  return marks[marks.length - 1] || null;
+}
+
+function statOf(entry, market) {
+  const stats = Array.isArray(entry.stats) ? entry.stats : [];
+  for (let i = 0; i < stats.length; i += 1) {
+    if (String(stats[i].market) === String(market)) return stats[i];
+  }
+  return null;
+}
+
+function hasLine(stat) {
+  return Boolean(stat) && stat.line !== null && stat.line !== undefined;
+}
+
+/* HOW CLOSE A LINED STAT IS TO CASHING, at this checkpoint: banked
+ * over need, with anything already cashed sitting above everything
+ * still running. It is the one ratio this screen takes, it is taken of
+ * two numbers the file stored, and it is used only to CHOOSE and to
+ * ORDER — it is never printed. */
+function closeness(stat, key) {
+  if (!hasLine(stat)) return -1;
+  const at = statAt(stat, key);
+  const need = numberOrNull(stat.need);
+  const banked = at ? numberOrNull(at.banked) : null;
+  if (at === null || need === null || banked === null || need <= 0) {
+    return -1;
+  }
+  const share = banked / need;
+  return at.state === "cashed" ? 1 + share : Math.min(share, 1);
+}
+
+/* THE ROW'S LEAD STAT: the focused one when a pill is chosen — present
+ * or not, because a dashed slot is the honest answer for a player with
+ * no line on it — and otherwise his own closest to cashing here. */
+function leadStat(entry, key) {
+  if (ui.focus) return statOf(entry, ui.focus);
+  const stats = Array.isArray(entry.stats) ? entry.stats : [];
+  let best = null;
+  let mark = -1;
+  stats.forEach(function (stat) {
+    const score = closeness(stat, key);
+    if (score > mark) {
+      mark = score;
+      best = stat;
+    }
+  });
+  return best;
+}
+
+/* The word on a row's chip: the stored state, and for a cashed one the
+ * checkpoint the exporter says it first crossed at. */
+function retroChip(stat, at) {
+  if (!hasLine(stat) || at === null) return STATE_LABELS.open;
+  if (at.state === "cashed" && stat.cashed_at_label) {
+    return CASHED_AT_OPEN + stat.cashed_at_label + CASHED_AT_CLOSE;
+  }
+  return STATE_LABELS[at.state] || String(at.state);
+}
+
+/* THE STATLINE — every tracked stat the file carries for this player,
+ * at this checkpoint, with the focused one emphasised. The short words
+ * come off the rows, so this page holds no market list. */
+function statLine(entry, key, lead) {
+  const stats = Array.isArray(entry.stats) ? entry.stats : [];
+  return '<span class="statline">' + stats.map(function (stat) {
+    const at = statAt(stat, key);
+    const on = lead && String(stat.market) === String(lead.market);
+    const banked = at ? numberOrNull(at.banked) : null;
+    return '<span class="stat' + (on ? " on" : "") + '">' +
+      '<span class="sval">' +
+      esc(banked === null ? BLANK : banked) + "</span>" +
+      '<span class="slab">' + esc(stat.short_label) + "</span></span>";
+  }).join("") + "</span>";
+}
+
+function retroMeta(entry) {
+  const parts = [entry.player.pos, entry.player.team].filter(
+    function (part) { return Boolean(part); });
+  return parts.join(" · ");
+}
+
+/* What the row's headline says, off the lead stat's stored checkpoint:
+ * the cashed word with its checkpoint, "Did not hit" once the game is
+ * over, the needs-remaining while it was still running — and, for a
+ * focused stat this player has no line on, the reason there is no
+ * number rather than a number. */
+function retroNeed(stat, at) {
+  if (!hasLine(stat) || at === null) return NO_LINE_NEED;
+  if (at.state === "cashed") return retroChip(stat, at);
+  if (at.state === "lost") return "Did not hit";
+  /* the unit is THIS remaining's, off the checkpoint: a bet one catch
+   * short needs "1 catch" and not "1 catches", and this page holds no
+   * market list it could work that out from */
+  return needWords(at.needs, at.needs_unit);
+}
+
+function retroRow(entry, key) {
+  const lead = leadStat(entry, key);
+  const at = lead ? statAt(lead, key) : null;
+  const state = (lead && at && at.state) ? String(at.state) : "open";
+  const banked = at ? numberOrNull(at.banked) : null;
+  return '<a class="sw row retro" data-state="' + esc(state) +
+    '" data-retro="' + esc(entry.player_id) + '" href="#/retro/' +
+    encodeURIComponent(entry.player_id) + '">' +
+    '<span class="rtop"><span class="rname">' +
+    esc(entry.player.name) + '</span><span class="chip">' +
+    esc(retroChip(lead, at)) + "</span></span>" +
+    '<span class="rmeta">' + esc(retroMeta(entry)) + "</span>" +
+    '<span class="rgame">' + esc(gameLine(entry.game)) + "</span>" +
+    '<span class="rneed">' + esc(retroNeed(lead, at)) + "</span>" +
+    '<span class="rspark">' + statLine(entry, key, lead) + "</span>" +
+    '<span class="rpct">' +
+    esc(banked === null ? BLANK : banked) + "</span></a>";
+}
+
+function retroSection(title, rows, key) {
+  if (!rows.length) return "";
+  return '<section class="sect"><div class="secthead"><span>' +
+    esc(title) + "</span></div>" + rows.map(function (entry) {
+      return retroRow(entry, key);
+    }).join("") + "</section>";
+}
+
+/* The board's three groupings at the selected checkpoint, off the
+ * STORED state of each row's lead stat. Ordering follows the same
+ * closeness the lead was chosen by, so the rows nearest to cashing sit
+ * nearest the top. */
+function retroGroups(key) {
+  const cashed = [];
+  const open = [];
+  const settled = [];
+  const unlined = [];
+  retroPlayers().forEach(function (entry) {
+    const lead = leadStat(entry, key);
+    const at = lead ? statAt(lead, key) : null;
+    if (!hasLine(lead) || at === null || !at.state) {
+      unlined.push(entry);
+    } else if (at.state === "cashed") {
+      cashed.push(entry);
+    } else if (at.state === "lost") {
+      settled.push(entry);
+    } else {
+      open.push(entry);
+    }
+  });
+  const byCloseness = function (a, b) {
+    const left = closeness(leadStat(a, key), key);
+    const right = closeness(leadStat(b, key), key);
+    if (right !== left) return right - left;
+    return String(a.player.name).localeCompare(String(b.player.name));
+  };
+  cashed.sort(byCloseness);
+  open.sort(byCloseness);
+  settled.sort(byCloseness);
+  return { cashed: cashed, open: open, settled: settled,
+           unlined: unlined };
+}
+
+function checkpointSelector() {
+  const marks = retroMarks();
+  if (!marks.length) return "";
+  const here = retroMarkIndex();
+  return '<div class="seg" role="group" aria-label="' +
+    esc(CHECKPOINT_LEGEND) + '">' + marks.map(function (mark, index) {
+      const on = index === here;
+      return '<button type="button" class="segbtn' + (on ? " on" : "") +
+        '" data-checkpoint="' + index + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(mark.label) + "</button>";
+    }).join("") + "</div>";
+}
+
+/* THE FOCUS PILLS COME OUT OF THE FILE, exactly as the board's stat
+ * chips do: one per market the retrospective actually carries, in the
+ * words the exporter wrote. */
+function retroMarkets() {
+  const seen = [];
+  const words = {};
+  retroPlayers().forEach(function (entry) {
+    (Array.isArray(entry.stats) ? entry.stats : []).forEach(
+      function (stat) {
+        const market = String(stat.market);
+        if (market && seen.indexOf(market) === -1) {
+          seen.push(market);
+          words[market] = String(stat.short_label);
+        }
+      });
+  });
+  return seen.map(function (market) {
+    return [market, words[market]];
+  });
+}
+
+function focusChips() {
+  const chips = [["", ALL_MARKETS_LABEL]].concat(retroMarkets());
+  if (chips.length < 3) return "";
+  return '<div class="chips" role="group" aria-label="' +
+    esc(FOCUS_LEGEND) + '">' + chips.map(function (chip) {
+      const on = ui.focus === chip[0];
+      return '<button type="button" class="statchip' + (on ? " on" : "") +
+        '" data-focus="' + esc(chip[0]) + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(chip[1]) + "</button>";
+    }).join("") + "</div>";
+}
+
+/* ------------------------------------------------------------------
+ * THE STEP TRACE — the banked stat against the line, across the
+ * checkpoints. GEOMETRY ONLY: a stored value over an axis this
+ * function picks so the drawing fits, turned into an x and a y. The
+ * axis is the STAT and the page says so under it.
+ * ------------------------------------------------------------------ */
+
+const STEP_W = 330;
+const STEP_H = 200;
+const STEP_L = 8;
+const STEP_T = 14;
+const STEP_BOTTOM = 172;
+
+function stepAxis(stat) {
+  let top = numberOrNull(stat.need) || 0;
+  (Array.isArray(stat.checkpoints) ? stat.checkpoints : []).forEach(
+    function (mark) {
+      const banked = numberOrNull(mark.banked);
+      if (banked !== null && banked > top) top = banked;
+    });
+  return top > 0 ? top * 1.15 : 1;
+}
+
+function stepAria(entry, stat) {
+  const marks = Array.isArray(stat.checkpoints) ? stat.checkpoints : [];
+  const parts = [entry.player.name + ", " + stat.label +
+    ", banked stat by checkpoint"];
+  marks.forEach(function (mark) {
+    parts.push(mark.label + " " + mark.banked);
+  });
+  if (hasLine(stat)) parts.push("line " + stat.line);
+  return parts.join(", ") + ".";
+}
+
+function stepTrace(entry, stat) {
+  const marks = Array.isArray(stat.checkpoints) ? stat.checkpoints : [];
+  if (!marks.length) return "";
+  const width = STEP_W - STEP_L * 2;
+  const height = STEP_BOTTOM - STEP_T;
+  const top = stepAxis(stat);
+  const span = marks.length > 1 ? width / (marks.length - 1) : 0;
+  const at = {
+    x: function (index) { return STEP_L + index * span; },
+    y: function (value) { return STEP_T + (1 - value / top) * height; }
+  };
+  const layers = [];
+
+  layers.push('<line class="axis" x1="' + STEP_L + '" y1="' +
+    STEP_BOTTOM + '" x2="' + (STEP_L + width) + '" y2="' +
+    STEP_BOTTOM + '"></line>');
+  marks.forEach(function (mark, index) {
+    const line = at.x(index).toFixed(1);
+    layers.push('<line class="grid" x1="' + line + '" y1="' + STEP_T +
+      '" x2="' + line + '" y2="' + STEP_BOTTOM + '"></line>');
+  });
+
+  /* THE LINE IT WAS BET AGAINST, dashed, labelled with the threshold
+   * the file carries. A stat with no captured line draws none. */
+  if (hasLine(stat)) {
+    const need = numberOrNull(stat.need) || 0;
+    const y = at.y(need).toFixed(1);
+    layers.push('<line class="preline" x1="' + STEP_L + '" y1="' + y +
+      '" x2="' + (STEP_L + width) + '" y2="' + y + '"></line>');
+    const label = Math.min(STEP_BOTTOM - 4,
+      Math.max(STEP_T + 9, at.y(need) - 5));
+    layers.push('<text class="prelabel" x="' + (STEP_L + width) +
+      '" y="' + label.toFixed(1) + '" text-anchor="end">' +
+      esc(stat.line_label) + "</text>");
+  }
+
+  /* THE STEP ITSELF. A banked stat does not drift between checkpoints
+   * — it stands where it stood and then jumps — so it is drawn as
+   * steps and not as a slope, which would show a value the file never
+   * stated. */
+  const path = [];
+  marks.forEach(function (mark, index) {
+    const banked = numberOrNull(mark.banked) || 0;
+    const y = at.y(banked).toFixed(1);
+    if (index > 0) path.push(at.x(index).toFixed(1) + "," +
+      at.y(numberOrNull(marks[index - 1].banked) || 0).toFixed(1));
+    path.push(at.x(index).toFixed(1) + "," + y);
+  });
+  layers.push('<polyline class="trace big" points="' + path.join(" ") +
+    '"></polyline>');
+
+  marks.forEach(function (mark, index) {
+    const banked = numberOrNull(mark.banked) || 0;
+    const family = mark.state === "cashed" ? "d-hit" : "d-note";
+    layers.push('<circle class="dot ' + family + '" cx="' +
+      at.x(index).toFixed(1) + '" cy="' + at.y(banked).toFixed(1) +
+      '" r="4.5"></circle>');
+  });
+
+  const labels = marks.map(function (mark, index) {
+    return '<text class="qlabel" x="' + at.x(index).toFixed(1) +
+      '" y="' + (STEP_BOTTOM + 15) + '" text-anchor="middle">' +
+      esc(mark.label) + "</text>";
+  });
+
+  return '<div class="chartwrap"><svg class="chart" viewBox="0 0 ' +
+    STEP_W + " " + STEP_H + '" role="img" aria-label="' +
+    esc(stepAria(entry, stat)) + '">' + layers.join("") +
+    labels.join("") + "</svg></div>";
+}
+
+/* ------------------------------------------------------------------
+ * the retrospective's two screens
+ * ------------------------------------------------------------------ */
+
+function retroTitleRow(title) {
+  return '<div class="titlerow"><h1>' + esc(title) +
+    '</h1><span class="samplechip">' + esc(RETRO_CHIP) +
+    "</span></div>";
+}
+
+function retroTiles() {
+  const tiles = retroRun();
+  const totals = (ui.retroDoc && ui.retroDoc.summary) || {};
+  const cells = [["Players", totals.players], ["Cashed", totals.cashed],
+                 ["Lost", totals.lost]];
+  return '<div class="tiles">' + cells.map(function (cell) {
+    const value = numberOrNull(cell[1]);
+    return '<div class="tile"><span class="tlab">' + esc(cell[0]) +
+      '</span><span class="tval">' +
+      esc(value === null ? BLANK : String(value)) + "</span></div>";
+  }).join("") + "</div>" +
+    (tiles.chance_absent_reason
+      ? '<div class="refnote">' + esc(tiles.chance_absent_reason) +
+        "</div>" : "");
+}
+
+function retroBoard() {
+  const key = retroMarkKey();
+  const groups = retroGroups(key);
+  const body = retroSection(RETRO_CASHED_HEAD, groups.cashed, key) +
+    retroSection(RETRO_OPEN_HEAD, groups.open, key) +
+    retroSection(SETTLED_HEAD, groups.settled, key) +
+    retroSection(RETRO_NO_LINE_HEAD, groups.unlined, key);
+  const reason = typeof retroRun().reason === "string"
+    ? retroRun().reason : "";
+  const empty = body ? "" :
+    '<div class="empty"><b>' + esc(RETRO_EMPTY) + "</b>" +
+    (reason ? esc(reason) : "") + "</div>";
+  return '<div class="topbar"><a class="back" href="#/board" ' +
+    'aria-label="' + esc(BACK_LABEL) + '">‹</a><span class="ttl">' +
+    esc(BOARD_LINK) + "</span></div>" + retroTitleRow(RETRO_TITLE) +
+    retroTiles() +
+    '<div class="controls">' + checkpointSelector() + focusChips() +
+    "</div>" + body + empty;
+}
+
+function findRetro(playerId) {
+  const all = retroPlayers();
+  for (let i = 0; i < all.length; i += 1) {
+    if (String(all[i].player_id) === String(playerId)) return all[i];
+  }
+  return null;
+}
+
+function retroCard(entry) {
+  const key = retroMarkKey();
+  const lead = leadStat(entry, key);
+  const at = lead ? statAt(lead, key) : null;
+  const state = (lead && at && at.state) ? String(at.state) : "open";
+  const banked = at ? numberOrNull(at.banked) : null;
+  const drawing = lead
+    ? stepTrace(entry, lead)
+    : '<div class="empty">' + esc(NO_LINE_NEED) + "</div>";
+  return '<div class="topbar"><a class="back" href="#/retro" ' +
+    'aria-label="' + esc(RETRO_BACK_LABEL) + '">‹</a>' +
+    '<span class="ttl">' + esc(RETRO_TITLE) +
+    '</span><span class="samplechip">' + esc(RETRO_CHIP) +
+    "</span></div>" +
+    '<article class="sw card" data-state="' + esc(state) + '">' +
+    '<section class="hdr"><div class="hleft">' +
+    '<div class="hname"><span class="hwho">' +
+    esc(entry.player.name) + '</span><span class="chip">' +
+    esc(retroChip(lead, at)) + "</span></div>" +
+    '<div class="hmeta">' + esc(retroMeta(entry)) + " · " +
+    esc(gameLine(entry.game)) + "</div>" +
+    '<div class="hhead"><span class="hbig">' +
+    esc(banked === null ? BLANK : banked) +
+    '</span><span class="hunit">' +
+    esc(lead ? lead.short_label : "") + "</span></div>" +
+    '<div class="hstat">' + statLine(entry, key, lead) + "</div>" +
+    "</div></section>" +
+    '<div class="controls">' + checkpointSelector() + focusChips() +
+    "</div>" +
+    '<section class="chartcard"><div class="chead">' +
+    '<span class="ctitle">' +
+    esc(lead ? lead.label : BLANK) + "</span></div>" + drawing +
+    '<div class="axisnote">' + esc(RETRO_AXIS_NOTE) + "</div>" +
+    '<div class="panel"><div class="ptitle">' +
+    esc(retroNeed(lead, at)) + "</div></div></section></article>";
+}
+
+function renderRetro() {
+  if (ui.retroError) {
+    return '<div class="empty"><b>Nothing to show</b>' +
+      esc(ui.retroError) + "</div>";
+  }
+  if (!ui.retroDoc) {
+    return '<div class="empty"><b>' + esc(RETRO_LOADING) + "</b></div>";
+  }
+  if (ui.retroPlayer) {
+    const entry = findRetro(ui.retroPlayer);
+    if (entry) return retroCard(entry);
+    ui.retroPlayer = null;
+  }
+  return retroBoard();
+}
+
+/* ONE FETCH OF ONE FILE, on the route that needs it, held in its own
+ * field. It is asked for once: a file that could not be read leaves
+ * the honest no-file arm on screen rather than retrying behind the
+ * reader's back. */
+async function askRetro() {
+  if (ui.retroAsked) return;
+  ui.retroAsked = true;
+  try {
+    ui.retroDoc = await getJSON(RETRO_URL);
+  } catch (err) {
+    ui.retroError = RETRO_NO_FILE + " (" + err.message + ")";
+  }
+  render(null);
+}
+
+/* ------------------------------------------------------------------
  * render and route
  * ------------------------------------------------------------------ */
 
 /* The top sentinel is the mode's own: the SAMPLE one in demo, the
  * ALPHA one on the real file. One slot, one string, never both — the
- * reader is never left guessing which kind of numbers are below it. */
+ * reader is never left guessing which kind of numbers are below it.
+ *
+ * L3e. The retrospective takes the slot for itself, because neither of
+ * the other two describes it: nothing on it is fabricated, so the
+ * SAMPLE sentinel would be a lie, and nothing on it is an engine
+ * probability, so the ALPHA one would be too. The lab's in-progress
+ * banner rides under all three, always. */
 function topSentinel() {
+  if (ui.retro) return RETRO_SWEATS;
   return DEMO ? SAMPLE_SWEATS : ALPHA_SWEATS;
 }
 
@@ -1164,6 +1785,7 @@ function renderBanners() {
   document.getElementById("topbanner").textContent = topSentinel();
   document.getElementById("labbanner").textContent = SWEAT_IN_PROGRESS;
   BODY.dataset.mode = DEMO ? "demo" : "real";
+  BODY.dataset.screen = ui.retro ? "retro" : "sweats";
 }
 
 function boardTops() {
@@ -1197,6 +1819,13 @@ function render(before) {
   renderReplay();
   renderStale();
   const screen = document.getElementById("screen");
+  /* L3e. The retrospective is its OWN screen over its OWN document.
+   * It is drawn before anything else is consulted, so a failed live
+   * fetch never empties it and a live row never reaches it. */
+  if (ui.retro) {
+    screen.innerHTML = renderRetro();
+    return;
+  }
   if (ui.error) {
     screen.innerHTML = '<div class="empty"><b>Nothing to show</b>' +
       esc(ui.error) + "</div>";
@@ -1217,6 +1846,18 @@ function render(before) {
 
 function readRoute() {
   const hash = String(window.location.hash || "");
+  /* L3e. `#/retro` and `#/retro/<player_id>` are the third route. It
+   * is read FIRST because it owns the screen: the live board's card
+   * and its reference toggle belong to the other two. */
+  const retro = hash.match(/^#\/retro(?:\/(.+))?$/);
+  ui.retro = Boolean(retro);
+  if (ui.retro) {
+    ui.retroPlayer = retro[1] ? decodeURIComponent(retro[1]) : null;
+    ui.bet = null;
+    ui.reference = REF_LINE;
+    return;
+  }
+  ui.retroPlayer = null;
   const match = hash.match(/^#\/sweat\/(.+)$/);
   const wanted = match ? decodeURIComponent(match[1]) : null;
   if (wanted !== ui.bet) {
@@ -1230,7 +1871,10 @@ function route() {
   const goingBack = ui.bet !== null;
   readRoute();
   render(null);
-  if (ui.bet) {
+  /* the retrospective's own file, asked for once, on the route that
+   * needs it — never on a route that does not */
+  if (ui.retro) askRetro();
+  if (ui.bet || ui.retro) {
     window.scrollTo(0, 0);
   } else if (goingBack) {
     window.scrollTo(0, ui.boardScroll);
@@ -1336,6 +1980,22 @@ document.addEventListener("click", function (event) {
     render(null);
     return;
   }
+  /* L3e. The retrospective's two controls, and they do the same one
+   * thing: set a presentation field and re-render. The checkpoint is a
+   * position in the file's own list and the focus is a market the file
+   * already carries; neither fetches, stores or works out a number. */
+  const mark = target.closest("[data-checkpoint]");
+  if (mark) {
+    ui.checkpoint = Number(mark.dataset.checkpoint);
+    render(null);
+    return;
+  }
+  const focus = target.closest("[data-focus]");
+  if (focus) {
+    ui.focus = focus.dataset.focus;
+    render(null);
+    return;
+  }
   const swing = target.closest("[data-swing]");
   if (swing) {
     pick(Number(swing.dataset.swing));
@@ -1412,6 +2072,11 @@ async function boot() {
   ui.advancedAt = Date.now();
   readRoute();
   render(null);
+  /* ...and a reader who LANDED on the retrospective — from a link, or
+   * a reload — needs its file too. It is the same one-shot ask the
+   * route makes, so arriving at #/retro and navigating to it behave
+   * identically. */
+  if (ui.retro) askRetro();
   /* the paused-feed banner has to be able to appear while nothing else
    * is happening, so one second-hand ticks for it and for nothing else */
   ui.ticker = window.setInterval(renderStale, 1000);
