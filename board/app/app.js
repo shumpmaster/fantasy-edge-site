@@ -1,45 +1,48 @@
-/* U1 — THE APP SHELL.
+/* U1 — THE APP SHELL, and U2 — THE HOME MATCHUP TABLE.
  *
- * docs/plan/UI_ALPHA_SPEC.md sec 3, realising
+ * docs/plan/UI_ALPHA_SPEC.md, realising
  * docs/design/FANTASY_EDGE_UI_HANDOFF.md: the tab bar (sec 2.2), the
  * per-tab stacks (sec 2.3), the + sheet (sec 2.4), the transition set
  * (sec 2.5), the hero (sec 5.1) and the Projections placeholder (sec
- * 5.3), with honest stubs at every other route so the navigation of
- * the reference prototype's board 16 works end to end.
+ * 5.3) came in with U1; U2 makes the HOME screen real — the game
+ * switcher and its search, the game line strip, the five views, the
+ * mirrored seven-row table and the expanded rows, all read off
+ * `web/data/slate.json`, which `fantasy_edge.live.slate` writes.
  *
  * THE LAB'S IDIOMS, KEPT. Vanilla, no framework, no build step, no
  * module: the directory that is served is the directory that is
  * written. Sentinel constants for every word the reader must see.
- * `esc()` on every value that reaches the page. Honest arms — a stub
- * says it is a stub, in the increment's own words, rather than
- * drawing a plausible number nobody computed.
+ * `esc()` on every value that reaches the page. Honest arms — a cell
+ * with no number says so with a dash and a footnote that names the
+ * reason, rather than drawing a plausible number nobody computed.
  *
- * WHAT THIS FILE DOES NOT DO, AND WHY.
+ * WHAT THIS FILE COMPUTES, AND WHAT IT ONLY DRAWS.
  *
- *   IT FETCHES NOTHING. There is no exporter behind this surface yet
- *   (slate.json arrives at U2), so there is no document to read and
- *   no contract to honour. Everything the shell draws comes from the
- *   FIXTURES block below — fabricated names, a fabricated week — and
- *   the hero's Sample-data tag says so on screen for exactly as long
- *   as that is true. A test asserts this directory makes no network
- *   call of any kind, so the day that changes is a deliberate day.
+ *   IT COMPUTES ONE THING THAT IS A DISPLAY RULE, and that is the
+ *   whole of it: the sec 7.3 GAP THRESHOLD. The exporter ships
+ *   `gap_pts` and says nothing about whether it is an edge; this file
+ *   draws the arrow and the tint at GAP_MIN and a grey dash below it,
+ *   because that is a decision about a screen and it belongs where it
+ *   can be checked against the screen. Everything else on the page is
+ *   a STORED NUMBER FORMATTED — no probability is derived here, no
+ *   projection is summed here, and no range is invented for a column
+ *   the exporter left null.
+ *
+ *   IT READS ONE DOCUMENT. `slate.json` in real mode, the bundled
+ *   fixture behind `?demo=1`, and nothing else. The document either
+ *   arrives or it does not; there is no third state and no cached
+ *   yesterday.
  *
  *   IT STORES NOTHING. Not a key, not a token, not a preference. The
- *   Bets sub-view is remembered for the visit (sec 2.3) and the visit
- *   is all it is remembered for; nothing here is written to the
- *   reader's browser. When something does need remembering it will be
- *   written through a guarded read and a guarded write like the lab's.
+ *   Bets sub-view, the open row and the chosen view are remembered
+ *   for the visit (sec 2.3) and the visit is all they are remembered
+ *   for; nothing here is written to the reader's browser.
  *
- *   IT COMPUTES NOTHING THAT IS A CLAIM. There is no probability, no
- *   projection and no gap on this surface yet. The one arithmetic in
- *   the file is the hero art's geometry and a modulo over six sample
- *   games, neither of which is ever shown as a quantity.
- *
- * THE NAVIGATION MODEL (sec 2.3) IS THE POINT OF THIS INCREMENT.
- * Each tab owns a STACK. Tapping a tab resets that tab to its root.
- * Detail screens PUSH onto the current tab's stack and the back
- * chevron POPS. The Bets tab remembers which of Screen and Live was
- * last used, and the Screen | Live toggle SWAPS the Bets root without
+ * THE NAVIGATION MODEL (sec 2.3) IS U1'S AND IS UNCHANGED. Each tab
+ * owns a STACK. Tapping a tab resets that tab to its root. Detail
+ * screens PUSH onto the current tab's stack and the back chevron
+ * POPS. The Bets tab remembers which of Screen and Live was last
+ * used, and the Screen | Live toggle SWAPS the Bets root without
  * pushing anything. The hash is the address of whatever is on top, so
  * the browser's own back button pops the same stack the chevron does.
  */
@@ -56,9 +59,16 @@
  * the two are the same string. It may be reworded only where D-098 is
  * rewritten — never softened here. */
 const ALPHA_NOTE =
-  "ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098). Sample data drives this build.";
+  "ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098).";
 
-/* The sec 5.1 tag, shown for as long as fixtures drive the shell. */
+/* The sec 5.1 tag. It LABELS FIXTURES, so it comes off the hero the
+ * moment a real slate.json is on screen: real data is real, and a tag
+ * that says otherwise would be the one dishonest thing on a page whose
+ * whole point is that its numbers are the engine's. It stays in demo
+ * mode, where the document IS fabricated, and it stays wherever the
+ * shell is still drawing its U3-U6 fixtures. The ALPHA line below it
+ * never comes off — that is a statement about the INTERFACE, which is
+ * unfinished whatever the data is. */
 const SAMPLE_TAG = "Sample data";
 
 const WORDMARK = "Fantasy Edge";
@@ -92,7 +102,6 @@ const ADD_STARTSIT_SUB = "Compare two players for your lineup";
 const NOTE_READS = "Your read arrives in U6. The pick card it opens on is here already.";
 const ACTION_OPEN_PICK = "Open the pick";
 const NOTE_ALERTS = "Alerts are unruled: which events notify is open question 5 in the handoff.";
-const STUB_HOME_TABLE = "The matchup table arrives in U2, from the slate the exporter writes.";
 const STUB_PICK = "The pick card — distribution, probability bars, context tiles — arrives in U3.";
 const STUB_TRACK = "Slip import, leg matching and the break-even check arrive in U3.";
 const STUB_LIVE_CARD = "The live chance chart and its swings arrive in U4, on the live contract this app already has.";
@@ -107,6 +116,161 @@ const SLATE_HEADER = "Sunday 12:00 slate";
 const SLATE_BASIS = "model vs no-vig market";
 const LIVE_OVERLINE = "Closest to hitting";
 const PICKS_OVERLINE = "Saved and placed";
+
+/* ------------------------------------------------------------------
+ * U2 — THE SLATE DOCUMENT
+ * ------------------------------------------------------------------
+ * THE TWO PATHS, the lab's idiom exactly. Real is the default; the
+ * fixture is reachable only by asking for it by name in the query
+ * string, and when it is asked for the Sample-data tag stays on. */
+
+const REAL_SLATE_URL = "../data/slate.json";
+const DEMO_SLATE_URL = "../demo/slate.demo.json";
+
+/* The one switch, read once. Anything but `?demo=1` is real mode. */
+const DEMO = (function () {
+  try {
+    return window.location.search.indexOf("demo=1") !== -1;
+  } catch (err) {
+    return false;
+  }
+})();
+
+const SLATE_URL = DEMO ? DEMO_SLATE_URL : REAL_SLATE_URL;
+
+/* The schema tag the exporter writes. A document that does not carry
+ * it is not this contract, and the page refuses it out loud rather
+ * than reading fields out of a shape it does not know. */
+const SLATE_SCHEMA = "slate-1";
+const FETCH_TIMEOUT_MS = 15000;
+
+/* THE ONE DISPLAY RULE THIS FILE OWNS (handoff sec 7.3): a gap under
+ * three points is not an edge and is never drawn as one. It lives
+ * here, on the client, because it is a decision about a screen — the
+ * exporter ships the number and says nothing about it. */
+const GAP_MIN = 3;
+
+/* ...and the same shape for the Role trend, which sec 5.1 shows at
+ * plus or minus five and hides below. */
+const TREND_MIN = 5;
+
+/* The Usage view's own threshold: a red-zone share of a quarter or
+ * more is drawn positive. It is declared beside the other two even
+ * though NOTHING reaches it today — the exporter publishes no
+ * red-zone share at all — so the rule is written once and is already
+ * right on the day a split is ingested. */
+const RZ_MIN = 0.25;
+
+/* The empty cell, sec 3.1's `disabled` grey. One character, one
+ * constant, so a dash is never a hyphen somewhere else. */
+const DASH = "—";
+const UP = "▲";
+const DOWN = "▼";
+
+/* ------------------------------------------------------------------
+ * the words — sec 5.1's views, headers and footnotes
+ * ------------------------------------------------------------------ */
+
+const VIEWS = [
+  ["props", "Props"], ["fantasy", "Fantasy"], ["role", "Role"],
+  ["usage", "Usage"], ["market", "Market"]
+];
+
+const VIEW_GROUP_LABEL = "Table view";
+
+/* The two column headers per view, away-side order. The home side
+ * mirrors them (sec 5.1: away · v1 · v2 | pos | v2 · v1 · home). */
+const HEADS = {
+  props: ["LINE", "GAP"],
+  fantasy: ["PROJ", "RANGE"],
+  role: ["SHARE", "TREND"],
+  usage: ["OPP/G", "RZ %"],
+  market: ["", ""]
+};
+
+/* THE LEGENDS, one per view, each its own sentinel. Sec 10: numbers
+ * carry units or a legend, and the unit letters are always explained
+ * in the view footnote. */
+const LEGEND_PROPS =
+  "Key prop line with its unit, and the gap against the no-vig market. The arrow and the number appear only when the model beats that market by 3 points or more; anything under that is a dash, because a gap that small is not an edge.";
+const LEGEND_FANTASY =
+  "Half-PPR projected points, the weighted sum of the generation's own stat means.";
+const LEGEND_ROLE =
+  "Share is the chain's own allocation, and each cell says which one: attempts weight for a quarterback, carry share for a back, target share for a receiver. Trend is the change against the prior four games from realized weeks, shown at 5 points or more.";
+const LEGEND_USAGE =
+  "Opportunities per game over the weeks already played: a pass attempts, o carries plus targets, t targets.";
+const LEGEND_MARKET =
+  "Chance of the lean side of the key prop, from the line's open to now. The solid line is our model at each generation, the dashed one is the book with the vig removed at each capture. It turns positive when the gap is 3 points or more.";
+
+const LEGENDS = {
+  props: LEGEND_PROPS, fantasy: LEGEND_FANTASY, role: LEGEND_ROLE,
+  usage: LEGEND_USAGE, market: LEGEND_MARKET
+};
+
+/* THE CALIBRATION BASIS, per market and never blanket
+ * (UI_ALPHA_SPEC sec 1, handoff sec 7.4). One sentence, pinned, under
+ * the Props view — the only view on this screen that draws a
+ * probability against a price. WHICH markets ride the layer is read
+ * off the document's own `run.calibrated_markets` and off each prop's
+ * own `calibration` field; this sentence says what that means. */
+const CALIBRATION_NOTE =
+  "Receptions, receiving yards, rushing attempts and rushing yards ride the adopted calibration layer; every other market here is ungraded, so treat its number as a lean.";
+
+/* The Fantasy view's range column. The exporter publishes no points
+ * range and says why on every record; this is that reason in the
+ * reader's words, under the column it explains. */
+const RANGE_ABSENT =
+  "Range is a dash because points quantiles are not persisted at generation yet: the engine archives a quantile grid per stat, and the quantiles of a sum are not the sum of the quantiles.";
+
+/* ...and the Usage view's, for the same reason in a different place. */
+const RZ_ABSENT =
+  "Red-zone share is a dash because no red-zone split is ingested: it needs a play-by-play cut by field position, and nothing is estimated in its place.";
+
+/* Sec 8: a market with fewer than two points has no shape to draw. */
+const LINE_JUST_POSTED = "Line just posted";
+
+/* Sec 8: no games this week. */
+const NO_GAMES_SWITCHER = "No games this week";
+const NO_GAMES_BODY =
+  "The slate carries no game for this week, so there is no matchup to draw.";
+
+/* THE HONEST OFFLINE ARM. The document either arrived or it did not;
+ * there is no cached yesterday and no fabricated stand-in on a screen
+ * whose whole claim is that its numbers are the engine's. */
+const OFFLINE_HEAD = "The slate hasn't loaded.";
+const OFFLINE_BODY =
+  "This screen reads one file the exporter writes on each deploy. It isn't here right now, so there is nothing true to draw and nothing is being guessed at. The games below are sample data, exactly as the tag says.";
+const OFFLINE_SCHEMA =
+  "The slate file that loaded is a shape this build does not know, so none of it is drawn. That is a deliberate refusal, not a failure to try.";
+
+/* Sec 5.1's expanded row and search overlay. */
+const PROJECTED = "PROJECTED";
+const FANTASY_ROW = "Fantasy";
+const OPEN_PICK = "Open pick";
+const SEARCH_PLACEHOLDER = "Search teams or players";
+const SEARCH_CANCEL = "Cancel";
+const SEARCH_HEADING = "THIS WEEK'S GAMES";
+const SEARCH_HAS = "has ";
+const SEARCH_EMPTY = "No games match";
+
+/* A NAMED DEVIATION from sec 5.1, recorded where it is made: the
+ * search there lists full team names beside the abbreviations, and
+ * slate.json carries abbreviations only. A thirty-two-name table
+ * written into this file would be the app inventing data the engine
+ * never gave it, which is exactly what every other arm here refuses to
+ * do — so the results list matches on the abbreviation and on the
+ * player names the slate does carry, and says so under the input. */
+const SEARCH_BASIS =
+  "Matches on team abbreviation and on any player listed in the table.";
+
+/* The market sparkline, sec 4: 84 x 24, model solid, book dashed, end
+ * dot on the model line. The y-window is the CELL'S OWN range with a
+ * floor on its width, so a line that barely moved is drawn as a line
+ * that barely moved rather than amplified to fill the box. */
+const SPARK_W = 84;
+const SPARK_H = 24;
+const SPARK_PAD = 2;
+const SPARK_MIN_SPAN = 0.10;
 
 /* ------------------------------------------------------------------
  * THE FIXTURES — fabricated, every one of them
@@ -223,7 +387,8 @@ const ICONS = {
   profile: "M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6",
   alerts: "M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20a2 2 0 0 0 4 0",
   search: "M20 20l-4-4",
-  close: "M6 6l12 12M18 6L6 18"
+  close: "M6 6l12 12M18 6L6 18",
+  chevron: "M6 9l6 6 6-6"
 };
 
 /* ------------------------------------------------------------------
@@ -287,7 +452,21 @@ const nav = {
   booted: false,
   sheet: false,
   toast: null,
-  game: 0
+  game: 0,
+  /* the player a pick was opened for. U3 reads it; U2 only sets it. */
+  pick: null,
+
+  /* U2's own state, and it is held for the visit exactly as the rest
+   * of this object is: the slate document once it has arrived (or
+   * null, which is a real and drawn state), the reason it did not,
+   * the chosen view, the ONE open row — sec 5.1: one at a time — and
+   * the search panel with whatever has been typed into it. */
+  slate: null,
+  slateNote: null,
+  view: "props",
+  exp: null,
+  search: false,
+  query: ""
 };
 
 /* ------------------------------------------------------------------
@@ -564,7 +743,9 @@ function heroRings() {
 
 function heroTop() {
   return '<div class="herotop">' +
-    '<div class="sampletag">' + esc(SAMPLE_TAG) + '</div>' +
+    (onFixtures()
+      ? '<div class="sampletag">' + esc(SAMPLE_TAG) + '</div>'
+      : '<div class="sampletag off"></div>') +
     '<div class="wordmark">' + esc(WORDMARK) + '</div>' +
     '<div class="heroicons">' +
     '<button class="iconbtn" data-act="open" data-route="report" ' +
@@ -576,32 +757,6 @@ function heroTop() {
     '<button class="iconbtn" data-act="note" data-note="' + esc(NOTE_ALERTS) +
     '" aria-label="Alerts">' + icon("alerts") + '</button>' +
     '</div></div>';
-}
-
-/* The game switcher's shell (sec 4). The arrows move through the
- * sample week and the table below them re-runs its Swap in the
- * direction of travel, which is the whole point of building the shell
- * before the table: the overlap, the shadow and the motion are real
- * from U1 and only the rows are missing. */
-function gameSwitcher() {
-  const game = SAMPLE_GAMES[nav.game];
-  const dots = SAMPLE_GAMES.map(function (unused, index) {
-    return '<span class="' + (index === nav.game ? "on" : "") + '"></span>';
-  }).join("");
-  return '<div class="switcher">' +
-    '<button class="arrow" data-act="game" data-step="-1" ' +
-    'aria-label="Previous game">' + icon("back", 20, 2.5) + '</button>' +
-    '<button class="matchup" data-act="note" data-note="' +
-    esc(STUB_HOME_TABLE) + '" aria-label="' + esc(game.away + " at " +
-    game.home + ", " + game.when + ". Game search arrives in U2") + '">' +
-    '<span class="teams">' + esc(game.away) +
-    ' <span class="at">@</span> ' + esc(game.home) + '</span>' +
-    '<span class="when">' + esc(game.when) + ' · ' + (nav.game + 1) +
-    ' OF ' + SAMPLE_GAMES.length + '</span></button>' +
-    '<button class="arrow" data-act="game" data-step="1" ' +
-    'aria-label="Next game">' + icon("next", 20, 2.5) + '</button>' +
-    '</div>' +
-    '<div class="dots" aria-hidden="true">' + dots + '</div>';
 }
 
 function skeletonRows(widths) {
@@ -635,17 +790,681 @@ function stubRows(rows, mark, route) {
 }
 
 /* ------------------------------------------------------------------
+ * U2 — reading the slate document
+ * ------------------------------------------------------------------ */
+
+/* ONE fetch in this file, so there is one timeout and one error shape.
+ * `no-store` because the file is rewritten on every deploy and a
+ * cached yesterday is the one thing this screen must never show. */
+async function getJSON(url) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(function () { controller.abort(); },
+    FETCH_TIMEOUT_MS);
+  try {
+    const response = await fetch(url, {
+      signal: controller.signal, cache: "no-store" });
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    return await response.json();
+  } finally {
+    window.clearTimeout(timer);
+  }
+}
+
+async function loadSlate() {
+  try {
+    const loaded = await getJSON(SLATE_URL);
+    /* THE SCHEMA TAG IS READ BEFORE ANY FIELD IS. A document that does
+     * not say which iteration it is could be anything, and reading a
+     * field out of a shape this build does not know is how a page
+     * comes to draw a number that means something else. */
+    if (!loaded || loaded.slate_schema !== SLATE_SCHEMA) {
+      nav.slateNote = OFFLINE_SCHEMA;
+    } else {
+      nav.slate = loaded;
+    }
+  } catch (err) {
+    nav.slateNote = OFFLINE_BODY;
+  }
+  nav.game = 0;
+  nav.exp = null;
+  render();
+}
+
+/* REAL DATA IS REAL. The tag labels fixtures, so it comes off exactly
+ * when a real document is driving the screen — and stays on in demo
+ * mode, where the document is fabricated by design. */
+function onFixtures() {
+  return DEMO || !nav.slate;
+}
+
+function games() {
+  return (nav.slate && nav.slate.games) || [];
+}
+
+function currentGame() {
+  const list = games();
+  if (!list.length) return null;
+  return list[Math.min(nav.game, list.length - 1)] || null;
+}
+
+function playerOf(id) {
+  if (!id || !nav.slate || !nav.slate.players) return null;
+  return nav.slate.players[id] || null;
+}
+
+function calibratedMarkets() {
+  return (nav.slate && nav.slate.run &&
+    nav.slate.run.calibrated_markets) || [];
+}
+
+/* ------------------------------------------------------------------
+ * formatting — stored numbers, printed; never a number derived here
+ * ------------------------------------------------------------------ */
+
+/* A projected quantity at the precision it can carry. Big counts read
+ * whole, small ones to a decimal, rates to two — one rule, so the same
+ * number never reads two ways in two columns. */
+function num(value) {
+  if (value === null || value === undefined) return DASH;
+  const size = Math.abs(value);
+  if (size >= 100) return String(Math.round(value));
+  if (size >= 10) return value.toFixed(1);
+  if (size >= 1) return value.toFixed(1);
+  return value.toFixed(2);
+}
+
+function pct(value) {
+  if (value === null || value === undefined) return DASH;
+  return Math.round(value * 100) + "%";
+}
+
+function signed(points) {
+  const up = points >= 0;
+  return (up ? UP : DOWN) + Math.abs(points);
+}
+
+/* ------------------------------------------------------------------
+ * THE STATLINE — ONE renderer, and the only one
+ * ------------------------------------------------------------------
+ * UI_ALPHA_SPEC sec 1's standing requirement: projection value · stat
+ * label · threshold, rendered IDENTICALLY wherever a statline appears.
+ * The home expanded row is its first consumer; the pick card (U3), the
+ * live card (U4) and the projections merge (U7) are the next three,
+ * and each of them calls THIS FUNCTION rather than laying out its own
+ * rows, which is the whole reason it takes a plain list of entries and
+ * knows nothing about where it is drawn.
+ *
+ * An entry is `{label, value, reason, threshold}`. A null value draws
+ * the sec 8 dash and carries its reason as the cell's own title, so an
+ * absence is explained where it is seen and never just blank. The
+ * threshold slot is optional — the home table has none, the pick card
+ * and the live card do — and a banked value (U4) arrives as a second
+ * entry list beside the projected one, not as a second renderer. */
+function statline(entries) {
+  return '<div class="statline">' + (entries || []).map(function (entry) {
+    const absent = entry.value === null || entry.value === undefined;
+    return '<div class="statrow">' +
+      '<span class="statlabel">' + esc(entry.label) + '</span>' +
+      (entry.threshold
+        ? '<span class="statthreshold">' + esc(entry.threshold) +
+          '</span>'
+        : "") +
+      '<span class="statvalue' + (absent ? " absent" : "") + '"' +
+      (absent && entry.reason
+        ? ' title="' + esc(entry.reason) + '"'
+        : "") + '>' +
+      (absent ? DASH : esc(num(entry.value))) + '</span></div>';
+  }).join("") + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * THE MARKET SPARKLINE — sec 4, 84 x 24
+ * ------------------------------------------------------------------ */
+
+/* The y-window is the CELL'S OWN range, widened to a floor so a line
+ * that barely moved is drawn as a line that barely moved. Both series
+ * share the window, or the two would not be comparable — which is the
+ * only thing this chart is for. */
+function sparkWindow(series) {
+  const values = [];
+  (series || []).forEach(function (point) {
+    if (point.model_p !== null && point.model_p !== undefined) {
+      values.push(point.model_p);
+    }
+    if (point.book_p !== null && point.book_p !== undefined) {
+      values.push(point.book_p);
+    }
+  });
+  if (!values.length) return null;
+  let lo = Math.min.apply(null, values);
+  let hi = Math.max.apply(null, values);
+  const span = hi - lo;
+  if (span < SPARK_MIN_SPAN) {
+    const grow = (SPARK_MIN_SPAN - span) / 2;
+    lo -= grow;
+    hi += grow;
+  }
+  return { lo: lo, hi: hi };
+}
+
+function sparkY(value, box) {
+  const scale = (value - box.lo) / (box.hi - box.lo);
+  const usable = SPARK_H - SPARK_PAD * 2;
+  return SPARK_PAD + (1 - Math.max(0, Math.min(1, scale))) * usable;
+}
+
+/* One path through the points that HAVE the reading asked for. The
+ * series is honest about its sparsity — a stamp may carry a model
+ * reading and no book price — so nothing is interpolated across a gap
+ * and nothing is carried forward; the path simply joins the points
+ * that exist, at their own places on the x-axis. */
+function sparkPath(series, key) {
+  const box = sparkWindow(series);
+  if (!box) return "";
+  const last = Math.max(1, series.length - 1);
+  const parts = [];
+  series.forEach(function (point, index) {
+    const value = point[key];
+    if (value === null || value === undefined) return;
+    const x = SPARK_PAD + (index / last) * (SPARK_W - SPARK_PAD * 2);
+    parts.push((parts.length ? "L" : "M") + x.toFixed(1) + " " +
+      sparkY(value, box).toFixed(1));
+  });
+  return parts.join(" ");
+}
+
+function lastOf(series, key) {
+  let held = null;
+  (series || []).forEach(function (point) {
+    if (point[key] !== null && point[key] !== undefined) {
+      held = point;
+    }
+  });
+  return held;
+}
+
+function marketCell(person, big) {
+  const series = (person && person.market_series) || [];
+  if (series.length < 2) {
+    return '<span class="justposted">' + esc(LINE_JUST_POSTED) +
+      '</span>';
+  }
+  const box = sparkWindow(series);
+  const model = lastOf(series, "model_p");
+  const book = lastOf(series, "book_p");
+  const stroke = big ? "var(--positive)" : "var(--ink)";
+  const dot = model
+    ? '<circle cx="' + (SPARK_W - SPARK_PAD) + '" cy="' +
+      sparkY(model.model_p, box).toFixed(1) +
+      '" r="2.5" fill="' + stroke + '"></circle>'
+    : "";
+  return '<span class="spark">' +
+    '<svg width="' + SPARK_W + '" height="' + SPARK_H + '" viewBox="0 0 ' +
+    SPARK_W + ' ' + SPARK_H + '" role="img" aria-label="' +
+    esc("Model " + pct(model && model.model_p) + " against book " +
+      pct(book && book.book_p)) + '">' +
+    '<path d="' + esc(sparkPath(series, "book_p")) +
+    '" fill="none" stroke="var(--subtle)" stroke-width="1.4" ' +
+    'stroke-dasharray="3 2"></path>' +
+    '<path d="' + esc(sparkPath(series, "model_p")) +
+    '" fill="none" stroke="' + stroke +
+    '" stroke-width="1.8" stroke-linejoin="round"></path>' + dot +
+    '</svg>' +
+    '<span class="sparknums"><b>' + esc(pct(model && model.model_p)) +
+    '</b> vs ' + esc(pct(book && book.book_p)) + '</span></span>';
+}
+
+/* ------------------------------------------------------------------
+ * THE FIVE VIEWS — one cell's two values, per sec 5.1's table
+ * ------------------------------------------------------------------ */
+
+/* `{v1, v2, tone, big}`. `tone` colours v2 and `big` tints the whole
+ * cell; both are decided HERE, because both are display rules. A
+ * quantity the exporter left null comes back as a dash with its own
+ * reason on it, never as a zero. */
+function cellValues(person) {
+  const empty = { v1: DASH, v2: DASH, tone: "absent", big: false };
+  if (!person) return empty;
+
+  if (nav.view === "props") {
+    const prop = person.key_prop;
+    if (!prop) return empty;
+    const line = num(prop.line) + prop.unit;
+    /* SEC 7.3, AND THIS IS THE WHOLE OF IT. At GAP_MIN and above the
+     * gap is an edge and is drawn as one; below it the cell is a grey
+     * dash, never a small number a reader could take for one. */
+    const big = prop.gap_pts >= GAP_MIN;
+    return { v1: line, v2: big ? signed(prop.gap_pts) : DASH,
+      tone: big ? "positive" : "absent", big: big };
+  }
+
+  if (nav.view === "fantasy") {
+    const points = person.fantasy && person.fantasy.proj;
+    return { v1: num(points), v2: DASH, tone: "absent", big: false };
+  }
+
+  if (nav.view === "role") {
+    const role = person.role || {};
+    const trend = role.trend_pts_vs_prior4;
+    const shown = trend !== null && trend !== undefined &&
+      Math.abs(trend) >= TREND_MIN;
+    return { v1: pct(role.share),
+      v2: shown ? signed(trend) : DASH,
+      tone: shown ? (trend > 0 ? "positive" : "negative") : "absent",
+      big: false };
+  }
+
+  if (nav.view === "usage") {
+    const usage = person.usage || {};
+    const opp = usage.opp_per_game;
+    const share = usage.rz_share;
+    const hot = share !== null && share !== undefined &&
+      share >= RZ_MIN;
+    return {
+      v1: opp === null || opp === undefined
+        ? DASH : num(opp) + usage.opp_unit,
+      v2: share === null || share === undefined ? DASH : pct(share),
+      tone: hot ? "positive" : "absent", big: false };
+  }
+
+  /* market: the cell IS the sparkline, so it has no v1 or v2 — but it
+   * still carries the tint, because the gap is the same gap. */
+  const prop = person.key_prop;
+  return { v1: "", v2: "",
+    tone: "absent",
+    big: !!(prop && prop.gap_pts >= GAP_MIN) };
+}
+
+function cellLabel(person, team, slot) {
+  if (!person) return team + " " + slot + ", no player listed";
+  const values = cellValues(person);
+  if (nav.view === "market") {
+    const model = lastOf(person.market_series, "model_p");
+    const book = lastOf(person.market_series, "book_p");
+    return person.name + ", " + person.team + " " + person.pos +
+      ", model " + pct(model && model.model_p) + " against book " +
+      pct(book && book.book_p);
+  }
+  return person.name + ", " + person.team + " " + person.pos + ", " +
+    HEADS[nav.view][0] + " " + values.v1 + ", " +
+    HEADS[nav.view][1] + " " + values.v2;
+}
+
+/* The two inner layouts, mirrored. The away side reads name, v1, v2
+ * outward from the centre; the home side reads v2, v1, name inward —
+ * which is what sec 5.1 means by a mirrored table and is why the two
+ * are written as one function with a side. */
+function cellBody(person, side) {
+  const values = cellValues(person);
+  if (nav.view === "market") {
+    const spark = marketCell(person, values.big);
+    const name = '<span class="cellname">' +
+      esc(person ? person.name : DASH) + '</span>';
+    return side === "away" ? name + spark : spark + name;
+  }
+  const name = '<span class="cellname">' +
+    esc(person ? person.name : DASH) + '</span>';
+  const one = '<span class="cellv1">' + esc(values.v1) + '</span>';
+  const two = '<span class="cellv2 ' + values.tone + '">' +
+    esc(values.v2) + '</span>';
+  return side === "away" ? name + one + two : two + one + name;
+}
+
+function playerCell(id, side, team, slot) {
+  const person = playerOf(id);
+  const values = cellValues(person);
+  const classes = ["cellbtn", side, nav.view];
+  if (values.big) classes.push("tinted");
+  if (!person) classes.push("empty");
+  /* The cell is a button whether or not it has a player in it, so the
+   * seven rows keep their shape and the grid never reflows between
+   * views. An empty one is disabled rather than silently inert. */
+  return '<button class="' + classes.join(" ") +
+    '" data-act="player" data-player="' + esc(id || "") + '"' +
+    (person ? "" : " disabled") + ' aria-label="' +
+    esc(cellLabel(person, team, slot)) + '">' +
+    cellBody(person, side) + '</button>';
+}
+
+/* ------------------------------------------------------------------
+ * THE EXPANDED ROW — sec 5.1, two cards on a ground panel
+ * ------------------------------------------------------------------ */
+
+function expandedCard(id) {
+  const person = playerOf(id);
+  if (!person) {
+    return '<div class="expcard empty">' + esc(DASH) + '</div>';
+  }
+  const points = person.fantasy && person.fantasy.proj;
+  return '<div class="expcard">' +
+    '<div class="exphead"><span class="expname">' +
+    esc(person.name) + '</span><span class="expteam">' +
+    esc(person.team + " " + person.pos) + '</span></div>' +
+    '<div class="overline" title="' +
+    esc(person.projected_line_template) + '">' + esc(PROJECTED) +
+    '</div>' +
+    statline(person.projected_line) +
+    '<div class="statrow exppoints"><span class="statlabel">' +
+    esc(FANTASY_ROW) + '</span><span class="statvalue">' +
+    esc(num(points)) + '</span></div>' +
+    '<button class="openpick" data-act="player" data-player="' +
+    esc(id) + '">' + esc(OPEN_PICK) + '</button></div>';
+}
+
+function expandedRow(game, index) {
+  return '<div class="exprow' + growClass() + '">' +
+    expandedCard(game.players.away[index]) +
+    expandedCard(game.players.home[index]) + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * THE TABLE — seven mirrored rows, sec 5.1
+ * ------------------------------------------------------------------ */
+
+function tableHead(game) {
+  const heads = HEADS[nav.view];
+  return '<div class="thead">' +
+    '<div class="tside away"><span class="tteam">' + esc(game.away) +
+    '</span><span class="th1">' + esc(heads[0]) +
+    '</span><span class="th2">' + esc(heads[1]) + '</span></div>' +
+    '<div class="tpos">POS</div>' +
+    '<div class="tside home"><span class="th2">' + esc(heads[1]) +
+    '</span><span class="th1">' + esc(heads[0]) +
+    '</span><span class="tteam">' + esc(game.home) + '</span></div>' +
+    '</div>';
+}
+
+function tableRows(game) {
+  const slots = game.slots || [];
+  return slots.map(function (slot, index) {
+    const open = nav.exp === index;
+    return '<div class="trow' + (open ? " open" : "") +
+      (index % 2 ? " alt" : "") + '">' +
+      playerCell(game.players.away[index], "away", game.away, slot) +
+      '<button class="posbtn' + (open ? " open" : "") +
+      '" data-act="row" data-row="' + index +
+      '" aria-expanded="' + open + '" aria-label="' +
+      esc((open ? "Hide" : "Show") + " projected stats for the " +
+        slot + " row") + '">' +
+      '<span class="posname">' + esc(slot) + '</span>' +
+      icon("chevron", 12, 2.5) + '</button>' +
+      playerCell(game.players.home[index], "home", game.home, slot) +
+      '</div>' + (open ? expandedRow(game, index) : "");
+  }).join("");
+}
+
+/* THE PROPS UNIT KEY, built from the cells actually on screen. Sec 10
+ * asks that every unit letter be explained in the view footnote, and
+ * a fixed sentence would sooner or later name a letter no cell
+ * carries — or miss one that a new key market brought in. */
+function unitKey(game) {
+  const seen = {};
+  ["away", "home"].forEach(function (side) {
+    (game.players[side] || []).forEach(function (id) {
+      const person = playerOf(id);
+      if (person && person.key_prop) {
+        seen[person.key_prop.unit] = person.key_prop.unit_word;
+      }
+    });
+  });
+  const keys = Object.keys(seen).sort();
+  if (!keys.length) return "";
+  return " Units: " + keys.map(function (unit) {
+    return unit + " " + seen[unit];
+  }).join(", ") + ".";
+}
+
+/* WHETHER THE CALIBRATION SENTENCE APPLIES is read off the document,
+ * not assumed: it is shown when a prop on this screen belongs to one
+ * of the markets the run block names, or when one does not — which is
+ * both arms, and is exactly why the sentence names both. */
+function propsFootnote(game) {
+  return LEGEND_PROPS + unitKey(game) + " " + CALIBRATION_NOTE;
+}
+
+function legendFor(game) {
+  if (nav.view === "props") return propsFootnote(game);
+  if (nav.view === "fantasy") {
+    return LEGEND_FANTASY + " " + RANGE_ABSENT;
+  }
+  if (nav.view === "usage") return LEGEND_USAGE + " " + RZ_ABSENT;
+  return LEGENDS[nav.view];
+}
+
+function footnotes(game) {
+  const lines = [legendFor(game)].concat(game.notes || []);
+  return lines.map(function (line) {
+    return '<div class="legend">' + esc(line) + '</div>';
+  }).join("");
+}
+
+function viewToggle() {
+  return '<div class="viewseg" role="group" aria-label="' +
+    esc(VIEW_GROUP_LABEL) + '">' + VIEWS.map(function (view) {
+      return '<button data-act="view" data-view="' + esc(view[0]) +
+        '" aria-pressed="' + (nav.view === view[0]) + '">' +
+        esc(view[1]) + '</button>';
+    }).join("") + '</div>';
+}
+
+/* Sec 4's game line strip: three cells on a ground panel. Each one is
+ * a stored number or a dash — the exporter ships the line the forecast
+ * CONSUMED, and where it had none the strip says so rather than
+ * falling back to a different number that would look the same. */
+function lineStrip(game) {
+  const cells = [
+    [game.away + " TOTAL", num(game.implied_total_away)],
+    ["SPREAD", game.spread_label || DASH],
+    [game.home + " TOTAL", num(game.implied_total_home)]
+  ];
+  return '<div class="linestrip" title="' + esc(game.line_basis) + '">' +
+    cells.map(function (cell) {
+      return '<div class="linecell"><span class="linelabel">' +
+        esc(cell[0]) + '</span><span class="linevalue">' +
+        esc(cell[1]) + '</span></div>';
+    }).join("") + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * THE GAME SWITCHER — sec 4
+ * ------------------------------------------------------------------ */
+
+function kickoffLabel(stamp) {
+  if (!stamp) return "";
+  const when = new Date(stamp);
+  if (isNaN(when.getTime())) return "";
+  const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  let hour = when.getHours();
+  hour = hour % 12 || 12;
+  const minutes = String(when.getMinutes()).padStart(2, "0");
+  return days[when.getDay()] + " " + hour + ":" + minutes;
+}
+
+function switcher(game, count) {
+  const dots = games().map(function (unused, index) {
+    return '<span class="' + (index === nav.game ? "on" : "") +
+      '"></span>';
+  }).join("");
+  const when = kickoffLabel(game.kickoff);
+  return '<div class="switcher">' +
+    '<button class="arrow" data-act="game" data-step="-1" ' +
+    'aria-label="Previous game">' + icon("back", 20, 2.5) + '</button>' +
+    '<button class="matchup" data-act="search-open" aria-label="' +
+    esc(game.away + " at " + game.home + (when ? ", " + when : "") +
+      ". Search games") + '">' +
+    '<span class="teams">' + esc(game.away) +
+    ' <span class="at">@</span> ' + esc(game.home) +
+    icon("search", 15, 2.5) + '</span>' +
+    '<span class="when">' + esc(when ? when + " · " : "") +
+    (nav.game + 1) + ' OF ' + count + '</span></button>' +
+    '<button class="arrow" data-act="game" data-step="1" ' +
+    'aria-label="Next game">' + icon("next", 20, 2.5) + '</button>' +
+    '</div>' +
+    '<div class="dots" aria-hidden="true">' + dots + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * THE MATCHUP CARD — the only table on Home
+ * ------------------------------------------------------------------ */
+
+function matchBody(game) {
+  return lineStrip(game) + viewToggle() +
+    '<div class="table" id="matchtable">' + tableHead(game) +
+    tableRows(game) + '</div>' + footnotes(game);
+}
+
+function matchCard() {
+  const game = currentGame();
+  if (!game) {
+    /* Sec 8: no games this week. The switcher says so and the table is
+     * replaced by an empty state — not by a skeleton, which would
+     * promise something that is coming. */
+    return '<div class="matchcard" id="matchcard">' +
+      '<div class="switcher"><div class="matchupflat">' +
+      esc(NO_GAMES_SWITCHER) + '</div></div>' +
+      '<div class="legend">' + esc(NO_GAMES_BODY) + '</div></div>';
+  }
+  return '<div class="matchcard" id="matchcard">' +
+    switcher(game, games().length) + matchBody(game) + '</div>';
+}
+
+/* THE OFFLINE ARM. The shell's own stub, with the honest note: the
+ * sample games below it are labelled by the Sample-data tag in the
+ * hero, which stays on for exactly as long as they are what is on
+ * screen. */
+function matchStub() {
+  const game = SAMPLE_GAMES[nav.game % SAMPLE_GAMES.length];
+  const dots = SAMPLE_GAMES.map(function (unused, index) {
+    return '<span class="' +
+      (index === nav.game % SAMPLE_GAMES.length ? "on" : "") +
+      '"></span>';
+  }).join("");
+  return '<div class="matchcard" id="matchcard">' +
+    '<div class="switcher">' +
+    '<button class="arrow" data-act="game" data-step="-1" ' +
+    'aria-label="Previous game">' + icon("back", 20, 2.5) + '</button>' +
+    '<div class="matchupflat"><span class="teams">' + esc(game.away) +
+    ' <span class="at">@</span> ' + esc(game.home) + '</span>' +
+    '<span class="when">' + esc(game.when) + '</span></div>' +
+    '<button class="arrow" data-act="game" data-step="1" ' +
+    'aria-label="Next game">' + icon("next", 20, 2.5) + '</button>' +
+    '</div><div class="dots" aria-hidden="true">' + dots + '</div>' +
+    '<div class="tablestub" id="tablestub">' +
+    '<div class="skeleton" aria-hidden="true">' +
+    skeletonRows(SKELETON_WIDTHS) + '</div></div>' +
+    '<div class="cardhead offhead">' + esc(OFFLINE_HEAD) + '</div>' +
+    '<div class="legend">' + esc(nav.slateNote || OFFLINE_BODY) +
+    '</div></div>';
+}
+
+/* ------------------------------------------------------------------
+ * THE GAME SEARCH OVERLAY — sec 5.1
+ * ------------------------------------------------------------------ */
+
+function playersIn(game) {
+  const out = [];
+  ["away", "home"].forEach(function (side) {
+    (game.players[side] || []).forEach(function (id) {
+      const person = playerOf(id);
+      if (person) out.push(person);
+    });
+  });
+  return out;
+}
+
+function gapsIn(game) {
+  return playersIn(game).filter(function (person) {
+    return person.key_prop && person.key_prop.gap_pts >= GAP_MIN;
+  }).length;
+}
+
+/* THE FILTER. Team abbreviation and player name, case-insensitively,
+ * and the first matching player becomes the "has ..." hint — which is
+ * the whole reason a player search on a GAME list makes sense. */
+function searchResults() {
+  const query = String(nav.query || "").trim().toLowerCase();
+  const out = [];
+  games().forEach(function (game, index) {
+    const people = playersIn(game);
+    const hay = [game.away, game.home].concat(
+      people.map(function (person) { return person.name; }))
+      .join(" ").toLowerCase();
+    if (query && hay.indexOf(query) < 0) return;
+    let hit = null;
+    if (query) {
+      people.some(function (person) {
+        if (person.name.toLowerCase().indexOf(query) >= 0) {
+          hit = person.name;
+          return true;
+        }
+        return false;
+      });
+    }
+    out.push({ index: index, game: game, hit: hit,
+      gaps: gapsIn(game) });
+  });
+  return out;
+}
+
+function renderSearch() {
+  const node = el("searchoverlay");
+  if (!node) return;
+  if (!nav.search) {
+    node.hidden = true;
+    node.innerHTML = "";
+    return;
+  }
+  const results = searchResults();
+  const when = function (game) {
+    const label = kickoffLabel(game.kickoff);
+    return label ? label : "";
+  };
+  const rows = results.map(function (result) {
+    const bits = [result.game.away + " at " + result.game.home];
+    const time = when(result.game);
+    if (time) bits.push(time);
+    if (result.hit) bits.push(SEARCH_HAS + result.hit);
+    return '<button class="gameresult' +
+      (result.index === nav.game ? " current" : "") +
+      '" data-act="pick-game" data-game="' + result.index +
+      '" aria-label="' + esc(bits.join(", ")) + '">' +
+      '<span class="gamecol"><span class="gamename">' +
+      esc(result.game.away + " @ " + result.game.home) +
+      '</span><span class="gamesub">' + esc(bits.slice(1).join(" · ")) +
+      '</span></span>' +
+      (result.gaps
+        ? '<span class="gapchip">' + result.gaps +
+          (result.gaps === 1 ? " gap" : " gaps") + '</span>'
+        : "") + '</button>';
+  }).join("");
+  node.innerHTML = '<button class="scrim" data-act="search-close" ' +
+    'aria-label="Close search"></button>' +
+    '<div class="searchpanel motion-drop" role="dialog" ' +
+    'aria-modal="true" aria-label="Search games">' +
+    '<div class="searchbar">' + icon("search", 18, 2.5) +
+    '<input class="searchinput" id="gamesearch" type="text" ' +
+    'autocomplete="off" placeholder="' + esc(SEARCH_PLACEHOLDER) +
+    '" aria-label="Search games" value="' + esc(nav.query) + '">' +
+    '<button class="searchcancel" data-act="search-close">' +
+    esc(SEARCH_CANCEL) + '</button></div>' +
+    '<div class="searchbasis">' + esc(SEARCH_BASIS) + '</div>' +
+    '<div class="overline">' + esc(SEARCH_HEADING) + '</div>' +
+    rows +
+    (results.length ? "" :
+      '<div class="legend">' + esc(SEARCH_EMPTY + ' "' + nav.query +
+        '".') + '</div>') +
+    '</div>';
+  node.hidden = false;
+}
+
+/* ------------------------------------------------------------------
  * the screens
  * ------------------------------------------------------------------ */
 
 function renderHome() {
   return '<div class="hero">' + heroArt() + heroTop() + heroRings() +
     '<div class="herofade"></div></div>' +
-    '<div class="matchcard" id="matchcard">' + gameSwitcher() +
-    '<div class="tablestub" id="tablestub">' +
-    '<div class="skeleton" aria-hidden="true">' +
-    skeletonRows(SKELETON_WIDTHS) + '</div></div>' +
-    '<div class="legend">' + esc(STUB_HOME_TABLE) + '</div></div>';
+    (nav.slate ? matchCard() : matchStub());
 }
 
 function lineupSkeleton() {
@@ -892,23 +1711,65 @@ function render() {
   renderAlpha();
   renderToast();
   renderSheet();
+  renderSearch();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
  * direction of travel and nothing else on the screen moves, so this
- * does not go through `render()`'s screen transition. */
-function stepGame(step) {
-  const count = SAMPLE_GAMES.length;
-  nav.game = (nav.game + step + count) % count;
+ * does not go through `render()`'s screen transition. Sec 2.5 asks
+ * that the animation RESTART on every change, which `restart` does.
+ *
+ * CHANGING GAME COLLAPSES THE OPEN ROW (sec 5.1). A row is a pair of
+ * players in one game; carrying it across would leave the panel open
+ * on two different men. */
+function redrawCard(step) {
   const card = el("matchcard");
   if (!card) return;
-  card.innerHTML = gameSwitcher() +
-    '<div class="tablestub" id="tablestub">' +
-    '<div class="skeleton" aria-hidden="true">' +
-    skeletonRows(SKELETON_WIDTHS) + '</div></div>' +
-    '<div class="legend">' + esc(STUB_HOME_TABLE) + '</div>';
-  restart(el("tablestub"),
-    step > 0 ? "motion-swap-next" : "motion-swap-prev");
+  const game = currentGame();
+  if (nav.slate && game) {
+    card.innerHTML = switcher(game, games().length) + matchBody(game);
+    /* ONLY A GAME CHANGE SWAPS. A view change and a row toggle redraw
+     * the same game's table, and sliding it sideways would say a
+     * different game had arrived. */
+    if (step) {
+      restart(el("matchtable"),
+        step > 0 ? "motion-swap-next" : "motion-swap-prev");
+    }
+    return;
+  }
+  render();
+}
+
+function stepGame(step) {
+  const count = nav.slate ? games().length : SAMPLE_GAMES.length;
+  if (!count) return;
+  nav.game = (nav.game + step + count) % count;
+  nav.exp = null;
+  redrawCard(step);
+}
+
+function pickGame(index) {
+  const count = games().length;
+  if (!count) return;
+  const step = index >= nav.game ? 1 : -1;
+  nav.game = Math.max(0, Math.min(index, count - 1));
+  nav.exp = null;
+  nav.search = false;
+  nav.query = "";
+  renderSearch();
+  redrawCard(step);
+}
+
+/* Sec 5.1: ONE row open at a time. Tapping the open one closes it. */
+function toggleRow(index) {
+  nav.exp = nav.exp === index ? null : index;
+  redrawCard(0);
+}
+
+function setView(view) {
+  if (!HEADS[view] || nav.view === view) return;
+  nav.view = view;
+  redrawCard(0);
 }
 
 /* ------------------------------------------------------------------
@@ -933,6 +1794,21 @@ function onClick(event) {
     swapSub(target.getAttribute("data-tab"), target.getAttribute("data-sub"));
   } else if (act === "game") {
     stepGame(Number(target.getAttribute("data-step")) || 1);
+  } else if (act === "view") {
+    setView(target.getAttribute("data-view"));
+  } else if (act === "row") {
+    toggleRow(Number(target.getAttribute("data-row")));
+  } else if (act === "player") {
+    /* Sec 2.1: a player cell opens that player's pick. U3 fills the
+     * card; the id travels on the address so the day it does, this
+     * handler does not change. */
+    openPick(target.getAttribute("data-player"));
+  } else if (act === "search-open") {
+    openSearch();
+  } else if (act === "search-close") {
+    closeSearch();
+  } else if (act === "pick-game") {
+    pickGame(Number(target.getAttribute("data-game")) || 0);
   } else if (act === "note") {
     showToast(target.getAttribute("data-note"));
   } else if (act === "sheet-open") {
@@ -965,8 +1841,65 @@ function onClick(event) {
   }
 }
 
+/* Sec 5.1's search panel. Opening it clears nothing and closing it
+ * clears the query, so re-opening is a fresh search rather than a
+ * half-remembered one. */
+function openSearch() {
+  if (!nav.slate || !games().length) return;
+  nav.search = true;
+  nav.toast = null;
+  renderToast();
+  renderSearch();
+  const input = el("gamesearch");
+  if (input && input.focus) input.focus();
+}
+
+function closeSearch() {
+  if (!nav.search) return;
+  nav.search = false;
+  nav.query = "";
+  renderSearch();
+}
+
+/* THE PICK STUB ROUTE. U3 fills the card; until then the route exists
+ * and the player it was opened for rides the address, so nothing
+ * about this call changes on the day it does. */
+function openPick(playerId) {
+  if (playerId) nav.pick = playerId;
+  closeSearch();
+  openDetail("pick");
+}
+
+/* The search input is the one control in this app that is not a
+ * button, so it is the one thing wired by its own listener rather
+ * than by `data-act`. Re-rendering the panel on each keystroke would
+ * take the caret with it, so only the RESULTS are redrawn. */
+function onInput(event) {
+  const target = event.target;
+  if (!target || target.id !== "gamesearch") return;
+  nav.query = target.value;
+  const panel = el("searchoverlay");
+  if (!panel) return;
+  const held = target.selectionStart;
+  renderSearch();
+  const again = el("gamesearch");
+  if (again) {
+    again.focus();
+    try {
+      again.setSelectionRange(held, held);
+    } catch (err) {
+      /* a browser that will not place the caret still has the text */
+    }
+  }
+}
+
 function onKeyDown(event) {
-  if (event.key === "Escape" && nav.sheet) closeSheet();
+  if (event.key !== "Escape") return;
+  if (nav.search) {
+    closeSearch();
+    return;
+  }
+  if (nav.sheet) closeSheet();
 }
 
 function onHashChange() {
@@ -980,6 +1913,7 @@ function onHashChange() {
  * ------------------------------------------------------------------ */
 
 document.addEventListener("click", onClick);
+document.addEventListener("input", onInput);
 document.addEventListener("keydown", onKeyDown);
 window.addEventListener("hashchange", onHashChange);
 
@@ -1000,3 +1934,10 @@ render();
  * booting and still at rest. Every transition from this line on
  * belongs to something the reader did. */
 nav.booted = true;
+
+/* ...and only then is the document asked for. The first paint is the
+ * shell at rest (U1's rule, unchanged); the slate arrives after it and
+ * redraws the home screen when it does, so a slow network shows the
+ * app rather than a blank page, and a network that never answers shows
+ * the honest arm rather than a spinner that means nothing. */
+loadSlate();

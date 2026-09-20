@@ -56,7 +56,7 @@
 
   <div class="viewport" id="viewport">
     <main class="screen" id="screen" tabindex="-1"></main>
-    <footer class="alpha" id="alpha" data-sample-tag="Sample data">ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098). Sample data drives this build.</footer>
+    <footer class="alpha" id="alpha" data-sample-tag="Sample data">ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098).</footer>
   </div>
 
   <!-- The tab bar is chrome, not a screen: it is rendered once per
@@ -68,6 +68,12 @@
        for them. -->
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   <div class="overlay" id="overlay" hidden></div>
+
+  <!-- U2's sec 5.1 game search: its OWN overlay, not the + sheet's.
+       Two panels that can never be open at once are still two panels,
+       and sharing one node would make closing either of them a guess
+       about which was up. -->
+  <div class="overlay" id="searchoverlay" hidden></div>
 
 </div>
 

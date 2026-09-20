@@ -443,6 +443,242 @@ body{
 .legend{font-size:var(--type-meta);color:var(--muted);line-height:1.45;padding:8px 12px 0}
 
 /* --------------------------------------------------------------------
+   U2 — THE HOME MATCHUP TABLE (sec 5.1)
+
+   The mirrored seven rows, the five views, the expanded rows and the
+   game search. Every colour below is one of the sec 3.1 tokens; the
+   two meaning colours that appear — positive for a gap the model wins
+   by three or more and for a trend up, negative for a trend down —
+   are used ONLY where colour means something, and each is accompanied
+   by an arrow, so sec 9's "colour is never the only signal" holds.
+   -------------------------------------------------------------------- */
+
+/* the flat switcher head the offline and empty arms use: the same
+   shape as the button, without the affordance, because there is
+   nothing behind it to open */
+.switcher .matchupflat{
+  flex-grow:1;
+  min-height:52px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  font-size:var(--type-section);
+  font-weight:var(--w-semibold);
+}
+.switcher .matchupflat .teams{font-size:var(--type-section);font-weight:var(--w-semibold);line-height:1.1}
+.switcher .matchupflat .at{color:var(--subtle)}
+.switcher .matchupflat .when{
+  font-size:var(--type-overline);font-weight:var(--w-semibold);
+  letter-spacing:0.1em;color:var(--muted);
+}
+.switcher .matchup .teams svg{vertical-align:-2px;margin-left:6px;color:var(--muted)}
+
+/* the sample tag's own empty twin, so removing the tag does not move
+   the wordmark off centre */
+.sampletag.off{visibility:hidden}
+
+.offhead{padding:10px 12px 0;font-size:var(--type-card);font-weight:var(--w-semibold)}
+
+/* sec 4 GAME LINE STRIP: three cells on a ground panel */
+.linestrip{
+  display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));
+  margin:8px 10px 0;
+  background:var(--ground);
+  border-radius:var(--r-panel);
+  padding:6px 0;
+  text-align:center;
+}
+.linecell{display:flex;flex-direction:column;gap:1px}
+.linecell + .linecell{border-left:1px solid var(--rule-2)}
+.linelabel{font-size:10px;color:var(--muted);letter-spacing:0.06em}
+.linevalue{font-size:14px;font-weight:var(--w-semibold)}
+
+/* sec 4 SEGMENTED CONTROL, the table's own: five views that scroll
+   horizontally on a narrow phone rather than wrapping */
+.viewseg{
+  display:flex;gap:3px;margin:8px 10px 0;
+  background:var(--rule);border-radius:22px;padding:3px;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.viewseg::-webkit-scrollbar{display:none}
+.viewseg button{
+  flex:1 0 auto;
+  min-width:62px;min-height:44px;
+  border:none;border-radius:20px;
+  font-family:inherit;font-size:var(--type-cell);
+  font-weight:var(--w-medium);
+  background:transparent;color:var(--text-2);
+  cursor:pointer;
+}
+.viewseg button[aria-pressed="true"]{
+  background:var(--surface);color:var(--ink);
+  font-weight:var(--w-semibold);
+  box-shadow:0 1px 3px rgba(28,31,35,0.08);
+}
+
+/* THE TABLE. One grid, three columns: away cell, the position toggle,
+   home cell. The centre column is 44px and not the prototype's 34
+   because sec 4's last line and sec 9's second are a rule and the
+   prototype is a drawing. */
+.table{margin:8px 6px 0}
+
+.thead{
+  display:grid;grid-template-columns:minmax(0, 1fr) 44px minmax(0, 1fr);
+  align-items:end;padding:0 2px 4px;
+  border-bottom:1.5px solid var(--ink);
+}
+.tside{
+  display:grid;gap:2px;
+  font-size:10px;font-weight:var(--w-semibold);
+  letter-spacing:0.04em;color:var(--muted);
+}
+.tside.away{grid-template-columns:minmax(0, 1fr) 40px 38px}
+.tside.home{grid-template-columns:38px 40px minmax(0, 1fr)}
+.tside.away .tteam{padding-left:4px}
+.tside.home .tteam{padding-right:4px;text-align:right}
+.tteam{color:var(--ink);font-size:var(--type-cell)}
+.tside.away .th1,.tside.away .th2{text-align:right}
+.tpos{font-size:10px;font-weight:var(--w-semibold);color:var(--muted);text-align:center}
+
+.trow{
+  display:grid;grid-template-columns:minmax(0, 1fr) 44px minmax(0, 1fr);
+  align-items:center;padding:0 2px;
+  border-bottom:1px solid var(--rule);
+  background:var(--surface);
+}
+.trow.alt{background:var(--row-alt)}
+.trow.open{background:var(--ground)}
+
+.cellbtn{
+  min-height:46px;min-width:44px;
+  border:none;background:transparent;
+  border-radius:6px;
+  cursor:pointer;font-family:inherit;color:var(--ink);
+  padding:0;text-align:left;
+  display:grid;gap:2px;align-items:center;
+}
+.cellbtn.away{grid-template-columns:minmax(0, 1fr) 40px 38px}
+.cellbtn.home{grid-template-columns:38px 40px minmax(0, 1fr)}
+.cellbtn.away.market{grid-template-columns:minmax(0, 1fr) 84px;gap:4px}
+.cellbtn.home.market{grid-template-columns:84px minmax(0, 1fr);gap:4px}
+.cellbtn.tinted{background:var(--positive-cell)}
+.cellbtn.empty{cursor:default}
+
+.cellname{
+  font-size:var(--type-cell);font-weight:var(--w-medium);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cellbtn.away .cellname{padding-left:4px}
+.cellbtn.home .cellname{padding-right:4px;text-align:right}
+.cellv1{font-size:12px}
+.cellbtn.away .cellv1,.cellbtn.away .cellv2{text-align:right}
+.cellv2{font-size:12px;font-weight:var(--w-semibold)}
+.cellv2.positive{color:var(--positive-text)}
+.cellv2.negative{color:var(--negative-text)}
+.cellv2.absent{color:var(--disabled);font-weight:var(--w-regular)}
+
+/* the sec 4 MARKET SPARKLINE, 84 x 24 with its numbers beneath */
+.spark{display:flex;flex-direction:column;gap:1px}
+.cellbtn.away .spark{align-items:flex-end}
+.sparknums{font-size:10px;color:var(--muted)}
+.sparknums b{color:var(--ink)}
+.justposted{font-size:11px;color:var(--muted);text-align:center}
+
+/* the position cell: the expand toggle, 44 x 46 */
+.posbtn{
+  min-width:44px;min-height:46px;
+  border:none;background:transparent;cursor:pointer;
+  font-family:inherit;color:var(--muted);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  padding:0;
+}
+.posname{font-size:10px;font-weight:var(--w-semibold)}
+.posbtn svg{transition:transform 200ms}
+.posbtn.open svg{transform:rotate(180deg)}
+
+/* THE EXPANDED ROW: a ground panel under the row, two cards on it */
+.exprow{
+  display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:8px;
+  padding:10px 6px 12px;
+  background:var(--ground);
+  border-bottom:1px solid var(--rule);
+}
+.expcard{
+  background:var(--surface);border-radius:var(--r-panel);
+  padding:10px;display:flex;flex-direction:column;gap:6px;
+}
+.expcard.empty{align-items:center;justify-content:center;color:var(--disabled)}
+.exphead{display:flex;justify-content:space-between;align-items:baseline;gap:6px}
+.expname{font-weight:var(--w-semibold);font-size:var(--type-cell);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.expteam{font-size:10px;color:var(--muted);white-space:nowrap}
+
+/* THE STATLINE COMPONENT (UI_ALPHA_SPEC sec 1). One renderer, one
+   stylesheet block: the pick card, the live card and the projections
+   merge all draw THESE rules, so a statline looks the same wherever
+   it appears. */
+.statline{display:flex;flex-direction:column;gap:2px}
+.statrow{display:flex;justify-content:space-between;align-items:baseline;gap:6px;font-size:12px}
+.statlabel{color:var(--text-2)}
+.statthreshold{color:var(--muted);font-size:11px;margin-left:auto;padding-right:6px}
+.statvalue{font-weight:var(--w-semibold)}
+.statvalue.absent{color:var(--disabled);font-weight:var(--w-regular)}
+.exppoints{border-top:1px solid var(--rule);padding-top:6px}
+
+.openpick{
+  min-height:44px;min-width:44px;
+  border-radius:22px;border:1px solid var(--ink);
+  background:var(--surface);color:var(--ink);
+  font-family:inherit;font-size:12px;font-weight:var(--w-semibold);
+  cursor:pointer;
+}
+
+/* THE GAME SEARCH OVERLAY — sec 5.1, on the sec 2.5 Drop transition */
+.searchpanel{
+  position:absolute;left:12px;right:12px;top:56px;
+  background:var(--surface);border-radius:18px;
+  padding:12px;display:flex;flex-direction:column;gap:8px;
+  box-shadow:0 12px 32px rgba(28,31,35,0.20);
+  max-height:calc(100% - 96px);
+  overflow-y:auto;
+}
+.searchbar{
+  display:flex;align-items:center;gap:8px;
+  border:1.5px solid var(--ink);border-radius:12px;
+  padding:0 12px;min-height:48px;color:var(--muted);
+}
+.searchinput{
+  flex-grow:1;border:none;outline:none;background:transparent;
+  font-family:inherit;
+  /* 16px, which is what stops iOS zooming the page on focus (sec 9) */
+  font-size:16px;color:var(--ink);
+  min-height:44px;min-width:44px;
+}
+.searchcancel{
+  min-height:44px;min-width:44px;
+  border:none;background:transparent;color:var(--ink);
+  font-family:inherit;font-size:var(--type-body);
+  font-weight:var(--w-semibold);cursor:pointer;
+}
+.searchbasis{font-size:var(--type-meta);color:var(--muted);line-height:1.4}
+.gameresult{
+  min-height:60px;min-width:44px;
+  border:1px solid var(--rule);border-radius:12px;
+  background:var(--surface);cursor:pointer;
+  font-family:inherit;color:var(--ink);text-align:left;
+  padding:8px 12px;display:flex;align-items:center;gap:10px;
+}
+.gameresult.current{border:1.5px solid var(--ink)}
+.gamecol{display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0}
+.gamename{font-size:16px;font-weight:var(--w-semibold)}
+.gamesub{font-size:12px;color:var(--muted)}
+.gapchip{
+  font-size:11px;font-weight:var(--w-semibold);
+  color:var(--positive-text);background:var(--positive-tint);
+  border-radius:999px;padding:3px 8px;white-space:nowrap;
+}
+
+/* --------------------------------------------------------------------
    THE TAB BAR — sec 2.2. Five slots, the centre one a raised 54px ink
    circle, the active tab in ink and the inactive ones in subtle grey.
    -------------------------------------------------------------------- */
