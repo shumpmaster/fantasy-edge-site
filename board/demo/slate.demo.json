@@ -21,6 +21,7 @@
     "scoring": "half_ppr_v1",
     "scoring_basis": "half_ppr_v1: the weighted sum of the GENERATION'S OWN stat means (pass yds 0.04, pass TD 4, rush yds 0.1, reception 0.5, rec yds 0.1, touchdown 6) \u2014 exact for a mean, because expectation is linear. Half-PPR's two negative components, interceptions and fumbles lost, are NOT in this number: the engine projects neither (D-075 point 3), so a passer's total is high by whatever his interceptions would have cost",
     "line_of_record": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
+    "share_prior": "FABRICATED, in the exporter's own shape: target K 0.7244 fitted this generation, INSIDE the band 0.2186 .. 1.9671 (the gated K 0.6557 / 3 .. * 3, gate run 35510126099); carry K 0.1593 fitted this generation, INSIDE the band 0.0597 .. 0.5376 (the gated K 0.1792 / 3 .. * 3, gate run 35510126099)",
     "markets": [
       "player_receptions",
       "player_reception_yds",
