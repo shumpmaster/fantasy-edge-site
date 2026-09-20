@@ -84,6 +84,7 @@ const TITLE_PICK = "Pick";
 const TITLE_TRACK = "Track a slip";
 const TITLE_LIVE_CARD = "Live";
 const TITLE_REPORT = "Read report";
+const TITLE_TEAM = "My team";
 
 /* sec 5.3, the Projections placeholder, taken verbatim. */
 const PROJ_OVERLINE = "Coming in the merge";
@@ -199,9 +200,66 @@ const NOTE_READ_SHEET =
 /* The deferrals, each named where it would have been. */
 const DEFER_MATCHUP =
   "The matchup tile is on hold: its coverage rates and cornerback grades come from Pro Football Focus data, and each one needs its own sign-off before it can appear here.";
-const DEFER_SCREENSHOT = "Screenshot";
-const DEFER_SCREENSHOT_NOTE =
-  "Screenshot input is deferred. Paste the slip's text or enter the legs by hand; nothing here reads an image yet.";
+
+/* ------------------------------------------------------------------
+ * sec 6a — READING A PICTURE
+ * ------------------------------------------------------------------
+ * THE ONE SENTENCE THIS WHOLE FEATURE STANDS ON, and it is on both
+ * screens that use it: we read the picture, the reader confirms what
+ * is right, and nothing is saved until he does. The picture is sent
+ * to the service, read once and kept nowhere — not by the service and
+ * not by this page. */
+const SHOT_PROMISE =
+  "We read the picture; you confirm what's right. Nothing is saved until you do.";
+const SHOT_LABEL = "Screenshot";
+const SHOT_PICK = "Choose a picture";
+const SHOT_PICK_AGAIN = "Choose a different picture";
+const SHOT_READ_SLIP = "Read the slip";
+const SHOT_READ_TEAM = "Read the picture";
+const SHOT_BUSY = "Reading the picture…";
+const SHOT_EMPTY = "No picture chosen yet.";
+const SHOT_PREVIEW = "The picture you chose";
+const SHOT_TOO_BIG =
+  "That picture is too large to send, so it was not sent. Take a plain screenshot rather than a full-resolution photo and try again.";
+const SHOT_WRONG_KIND =
+  "That file is not a picture we can read. A PNG, JPG, WEBP or GIF screenshot works.";
+const SHOT_FAILED =
+  "We could not read that picture. Nothing was saved. Type the legs in by hand, or try a clearer picture.";
+const SHOT_NOTHING_FOUND =
+  "We did not find anything we could read on that picture. Nothing was saved. Type it in by hand, or try a clearer picture.";
+const SHOT_READ_DONE =
+  "Read. Check every row before you save — these are our best reading of the picture, not your bet yet.";
+const SHOT_LOCAL_NOTE =
+  "The picture is sent to your service to be read and is not kept — not there, and not in this browser.";
+
+/* sec 6a's second door: the Fantasy tab's team capture. */
+const TEAM_ENTRY = "Add my team from a picture";
+const TEAM_ENTRY_SUB =
+  "A screenshot of your lineup becomes your team here. You confirm every row before anything is saved.";
+const TEAM_CONFIRM_HEAD = "Check your lineup";
+const TEAM_CONFIRM_BODY =
+  "Every row below is our reading of the picture. Fix what is wrong, take off what is not yours, then save.";
+const TEAM_SLOTS = "Your slots";
+const TEAM_SLOT_LABEL = "Slot";
+const TEAM_MATCHED = "Matched";
+const TEAM_UNMATCHED = "Not matched";
+const TEAM_UNMATCHED_NOTE =
+  "We could not match these names to a player we know, so nothing was filled in for them. Type the name yourself, or leave the row off your team.";
+const TEAM_KIND_LABEL = "Which team is this?";
+const TEAM_KIND_SEASON = "Season long";
+const TEAM_KIND_DFS = "DFS entry";
+const TEAM_SAVE = "Save my team";
+const TEAM_SAVED = "Saved. This is your team from now on.";
+const TEAM_DROP = "Remove";
+const TEAM_EMPTY =
+  "No lineup read yet. Choose a picture of your lineup and we will read it.";
+const TEAM_NOTHING_TO_SAVE =
+  "Every row was removed, so there is no team to save.";
+const TEAM_SALARY = "Salary";
+const TEAM_CURRENT = "Your team now";
+const TEAM_NONE_YET =
+  "No team saved yet. Add one from a picture of your lineup.";
+const TEAM_FROM = "Read from ";
 
 /* sec 5.7, Track a slip. */
 const TRACK_PASTE = "Paste";
@@ -729,6 +787,7 @@ const ROUTES = {
   picks: { tab: "bets", hash: "#/bets/my-picks", root: true },
   pick: { tab: "bets", hash: "#/pick", root: false },
   track: { tab: "bets", hash: "#/track", root: false },
+  team: { tab: "fantasy", hash: "#/team", root: false },
   card: { tab: "bets", hash: "#/card", root: false },
   report: { tab: "home", hash: "#/report", root: false }
 };
@@ -877,7 +936,25 @@ const nav = {
   picksBusy: "",
   hasToken: false,
   track: { input: "paste", text: "", legs: [], unparsed: [],
-    payout: "", stake: "", saved: null }
+    payout: "", stake: "", saved: null },
+
+  /* U3c's own state, and it is HELD FOR THE VISIT LIKE THE REST OF IT
+   * — in memory, never in storage. A picture is a private thing; it
+   * goes to the service to be read, it is drawn back as a preview
+   * while the reader is looking at it, and it leaves with the tab.
+   *
+   * `shot` is the picture currently chosen (its data URL for the
+   * preview, its base64 and media type for the request); `capture` is
+   * what the last reading did — busy, a named failure, or nothing.
+   * `team` is the PROPOSAL being confirmed: the slots as the service
+   * resolved them, the kind the reader picked, and the saved receipt
+   * once the service has it. None of it is a stored thing until the
+   * service says so. */
+  shot: { slip: null, team: null },
+  capture: { busy: "", note: "" },
+  team: { slots: null, kind: "season_long", surface: null,
+    saved: null },
+  teams: null
 };
 
 /* ------------------------------------------------------------------
@@ -1351,6 +1428,259 @@ async function toggleWatch(playerId, market, line, side) {
   }
 }
 
+/* ------------------------------------------------------------------
+ * U3c — READING A PICTURE
+ * ------------------------------------------------------------------
+ * The picture goes to the service, which reads it under a schema our
+ * own code built and answers with a PROPOSAL. Nothing about that
+ * answer is stored anywhere until the reader confirms it: a slip goes
+ * through the same Track this slip button a pasted one does, and a
+ * team goes through Save my team.
+ *
+ * THE PICTURE IS NEVER KEPT. It is held in memory for as long as the
+ * reader is looking at the preview and it is written to no storage —
+ * the token is still the only thing this app puts in his browser. */
+
+/* What a browser may hand over. The same four the service reads, and
+ * a file that is not one of them is refused HERE, before anything is
+ * sent: telling him on the spot beats a round trip to be told no. */
+const SHOT_TYPES = ["image/png", "image/jpeg", "image/webp",
+  "image/gif"];
+
+/* The three doors, in the service's own words for them. The toggle
+ * says "Screenshot" to the reader and the stored row says
+ * `screenshot`, which is the mapping done in one place. */
+const SLIP_INPUTS = { paste: "paste", manual: "manual",
+  shot: "screenshot" };
+
+/* FOUR MEGABYTES, the service's own cap, checked on this side too so
+ * an oversized picture is named rather than uploaded and refused. It
+ * is the service's number; this is not a second rule. */
+const SHOT_MAX_BYTES = 4 * 1024 * 1024;
+
+/* A chosen file -> `{ url, b64, media }`, or a named refusal. The
+ * data URL is what the preview draws; the part after the comma is
+ * what the service reads. */
+function readShot(file) {
+  return new Promise(function (resolve, reject) {
+    if (!file) {
+      reject(new Error(SHOT_WRONG_KIND));
+      return;
+    }
+    if (SHOT_TYPES.indexOf(file.type) < 0) {
+      reject(new Error(SHOT_WRONG_KIND));
+      return;
+    }
+    if (file.size > SHOT_MAX_BYTES) {
+      reject(new Error(SHOT_TOO_BIG));
+      return;
+    }
+    const reader = new FileReader();
+    reader.onerror = function () {
+      reject(new Error(SHOT_FAILED));
+    };
+    reader.onload = function () {
+      const url = String(reader.result || "");
+      const comma = url.indexOf(",");
+      if (comma < 0) {
+        reject(new Error(SHOT_FAILED));
+        return;
+      }
+      resolve({ url: url, b64: url.slice(comma + 1),
+        media: file.type, name: file.name || "" });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* The picture chosen, held for the preview. Choosing a new one
+ * clears the last reading: a preview of one picture beside the rows
+ * of another is the worst screen this feature could draw. */
+function chooseShot(which, file) {
+  nav.capture = { busy: "", note: "" };
+  readShot(file).then(function (shot) {
+    nav.shot[which] = shot;
+    if (which === "team") {
+      nav.team.slots = null;
+      nav.team.saved = null;
+    } else {
+      nav.track.saved = null;
+    }
+    render();
+  }).catch(function (err) {
+    nav.shot[which] = null;
+    nav.capture = { busy: "", note: err.message || SHOT_FAILED };
+    render();
+  });
+}
+
+/* THE READING. One request, through the page's one fetch, carrying
+ * the bearer token and the picture and nothing else about the
+ * reader. The answer is a proposal and is drawn as one. */
+async function readPicture(which) {
+  if (DEMO) {
+    showToast(SERVICE_DEMO);
+    return;
+  }
+  const shot = nav.shot[which];
+  if (!shot || nav.capture.busy) return;
+  const token = askToken();
+  if (!token) return;
+  nav.capture = { busy: which, note: "" };
+  render();
+  try {
+    const answer = await picksAsk("/capture", token, {
+      kind: which === "team" ? "lineup" : "slip",
+      image_b64: shot.b64, media_type: shot.media });
+    nav.capture = { busy: "", note: "" };
+    nav.picksOffline = false;
+    if (which === "team") {
+      takeTeamProposal(answer);
+    } else {
+      takeSlipProposal(answer);
+    }
+  } catch (err) {
+    /* Never a silent drop and never a half-read: the rows the reader
+     * had stay as they were and the line under the button says what
+     * happened. */
+    nav.capture = { busy: "", note: SHOT_FAILED };
+    nav.picksOffline = true;
+    render();
+  }
+}
+
+/* A SLIP PROPOSAL JOINS THE FLOW A PASTED SLIP ALREADY USES. Each
+ * extracted leg is written back out as one line of text and put
+ * through `parseSlip` — the SAME parser, so there is one rule for
+ * what counts as a leg whichever door it came through, and a row we
+ * cannot match to a published prop falls to manual entry exactly as
+ * an unparsed pasted line does.
+ *
+ * Where the service resolved a name against our own crosswalk, the
+ * line is written with the name THAT PLAYER is listed under here,
+ * because matching our own spelling to our own slate is what the
+ * parser is good at. Where it did not, the picture's own words are
+ * used and the row falls through honestly. */
+function takeSlipProposal(answer) {
+  const legs = (answer && answer.legs) || [];
+  if (!legs.length) {
+    nav.capture = { busy: "", note: SHOT_NOTHING_FOUND };
+    render();
+    return;
+  }
+  parseIntoTrack(legs.map(shotLegLine).join("\n"));
+  showToast(SHOT_READ_DONE);
+}
+
+function shotLegLine(leg) {
+  const person = leg.resolved ? playerOf(leg.player_id) : null;
+  return [person ? person.name : (leg.player_text || ""),
+    leg.side === "less" ? "less" : "more",
+    leg.line === null || leg.line === undefined ? "" : leg.line,
+    leg.market || ""].join(" ").replace(/\s+/g, " ").trim();
+}
+
+/* A TEAM PROPOSAL IS HELD FOR CONFIRMATION and nothing else. Every
+ * row is editable and removable before Save my team, and the rows we
+ * could not match say so rather than being filled in with a guess. */
+function takeTeamProposal(answer) {
+  const slots = (answer && answer.slots) || [];
+  if (!slots.length) {
+    nav.capture = { busy: "", note: SHOT_NOTHING_FOUND };
+    render();
+    return;
+  }
+  nav.team.surface = (answer && answer.surface_text) || null;
+  nav.team.saved = null;
+  nav.team.slots = slots.map(function (slot) {
+    const person = slot.resolved ? playerOf(slot.player_id) : null;
+    return {
+      slot_label: slot.slot_label || "",
+      player_id: slot.resolved ? slot.player_id : null,
+      player_text: slot.player_text || "",
+      name: person ? person.name : "",
+      salary: slot.salary === undefined ? null : slot.salary,
+      opponent_text: slot.opponent_text || null,
+      resolved: !!slot.resolved
+    };
+  });
+  render();
+  showToast(SHOT_READ_DONE);
+}
+
+/* THE CONFIRMATION. What is sent is what is on the screen after the
+ * reader has edited it — never what the picture said. */
+async function saveTeam() {
+  if (DEMO) {
+    showToast(SERVICE_DEMO);
+    return;
+  }
+  const slots = nav.team.slots || [];
+  if (!slots.length || nav.picksBusy === "team") return;
+  const token = askToken();
+  if (!token) return;
+  const week = slateWeek();
+  if (!week) return;
+  nav.picksBusy = "team";
+  render();
+  try {
+    const saved = await picksAsk("/team", token, {
+      kind: nav.team.kind, season: week.season, week: week.week,
+      slots: slots.map(function (slot) {
+        return {
+          slot_label: slot.slot_label,
+          player_id: slot.player_id,
+          player_text: slot.player_text,
+          salary: slot.salary,
+          opponent_text: slot.opponent_text
+        };
+      })
+    });
+    nav.team.saved = saved;
+    nav.teams = null;
+    nav.picksOffline = false;
+    nav.picksBusy = "";
+    render();
+    loadTeams(true);
+    showToast(TEAM_SAVED);
+  } catch (err) {
+    nav.picksOffline = true;
+    nav.picksBusy = "";
+    render();
+  }
+}
+
+/* The teams the service is holding, asked for once per visit like
+ * the watchlist and the slips beside them. */
+async function loadTeams(force) {
+  if (DEMO) return;
+  const token = readToken();
+  if (!token) return;
+  if (nav.teams && !force) return;
+  try {
+    const answer = await picksAsk("/team", token, null);
+    nav.teams = (answer && answer.teams) || {};
+    nav.picksOffline = false;
+  } catch (err) {
+    nav.picksOffline = true;
+  }
+  render();
+}
+
+/* The season and week the confirmed team is FOR. It is the slate
+ * document's own, never this page's clock: a team stamped with a week
+ * nothing else on the screen agrees with is a team nobody can read
+ * back. Without a document there is nothing to stamp and the save
+ * does not happen. */
+function slateWeek() {
+  const run = nav.slate && nav.slate.run;
+  if (!run || !run.season || !run.week) {
+    showToast(OFFLINE_BODY);
+    return null;
+  }
+  return { season: run.season, week: run.week };
+}
+
 /* THE SAVE. The slip's own numbers come BACK from the service, which
  * computed and stored them; the preview this page drew before the
  * save is replaced by the stored answer rather than kept beside it. */
@@ -1367,7 +1697,11 @@ async function saveSlip() {
   render();
   try {
     const saved = await picksAsk("/slips", token, {
-      input: nav.track.input === "manual" ? "manual" : "paste",
+      /* WHICH DOOR THE SLIP CAME THROUGH, recorded because it is a
+       * fact about the slip. The three doors produce the same object
+       * and the same arithmetic prices it; which one it was is worth
+       * knowing when a leg turns out wrong. */
+      input: SLIP_INPUTS[nav.track.input] || "paste",
       source: null,
       stake: numberOrNull(nav.track.stake),
       payout_multiple: numberOrNull(nav.track.payout),
@@ -2228,16 +2562,137 @@ function fantasyHead() {
     subToggle("fantasy");
 }
 
+/* sec 6a — THE TEAM-CAPTURE ENTRY POINT, on both Fantasy sub-views.
+ * The lineup TABLE is still being built (it lands with the Fantasy
+ * increment); what is live here is the door: a picture of a lineup
+ * becomes the team, and the team it saved is named back. */
+function teamEntryCard(kind) {
+  const held = (nav.teams || {})[kind];
+  return '<div class="card"><div class="overline">' +
+    esc(TEAM_CURRENT) + '</div>' +
+    '<div class="cardbody">' +
+    esc(held
+      ? teamHeldLine(held)
+      : (nav.hasToken ? TEAM_NONE_YET : CONNECT_BODY)) + '</div>' +
+    '<button class="primary" data-act="team-open" data-kind="' +
+    esc(kind) + '">' + esc(TEAM_ENTRY) + '</button>' +
+    '<div class="legend">' + esc(TEAM_ENTRY_SUB) + '</div></div>';
+}
+
+/* What the saved team says about itself. Counts and a week — no
+ * projection, because the lineup table is not built yet and a total
+ * nobody computed is exactly the thing this app does not draw. */
+function teamHeldLine(held) {
+  const slots = (held.slots || []).length;
+  return slots + (slots === 1 ? " slot" : " slots") +
+    ", saved for week " + held.week + ".";
+}
+
 function renderFantasySeason() {
   return '<div class="page">' + fantasyHead() +
-    stubCard("Arrives in U5", "My team, and the calls on it.",
-      STUB_FANTASY_SEASON) + lineupSkeleton() + '</div>';
+    stubCard("Still being built", "My team, and the calls on it.",
+      STUB_FANTASY_SEASON) + teamEntryCard("season_long") +
+    lineupSkeleton() + '</div>';
 }
 
 function renderFantasyDfs() {
   return '<div class="page">' + fantasyHead() +
-    stubCard("Arrives in U5", "My team, built for a slate.",
-      STUB_FANTASY_DFS) + lineupSkeleton() + '</div>';
+    stubCard("Still being built", "My team, built for a slate.",
+      STUB_FANTASY_DFS) + teamEntryCard("dfs_entry") +
+    lineupSkeleton() + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * sec 6a — THE TEAM CONFIRM SCREEN
+ * ------------------------------------------------------------------
+ * The picture proposes; this screen is where the reader says what is
+ * right. Every row can be edited and removed, an unmatched row says
+ * so rather than being filled in, and the save button is the only
+ * thing on this page that writes anything anywhere. */
+
+function teamKindToggle() {
+  return '<div class="card"><div class="overline">' +
+    esc(TEAM_KIND_LABEL) + '</div>' +
+    '<div class="seg" role="group" aria-label="' +
+    esc(TEAM_KIND_LABEL) + '">' +
+    [["season_long", TEAM_KIND_SEASON],
+      ["dfs_entry", TEAM_KIND_DFS]].map(function (pair) {
+      return '<button data-act="team-kind" data-kind="' +
+        esc(pair[0]) + '" aria-pressed="' +
+        (nav.team.kind === pair[0]) + '">' + esc(pair[1]) +
+        '</button>';
+    }).join("") + '</div></div>';
+}
+
+function teamSlotRows() {
+  const slots = nav.team.slots || [];
+  if (!slots.length) {
+    return '<div class="card"><div class="cardbody">' +
+      esc(nav.team.slots ? TEAM_NOTHING_TO_SAVE : TEAM_EMPTY) +
+      '</div></div>';
+  }
+  const unmatched = slots.filter(function (slot) {
+    return !slot.resolved;
+  }).length;
+  return '<div class="card"><div class="overline">' +
+    esc(TEAM_SLOTS) + '</div>' +
+    slots.map(function (slot, index) {
+      return '<div class="teamslot' + growClass() + '" style="--i:' +
+        Math.min(index, 8) + '">' +
+        '<div class="legtop"><span class="slotlabel">' +
+        esc(slot.slot_label || TEAM_SLOT_LABEL) + '</span>' +
+        '<span class="slotstate ' +
+        (slot.resolved ? "positive" : "absent") + '">' +
+        esc(slot.resolved ? TEAM_MATCHED : TEAM_UNMATCHED) +
+        '</span></div>' +
+        (slot.resolved
+          ? '<div class="slotname">' + esc(slot.name) + '</div>'
+          : '<input class="trackline" id="teamslot' + index +
+            '" type="text" autocomplete="off" aria-label="' +
+            esc(TEAM_SLOT_LABEL + " " +
+              (slot.slot_label || index + 1)) +
+            '" value="' + esc(slot.player_text) + '">') +
+        '<div class="slotmeta">' +
+        esc([slot.opponent_text || "",
+          slot.salary === null || slot.salary === undefined
+            ? "" : TEAM_SALARY + " " + slot.salary].filter(
+          function (part) { return part; }).join(" · ")) +
+        '</div>' +
+        '<button class="legdrop" data-act="team-drop" data-slot="' +
+        index + '" aria-label="' + esc(TEAM_DROP + " " +
+          (slot.name || slot.player_text)) + '">' + esc(TEAM_DROP) +
+        '</button></div>';
+    }).join("") +
+    (unmatched
+      ? '<div class="legend">' + esc(TEAM_UNMATCHED_NOTE) + '</div>'
+      : "") + '</div>';
+}
+
+function renderTeam() {
+  const slots = nav.team.slots || [];
+  return '<div class="page">' + detailHead(TITLE_TEAM) +
+    '<div class="card"><div class="cardhead">' +
+    esc(TEAM_CONFIRM_HEAD) + '</div>' +
+    /* THE PROMISE ITSELF is on the picker below, beside the button
+     * that does the reading, so it is said once per screen and it is
+     * said where the act happens. */
+    '<div class="cardbody">' + esc(TEAM_CONFIRM_BODY) + '</div>' +
+    (nav.team.surface
+      ? '<div class="legend">' + esc(TEAM_FROM + nav.team.surface) +
+        '</div>'
+      : "") + '</div>' +
+    shotPicker("team", "shot-team", SHOT_READ_TEAM) +
+    teamSlotRows() + teamKindToggle() +
+    '<div class="card">' +
+    (nav.team.saved
+      ? '<div class="cardbody">' + esc(TEAM_SAVED) + '</div>'
+      : '<button class="primary" data-act="team-save"' +
+        (slots.length ? "" : " disabled") + '>' +
+        esc(nav.picksBusy === "team" ? "…" : TEAM_SAVE) +
+        '</button>') +
+    (nav.picksOffline
+      ? '<div class="legend">' + esc(SERVICE_OFFLINE) + '</div>'
+      : "") + '</div></div>';
 }
 
 function renderProjections() {
@@ -3000,13 +3455,44 @@ function trackInputs() {
     '<button data-act="track-input" data-input="manual" ' +
       'aria-pressed="' + (nav.track.input === "manual") + '">' +
       esc(TRACK_MANUAL) + '</button>',
-    '<button class="deferred" data-act="note" data-note="' +
-      esc(DEFER_SCREENSHOT_NOTE) + '" aria-pressed="false" ' +
-      'aria-label="' + esc(DEFER_SCREENSHOT + ", deferred") + '">' +
-      esc(DEFER_SCREENSHOT) + '</button>'].join("") + '</div>';
+    '<button data-act="track-input" data-input="shot" ' +
+      'aria-pressed="' + (nav.track.input === "shot") + '">' +
+      esc(SHOT_LABEL) + '</button>'].join("") + '</div>';
+}
+
+/* sec 6a's picker, shared by both doors. The file input is the one
+ * control in this app that is neither a button nor a text field, so
+ * it is LABELLED as a button and wired by the one change listener —
+ * the pattern the search box already set for the input listener. */
+function shotPicker(which, action, label) {
+  const shot = nav.shot[which];
+  const busy = nav.capture.busy === which;
+  const id = which === "team" ? "teamshot" : "slipshot";
+  return '<div class="card"><div class="overline">' +
+    esc(SHOT_LABEL) + '</div>' +
+    '<div class="cardbody">' + esc(SHOT_PROMISE) + '</div>' +
+    '<label class="shotpick" for="' + esc(id) + '">' +
+    esc(shot ? SHOT_PICK_AGAIN : SHOT_PICK) + '</label>' +
+    '<input class="shotfile" id="' + esc(id) + '" type="file" ' +
+    'accept="image/*" capture="environment" aria-label="' +
+    esc(shot ? SHOT_PICK_AGAIN : SHOT_PICK) + '">' +
+    (shot
+      ? '<img class="shotpreview" src="' + esc(shot.url) +
+        '" alt="' + esc(SHOT_PREVIEW) + '">'
+      : '<div class="cardbody muted">' + esc(SHOT_EMPTY) + '</div>') +
+    '<button class="primary" data-act="' + esc(action) + '"' +
+    (shot && !busy ? "" : " disabled") + '>' +
+    esc(busy ? SHOT_BUSY : label) + '</button>' +
+    (nav.capture.note
+      ? '<div class="legend warn">' + esc(nav.capture.note) + '</div>'
+      : "") +
+    '<div class="legend">' + esc(SHOT_LOCAL_NOTE) + '</div></div>';
 }
 
 function trackEntry() {
+  if (nav.track.input === "shot") {
+    return shotPicker("slip", "shot-slip", SHOT_READ_SLIP);
+  }
   if (nav.track.input === "manual") {
     return '<div class="card"><div class="overline">' +
       esc(TRACK_MANUAL) + '</div>' +
@@ -3171,6 +3657,7 @@ const SCREENS = {
   picks: renderBetsPicks,
   pick: renderPick,
   track: renderTrack,
+  team: renderTeam,
   card: renderLiveCard,
   report: renderReport
 };
@@ -3439,6 +3926,28 @@ function onClick(event) {
     render();
   } else if (act === "track-save") {
     saveSlip();
+  } else if (act === "shot-slip") {
+    readPicture("slip");
+  } else if (act === "shot-team") {
+    readPicture("team");
+  } else if (act === "team-open") {
+    /* sec 6a: the Fantasy entry point. The kind the reader came in
+     * from is the kind the confirm screen starts on — he can still
+     * change it there, because the picture is what it is and he is
+     * the one who knows which team it was. */
+    nav.team.kind = target.getAttribute("data-kind") === "dfs_entry"
+      ? "dfs_entry" : "season_long";
+    openDetail("team");
+  } else if (act === "team-kind") {
+    nav.team.kind = target.getAttribute("data-kind");
+    render();
+  } else if (act === "team-drop") {
+    (nav.team.slots || []).splice(
+      Number(target.getAttribute("data-slot")), 1);
+    nav.team.saved = null;
+    render();
+  } else if (act === "team-save") {
+    saveTeam();
   } else if (act === "connect" || act === "picks-retry") {
     if (askToken()) {
       nav.picksAsked = false;
@@ -3553,6 +4062,18 @@ function onInput(event) {
     nav.track.text = target.value;
     return;
   }
+  /* U3c's editable rows on the team confirm screen. A row the reader
+   * is fixing keeps its text in the proposal he is confirming, and
+   * the row is NOT re-rendered under his caret. */
+  if (target.id.indexOf("teamslot") === 0) {
+    const slot = (nav.team.slots || [])[
+      Number(target.id.slice("teamslot".length))];
+    if (slot) {
+      slot.player_text = target.value;
+      nav.team.saved = null;
+    }
+    return;
+  }
   if (target.id === "slippayout" || target.id === "slipstake") {
     if (target.id === "slippayout") {
       nav.track.payout = target.value;
@@ -3579,6 +4100,20 @@ function onInput(event) {
   }
 }
 
+/* sec 6a's ONE change listener, and it is the file picker's own —
+ * the same arrangement the input listener has, for the same reason:
+ * one place that knows how a control reports itself, rather than an
+ * inline handler per control. */
+function onChange(event) {
+  const target = event.target;
+  if (!target || !target.files) return;
+  if (target.id === "slipshot") {
+    chooseShot("slip", target.files[0]);
+  } else if (target.id === "teamshot") {
+    chooseShot("team", target.files[0]);
+  }
+}
+
 function onKeyDown(event) {
   if (event.key !== "Escape") return;
   if (nav.search) {
@@ -3600,6 +4135,7 @@ function onHashChange() {
 
 document.addEventListener("click", onClick);
 document.addEventListener("input", onInput);
+document.addEventListener("change", onChange);
 document.addEventListener("keydown", onKeyDown);
 window.addEventListener("hashchange", onHashChange);
 
@@ -3633,4 +4169,9 @@ loadSlate();
  * of its two honest states to draw: connected, or the connect card.
  * Nothing is asked of the service without one. */
 nav.hasToken = !DEMO && !!readToken();
-if (nav.hasToken) loadPicks(false);
+if (nav.hasToken) {
+  loadPicks(false);
+  /* ...and the team he has already confirmed, so Fantasy says which
+   * one is his rather than offering to read a picture he has read. */
+  loadTeams(false);
+}

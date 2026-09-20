@@ -1074,7 +1074,42 @@ body{
 .sliplegtext{display:flex;flex-direction:column;gap:2px;min-width:0}
 .slipleg .legp{font-size:var(--type-cell)}
 
-.seg button.deferred{color:var(--disabled)}
+/* sec 6a — READING A PICTURE. The file input is the one control in
+   this app that is neither a button nor a text field, so its LABEL is
+   dressed as the button and the input itself is visually hidden but
+   still focusable and still 44px — a control nobody can tab to is not
+   a control. The preview is capped in height so a tall screenshot
+   does not push the confirm button off the screen it belongs on. */
+.shotpick{
+  display:flex;align-items:center;justify-content:center;
+  min-height:48px;min-width:44px;width:100%;margin-top:10px;padding:0 12px;
+  border:1.5px dashed var(--border-strong);border-radius:var(--r-button);
+  background:var(--panel);color:var(--text-2);
+  font:inherit;font-weight:var(--w-semibold);font-size:15px;cursor:pointer;
+}
+.shotfile{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;border:0;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;
+}
+.shotfile:focus-visible + .shotpreview,
+.shotpick:focus-within{outline:2px solid var(--ink);outline-offset:2px}
+.shotpreview{
+  display:block;width:100%;max-height:260px;margin-top:10px;
+  object-fit:contain;border-radius:var(--r-panel);
+  background:var(--panel);
+}
+.cardbody.muted{color:var(--muted)}
+.legend.warn{color:var(--negative-text)}
+
+.teamslot{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--rule)}
+.teamslot:first-of-type{border-top:none}
+.slotlabel{font-size:var(--type-meta);font-weight:var(--w-semibold);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.slotstate{font-size:var(--type-meta);font-weight:var(--w-semibold)}
+.slotstate.positive{color:var(--positive-text)}
+.slotstate.absent{color:var(--muted);font-weight:var(--w-regular)}
+.slotname{font-size:15px;font-weight:var(--w-semibold)}
+.slotmeta{font-size:var(--type-meta);color:var(--muted)}
 
 /* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
