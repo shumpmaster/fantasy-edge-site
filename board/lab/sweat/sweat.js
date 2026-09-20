@@ -144,7 +144,7 @@ const FETCH_TIMEOUT_MS = 15000;
  * ------------------------------------------------------------------ */
 
 const SWEAT_IN_PROGRESS =
-  "LAB — IN PROGRESS: design sandbox; presentation is experimental";
+  "LAB — IN PROGRESS: design sandbox; the design is still being finished";
 
 /* THE SAMPLE SENTINEL. It rides the top of the page always, on
  * every screen, and it is the one string on this page that may never
@@ -153,14 +153,16 @@ const SWEAT_IN_PROGRESS =
 const SAMPLE_SWEATS =
   "SAMPLE LIVE BOARD — fabricated bets and numbers for design work; nothing here is a pick, a price, or a recommendation";
 
-/* THE ALPHA SENTINEL — real mode's own, and the sample one's opposite
- * number. It names exactly what the numbers are: lines and prices as
- * the books posted them, probabilities the engine read off its own
- * distributions, an uncalibrated model, and a presentation nobody has
- * signed off as finished. It rides the same slot, always visible, and
- * it may never be softened either. */
+/* THE EARLY-ACCESS SENTINEL — real mode's own, and the sample one's
+ * opposite number. It names exactly what the numbers are: lines and
+ * prices as the books posted them, chances our own model worked out,
+ * a model nothing has checked against history, and a design nobody has
+ * signed off as finished. UI_ALPHA_SPEC sec 7 puts it in a reader's
+ * words and takes the ledger code off the screen; every one of those
+ * four facts stays. It rides the same slot, always visible, and it may
+ * never be softened either. */
 const ALPHA_SWEATS =
-  "ALPHA LIVE BOARD — real lines and engine probabilities; model, not yet calibrated; experimental presentation (D-122)";
+  "EARLY ACCESS LIVE BOARD — real lines and our own chances; not yet checked against history, so treat them as leans, not probabilities; the design is still being finished";
 
 const SAMPLE_CHIP = "Sample data";
 const ALPHA_CHIP = "Alpha";
@@ -192,7 +194,7 @@ const NO_FILE =
 const STALE_HEAD = "Live data paused · last update ";
 const STALE_TAIL = " ago";
 const STALE_NOTE =
-  "The trace and the now dot are frozen where the last snapshot left them. Nothing is extrapolated.";
+  "The line and the now dot are frozen where the last update left them. Nothing is estimated past that point.";
 
 /* The chart's own title. It says "Live chance" only while the bet is
  * live: on a settled or voided bet the number is history, and calling
@@ -208,15 +210,15 @@ const NO_SWINGS = "No swings yet — the chart starts at the pregame chance.";
  * is never read as part of the designed surface. */
 const REPLAY_LABEL = "REPLAY — sandbox control, not part of the design";
 const REPLAY_NOTE =
-  "Play walks the recorded snapshots; pause long enough and the paused-feed banner appears, because a stopped replay is exactly the stale case.";
+  "Play steps through the recorded updates; pause long enough and the paused-feed banner appears, because a stopped replay is exactly the paused case.";
 
 /* Honesty rule sec 6.2 — the source is declared in plain words
  * whenever the snapshot says the source has not passed its calibration
  * gate. The wording is per `p_source` and nothing else. */
 const SOURCE_LABELS = {
-  model: "model, not yet calibrated",
-  market: "market-implied",
-  blend: "blended model and market, not yet calibrated"
+  model: "newer market — treat as a lean, not a probability",
+  market: "from the market price",
+  blend: "our number and the market combined — treat as a lean, not a probability"
 };
 
 /* ------------------------------------------------------------------
@@ -237,7 +239,7 @@ const REF_PROJECTION_LABEL = "Vs projection";
  * is the whole definition: the same distribution, a different
  * threshold. */
 const VS_PROJECTION_NOTE =
-  "Vs projection: chance of reaching our projected value, from the same distribution.";
+  "Vs projection: the chance of reaching our projected number, from the same set of likely outcomes.";
 
 /* ...and what the big number says when the row carries no projection
  * to be read against. The dash is the number; this is the reason. */
@@ -262,7 +264,7 @@ const NO_LEAD_STATE = "pregame";
  * replayed from what was banked, with NO probability anywhere on it.
  * It is written into index.html as well, and it may not be softened. */
 const RETRO_SWEATS =
-  "RETROSPECTIVE — 2026 week 1 replayed from banked play-by-play; no probabilities existed for this week";
+  "RETROSPECTIVE — 2026 week 1 replayed from saved play-by-play; no chances were ever worked out for this week";
 
 const RETRO_CHIP = "Retro";
 const RETRO_TITLE = "WEEK 1 RETRO";
@@ -274,7 +276,7 @@ const RETRO_BACK_LABEL = "Back to the week 1 retrospective";
  * A reader arriving from the live board has just been looking at a
  * chance trace, and the two drawings look alike. */
 const RETRO_AXIS_NOTE =
-  "The axis is the BANKED STAT against the line at each checkpoint — not a chance. No probability existed for this week.";
+  "The axis is the saved stat against the line at each checkpoint — not a chance. No chance was ever worked out for this week.";
 
 const CHECKPOINT_LEGEND = "Checkpoint";
 const FOCUS_LEGEND = "Focus";
@@ -307,7 +309,7 @@ const RETRO_LOADING = "Reading the week-1 retrospective…";
  * question, so it is the one number on the board the reference toggle
  * does not move. It says so on itself. */
 const EXP_HITS_TITLE =
-  "Bets already cashed, plus the chance of each live and pregame bet against ITS OWN LINE. A bet settles against its line, so this total never follows the vs-projection toggle.";
+  "Bets already cashed, plus the chance of each live and pregame bet against its own line. A bet settles against its line, so this total never follows the vs-projection toggle.";
 
 /* ------------------------------------------------------------------
  * R0b — THE CAPTURE BOX (READS_LAB_SPEC §6, brief Addendum 2)

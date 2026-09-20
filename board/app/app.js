@@ -52,14 +52,17 @@
  * THE SENTINELS — every word on the screen that is a promise
  * ------------------------------------------------------------------ */
 
-/* THE ALPHA LINE. D-098's idiom in the app's own words: the numbers
- * are the engine's, the interface around them is not finished, and
- * the reader is told so on every screen. It rides `index.html` too,
- * so it is on the page before this script runs, and a test asserts
- * the two are the same string. It may be reworded only where D-098 is
- * rewritten — never softened here. */
+/* THE EARLY-ACCESS LINE. The same promise the alpha line always made,
+ * said the way a reader says it (UI_ALPHA_SPEC sec 7): the numbers are
+ * the engine's real output, and the interface around them is not
+ * finished. The ledger code comes OFF the screen — the ruling still
+ * governs the sentence, it just no longer recites its own number at a
+ * reader who has no way to look it up. It rides `index.html` too, so
+ * it is on the page before this script runs, and a test asserts the
+ * two are the same string. Its wording is fixed by sec 7 and may be
+ * changed only where that section is rewritten — never softened. */
 const ALPHA_NOTE =
-  "ALPHA — engine-certified projections; the interface around them is under active development, and its presentation is experimental (D-098).";
+  "EARLY ACCESS — the numbers are real; the design is still being finished.";
 
 /* The sec 5.1 tag. It LABELS FIXTURES, so it comes off the hero the
  * moment a real slate.json is on screen: real data is real, and a tag
@@ -99,17 +102,17 @@ const ADD_STARTSIT_SUB = "Compare two players for your lineup";
 
 /* The honest arms. Each stub names the increment that fills it, so
  * nothing on this surface pretends to be finished. */
-const NOTE_READS = "Your read arrives in U6. The pick card it opens on is here already.";
+const NOTE_READS = "Saving your own read is still being built. The pick card it opens on is here already.";
 const ACTION_OPEN_PICK = "Open the pick";
-const NOTE_ALERTS = "Alerts are unruled: which events notify is open question 5 in the handoff.";
-const STUB_LIVE_CARD = "The live chance chart and its swings arrive in U4, on the live contract this app already has.";
-const STUB_REPORT = "The graded read report arrives in U6, with the reads engine behind it.";
-const STUB_LIVE_BOARD = "The live board arrives in U4.";
-const STUB_FANTASY_SEASON = "My team, the lineup table, the ranges and the FLEX call arrive in U5.";
-const STUB_FANTASY_DFS = "My team for a DFS slate — its own sub-view — arrives in U5.";
-const STUB_STARTSIT = "Fantasy is here; the start/sit comparison itself arrives in U5.";
+const NOTE_ALERTS = "Alerts are not built yet. We have not decided which events should notify you.";
+const STUB_LIVE_CARD = "The live chance chart and its swings are still being built, on the live feed this app already reads.";
+const STUB_REPORT = "The graded report on your reads is still being built.";
+const STUB_LIVE_BOARD = "The live board is still being built.";
+const STUB_FANTASY_SEASON = "My team, the lineup table, the ranges and the FLEX call are still being built.";
+const STUB_FANTASY_DFS = "My team for a DFS slate — its own view — is still being built.";
+const STUB_STARTSIT = "Fantasy is here; the start/sit comparison is still being built.";
 const SLATE_HEADER = "Sunday 12:00 slate";
-const SLATE_BASIS = "model vs no-vig market";
+const SLATE_BASIS = "our numbers vs fair market odds";
 const LIVE_OVERLINE = "Closest to hitting";
 const PICKS_OVERLINE = "Saved and placed";
 
@@ -129,8 +132,14 @@ const SORTS = [[SORT_GAP, "Biggest gap"], [SORT_CHANCE, "Model chance"]];
 const SORT_GROUP_LABEL = "Sort";
 
 /* sec 5.4's gap text, and the sec 7.3 arm beside it. */
-const GAP_VS = " vs mkt";
+const GAP_VS = " vs the market";
 const NO_REAL_GAP = "No real gap";
+
+/* ...and what "vs the market" MEANS, said once on each surface the
+ * phrase appears on (UI_ALPHA_SPEC sec 7). A number with a unit the
+ * reader cannot name is a number he cannot use. */
+const GAP_FOOTNOTE =
+  "How far our number is from the fair market chance, in percentage points.";
 
 /* UI_ALPHA_SPEC sec 5's two sentences, verbatim. The first rides
  * every blind-spot row, card and leg; the second heads the band they
@@ -146,15 +155,15 @@ const BLIND_SPOT_DIVIDER = "Probably our blind spots, not edges";
  * else here is computed: every other number is read off the exporter's
  * document or off the service's stored row. */
 const CLIENT_GAP_RULE =
-  "Shown when the model beats the no-vig market by 3 points or more. That threshold is this page's own rule, applied to the gap the exporter published.";
+  "Shown only when our number beats the fair market chance by 3 points or more. That cut-off is this page's own rule, applied to a gap the file already published; anything smaller shows a dash.";
 const CLIENT_BREAK_EVEN_NOTE =
-  "Break-even is one divided by the payout multiple you entered — this page's own division, and the only thing it works out about the price.";
+  "Break-even is 1 divided by the payout multiple you entered — this page's own division, and the only thing it works out about the price.";
 const CLIENT_PREVIEW_NOTE =
-  "Preview only: this page multiplies the published chance of each leg. The saved slip's number is computed and stored by the service, and that is the one you will see afterwards.";
+  "Preview only: this page multiplies the published chance of each leg together. When you save the slip the service works out the number and stores it, and that is the one you will see afterwards.";
 
 /* D-123, and it rides every screen a product appears on. */
 const INDEPENDENCE_NOTE =
-  "Assumes the legs are independent — correlated legs are the coherent simulator's job.";
+  "Assumes the legs are independent. Legs that tend to hit or miss together are not modelled yet.";
 
 /* sec 5.5, the Pick card. */
 const PICK_WATCH_ADD = "Save to watchlist";
@@ -165,19 +174,19 @@ const PICK_COPY = "Copy pick to place it";
 const PICK_COPIED = "Copied. Place it in your app, then bring the slip back.";
 const PICK_PLACED = "I placed it";
 const PICK_IMPLIES = "What the line implies";
-const PICK_SHAPE = "Outcome shape";
-const PICK_BAND = "Where the projection sits";
+const PICK_SHAPE = "Outcome chart";
+const PICK_BAND = "Likely outcomes";
 const PICK_BARS = "Chance";
 const PICK_MODEL = "Model";
-const PICK_MARKET = "Market, no-vig";
+const PICK_MARKET = "Market, fair odds";
 const PICK_CONTEXT = "Context";
-const PICK_FLOOR = "Floor";
-const PICK_MEDIAN = "Median";
-/* The 90th percentile's own word, as the handoff's sec 5.5 caption
- * spells it. It is the STAT distribution's upper quantile and has
- * nothing to do with the fantasy-point sort D-075 sec 0 excluded —
- * the same distinction `live_ceiling_probs` already carries. */
-const PICK_CEILING = "Ceiling";
+/* The three marks on the range, in the words sec 7 sets for them. They
+ * are the 10th, 50th and 90th percentile of the stat's own outcomes —
+ * which is what "low end", "middle" and "high end" say to a reader who
+ * has never met a percentile. Nothing about the numbers changed. */
+const PICK_FLOOR = "Low end";
+const PICK_MEDIAN = "Middle";
+const PICK_CEILING = "High end";
 const PICK_NO_PROP = "This player has no captured line this week, so there is no pick card to draw and nothing is invented in its place.";
 const PICK_OTHER_MARKETS = "Other lines for him";
 
@@ -185,11 +194,11 @@ const PICK_OTHER_MARKETS = "Other lines for him";
  * than opening a sheet that does not exist yet. */
 const ADD_READ_BUTTON = "+ Add your read";
 const NOTE_READ_SHEET =
-  "The read sheet arrives with the reads increment in U6. Nothing is saved from this button yet, and no sheet opens.";
+  "Adding your own read is still being built. Nothing is saved from this button yet, and no panel opens.";
 
 /* The deferrals, each named where it would have been. */
 const DEFER_MATCHUP =
-  "The matchup tile is deferred: its man/zone rates and corner grades are PFF-derived, and each one needs its own wall ruling before it appears here.";
+  "The matchup tile is on hold: its coverage rates and cornerback grades come from Pro Football Focus data, and each one needs its own sign-off before it can appear here.";
 const DEFER_SCREENSHOT = "Screenshot";
 const DEFER_SCREENSHOT_NOTE =
   "Screenshot input is deferred. Paste the slip's text or enter the legs by hand; nothing here reads an image yet.";
@@ -208,7 +217,7 @@ const TRACK_UNPARSED_NOTE =
 const TRACK_SAME_LINE = "Same line you screened";
 const TRACK_MOVED_TO = "Moved your way";
 const TRACK_MOVED_AGAINST = "Moved against you";
-const TRACK_OFF_LADDER = "Off the published ladder — no chance shown for this line";
+const TRACK_OFF_LADDER = "We published no chance at this line, so none is shown";
 const TRACK_UNMATCHED_LEG = "Not from your screen";
 const TRACK_PAYOUT = "Payout multiple";
 const TRACK_STAKE = "Stake";
@@ -230,7 +239,7 @@ const TRACK_MANUAL_HINT = "e.g. D. Hale more 5.5 receptions";
 const STORED_BY_SERVICE =
   "These two numbers were computed and stored by the service when the slip was saved; this page is reading them back.";
 const NO_CAPTURED_ROWS =
-  "No market line was captured for this slate, so there is nothing to screen. That is the capture's silence, not an empty week.";
+  "No bookmaker line was saved for this slate, so there is nothing to screen. That means we saved none — not that the week is empty.";
 const PICKS_WATCH = "Watchlist";
 const PICKS_SLIPS = "Tracked slips";
 const PICKS_EMPTY_WATCH = "Nothing on your watchlist yet. The bookmark on a pick card puts it here.";
@@ -368,15 +377,15 @@ const HEADS = {
  * carry units or a legend, and the unit letters are always explained
  * in the view footnote. */
 const LEGEND_PROPS =
-  "Key prop line with its unit, and the gap against the no-vig market. The arrow and the number appear only when the model beats that market by 3 points or more; anything under that is a dash, because a gap that small is not an edge.";
+  "The main line for this player with its unit, and how far our number sits from the fair market chance, in percentage points. The arrow and the number show only when we are 3 points or more above the market; anything smaller is a dash, because a gap that small is not an edge.";
 const LEGEND_FANTASY =
-  "Half-PPR projected points, the weighted sum of the generation's own stat means.";
+  "Projected points in half-PPR scoring, added up from our own projected stats. It does not yet subtract fumbles or interceptions.";
 const LEGEND_ROLE =
-  "Share is the chain's own allocation, and each cell says which one: attempts weight for a quarterback, carry share for a back, target share for a receiver. Trend is the change against the prior four games from realized weeks, shown at 5 points or more.";
+  "Share is the slice of his team's work our depth chart gives him, and each cell says which slice: pass attempts for a quarterback, share of the team's carries for a back, share of the team's targets for a receiver. Trend is the change against his prior four games, shown at 5 points or more.";
 const LEGEND_USAGE =
   "Opportunities per game over the weeks already played: a pass attempts, o carries plus targets, t targets.";
 const LEGEND_MARKET =
-  "Chance of the lean side of the key prop, from the line's open to now. The solid line is our model at each generation, the dashed one is the book with the vig removed at each capture. It turns positive when the gap is 3 points or more.";
+  "The chance of the side we lean to, from the line's open until now. The solid line is our number at each update; the dashed one is the bookmaker's fair odds at each saved price. It turns green when we are 3 points or more above the market.";
 
 const LEGENDS = {
   props: LEGEND_PROPS, fantasy: LEGEND_FANTASY, role: LEGEND_ROLE,
@@ -390,17 +399,226 @@ const LEGENDS = {
  * off the document's own `run.calibrated_markets` and off each prop's
  * own `calibration` field; this sentence says what that means. */
 const CALIBRATION_NOTE =
-  "Receptions, receiving yards, rushing attempts and rushing yards ride the adopted calibration layer; every other market here is ungraded, so treat its number as a lean.";
+  "Receptions, receiving yards, rushing attempts and rushing yards have been checked against two seasons of history; every other market here is newer, so treat its number as a lean, not a probability.";
 
 /* The Fantasy view's range column. The exporter publishes no points
  * range and says why on every record; this is that reason in the
  * reader's words, under the column it explains. */
 const RANGE_ABSENT =
-  "Range is a dash because points quantiles are not persisted at generation yet: the engine archives a quantile grid per stat, and the quantiles of a sum are not the sum of the quantiles.";
+  "Range is a dash because we do not save a range for total points yet: we save one for each stat, and stat ranges cannot simply be added together.";
 
 /* ...and the Usage view's, for the same reason in a different place. */
 const RZ_ABSENT =
-  "Red-zone share is a dash because no red-zone split is ingested: it needs a play-by-play cut by field position, and nothing is estimated in its place.";
+  "Red-zone share is a dash because we do not store red-zone data yet: it needs plays split by field position, and nothing is estimated in its place.";
+
+/* ------------------------------------------------------------------
+ * THE PLAIN-LANGUAGE LAYER (UI_ALPHA_SPEC sec 7)
+ * ------------------------------------------------------------------
+ * The footnotes the exporter writes into `slate.json` are ENGINEERING
+ * prose. They name archive shapes, table names, method ids and the
+ * rulings behind them, which is exactly right in a document other code
+ * reads and exactly wrong on a screen: "quantile grid", "de-vigged",
+ * "half_ppr_v1" and "(D-075 point 3)" tell a reader who bets on
+ * Sundays nothing at all.
+ *
+ * THE JSON DOES NOT MOVE. No key is renamed and no value is rewritten
+ * upstream — the document is a contract, and the board, the tests and
+ * the exporter's own pins all read it as it stands. This layer sits
+ * between that document and the page, and it is the ONLY place either
+ * vocabulary meets the other.
+ *
+ * THE FACTS SURVIVE THE TRANSLATION. That is the whole rule: each
+ * replacement below says the same source, the same removal and the
+ * same absence its original said — what we used, what is missing, and
+ * what we refuse to invent — in words that need no glossary. Nothing
+ * is dropped because it is awkward; the ledger citations go because a
+ * reader cannot look them up, not because the facts they carry are
+ * inconvenient.
+ *
+ * TWO PARTS, applied in this order:
+ *   1. PLAIN_NOTES — a distinctive fragment of an exporter sentence,
+ *      and the plain sentence that replaces the whole of it.
+ *   2. PLAIN_WORDS — the backstop. Anything that reaches the screen
+ *      WITHOUT a match still loses its ledger citations and its
+ *      shorthand, so a footnote added upstream next month cannot put
+ *      "no-vig" or "D-075" in front of a reader before anyone here
+ *      has noticed it arrived. */
+
+const PLAIN_NOTES = [
+  ["half_ppr_v1: the weighted sum",
+    "Half-PPR scoring, added up from our own projected stats: 1 point " +
+    "per 25 passing yards, 4 per passing touchdown, 1 per 10 rushing " +
+    "or receiving yards, 0.5 per catch, 6 per touchdown. It does not " +
+    "yet subtract interceptions or fumbles, so a passer's total is " +
+    "high by whatever his interceptions would have cost."],
+  ["the 10th, 50th and 90th percentile",
+    "The low end, middle and high end of our own simulated outcomes " +
+    "for this stat. They are the shape of those outcomes themselves, " +
+    "not a range drawn around the projection."],
+  ["per (player, market): each book's LATEST capture",
+    "The line most bookmakers quote, at the price from whichever book " +
+    "posted it most recently. It is a price a named book really " +
+    "posted — never an average, never a best-of, never shopped around."],
+  ["the implied totals and the spread are the ones the forward pass",
+    "These are the team totals and the spread our projection actually " +
+    "used, not numbers worked out again here."],
+  ["the lean side's chance over time",
+    "The chance of the side we lean to over time: one point each time " +
+    "we update, and one for each bookmaker price we saved, with the " +
+    "bookmaker's margin removed. It is only as detailed as those " +
+    "saved prices are, and with fewer than two we say the line has " +
+    "just posted rather than draw a line through a single dot."],
+  ["this is a MEASURED market, not a counted one",
+    "Yardage does not come in countable steps the way catches do, so " +
+    "there are no outcome bars for it. The range of likely outcomes " +
+    "is drawn instead."],
+  ["points quantiles are not persisted",
+    "We do not save a range for total points yet: we save one for " +
+    "each stat, and stat ranges cannot simply be added together. " +
+    "Saving one would take a change where the numbers are generated, " +
+    "and nothing does that today."],
+  ["the trailing weekly actuals for this player are not reachable",
+    "We cannot reach this player's earlier weeks this season, so " +
+    "there is no share to work out. Nothing is estimated from a " +
+    "part-finished season."],
+  ["aDOT is not an engine object",
+    "We do not project average depth of target: our model works in " +
+    "targets and yards per catch, which is not the same thing. " +
+    "Nothing is estimated in its place."],
+  ["only one capture of this line exists",
+    "Only one price was saved for this line this week, so there is no " +
+    "movement to report. A line quoted once has not moved."],
+  ["how often he has been at or above this line",
+    "How often he has finished at or above this line in the weeks " +
+    "already played, counted season by season and never added " +
+    "together, with the number of games beside each count. The sealed " +
+    "test season is left out and does not appear here."],
+  ["what this line implies is not derivable",
+    "We cannot say what this line implies: it needs this player's " +
+    "recent workload and conversion — targets and a catch rate, or " +
+    "carries and yards per carry — and we do not have both. Nothing " +
+    "is written from numbers nobody has."],
+  ["a red-zone opportunity share is not derivable",
+    "We do not store red-zone data: it needs plays split by field " +
+    "position, and nothing is estimated in its place."],
+  ["the line placed is outside this prop's published ladder",
+    "The line you placed is outside the lines we published a chance " +
+    "for, so none is shown. Working one out here would mean this page " +
+    "computing a probability, and it does not do that."],
+  ["the chain's persisted share for this player",
+    "We could not read the share our depth chart actually gave this " +
+    "player for this update, so none is shown. A share worked " +
+    "backwards from the projected stats would not be that number."],
+  ["the game line the volume model consumed",
+    "We could not read the game line our projection used here, so " +
+    "neither the totals nor the spread is stated. The schedule's own " +
+    "closing numbers are a different thing."],
+  ["no main line was captured for any of this player's key markets",
+    "No main line was saved for any of this player's key markets, so " +
+    "there is nothing to compare. That means we saved none — it is " +
+    "not the model staying quiet."],
+  ["no realized week of this season or of 2024",
+    "No completed week of this season or of 2024 carries this stat " +
+    "for him, so there is nothing to count. The two seasons are " +
+    "counted and labelled separately and never added together."],
+  ["the generation archived no usable grid",
+    "We saved no usable set of outcomes for this stat, so no line " +
+    "could be read off it. Nothing is estimated in its place."],
+  ["no captured market line was found for this slate",
+    "No bookmaker line was saved for this slate, so no player carries " +
+    "a main line. The Props and Market views show dashes; Fantasy, " +
+    "Role and Usage are unaffected, because none of them reads a price."]
+];
+
+/* The one exporter footnote that carries a value inside it: the stat
+ * whose mean the engine does not produce. Its name is kept — and
+ * where the exporter's name for it is a box-score abbreviation, the
+ * sentence says the whole word, because a sentence has room for it
+ * even where a column does not. */
+const NO_ENGINE_STAT_RE = /the engine projects no ([^:]+):[^]*$/;
+const STAT_WORDS = {
+  "ints": "interceptions",
+  "int": "interceptions",
+  "pass att": "passing attempts",
+  "pass yds": "passing yards",
+  "rush yds": "rushing yards",
+  "rec yds": "receiving yards",
+  "rec": "receptions",
+  "att": "attempts"
+};
+
+/* The backstop. Ledger citations first — they are dropped, not
+ * translated, because the sentence around them already carries the
+ * fact — then the shorthand, longest phrase first so a short pattern
+ * never eats a longer one's words. */
+const PLAIN_LEDGER_RE = /\s*\((?:the board's\s*)?D-\d{3}[^)]*\)/g;
+const PLAIN_WORDS = [
+  [/\bquantile grid\b/gi, "set of likely outcomes"],
+  [/\bquantile band\b/gi, "range"],
+  [/\bquantiles?\b/gi, "ranges"],
+  [/\bno-vig\b/gi, "fair"],
+  [/\bde-vigged\b/gi, "with the bookmaker's margin removed"],
+  [/\bde-vig\b/gi, "remove the bookmaker's margin"],
+  [/\bvs mkt\b/gi, "vs the market"],
+  [/\bhalf_ppr_v1\b/gi, "half-PPR scoring"],
+  [/\bchain-ranked\b/gi, "depth-chart"],
+  [/\bthe chain\b/gi, "the depth chart"],
+  [/\baDOT\b/g, "average depth of target"],
+  [/\bstats_nflverse_latest\b/gi, "our weekly stats table"],
+  [/\blive_explain_rows\b/gi, "our own saved projection rows"],
+  [/\bdistributions?\b/gi, "likely outcomes"],
+  [/\bp10\b/gi, "low end"],
+  [/\bp90\b/gi, "high end"],
+  [/\brealized weeks\b/gi, "weeks already played"],
+  [/\brealized\b/gi, "completed"],
+  [/\batt share\b/gi, "pass attempt share"],
+  [/\bcaptures\b/gi, "saved prices"],
+  [/\bcapture\b/gi, "saved price"],
+  /* ...and last of all, the field names themselves. An exporter
+   * sentence that quotes one of its own stat keys — `rushing_yards`,
+   * `pass_tds` — puts a column name in front of a reader; the key is
+   * unchanged in the document and reads as words on the page. The
+   * table names above are matched before this, so it only ever
+   * reaches the leftovers. */
+  [/\b[a-z]+(?:_[a-z0-9]+)+\b/g, function (key) {
+    return key.replace(/_/g, " ");
+  }]
+];
+
+/* Every exporter-written sentence goes through here on its way to the
+ * screen, whether it lands in a legend, a caption or a tooltip. */
+function plainNote(text) {
+  const source = String(text || "");
+  if (!source) return "";
+  for (let index = 0; index < PLAIN_NOTES.length; index += 1) {
+    if (source.indexOf(PLAIN_NOTES[index][0]) !== -1) {
+      return PLAIN_NOTES[index][1];
+    }
+  }
+  const stat = source.match(NO_ENGINE_STAT_RE);
+  if (stat) {
+    const named = stat[1].trim();
+    return "We do not project " +
+      (STAT_WORDS[named.toLowerCase()] || named) + ": our model " +
+      "produces no completions, attempts or interceptions, so there " +
+      "is no number to read and none is invented.";
+  }
+  let out = source.replace(PLAIN_LEDGER_RE, "");
+  PLAIN_WORDS.forEach(function (pair) {
+    out = out.replace(pair[0], pair[1]);
+  });
+  return out;
+}
+
+/* The statline keeps the exporter's own short labels — they are the
+ * words on a box score and a reader knows them — with the one
+ * exception sec 7 names: the initialism gets its meaning in the
+ * tooltip, where it costs no width. */
+const LABEL_EXPANSIONS = { adot: "average depth of target" };
+
+function labelTitle(label) {
+  return LABEL_EXPANSIONS[String(label || "").toLowerCase()] || "";
+}
 
 /* Sec 8: a market with fewer than two points has no shape to draw. */
 const LINE_JUST_POSTED = "Line just posted";
@@ -1274,15 +1492,18 @@ function signed(points) {
 function statline(entries) {
   return '<div class="statline">' + (entries || []).map(function (entry) {
     const absent = entry.value === null || entry.value === undefined;
+    const spelled = labelTitle(entry.label);
     return '<div class="statrow">' +
-      '<span class="statlabel">' + esc(entry.label) + '</span>' +
+      '<span class="statlabel"' +
+      (spelled ? ' title="' + esc(spelled) + '"' : "") + '>' +
+      esc(entry.label) + '</span>' +
       (entry.threshold
         ? '<span class="statthreshold">' + esc(entry.threshold) +
           '</span>'
         : "") +
       '<span class="statvalue' + (absent ? " absent" : "") + '"' +
       (absent && entry.reason
-        ? ' title="' + esc(entry.reason) + '"'
+        ? ' title="' + esc(plainNote(entry.reason)) + '"'
         : "") + '>' +
       (absent ? DASH : esc(num(entry.value))) + '</span></div>';
   }).join("") + '</div>';
@@ -1655,7 +1876,8 @@ function expandedCard(id) {
     esc(person.name) + '</span><span class="expteam">' +
     esc(person.team + " " + person.pos) + '</span></div>' +
     '<div class="overline" title="' +
-    esc(person.projected_line_template) + '">' + esc(PROJECTED) +
+    esc(plainNote(person.projected_line_template)) + '">' +
+    esc(PROJECTED) +
     '</div>' +
     statline(person.projected_line) +
     '<div class="statrow exppoints"><span class="statlabel">' +
@@ -1748,7 +1970,7 @@ function legendFor(game) {
 function footnotes(game) {
   const lines = [legendFor(game)].concat(game.notes || []);
   return lines.map(function (line) {
-    return '<div class="legend">' + esc(line) + '</div>';
+    return '<div class="legend">' + esc(plainNote(line)) + '</div>';
   }).join("");
 }
 
@@ -1771,7 +1993,8 @@ function lineStrip(game) {
     ["SPREAD", game.spread_label || DASH],
     [game.home + " TOTAL", num(game.implied_total_home)]
   ];
-  return '<div class="linestrip" title="' + esc(game.line_basis) + '">' +
+  return '<div class="linestrip" title="' +
+    esc(plainNote(game.line_basis)) + '">' +
     cells.map(function (cell) {
       return '<div class="linecell"><span class="linelabel">' +
         esc(cell[0]) + '</span><span class="linevalue">' +
@@ -2098,7 +2321,7 @@ function histogram(prop, tall) {
   return '<span class="hist' + (tall ? " tall" : "") + '">' +
     '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' +
     width + ' ' + height + '" role="img" aria-label="' +
-    esc("Outcome shape: " + bars.map(function (bar) {
+    esc(PICK_SHAPE + ": " + bars.map(function (bar) {
       return bar.label + " " + pct(bar.p);
     }).join(", ") + ". Line " + prop.line) + '">' +
     cells + marker + '</svg>' + labels + '</span>';
@@ -2122,8 +2345,9 @@ function rangeBar(prop, tall) {
   return '<span class="rangebar' + (tall ? " tall" : "") + '">' +
     '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' +
     width + ' ' + height + '" role="img" aria-label="' +
-    esc("Floor " + num(band.p10) + ", median " + num(band.p50) +
-      ", " + PICK_CEILING.toLowerCase() + " " + num(band.p90) +
+    esc(PICK_FLOOR + " " + num(band.p10) + ", " +
+      PICK_MEDIAN.toLowerCase() + " " + num(band.p50) + ", " +
+      PICK_CEILING.toLowerCase() + " " + num(band.p90) +
       ". Line " + prop.line) + '">' +
     '<line x1="4" y1="' + mid + '" x2="' + (width - 4) + '" y2="' + mid +
     '" stroke="var(--track)" stroke-width="2"></line>' +
@@ -2282,7 +2506,8 @@ function renderBetsScreen() {
             : "") + screenRow(entry, index);
         }).join("") + '</div>'
       : '<div class="legend">' + esc(NO_CAPTURED_ROWS) + '</div>') +
-    '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
+    '<div class="legend">' + esc(GAP_FOOTNOTE + " " + CLIENT_GAP_RULE) +
+    '</div>' +
     '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div></div>';
 }
 
@@ -2392,7 +2617,8 @@ function slipRows() {
       esc(slip.independence_note || INDEPENDENCE_NOTE) + '</div>' +
       '<div class="legend">' + esc(STORED_BY_SERVICE) + '</div>' +
       (slip.p_reason
-        ? '<div class="legend">' + esc(slip.p_reason) + '</div>'
+        ? '<div class="legend">' + esc(plainNote(slip.p_reason)) +
+          '</div>'
         : "") + '</div>';
   }).join("");
 }
@@ -2463,18 +2689,20 @@ function pickStatline(person, prop) {
 function impliesBanner(prop) {
   const implies = prop.line_implies || {};
   if (!implies.text) return "";
-  return '<div class="implies" title="' + esc(implies.basis || "") +
+  const basis = plainNote(implies.basis || "");
+  return '<div class="implies" title="' + esc(basis) +
     '"><span class="overline">' + esc(PICK_IMPLIES) + '</span>' +
     '<span class="impliestext">' + esc(implies.text) + '</span>' +
-    (implies.basis
-      ? '<span class="impliesbasis">' + esc(implies.basis) + '</span>'
+    (basis
+      ? '<span class="impliesbasis">' + esc(basis) + '</span>'
       : "") + '</div>';
 }
 
 function bandCaption(prop) {
   const band = prop.floor_median_ceiling || {};
   if (band.p10 === null || band.p10 === undefined) return "";
-  return '<div class="fmc" title="' + esc(band.basis || "") + '">' +
+  return '<div class="fmc" title="' +
+    esc(plainNote(band.basis || "")) + '">' +
     [[PICK_FLOOR, band.p10], [PICK_MEDIAN, band.p50],
       [PICK_CEILING, band.p90]].map(function (cell) {
       return '<span class="fmccell"><span class="fmclabel">' +
@@ -2486,14 +2714,14 @@ function bandCaption(prop) {
 function shapeSection(prop) {
   const counted = !!prop.distribution;
   const body = shapeFor(prop, true);
-  const note = counted ? "" : (prop.distribution_reason || "");
+  const note = counted ? "" : plainNote(prop.distribution_reason || "");
   return '<div class="card"><div class="overline">' +
     esc(counted ? PICK_SHAPE : PICK_BAND) + '</div>' +
     (body || '<div class="cardbody">' + esc(note) + '</div>') +
     bandCaption(prop) +
     (counted
       ? '<div class="legend">' + esc(prop.distribution_method
-        ? "Outcome bars off the generation's own draws." : "") +
+        ? "Outcome bars from our own simulated outcomes." : "") +
         '</div>'
       : '<div class="legend">' + esc(note) + '</div>') +
     '</div>';
@@ -2520,7 +2748,8 @@ function barsSection(prop) {
       : "") +
     '<div class="gapline ' + (isEdge(prop) ? "positive" : "absent") +
     '">' + esc(gapText(prop)) + '</div>' +
-    '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
+    '<div class="legend">' + esc(GAP_FOOTNOTE + " " + CLIENT_GAP_RULE) +
+    '</div>' +
     '<button class="readbtn" data-act="note" data-note="' +
     esc(NOTE_READ_SHEET) + '">' + esc(ADD_READ_BUTTON) + '</button>' +
     '</div>';
@@ -2532,14 +2761,14 @@ function barsSection(prop) {
 function tilesSection(prop) {
   const tiles = (prop.context_tiles || []).map(function (tile) {
     const absent = tile.value === null || tile.value === undefined;
+    const words = plainNote(absent ? (tile.reason || "")
+      : (tile.detail || ""));
     return '<div class="tile' + (absent ? " absent" : "") +
-      '" title="' + esc(absent ? (tile.reason || "")
-        : (tile.detail || "")) + '">' +
+      '" title="' + esc(words) + '">' +
       '<span class="tilelabel">' + esc(tile.label) + '</span>' +
       '<span class="tilevalue">' + esc(absent ? DASH : tile.value) +
       '</span>' +
-      '<span class="tiledetail">' +
-      esc(absent ? (tile.reason || "") : (tile.detail || "")) +
+      '<span class="tiledetail">' + esc(words) +
       '</span></div>';
   }).join("");
   return '<div class="card"><div class="overline">' +
@@ -2593,7 +2822,8 @@ function renderPick() {
       prop.line) + ' <span class="sidepill ' + esc(prop.lean) + '">' +
     esc(prop.lean_label) + '</span></div>' +
     '<div class="overline" title="' +
-    esc(person.projected_line_template) + '">' + esc(PROJECTED) +
+    esc(plainNote(person.projected_line_template)) + '">' +
+    esc(PROJECTED) +
     '</div>' + pickStatline(person, prop) +
     impliesBanner(prop) + '</div>' +
     shapeSection(prop) + barsSection(prop) + tilesSection(prop) +
@@ -2601,7 +2831,7 @@ function renderPick() {
     '<button class="primary" data-act="copy" data-player="' +
     esc(person.player_id) + '" data-market="' + esc(prop.market) +
     '">' + esc(PICK_COPY) + '</button>' +
-    '<div class="legend">' + esc(prop.basis) + '</div></div>';
+    '<div class="legend">' + esc(plainNote(prop.basis)) + '</div></div>';
 }
 
 /* ------------------------------------------------------------------
