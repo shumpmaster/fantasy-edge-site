@@ -17,15 +17,17 @@
  *   skeleton bar promising it would be the fake this whole surface
  *   refuses to draw.
  *
- *   THE PROJECTIONS TAB READS `lab.json`. The placeholder is gone —
- *   deleted, not reworded — and what stands there is the lab's own
- *   player breakdown: the results table, the likeliness line and the
- *   chain of elements, under sec 3's system, with the shared statline
- *   and this app's search idiom. Every honesty rule that page
- *   enforces came with it: stored numbers only, absences named with
- *   the generation's own reason, and a strip that draws nothing
- *   rather than assert a spread nobody produced. The lab page itself
- *   is untouched and stays live.
+ *   THE PROJECTIONS TAB READS THE WHOLE-SLATE PROJECTIONS FILE. The
+ *   placeholder is gone — deleted, not reworded — and what stands
+ *   there is the lab's own player breakdown, over every game of the
+ *   week: the results table, the likeliness line and the chain of
+ *   elements, under sec 3's system, with the shared statline, the
+ *   home game switcher and this app's search idiom. Every honesty
+ *   rule the design surface enforces came with it: stored numbers
+ *   only, absences named with the generation's own reason, and a
+ *   strip that draws nothing rather than assert a spread nobody
+ *   produced. The design surface itself is untouched, keeps its
+ *   one-game file and stays live.
  *
  * docs/plan/UI_ALPHA_SPEC.md, realising
  * docs/design/FANTASY_EDGE_UI_HANDOFF.md: the tab bar (sec 2.2), the
@@ -151,7 +153,7 @@ const STUB_REPORT = "The graded report on your reads is still being built.";
  * draw what they do not — the credibility rule, which is why there is
  * no "coming soon" left on either of them. */
 const STUB_STARTSIT = "Fantasy is here; the start/sit comparison is still being built.";
-const SLATE_HEADER = "Sunday 12:00 slate";
+const SLATE_HEADER = "This week's lines";
 const SLATE_BASIS = "our numbers vs fair market odds";
 const LIVE_OVERLINE = "Closest to hitting";
 const PICKS_OVERLINE = "Saved and placed";
@@ -359,6 +361,12 @@ const TEAM_SALARY = "Salary";
 const TEAM_CURRENT = "Your team now";
 const TEAM_NONE_YET =
   "No team saved yet. Add one from a picture of your lineup.";
+/* sec 8a: the team card's OWN connect line. It used to borrow the
+ * picks service's, which talks about a watchlist and slips — the
+ * right facts under the wrong heading. Same service, same token, the
+ * subject of the sentence corrected. */
+const TEAM_CONNECT =
+  "Paste the token and your saved team appears. Teams are kept by the service, not in this browser.";
 const TEAM_FROM = "Read from ";
 
 /* sec 5.7, Track a slip. */
@@ -400,22 +408,22 @@ const NO_CAPTURED_ROWS =
   "No bookmaker line was saved for this slate, so there is nothing to screen. That means we saved none — not that the week is empty.";
 const PICKS_WATCH = "Watchlist";
 const PICKS_SLIPS = "Tracked slips";
-const PICKS_EMPTY_WATCH = "Nothing on your watchlist yet. The bookmark on a pick card puts it here.";
-const PICKS_EMPTY_SLIPS = "No slips tracked yet. Bring one back from Track a slip.";
+const PICKS_EMPTY_WATCH = "Your watchlist is empty. Tap the bookmark on any pick to save it here.";
+const PICKS_EMPTY_SLIPS = "No slips yet. Paste one in Track a slip and it appears here.";
 const PICKS_REMOVE = "Remove";
 
 /* THE CONNECT STATE. Without a token there is nowhere for a watchlist
  * or a slip to live, and this page does not pretend otherwise: it
  * says so and offers to take the token, exactly as the lab's reads
  * box does (R0's idiom). Nothing is kept locally as a stand-in. */
-const CONNECT_HEAD = "Connect to your picks service.";
+const CONNECT_HEAD = "Your picks live on your own service.";
 const CONNECT_BODY =
-  "Your watchlist and your slips are stored by the service, not in this browser. Paste the token and they load; without it there is nothing to show and nothing is kept here instead.";
+  "Paste the token and your picks appear. Your watchlist and slips are stored by the service, not in this browser, and nothing is kept here instead.";
 const CONNECT_BUTTON = "Paste the token";
 const CONNECT_PROMPT =
-  "Paste the picks token. It is kept in this browser only and sent to the picks service.";
+  "Paste your token. It stays in this browser and goes only to your own service.";
 const SERVICE_OFFLINE =
-  "The picks service is not answering right now, so your watchlist and slips are not shown. Nothing was lost and nothing is being guessed at.";
+  "Your service is not answering right now, so nothing is shown. Nothing was lost — try again in a moment.";
 const SERVICE_DEMO =
   "Sample data — a fabricated slate does not write to the real service, so the watchlist and the slips are read-only here.";
 
@@ -459,15 +467,15 @@ const LIVE_POLL_NOTE =
 const LIVE_SERVICE_NOTE =
   "Every chance here was worked out by the service from what has actually happened in the game so far; this screen only draws them.";
 
-const LIVE_CONNECT_HEAD = "Connect to your picks service.";
+const LIVE_CONNECT_HEAD = "Your live board needs your token.";
 const LIVE_CONNECT_BODY =
-  "Live chances are worked out by the service, not in this browser. Paste the token and the board loads; without it there is nothing to show and nothing is guessed at in its place.";
+  "Paste the token and your live bets appear. The chances come from your service, not this browser, so nothing is guessed at here.";
 const LIVE_OFFLINE =
-  "The service is not answering right now, so no live chance is shown. The last numbers you saw are not carried forward.";
+  "Your service is not answering right now, so no live chance is shown. The numbers you last saw are not carried forward.";
 const LIVE_EMPTY =
-  "Nothing is live right now. Bets you track show up here at kickoff, and so do this week's lines once their games start.";
+  "Nothing is live yet. Bets you track show up here at kickoff.";
 const LIVE_NO_SLATE =
-  "The slate has not loaded, so this screen does not know which week to ask the service about.";
+  "This week's games have not loaded yet, so there is nothing to follow. Try again in a moment.";
 
 /* The state's own word, so colour is never the only signal. The map
  * is the lab's, in the handoff's wording: a cashed bet reads "Hit" on
@@ -642,13 +650,16 @@ const DFS_BOOM = "High end";
 const DFS_ROWS_DRAWN = 40;
 
 /* ------------------------------------------------------------------
- * U7 — THE PROJECTIONS MERGE (UI_ALPHA_SPEC sec 6e, handoff sec 5.3)
+ * U7 + U-PROJECTIONS-FULL — THE PROJECTIONS TAB
+ * (UI_ALPHA_SPEC sec 6e and sec 8b, handoff sec 5.3)
  * ------------------------------------------------------------------
- * THE LAB'S PLAYER BREAKDOWN, ON THIS SURFACE. `lab.json` is already
- * written beside the slate on every deploy and the lab page already
- * renders it; U7 draws the same document under sec 3's system, with
- * the shared statline and this app's own search idiom. THE LAB PAGE
- * IS UNTOUCHED — it stays live as the design surface it is.
+ * THE LAB'S PLAYER BREAKDOWN, ON THIS SURFACE, OVER THE WHOLE WEEK.
+ * U7 drew the lab's one-game file here; sec 8b replaces that read
+ * with `projections.json` — the same exporter's second command, the
+ * same per-player record, every game of the slate — because a reader
+ * looking up his own players needs the other fifteen matchups and a
+ * design sandbox's slice cannot give him one. THE LAB PAGE IS
+ * UNTOUCHED and keeps its one-game file; this app no longer reads it.
  *
  * EVERY HONESTY RULE OF THAT PAGE COMES WITH IT, and they are the
  * reason this is a port and not a redesign:
@@ -674,14 +685,14 @@ const DFS_ROWS_DRAWN = 40;
  * the sheet's prose does. */
 
 const PROJ_SCOPE =
-  "One game of this week's run, from our newest set of numbers. Every figure below is one we saved; anything missing says why.";
+  "Every game of this week, from our newest set of numbers. Every figure below is one we saved; anything missing says why.";
 const PROJ_PICK_A_PLAYER = "Pick a player";
 const PROJ_SEARCH_PLACEHOLDER = "Search players in this game";
 const PROJ_SEARCH_BASIS =
-  "Matches on the names in this game's file. It is one game, so there is nobody else to find.";
+  "Matches on the names in the game above. Use the arrows to change game.";
 const PROJ_SEARCH_EMPTY = "Nobody in this game matches";
 const PROJ_NO_PLAYERS =
-  "This file carries no player for that game, so there is nothing to draw and nothing is invented in its place.";
+  "We saved no player for this game, so there is nothing to draw and nothing is invented in its place.";
 const PROJ_OFFLINE_HEAD = "The projections haven't loaded.";
 const PROJ_OFFLINE_BODY =
   "This screen reads one file we write on each deploy. It isn't here right now, so there is nothing true to draw and nothing is being guessed at.";
@@ -726,11 +737,11 @@ const PROJ_CHAIN_NOTE =
 const PROJ_CHAIN_ABSENT =
   "The workings are not available for this run.";
 const PROJ_CEILING_LABEL =
-  "Ceiling probability — chance of a top-15% week at his position";
+  "Chance of a top-15% week at his position";
 const PROJ_PROBABILITY = "probability";
 const PROJ_FULL = "Full projection";
 const PROJ_NOT_IN_FILE =
-  "This week's projections file covers one game, and he is not in it, so there is nothing to open for him.";
+  "This week's projections do not carry him, so there is nothing to open for him and nothing is invented in its place.";
 const PROJ_GENERATED = "Our numbers from ";
 
 /* ------------------------------------------------------------------
@@ -769,19 +780,29 @@ const DEMO_DFS_URL = "../demo/dfs.demo.json";
 const DFS_URL = DEMO ? DEMO_DFS_URL : REAL_DFS_URL;
 const DFS_SCHEMA = "dfs-1";
 
-/* U7's third document, on the same two paths and the same one switch.
- * It is the file the lab page has always read — written beside the
- * slate by the same deploy — and this screen reads it the same way:
- * the schema tag first, then the fields, and nothing derived. */
-const REAL_LAB_URL = "../data/lab.json";
-const DEMO_LAB_URL = "../demo/lab.demo.json";
-const LAB_URL = DEMO ? DEMO_LAB_URL : REAL_LAB_URL;
-const LAB_SCHEMA = "lab-2";
+/* U-PROJECTIONS-FULL's third document (UI_ALPHA_SPEC sec 8b), on the
+ * same two paths and the same one switch.
+ *
+ * IT IS NO LONGER THE DESIGN SANDBOX'S ONE-GAME FILE. U7 read that
+ * one, which is a SLICE — one game of the week, chosen for the
+ * designer working on the page. A reader looking up his own players
+ * needs the other fifteen games, so this screen reads
+ * `projections.json`: the same exporter, the same record builders,
+ * the same honesty rules, every game of the slate. The sandbox's file
+ * is untouched and its page still reads it; this app no longer does.
+ *
+ * Read the same way as the other two: the schema tag first, then the
+ * fields, and nothing derived. */
+const REAL_PROJECTIONS_URL = "../data/projections.json";
+const DEMO_PROJECTIONS_URL = "../demo/projections.demo.json";
+const PROJECTIONS_URL = DEMO ? DEMO_PROJECTIONS_URL
+  : REAL_PROJECTIONS_URL;
+const PROJECTIONS_SCHEMA = "projections-1";
 
 /* The eight stats the generation carries, with the app's own label and
  * the decimals each one reads in — the board's spellings, which are
  * the words on a box score. */
-const LAB_STATS = [
+const PROJ_STATS = [
   ["Pass yds", "pass_yds", 0],
   ["Pass TD", "pass_tds", 2],
   ["Carries", "rush_att", 1],
@@ -794,7 +815,7 @@ const LAB_STATS = [
 
 /* The positions a roster is grouped into, in the order they are
  * drawn. Anything else keeps its own name and sorts after them. */
-const LAB_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
+const PROJ_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
 
 /* ------------------------------------------------------------------
  * U3 — THE PICKS SERVICE
@@ -877,21 +898,75 @@ const HEADS = {
   props: ["LINE", "GAP"],
   fantasy: ["PROJ", "RANGE"],
   role: ["SHARE", "TREND"],
-  usage: ["OPP/G", "RZ %"],
+  usage: ["PER GAME", "RED ZONE"],
   market: ["", ""]
 };
 
-/* THE LEGENDS, one per view, each its own sentinel. Sec 10: numbers
- * carry units or a legend, and the unit letters are always explained
- * in the view footnote. */
+/* ------------------------------------------------------------------
+ * U-CASUAL — THE UNIT WORDS (UI_ALPHA_SPEC sec 8a)
+ * ------------------------------------------------------------------
+ * THE SHORTHAND IS DEAD. `cy`, `r`, `ry` and a bare `att` were unit
+ * LETTERS: they saved four characters in a cell and cost a reader the
+ * whole sentence, because nothing on the screen told him what one was
+ * except a legend at the bottom explaining a code that only existed to
+ * need explaining. The owner's bar is one line long — if he has to
+ * work out what `cy` means, it is not casual friendly — and this is
+ * the whole of the answer: a number carries a word he already owns.
+ *
+ * THE DOCUMENT DOES NOT MOVE. `slate.json` still ships `unit` and
+ * `unit_word` per prop, because JSON keys are contracts and the
+ * exporter's pins read them. This table is the DISPLAY side, keyed by
+ * the prop's published `market` — the field that actually says what
+ * the number is — and it is the only thing the cell reads. A market
+ * this table has never met falls back to the document's own
+ * `market_label` ("Receiving yards", "Passing touchdowns"), which is
+ * already a phrase rather than a code; it never falls back to `unit`.
+ *
+ * THE SHORT WORD IS NOT THE LABEL. "pass yds" fits a phone cell and
+ * "Passing yards" does not — this is the compact vocabulary sec 8a
+ * asks for, and the long words still head the pick card.
+ *
+ * "catches" IS THE CASUAL WORD FOR RECEPTIONS and it is what a
+ * compact cell says (sec 8a names it); "Receptions" still heads the
+ * pick card, where there is room for the longer word. */
+const UNIT_WORDS = {
+  "passing yards": "pass yds",
+  "passing touchdowns": "pass TDs",
+  "rushing attempts": "carries",
+  "rushing yards": "rush yds",
+  "receptions": "catches",
+  "receiving yards": "rec yds"
+};
+
+/* What the small word under a home-table line says, in full: the
+ * stat, then the fact that the number IS a line. "88.5 / rush yds
+ * line" reads as a sentence; "88.5ry" reads as a puzzle. */
+const UNIT_LINE = " line";
+
+/* The Usage column's own words, per position, for the same reason —
+ * `a`, `o` and `t` were the same kind of code. A position this table
+ * does not know draws its number with NO word rather than a letter:
+ * the column head already says what it is, and a code is worse than
+ * nothing. */
+const USAGE_WORDS = {
+  QB: "pass attempts",
+  RB: "carries + targets",
+  WR: "targets",
+  TE: "targets"
+};
+
+/* THE LEGENDS, one per view, each its own sentinel. Sec 10 asked that
+ * every unit be explained in the view footnote; sec 8a answers it a
+ * better way — the unit is a word, so it explains itself, and the
+ * footnote no longer has a code to translate. */
 const LEGEND_PROPS =
-  "The main line for this player with its unit, and how far our number sits from the fair market chance, in percentage points. The arrow and the number show only when we are 3 points or more above the market; anything smaller is a dash, because a gap that small is not an edge.";
+  "The main line for this player, and how far our number sits from the fair market chance, in percentage points. The arrow and the number show only when we are 3 points or more above the market; anything smaller is a dash, because a gap that small is not an edge.";
 const LEGEND_FANTASY =
   "Projected points in half-PPR scoring, added up from our own projected stats. It does not yet subtract fumbles or interceptions.";
 const LEGEND_ROLE =
   "Share is the slice of his team's work our depth chart gives him, and each cell says which slice: pass attempts for a quarterback, share of the team's carries for a back, share of the team's targets for a receiver. Trend is the change against his prior four games, shown at 5 points or more.";
 const LEGEND_USAGE =
-  "Opportunities per game over the weeks already played: a pass attempts, o carries plus targets, t targets.";
+  "Opportunities per game over the weeks already played. Each number says what it counts: pass attempts for a quarterback, carries plus targets for a back, targets for a receiver.";
 const LEGEND_MARKET =
   "The chance of the side we lean to, from the line's open until now. The solid line is our number at each update; the dashed one is the bookmaker's fair odds at each saved price. It turns green when we are 3 points or more above the market.";
 
@@ -918,6 +993,70 @@ const RANGE_ABSENT =
 /* ...and the Usage view's, for the same reason in a different place. */
 const RZ_ABSENT =
   "Red-zone share is a dash because we do not store red-zone data yet: it needs plays split by field position, and nothing is estimated in its place.";
+
+/* ------------------------------------------------------------------
+ * U-CASUAL — THE "HOW TO READ THIS" DISCLOSURE (sec 8a)
+ * ------------------------------------------------------------------
+ * THE WALL COMES DOWN AND NOT ONE FACT GOES WITH IT. Every screen
+ * here had grown a stack of honest paragraphs — what the number is,
+ * what it is measured against, which season is left out, what we
+ * refuse to invent — and the honesty was real while the reading was
+ * impossible: four sentences of provenance between a reader and the
+ * table they explain is a wall, and a wall is skipped.
+ *
+ * So each block becomes ONE SHORT LINE plus a tap. The line is what a
+ * casual reader needs to use the screen; the tap holds every sentence
+ * that was there before, unchanged, through the same plain-language
+ * layer they always went through. Nothing is dropped, summarised away
+ * or softened — an honesty rule that only survives behind a tap still
+ * survives, and one nobody reads does not.
+ *
+ * ONE COMPONENT, used by every surface that had a block: Home,
+ * Screen, Pick, Live, Fantasy, DFS and Projections. It is a native
+ * `<details>`, so it works with no script, opens under a keyboard,
+ * announces its own state to a screen reader and cannot animate
+ * itself into a reduced-motion violation. */
+const HOW_TO_READ = "How to read this";
+
+/* The one short line per home view — what the two columns ARE, in a
+ * sentence a reader finishes. Everything else about them is one tap
+ * away. */
+const SHORT_PROPS =
+  "The bookmaker's main line for each player, and how far our number is from the market.";
+const SHORT_FANTASY =
+  "Projected points in half-PPR scoring.";
+const SHORT_ROLE =
+  "How much of his team's work our depth chart gives him, and which way it is moving.";
+const SHORT_USAGE =
+  "How many chances he has had per game so far this season.";
+const SHORT_MARKET =
+  "Our chance against the bookmaker's, from the line's open until now.";
+
+const SHORTS = {
+  props: SHORT_PROPS, fantasy: SHORT_FANTASY, role: SHORT_ROLE,
+  usage: SHORT_USAGE, market: SHORT_MARKET
+};
+
+/* ...and the one short line the other surfaces lead with. */
+const SHORT_SCREEN =
+  "Every line we have a number for, biggest difference first.";
+const SHORT_LIVE =
+  "Live chances, updated about once a minute while this screen is open.";
+const SHORT_PICK =
+  "Our number for this line, and what the market is paying.";
+const SHORT_TEAM =
+  "Your lineup with our projection for each player.";
+const SHORT_PROJECTIONS =
+  "Every game of this week, with our projected stats for every player.";
+const SHORT_BREAKDOWN =
+  "Every stat we projected for him, how it has moved, and the numbers behind it.";
+const SHORT_TOTAL =
+  "Your starters' projections added up.";
+/* The one short line on the matchup card, and it carries the sec 6c
+ * meaning rather than deferring it: two totals compared, and no claim
+ * about who wins. */
+const SHORT_COMPARE =
+  "Two projected totals side by side — not a chance of winning.";
 
 /* ------------------------------------------------------------------
  * THE PLAIN-LANGUAGE LAYER (UI_ALPHA_SPEC sec 7)
@@ -1482,8 +1621,15 @@ const SPARK_MIN_SPAN = 0.10;
  * wholesale by `slate.json` at U2, and until then the Sample-data tag
  * is on the hero. */
 
-const SAMPLE_WEEK = "Week 5";
+/* "Week 5" IS GONE (sec 8a). It was a fixture string from the
+ * handoff's drawing, and it sat in the Fantasy header telling every
+ * reader the wrong week for as long as the real week was not five.
+ * The week now comes from `slate.json`'s own run block — the same
+ * place the team capture is stamped from, so the header and the saved
+ * team can never disagree — and when no slate has loaded the header
+ * simply says the scoring and claims no week at all. */
 const SAMPLE_SCORING = "half-PPR";
+const WEEK_WORD = "Week ";
 
 const SAMPLE_GAMES = [
   { away: "HOU", home: "IND", when: "SUN 12:00" },
@@ -1497,15 +1643,19 @@ const SAMPLE_GAMES = [
 /* The sec 4 skeleton row, six of them on the placeholder (sec 5.3). */
 const SKELETON_WIDTHS = [62, 48, 70, 55, 66, 44];
 
+/* sec 8a reaches the FIXTURES too. "rush att 15.5" and "Rec 3+" are
+ * strings a reader meets on the stub rows, so they say the words the
+ * real cells say — a fixture that speaks a vocabulary the product has
+ * retired is a fixture that would put it back on the screen. */
 const SAMPLE_SCREEN_ROWS = [
-  { name: "D. Hale", note: "WR · vs IND · receptions 4.5" },
-  { name: "K. Ames", note: "RB · vs CAR · rush att 15.5" },
-  { name: "M. Okafor", note: "WR · vs GB · receptions 5.5" }
+  { name: "D. Hale", note: "WR · vs IND · catches 4.5" },
+  { name: "K. Ames", note: "RB · vs CAR · carries 15.5" },
+  { name: "M. Okafor", note: "WR · vs GB · catches 5.5" }
 ];
 
 const SAMPLE_LIVE_ROWS = [
-  { name: "T. Rourke", note: "Rush att 16+ · Q3" },
-  { name: "L. Pryor", note: "Rec 3+ · Q2" }
+  { name: "T. Rourke", note: "Carries 16+ · Q3" },
+  { name: "L. Pryor", note: "Catches 3+ · Q2" }
 ];
 
 const SAMPLE_WATCHLIST_ROWS = [
@@ -1781,14 +1931,17 @@ const nav = {
     step: 1, text: "", saved: null, spans: [], dropped: {},
     busy: false, note: "" },
 
-  /* U7's own state. `lab` is the breakdown document once it has
-   * arrived (null means "not asked or not answered", which is a drawn
-   * state and not an empty game), `labNote` the reason it did not,
-   * and `proj` is which player the detail is open on plus whatever
-   * has been typed into the roster search. */
-  lab: null,
-  labNote: null,
-  labAsked: false,
+  /* THE PROJECTIONS STATE (U7, widened to the whole slate at sec 8b).
+   * `projections` is the breakdown document once it has arrived (null
+   * means "not asked or not answered", which is a drawn state and not
+   * an empty week), `projNote` the reason it did not, `projGame` the
+   * index of the game the switcher is on, and `proj` is which player
+   * the detail is open on plus whatever has been typed into the
+   * roster search. */
+  projections: null,
+  projNote: null,
+  projAsked: false,
+  projGame: 0,
   proj: { player: null, query: "" }
 };
 
@@ -2840,20 +2993,21 @@ function syncDfs() {
  * schema tag before any field, the honest arm when it does not
  * arrive, and nothing carried forward from a document that failed its
  * own contract. */
-async function loadLab() {
-  nav.labAsked = true;
+async function loadProjections() {
+  nav.projAsked = true;
   try {
-    const document = await getJSON(LAB_URL);
-    if (!document || document.lab_schema !== LAB_SCHEMA) {
-      nav.lab = null;
-      nav.labNote = PROJ_OFFLINE_SCHEMA;
+    const document = await getJSON(PROJECTIONS_URL);
+    if (!document ||
+        document.projections_schema !== PROJECTIONS_SCHEMA) {
+      nav.projections = null;
+      nav.projNote = PROJ_OFFLINE_SCHEMA;
     } else {
-      nav.lab = document;
-      nav.labNote = null;
+      nav.projections = document;
+      nav.projNote = null;
     }
   } catch (err) {
-    nav.lab = null;
-    nav.labNote = PROJ_OFFLINE_BODY;
+    nav.projections = null;
+    nav.projNote = PROJ_OFFLINE_BODY;
   }
   render();
 }
@@ -2862,11 +3016,11 @@ async function loadLab() {
  * that read it: a reader who never opens Projections never fetches
  * it, and one who arrives straight on a player's breakdown from a
  * pick card fetches it once, there. */
-function syncLab() {
-  if (nav.labAsked) return;
+function syncProjections() {
+  if (nav.projAsked) return;
   const route = currentRoute();
   if (route !== "projections" && route !== "projection") return;
-  loadLab();
+  loadProjections();
 }
 
 /* The season and week the confirmed team is FOR. It is the slate
@@ -3011,6 +3165,46 @@ function pct(value) {
 function signed(points) {
   const up = points >= 0;
   return (up ? UP : DOWN) + Math.abs(points);
+}
+
+/* ------------------------------------------------------------------
+ * THE DISCLOSURE — ONE renderer, and the only one (sec 8a)
+ * ------------------------------------------------------------------
+ * `howLines` turns the sentences a surface used to stack into the
+ * body of the expander, through `plainNote` — the same translation
+ * they went through when they stood in the reader's way, so nothing
+ * about what they SAY has changed, only where they sit.
+ *
+ * `howToRead` is the shell: a native `<details>` with a 44px summary
+ * (sec 9), no animation of any kind (so `prefers-reduced-motion` has
+ * nothing to turn off), and no state of its own — a reader who opens
+ * it and taps a row does not have to open it again, because the app
+ * re-renders around it only when the data under it changes. */
+function howLines(lines) {
+  return (lines || []).filter(function (line) {
+    return line !== null && line !== undefined && String(line) !== "";
+  }).map(function (line) {
+    return '<p class="howline">' + esc(plainNote(line)) + '</p>';
+  }).join("");
+}
+
+function howToRead(body, label) {
+  if (!body) return "";
+  return '<details class="howto"><summary class="howsum">' +
+    esc(label || HOW_TO_READ) + icon("chevron", 12, 2.5) +
+    '</summary><div class="howbody">' + body + '</div></details>';
+}
+
+/* The pair, for the surfaces that simply have a list of sentences. */
+function disclosure(lines, label) {
+  return howToRead(howLines(lines), label);
+}
+
+/* THE ONE SHORT LINE ABOVE IT. A block is a short line and a tap, and
+ * writing the two together is how they stay that way. */
+function explainer(summary, lines, label) {
+  return '<div class="legend">' + esc(summary) + '</div>' +
+    disclosure(lines, label);
 }
 
 /* ------------------------------------------------------------------
@@ -3310,18 +3504,41 @@ function marketCell(person, big) {
  * THE FIVE VIEWS — one cell's two values, per sec 5.1's table
  * ------------------------------------------------------------------ */
 
-/* `{v1, v2, tone, big}`. `tone` colours v2 and `big` tints the whole
- * cell; both are decided HERE, because both are display rules. A
- * quantity the exporter left null comes back as a dash with its own
- * reason on it, never as a zero. */
+/* THE UNIT WORD A CELL SAYS, and the two rules behind it (sec 8a):
+ * the market decides the word, and an unknown market says the
+ * document's own phrase rather than its letter. */
+function unitWord(prop) {
+  if (!prop) return "";
+  const known = UNIT_WORDS[String(prop.market || "")];
+  if (known) return known;
+  const label = String(prop.market_label || "");
+  return label ? label.toLowerCase() : "";
+}
+
+function usageWord(person) {
+  return USAGE_WORDS[String((person && person.pos) || "")
+    .toUpperCase()] || "";
+}
+
+/* `{v1, v1unit, v2, tone, big}`. `tone` colours v2 and `big` tints
+ * the whole cell; all of them are decided HERE, because all of them
+ * are display rules. A quantity the exporter left null comes back as
+ * a dash with its own reason on it, never as a zero, and `v1unit` is
+ * the word under the number (sec 8a) or "" where the number needs
+ * none. */
 function cellValues(person) {
-  const empty = { v1: DASH, v2: DASH, tone: "absent", big: false };
+  const empty = { v1: DASH, v1unit: "", v2: DASH, tone: "absent",
+    big: false };
   if (!person) return empty;
 
   if (nav.view === "props") {
     const prop = person.key_prop;
     if (!prop) return empty;
-    const line = num(prop.line) + prop.unit;
+    /* NUMBER FIRST, THEN A WORD (sec 8a). The line is the number a
+     * reader came for and it is drawn at cell size; the word under it
+     * says what the number counts, in the vocabulary he already has.
+     * The unit LETTER the document still carries is never read here. */
+    const word = unitWord(prop);
     /* SEC 7.3, AND THIS IS THE WHOLE OF IT. At GAP_MIN and above the
      * gap is an edge and is drawn as one; below it the cell is a grey
      * dash, never a small number a reader could take for one. The
@@ -3336,13 +3553,16 @@ function cellValues(person) {
      * and a blind spot is not an edge. The LINE still draws: nothing
      * about this player's cell is hidden, only the claim. */
     const big = isEdge(prop) && !isBlindSpot(prop);
-    return { v1: line, v2: big ? signed(prop.gap_pts) : DASH,
+    return { v1: num(prop.line),
+      v1unit: word ? word + UNIT_LINE : "",
+      v2: big ? signed(prop.gap_pts) : DASH,
       tone: big ? "positive" : "absent", big: big };
   }
 
   if (nav.view === "fantasy") {
     const points = person.fantasy && person.fantasy.proj;
-    return { v1: num(points), v2: DASH, tone: "absent", big: false };
+    return { v1: num(points), v1unit: "", v2: DASH, tone: "absent",
+      big: false };
   }
 
   if (nav.view === "role") {
@@ -3350,7 +3570,7 @@ function cellValues(person) {
     const trend = role.trend_pts_vs_prior4;
     const shown = trend !== null && trend !== undefined &&
       Math.abs(trend) >= TREND_MIN;
-    return { v1: pct(role.share),
+    return { v1: pct(role.share), v1unit: "",
       v2: shown ? signed(trend) : DASH,
       tone: shown ? (trend > 0 ? "positive" : "negative") : "absent",
       big: false };
@@ -3362,9 +3582,12 @@ function cellValues(person) {
     const share = usage.rz_share;
     const hot = share !== null && share !== undefined &&
       share >= RZ_MIN;
+    const absent = opp === null || opp === undefined;
     return {
-      v1: opp === null || opp === undefined
-        ? DASH : num(opp) + usage.opp_unit,
+      v1: absent ? DASH : num(opp),
+      /* The same rule as the props cell: a word, or nothing at all.
+       * The `opp_unit` letter the document carries is never read. */
+      v1unit: absent ? "" : usageWord(person),
       v2: share === null || share === undefined ? DASH : pct(share),
       tone: hot ? "positive" : "absent", big: false };
   }
@@ -3372,7 +3595,8 @@ function cellValues(person) {
   /* market: the cell IS the sparkline, so it has no v1 or v2 — but it
    * still carries the tint, because the gap is the same gap. */
   const prop = person.key_prop;
-  return { v1: "", v2: "", tone: "absent", big: isEdge(prop) };
+  return { v1: "", v1unit: "", v2: "", tone: "absent",
+    big: isEdge(prop) };
 }
 
 function cellLabel(person, team, slot) {
@@ -3386,7 +3610,8 @@ function cellLabel(person, team, slot) {
       pct(book && book.book_p);
   }
   return person.name + ", " + person.team + " " + person.pos + ", " +
-    HEADS[nav.view][0] + " " + values.v1 + ", " +
+    HEADS[nav.view][0] + " " + values.v1 +
+    (values.v1unit ? " " + values.v1unit : "") + ", " +
     HEADS[nav.view][1] + " " + values.v2;
 }
 
@@ -3404,7 +3629,15 @@ function cellBody(person, side) {
   }
   const name = '<span class="cellname">' +
     esc(person ? person.name : DASH) + '</span>';
-  const one = '<span class="cellv1">' + esc(values.v1) + '</span>';
+  /* THE NUMBER, THEN ITS WORD UNDER IT (sec 8a). One span when there
+   * is no word to say — a points total, a share — and a two-line
+   * stack when there is, so the number keeps cell size and the word
+   * sits under it small rather than being welded to its last digit. */
+  const one = '<span class="cellv1">' +
+    '<span class="cellnum">' + esc(values.v1) + '</span>' +
+    (values.v1unit
+      ? '<span class="cellunit">' + esc(values.v1unit) + '</span>'
+      : "") + '</span>';
   const two = '<span class="cellv2 ' + values.tone + '">' +
     esc(values.v2) + '</span>';
   return side === "away" ? name + one + two : two + one + name;
@@ -3494,37 +3727,22 @@ function tableRows(game) {
   }).join("");
 }
 
-/* THE PROPS UNIT KEY, built from the cells actually on screen. Sec 10
- * asks that every unit letter be explained in the view footnote, and
- * a fixed sentence would sooner or later name a letter no cell
- * carries — or miss one that a new key market brought in. */
-function unitKey(game) {
-  const seen = {};
-  ["away", "home"].forEach(function (side) {
-    (game.players[side] || []).forEach(function (id) {
-      const person = playerOf(id);
-      if (person && person.key_prop) {
-        seen[person.key_prop.unit] = person.key_prop.unit_word;
-      }
-    });
-  });
-  const keys = Object.keys(seen).sort();
-  if (!keys.length) return "";
-  return " Units: " + keys.map(function (unit) {
-    return unit + " " + seen[unit];
-  }).join(", ") + ".";
-}
-
-/* WHETHER THE CALIBRATION SENTENCE APPLIES is read off the document,
- * not assumed: it is shown when a prop on this screen belongs to one
- * of the markets the run block names, or when one does not — which is
- * both arms, and is exactly why the sentence names both. */
-function propsFootnote(game) {
-  return LEGEND_PROPS + unitKey(game) + " " + CALIBRATION_NOTE;
-}
-
+/* THE UNIT KEY IS GONE (sec 8a), and gone rather than reworded. It
+ * existed for exactly one reason — the cells carried letters — and
+ * the cells carry words now, so the sentence that translated the
+ * letters has nothing left to translate. A legend decoding the codes
+ * in the cells above it was the clearest possible proof that those
+ * cells were not casual friendly.
+ *
+ * WHETHER THE CALIBRATION SENTENCE APPLIES is still read off the
+ * document, not assumed: it is shown when a prop on this screen
+ * belongs to one of the markets the run block names, or when one does
+ * not — which is both arms, and is exactly why the sentence names
+ * both. It moved behind the tap; it did not move out. */
 function legendFor(game) {
-  if (nav.view === "props") return propsFootnote(game);
+  if (nav.view === "props") {
+    return LEGEND_PROPS + " " + CALIBRATION_NOTE;
+  }
   if (nav.view === "fantasy") {
     return LEGEND_FANTASY + " " + RANGE_ABSENT;
   }
@@ -3532,11 +3750,17 @@ function legendFor(game) {
   return LEGENDS[nav.view];
 }
 
+/* THE FOOTNOTE WALL BECOMES A LINE AND A TAP (sec 8a). The view's own
+ * legend and every note the exporter wrote onto this game are all
+ * still here, still translated, still in full — under "How to read
+ * this" instead of between the reader and the table. */
 function footnotes(game) {
   const lines = [legendFor(game)].concat(game.notes || []);
-  return lines.map(function (line) {
-    return '<div class="legend">' + esc(plainNote(line)) + '</div>';
+  const body = lines.map(function (line) {
+    return '<p class="howline">' + esc(plainNote(line)) + '</p>';
   }).join("");
+  return '<div class="legend">' + esc(SHORTS[nav.view]) + '</div>' +
+    howToRead(body);
 }
 
 function viewToggle() {
@@ -3582,24 +3806,40 @@ function kickoffLabel(stamp) {
   return days[when.getDay()] + " " + hour + ":" + minutes;
 }
 
-function switcher(game, count) {
-  const dots = games().map(function (unused, index) {
-    return '<span class="' + (index === nav.game ? "on" : "") +
-      '"></span>';
+/* ONE SWITCHER, TWO SCREENS (sec 8b). Home walks the slate's games
+ * and Projections walks the projection file's; the component is the
+ * same one, and it takes the list, the index and WHICH ACTION its
+ * arrows fire rather than reading `nav` for itself.
+ *
+ * `search` is the action its centre button fires, or "" for a screen
+ * that has no game search to open — on Projections the search box
+ * below it is a PLAYER search within the game, so the matchup renders
+ * as a label rather than a button that promises something else. */
+function switcher(game, list, index, step, search) {
+  const count = (list || []).length;
+  const dots = (list || []).map(function (unused, at) {
+    return '<span class="' + (at === index ? "on" : "") + '"></span>';
   }).join("");
   const when = kickoffLabel(game.kickoff);
-  return '<div class="switcher">' +
-    '<button class="arrow" data-act="game" data-step="-1" ' +
-    'aria-label="Previous game">' + icon("back", 20, 2.5) + '</button>' +
-    '<button class="matchup" data-act="search-open" aria-label="' +
-    esc(game.away + " at " + game.home + (when ? ", " + when : "") +
-      ". Search games") + '">' +
-    '<span class="teams">' + esc(game.away) +
+  const position = esc(when ? when + " · " : "") + (index + 1) +
+    ' OF ' + count;
+  const teams = '<span class="teams">' + esc(game.away) +
     ' <span class="at">@</span> ' + esc(game.home) +
-    icon("search", 15, 2.5) + '</span>' +
-    '<span class="when">' + esc(when ? when + " · " : "") +
-    (nav.game + 1) + ' OF ' + count + '</span></button>' +
-    '<button class="arrow" data-act="game" data-step="1" ' +
+    (search ? icon("search", 15, 2.5) : "") + '</span>';
+  const middle = search
+    ? '<button class="matchup" data-act="' + esc(search) +
+      '" aria-label="' +
+      esc(game.away + " at " + game.home + (when ? ", " + when : "") +
+        ". Search games") + '">' + teams +
+      '<span class="when">' + position + '</span></button>'
+    : '<div class="matchupflat">' + teams +
+      '<span class="when">' + position + '</span></div>';
+  return '<div class="switcher">' +
+    '<button class="arrow" data-act="' + esc(step) +
+    '" data-step="-1" ' +
+    'aria-label="Previous game">' + icon("back", 20, 2.5) + '</button>' +
+    middle +
+    '<button class="arrow" data-act="' + esc(step) + '" data-step="1" ' +
     'aria-label="Next game">' + icon("next", 20, 2.5) + '</button>' +
     '</div>' +
     '<div class="dots" aria-hidden="true">' + dots + '</div>';
@@ -3627,7 +3867,8 @@ function matchCard() {
       '<div class="legend">' + esc(NO_GAMES_BODY) + '</div></div>';
   }
   return '<div class="matchcard" id="matchcard">' +
-    switcher(game, games().length) + matchBody(game) + '</div>';
+    switcher(game, games(), nav.game, "game", "search-open") +
+    matchBody(game) + '</div>';
 }
 
 /* THE OFFLINE ARM. The shell's own stub, with the honest note: the
@@ -3786,11 +4027,21 @@ function lineupSkeleton() {
     }).join("") + '</div>';
 }
 
+/* THE WEEK THE SLATE SAYS IT IS (sec 8a). `slate.json`'s run block is
+ * the one clock this app reads; a header that derived its own would be
+ * a second opinion about which week the reader is looking at. */
+function slateWeekWord() {
+  const run = (nav.slate && nav.slate.run) || {};
+  const week = numberOrNull(run.week);
+  return week === null ? "" : WEEK_WORD + week;
+}
+
 function fantasyHead() {
+  const week = slateWeekWord();
   return '<div class="pagehead"><div class="pagetitle">' +
     esc(TITLE_FANTASY) + '</div><div class="pagemeta">' +
-    esc(SAMPLE_WEEK + " · " + SAMPLE_SCORING) + '</div></div>' +
-    subToggle("fantasy");
+    esc((week ? week + " · " : "") + SAMPLE_SCORING) +
+    '</div></div>' + subToggle("fantasy");
 }
 
 /* sec 6a — THE TEAM-CAPTURE ENTRY POINT, on both Fantasy sub-views.
@@ -3804,7 +4055,7 @@ function teamEntryCard(kind) {
     '<div class="cardbody">' +
     esc(held
       ? teamHeldLine(held)
-      : (nav.hasToken ? TEAM_NONE_YET : CONNECT_BODY)) + '</div>' +
+      : (nav.hasToken ? TEAM_NONE_YET : TEAM_CONNECT)) + '</div>' +
     '<button class="primary" data-act="team-open" data-kind="' +
     esc(kind) + '">' + esc(TEAM_ENTRY) + '</button>' +
     '<div class="legend">' + esc(TEAM_ENTRY_SUB) + '</div></div>';
@@ -4010,13 +4261,13 @@ function lineupTable(rows) {
     '<span class="lineupproj">' + esc(LINEUP_PROJ) + '</span>' +
     '</div>' +
     rows.map(lineupRow).join("") +
-    '<div class="legend">' + esc(LEGEND_FANTASY) + '</div>' +
-    (anyRange
-      ? ""
-      : '<div class="legend">' + esc(RANGE_ABSENT) + '</div>') +
-    (offSlate
-      ? '<div class="legend">' + esc(LINEUP_OFF_SLATE) + '</div>'
-      : "") + '</div>';
+    /* sec 8a: the scoring rule, the missing points range and the
+     * off-slate note are three paragraphs under a lineup table. One
+     * line and a tap; all three survive inside, and the two that are
+     * conditional are still only said when they are true. */
+    explainer(SHORT_TEAM, [LEGEND_FANTASY,
+      anyRange ? "" : RANGE_ABSENT,
+      offSlate ? LINEUP_OFF_SLATE : ""]) + '</div>';
 }
 
 /* THE MATCHUP CARD, and the whole of sec 6c's rule about it. OUR
@@ -4051,15 +4302,21 @@ function matchupCard(mine, theirs) {
           : (edge > 0 ? COMPARE_AHEAD : COMPARE_BEHIND) +
             num(Math.abs(edge)) + COMPARE_POINTS) + '</div>'
       : "") +
-    '<div class="legend">' + esc(TEAM_TOTAL_BASIS) + '</div>' +
+    /* THE SKIPPED PLAYERS STAY IN THE OPEN. They are a fact about the
+     * number directly above them — it is not everybody's — and a
+     * total that quietly left somebody out is the one thing on this
+     * card that must not need a tap. */
     (ours.skipped.length
       ? '<div class="legend">' + esc(TEAM_TOTAL_SKIPPED +
         ours.skipped.join(", ") + ".") + '</div>'
       : "") +
-    (both
-      ? '<div class="overline comparehead">' + esc(COMPARE_HEAD) +
-        '</div><div class="legend">' + esc(COMPARE_NOTE) + '</div>'
-      : "") + '</div>';
+    /* sec 8a. The SHORT LINE carries the meaning that matters at a
+     * glance — these are two projected totals, not a chance of
+     * winning — and the full basis and the full sec 6c sentence sit
+     * under the tap, unchanged. */
+    explainer(both ? SHORT_COMPARE : SHORT_TOTAL,
+      [TEAM_TOTAL_BASIS, both ? COMPARE_NOTE : ""],
+      both ? COMPARE_HEAD : HOW_TO_READ) + '</div>';
 }
 
 /* SEC 5.2's FLEX call, and sec 6c's shape for it: the captured FLEX
@@ -4089,9 +4346,12 @@ function flexReason(row) {
       plainNote(role.share_label || "share"));
   }
   if (usage.opp_per_game !== null && usage.opp_per_game !== undefined) {
-    parts.push(num(usage.opp_per_game) + " " +
-      plainNote(usage.opp_word || "") + " a game over " +
-      usage.opp_games + (usage.opp_games === 1 ? " game" : " games"));
+    /* The casual word, not the document's own — sec 8a's rule is the
+     * same wherever a workload is said out loud. */
+    const word = usageWord(row.person);
+    parts.push(num(usage.opp_per_game) + (word ? " " + word : "") +
+      " a game over " + usage.opp_games +
+      (usage.opp_games === 1 ? " game" : " games"));
   }
   return parts.join(" · ");
 }
@@ -4248,14 +4508,25 @@ function dfsTrim(table, drawn) {
     total + DFS_SHOWING_TAIL) + '</div>';
 }
 
+/* sec 8a: a table's rules and its column meanings are S-016's words
+ * and every one of them survives — inside the tap, where a reader who
+ * wants to know what a column means can find them all in one place
+ * rather than reading four paragraphs to reach the table.
+ *
+ * THE ABSENCE SENTENCES AND THE TRIM LINE STAY IN THE OPEN, because
+ * each is about what is NOT on the screen in front of him: a table
+ * that had no data, or rows that were not drawn. Those are not
+ * background. */
 function dfsSection(name, body, drawn) {
   const table = dfsTable(name);
+  const rules = dfsRules(table);
+  const columns = dfsColumnList(table);
   return '<div class="card"><div class="cardhead">' +
     esc(DFS_TITLES[name]) + '</div>' +
     (table && table.present ? body(table) : "") +
     dfsAbsence(table) +
     (table && table.present ? dfsTrim(table, drawn) : "") +
-    dfsRules(table) + dfsColumnList(table) + '</div>';
+    howToRead(rules + columns) + '</div>';
 }
 
 function bucketWords(label) {
@@ -4397,18 +4668,18 @@ function dkEntryCard() {
       : "") + '</div>';
 }
 
+/* THE NO-BET FOOTER STAYS IN THE OPEN, always. S-016 binds it as a
+ * fixed sentence on the sheet — this page contains no bet and no play
+ * recommendation — and a promise about what a screen is NOT does not
+ * go behind a tap. The two background rules beside it do. */
 function dfsFooter() {
   const footer = dfsSentence("no_bet_footer");
   if (!footer) return "";
   return '<div class="card"><div class="overline">' +
     esc(DFS_FOOTER_HEAD) + '</div>' +
     '<div class="cardbody">' + esc(plainNote(footer)) + '</div>' +
-    ["season_rule", "ownership_rule"].map(function (key) {
-      const line = dfsSentence(key);
-      return line
-        ? '<div class="legend">' + esc(plainNote(line)) + '</div>'
-        : "";
-    }).join("") + '</div>';
+    disclosure([dfsSentence("season_rule"),
+      dfsSentence("ownership_rule")]) + '</div>';
 }
 
 function renderFantasyDfs() {
@@ -4538,48 +4809,90 @@ function renderTeam() {
 }
 
 /* ------------------------------------------------------------------
- * U7 — THE PROJECTIONS MERGE (sec 6e)
+ * U-PROJECTIONS-FULL — EVERY GAME, EVERY PLAYER (sec 8b)
  * ------------------------------------------------------------------
- * The lab's player breakdown, read off the same document the lab page
- * reads, drawn under this app's system. Two screens: the roster with
- * the app's search idiom, and one player's whole breakdown pushed on
- * top of it.
+ * The breakdown U7 built, over the WHOLE SLATE. The document is a
+ * list of games, each with its own game block and its own players, so
+ * this screen gains exactly one thing U7 did not have: the HOME
+ * SWITCHER, the same component, over the same kind of list. Under it
+ * the roster, the search and the per-player breakdown are what they
+ * already were — every honesty rule of the lab's page came across at
+ * U7 and none of them is touched by there being sixteen games instead
+ * of one.
  * ------------------------------------------------------------------ */
 
-function labPlayers() {
-  return (nav.lab && nav.lab.players) || [];
+function projGames() {
+  return (nav.projections && nav.projections.games) || [];
 }
 
-function labPlayerOf(playerId) {
-  const all = labPlayers();
-  for (let index = 0; index < all.length; index += 1) {
-    if (all[index].player_id === playerId) return all[index];
+/* THE GAME ON SCREEN. `nav.projGame` is an index into the file's own
+ * list, clamped rather than trusted: a document that arrives with
+ * fewer games than the one before it must not leave the screen
+ * pointing past its end. */
+function projGame() {
+  const list = projGames();
+  if (!list.length) return null;
+  return list[Math.min(nav.projGame, list.length - 1)] || null;
+}
+
+/* The players of the SELECTED game, which is what the roster lists
+ * and what the search matches against — the lab's own scope, with the
+ * switcher covering the rest of the week (sec 8b). */
+function projPlayers() {
+  const block = projGame();
+  return (block && block.players) || [];
+}
+
+/* ...and the lookup that spans the WHOLE file, because a reader who
+ * followed the link from a pick card is asking for one man and does
+ * not know or care which block he is in. It answers with the player
+ * AND the index of his game, so the screen can move the switcher to
+ * him rather than telling him he is not here. */
+function projFind(playerId) {
+  const games = projGames();
+  for (let g = 0; g < games.length; g += 1) {
+    const people = games[g].players || [];
+    for (let i = 0; i < people.length; i += 1) {
+      if (people[i].player_id === playerId) {
+        return { player: people[i], game: g };
+      }
+    }
   }
   return null;
 }
 
+function projPlayerOf(playerId) {
+  const found = projFind(playerId);
+  return found ? found.player : null;
+}
+
 /* The player the detail is open on: the one asked for, or — for a
  * reader who arrived on the list and has not chosen yet — the first
- * in the file. Never a silent substitution for a man who is not in
- * it: `labPlayerOf` returning null is a drawn state. */
-function labSelected() {
-  if (nav.proj.player) return labPlayerOf(nav.proj.player);
-  const all = labPlayers();
+ * of the game on screen. Never a silent substitution for a man who is
+ * not in the file: `projPlayerOf` returning null is a drawn state. */
+function projSelected() {
+  if (nav.proj.player) return projPlayerOf(nav.proj.player);
+  const all = projPlayers();
   return all.length ? all[0] : null;
 }
 
-/* The run and the game the file is about, said in the app's words. */
-function labMeta() {
-  const run = (nav.lab && nav.lab.run) || {};
-  const game = (nav.lab && nav.lab.game) || {};
-  const parts = [];
-  if (game.away || game.home) {
-    parts.push(String(game.away || "") + " @ " + String(game.home || ""));
-  }
-  if (run.week !== undefined && run.week !== null) {
-    parts.push("Week " + run.week);
-  }
-  return parts.join(" · ");
+/* The week the file is for, said in the app's words. The MATCHUP is
+ * no longer part of this line: the switcher says which game it is,
+ * where a reader can also change it. */
+function projMeta() {
+  const run = (nav.projections && nav.projections.run) || {};
+  const week = numberOrNull(run.week);
+  return week === null ? "" : WEEK_WORD + week;
+}
+
+/* The game one player is in, for the line under his name on his own
+ * breakdown screen. */
+function projWhere(player) {
+  const found = player ? projFind(player.player_id) : null;
+  const block = found ? projGames()[found.game] : null;
+  const game = block && block.game;
+  if (!game) return "";
+  return String(game.away || "") + " @ " + String(game.home || "");
 }
 
 /* sec 5.1's search, on this screen's own list. The idiom is the home
@@ -4599,7 +4912,7 @@ function projSearch() {
 
 function projMatches() {
   const query = String(nav.proj.query || "").trim().toLowerCase();
-  const all = labPlayers();
+  const all = projPlayers();
   if (!query) return all;
   return all.filter(function (player) {
     return String(player.name || "").toLowerCase().indexOf(query) !== -1;
@@ -4615,10 +4928,10 @@ function projRoster(list) {
     const pos = String(player.pos || "").toUpperCase() || DASH;
     (groups[pos] = groups[pos] || []).push(player);
   });
-  const order = LAB_POS_ORDER.filter(function (pos) {
+  const order = PROJ_POS_ORDER.filter(function (pos) {
     return groups[pos];
   }).concat(Object.keys(groups).filter(function (pos) {
-    return LAB_POS_ORDER.indexOf(pos) === -1;
+    return PROJ_POS_ORDER.indexOf(pos) === -1;
   }).sort());
   return order.map(function (pos) {
     return '<div class="card projgroup"><div class="overline">' +
@@ -4637,19 +4950,31 @@ function projRoster(list) {
 function renderProjections() {
   const head = '<div class="pagehead"><div class="pagetitle">' +
     esc(TITLE_PROJECTIONS) + '</div><div class="pagemeta">' +
-    esc(nav.lab ? labMeta() : "") + '</div></div>';
-  if (!nav.lab) {
+    esc(nav.projections ? projMeta() : "") + '</div></div>';
+  /* THE HONEST ARM, unchanged by there being more games in the file:
+   * no document, nothing drawn, and the sentence says which kind of
+   * absence it is. */
+  if (!nav.projections) {
     return '<div class="page">' + head +
       '<div class="card"><div class="cardhead">' +
       esc(PROJ_OFFLINE_HEAD) + '</div><div class="cardbody">' +
-      esc(nav.labNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
+      esc(nav.projNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
   }
+  const game = projGame();
   return '<div class="page">' + head +
-    '<div class="card"><div class="cardbody">' + esc(PROJ_SCOPE) +
-    '</div></div>' + projSearch() +
+    /* THE HOME SWITCHER, the same renderer (sec 8b). Its search
+     * affordance is off here because the search on this screen is a
+     * PLAYER search within the game, which is the lab's own scope —
+     * the arrows are what cover the rest of the week. */
+    (game
+      ? '<div class="card projswitch">' +
+        switcher(game.game, projGames(), nav.projGame, "proj-game",
+          "") + '</div>'
+      : "") +
+    projSearch() +
     '<div class="overline projpick">' + esc(PROJ_PICK_A_PLAYER) +
     '</div><div class="projlist" id="projlist">' + projListBody() +
-    '</div></div>';
+    '</div>' + explainer(SHORT_PROJECTIONS, [PROJ_SCOPE]) + '</div>';
 }
 
 /* The list under the search, and the sec 8 empty state that belongs
@@ -4679,7 +5004,7 @@ function projListBody() {
  * points, which would be hiding a number the generation saved. The
  * block keeps every figure and puts the line at full width. */
 function projResults(player) {
-  const blocks = LAB_STATS.filter(function (stat) {
+  const blocks = PROJ_STATS.filter(function (stat) {
     return numberOrNull((player.proj || {})[stat[1]]) !== null ||
       Array.isArray((player.stat_quantiles || {})[stat[1]]);
   }).map(function (stat) {
@@ -4866,8 +5191,8 @@ function projRows(player, block, which) {
 }
 
 function projContext(player) {
-  const rows = projRows(player, (nav.lab && nav.lab.context) || {},
-    "context");
+  const block = (nav.projections && nav.projections.context) || {};
+  const rows = projRows(player, block, "context");
   if (!rows) return "";
   return '<div class="card"><div class="overline">' +
     esc(PROJ_CONTEXT_HEAD) + '</div><div class="legend">' +
@@ -4877,7 +5202,7 @@ function projContext(player) {
 }
 
 function projChain(player) {
-  const block = (nav.lab && nav.lab.elements) || {};
+  const block = (nav.projections && nav.projections.elements) || {};
   const rows = projRows(player, block, "elements");
   const share = numberOrNull(player.p_ceiling);
   const probability = share === null ? ""
@@ -4900,7 +5225,7 @@ function projChain(player) {
  * every stat this run carried a projection for, with the absence
  * idiom the component already has. */
 function projStatline(player) {
-  const entries = LAB_STATS.filter(function (stat) {
+  const entries = PROJ_STATS.filter(function (stat) {
     return numberOrNull((player.proj || {})[stat[1]]) !== null ||
       Array.isArray((player.stat_quantiles || {})[stat[1]]);
   }).map(function (stat) {
@@ -4912,7 +5237,7 @@ function projStatline(player) {
 }
 
 function projProvenance() {
-  const run = (nav.lab && nav.lab.run) || {};
+  const run = (nav.projections && nav.projections.run) || {};
   if (!run.generated_ts) return "";
   return '<div class="legend">' + esc(PROJ_GENERATED) +
     esc(String(run.generated_ts).replace("T", " ").slice(0, 16)) +
@@ -4920,13 +5245,13 @@ function projProvenance() {
 }
 
 function renderProjection() {
-  const player = labSelected();
+  const player = projSelected();
   const head = detailHead(TITLE_PROJECTIONS);
-  if (!nav.lab) {
+  if (!nav.projections) {
     return '<div class="page">' + head +
       '<div class="card"><div class="cardhead">' +
       esc(PROJ_OFFLINE_HEAD) + '</div><div class="cardbody">' +
-      esc(nav.labNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
+      esc(nav.projNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
   }
   if (!player) {
     return '<div class="page">' + head +
@@ -4934,8 +5259,10 @@ function renderProjection() {
       esc(PROJ_NOT_IN_FILE) + '</div></div></div>';
   }
   const meta = [player.team, player.pos];
-  const where = labMeta();
+  const where = projWhere(player);
   if (where) meta.push(where);
+  const week = projMeta();
+  if (week) meta.push(week);
   return '<div class="page">' + head +
     '<div class="card playercard">' +
     '<div class="exphead"><span class="pickname">' +
@@ -4945,8 +5272,9 @@ function renderProjection() {
     projStatline(player) + '</div>' +
     '<div class="card"><div class="overline">' +
     esc(PROJ_RESULTS_HEAD) + '</div>' +
-    '<div class="legend">' + esc(PROJ_MOVED_NOTE) + '</div>' +
-    '<div class="legend">' + esc(PROJ_LIKELY_NOTE) + '</div>' +
+    /* sec 8a: two paragraphs explaining a chart the reader can see
+     * become one line and a tap. Both sentences are inside, whole. */
+    explainer(SHORT_BREAKDOWN, [PROJ_MOVED_NOTE, PROJ_LIKELY_NOTE]) +
     projResults(player) + '</div>' +
     projContext(player) + projChain(player) + projProvenance() +
     '</div>';
@@ -5169,8 +5497,11 @@ function screenRow(entry, index) {
     '" aria-label="' + esc(label) + '">' +
     '<span class="screencol">' +
     '<span class="screenname">' + esc(entry.person.name) + '</span>' +
+    /* sec 8a: the MARKET'S OWN LABEL, never its key. "WR · vs IND ·
+     * player_reception_yds 4.5" was a database column read at a
+     * reader; "WR · vs IND · Receiving yards 4.5" is the same row. */
     '<span class="screenmeta">' + esc(entry.person.pos + " · vs " +
-      opponentOf(entry.game, entry.side) + " · " + prop.market +
+      opponentOf(entry.game, entry.side) + " · " + prop.market_label +
       " " + prop.line) + '</span>' +
     (blind ? '<span class="blindnote">' + esc(BLIND_SPOT_NOTE) +
       '</span>' : "") + '</span>' +
@@ -5208,9 +5539,12 @@ function renderBetsScreen() {
             : "") + screenRow(entry, index);
         }).join("") + '</div>'
       : '<div class="legend">' + esc(NO_CAPTURED_ROWS) + '</div>') +
-    '<div class="legend">' + esc(GAP_FOOTNOTE + " " + CLIENT_GAP_RULE) +
-    '</div>' +
-    '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div></div>';
+    /* sec 8a: one line, then the tap. What "vs the market" means,
+     * the 3-point rule this page applies and which markets have been
+     * checked against history are all still said, in full, one tap
+     * down. */
+    explainer(SHORT_SCREEN,
+      [GAP_FOOTNOTE, CLIENT_GAP_RULE, CALIBRATION_NOTE]) + '</div>';
 }
 
 /* ------------------------------------------------------------------
@@ -5395,9 +5729,12 @@ function renderBetsLive() {
   return head +
     '<div class="livelist">' + bets.map(liveRow).join("") + '</div>' +
     '<div class="legend">' + esc(liveFreshness()) + '</div>' +
-    '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div>' +
-    '<div class="legend">' + esc(LIVE_POLL_NOTE) + '</div>' +
-    '<div class="legend">' + esc(LIVE_SERVICE_NOTE) + '</div></div>';
+    /* sec 8a: the freshness line stays out in the open — it is about
+     * the numbers a reader is looking at right now — and the three
+     * paragraphs behind it go under the tap, whole. */
+    explainer(SHORT_LIVE,
+      [CALIBRATION_NOTE, LIVE_POLL_NOTE, LIVE_SERVICE_NOTE]) +
+    '</div>';
 }
 
 /* ------------------------------------------------------------------
@@ -5630,8 +5967,11 @@ function barsSection(prop) {
       : "") +
     '<div class="gapline ' + (isEdge(prop) ? "positive" : "absent") +
     '">' + esc(gapText(prop)) + '</div>' +
-    '<div class="legend">' + esc(GAP_FOOTNOTE + " " + CLIENT_GAP_RULE) +
-    '</div>' +
+    /* sec 8a: ONE short line under the number it explains. The 3-point
+     * rule that used to run on after it is the same sentence the
+     * card's own "How to read this" carries at the bottom, so saying
+     * it twice made a wall out of a footnote. */
+    '<div class="legend">' + esc(GAP_FOOTNOTE) + '</div>' +
     /* U6: the button opens the sheet it has always named, on THIS
      * prop — the read carries the player, the market and the line it
      * was written against, which is the context the service already
@@ -5691,12 +6031,13 @@ function otherMarkets(person, prop) {
  * as it would if he had walked in through the tab.
  *
  * The link is drawn WITHOUT ASKING FIRST whether the breakdown file
- * has him. That file covers one game and it is not fetched until the
- * Projections tab is opened, so the pick card cannot know — and
- * fetching it here to find out would be a request made to decide
- * whether to draw a button. The screen it leads to says so plainly
- * when he is not in it, which is where somebody who followed the
- * link can actually read it. */
+ * has him. That file is not fetched until the Projections tab is
+ * opened, so the pick card cannot know — and fetching it here to find
+ * out would be a request made to decide whether to draw a button.
+ * Since sec 8b the file covers the WHOLE SLATE, so the answer is
+ * almost always yes; when it is not, the screen it leads to says so
+ * plainly, which is where somebody who followed the link can actually
+ * read it. */
 function fullProjection(person) {
   return '<button class="ghost wide" data-act="projection" ' +
     'data-player="' + esc(person.player_id) + '" aria-label="' +
@@ -5739,7 +6080,11 @@ function renderPick() {
     '<button class="primary" data-act="copy" data-player="' +
     esc(person.player_id) + '" data-market="' + esc(prop.market) +
     '">' + esc(PICK_COPY) + '</button>' +
-    '<div class="legend">' + esc(plainNote(prop.basis)) + '</div></div>';
+    /* sec 8a: the exporter's provenance paragraph — which book, which
+     * price, what it is not — used to close this card as a wall. It
+     * closes it as a tap now, with the same sentence inside. */
+    explainer(SHORT_PICK, [prop.basis, GAP_FOOTNOTE, CLIENT_GAP_RULE]) +
+    '</div>';
 }
 
 /* ------------------------------------------------------------------
@@ -6497,7 +6842,7 @@ function render() {
    * ONCE, the first time that sub-view is drawn. */
   syncDfs();
   /* U7: and the breakdown document, on the same rule. */
-  syncLab();
+  syncProjections();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
@@ -6513,7 +6858,8 @@ function redrawCard(step) {
   if (!card) return;
   const game = currentGame();
   if (nav.slate && game) {
-    card.innerHTML = switcher(game, games().length) + matchBody(game);
+    card.innerHTML = switcher(game, games(), nav.game, "game",
+      "search-open") + matchBody(game);
     /* ONLY A GAME CHANGE SWAPS. A view change and a row toggle redraw
      * the same game's table, and sliding it sideways would say a
      * different game had arrived. */
@@ -6544,6 +6890,18 @@ function pickGame(index) {
   nav.query = "";
   renderSearch();
   redrawCard(step);
+}
+
+/* The SAME step, on the projections file's own list (sec 8b). The
+ * roster and the search are scoped to the game on screen, so changing
+ * the game clears what was typed: a query that survived the move
+ * would be filtering a roster the reader never chose. */
+function stepProjGame(step) {
+  const count = projGames().length;
+  if (!count) return;
+  nav.projGame = (nav.projGame + step + count) % count;
+  nav.proj.query = "";
+  render();
 }
 
 /* Sec 5.1: ONE row open at a time. Tapping the open one closes it. */
@@ -6580,6 +6938,8 @@ function onClick(event) {
     swapSub(target.getAttribute("data-tab"), target.getAttribute("data-sub"));
   } else if (act === "game") {
     stepGame(Number(target.getAttribute("data-step")) || 1);
+  } else if (act === "proj-game") {
+    stepProjGame(Number(target.getAttribute("data-step")) || 1);
   } else if (act === "view") {
     setView(target.getAttribute("data-view"));
   } else if (act === "row") {
@@ -6789,7 +7149,18 @@ function openPick(playerId, market) {
  * it is the cross-tab push in both cases, because a detail belongs to
  * the Projections stack wherever it was opened from. */
 function openProjection(playerId) {
-  if (playerId) nav.proj.player = playerId;
+  if (playerId) {
+    nav.proj.player = playerId;
+    /* THE SWITCHER FOLLOWS THE MAN (sec 8b). He may be in any game of
+     * the week, and a reader who pops back to the list should land on
+     * the game he was just reading about rather than on whichever one
+     * the switcher happened to be showing. */
+    const found = projFind(playerId);
+    if (found) {
+      nav.projGame = found.game;
+      nav.proj.query = "";
+    }
+  }
   openIn("projections", "projection");
 }
 

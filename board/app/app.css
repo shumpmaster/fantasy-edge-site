@@ -443,6 +443,44 @@ body{
 .legend{font-size:var(--type-meta);color:var(--muted);line-height:1.45;padding:8px 12px 0}
 
 /* --------------------------------------------------------------------
+   U-CASUAL — THE "HOW TO READ THIS" DISCLOSURE (UI_ALPHA_SPEC sec 8a)
+
+   A native <details>. It needs no script, it opens under a keyboard,
+   it announces its own state, and it CANNOT ANIMATE — there is no
+   transition and no height interpolation anywhere below, so
+   prefers-reduced-motion has nothing here to turn off and the whole
+   component is reduced-motion safe by construction rather than by a
+   media query that somebody has to remember.
+
+   The summary is a 44px target (sec 9) because it is the one control
+   standing between a reader and every honest sentence a screen has.
+   -------------------------------------------------------------------- */
+.howto{margin:6px 12px 0;border-top:1px solid var(--rule)}
+.howsum{
+  min-height:44px;
+  display:flex;align-items:center;gap:6px;
+  font-size:var(--type-meta);font-weight:var(--w-medium);
+  color:var(--muted);
+  cursor:pointer;list-style:none;
+  padding:0;
+}
+.howsum::-webkit-details-marker{display:none}
+.howsum::marker{content:""}
+.howsum svg{color:var(--subtle)}
+.howto[open] .howsum svg{transform:rotate(180deg)}
+.howbody{padding:0 0 10px}
+.howline{
+  margin:0 0 8px;
+  font-size:var(--type-meta);color:var(--muted);line-height:1.45;
+}
+.howline:last-child{margin-bottom:0}
+/* the DFS tables hand their own blocks in, so the pieces they are
+   made of sit inside the body without their outer padding */
+.howbody .legend{padding:8px 0 0}
+.howbody .overline{padding:10px 0 2px}
+.howbody .colnotes{padding:0}
+
+/* --------------------------------------------------------------------
    U2 — THE HOME MATCHUP TABLE (sec 5.1)
 
    The mirrored seven rows, the five views, the expanded rows and the
@@ -527,13 +565,28 @@ body{
   align-items:end;padding:0 2px 4px;
   border-bottom:1.5px solid var(--ink);
 }
+/* The head row's own gap is 4px, not the cells' 2px, and its letter
+   spacing is tighter than the overline's: "RANGE" and "TREND" are the
+   longest words over the two narrow tracks (sec 8a's 44/36), and two
+   heads that touch read as one word nobody wrote. The 2px of drift
+   against the cells below is invisible; a run-together head is not. */
 .tside{
-  display:grid;gap:2px;
+  display:grid;gap:4px;
   font-size:10px;font-weight:var(--w-semibold);
-  letter-spacing:0.04em;color:var(--muted);
+  letter-spacing:0.02em;color:var(--muted);
 }
-.tside.away{grid-template-columns:minmax(0, 1fr) 40px 38px}
-.tside.home{grid-template-columns:38px 40px minmax(0, 1fr)}
+/* THE TRACKS ARE 44 AND 36 (UI_ALPHA_SPEC sec 8a), not 40 and 38.
+   The cell is number-first with a small unit word under it — "88.5"
+   over "rush yds line" — so the VALUE track widens to hold a number
+   at cell size with its word wrapping under it in at most two lines,
+   and the GAP track gives the 4px back: an arrow and two digits need
+   less than "TREND" does, and the header word is what sets the floor
+   on that column. The two moves cancel: the fixed total is 80px
+   either way, so THE NAME COLUMN IS NOT PAID FOR BY THE REDESIGN. At
+   360px the two sides are 150px each and the name keeps 66px, which
+   is what it had before this cell was redrawn. */
+.tside.away{grid-template-columns:minmax(0, 1fr) 44px 36px}
+.tside.home{grid-template-columns:36px 44px minmax(0, 1fr)}
 .tside.away .tteam{padding-left:4px}
 .tside.home .tteam{padding-right:4px;text-align:right}
 .tteam{color:var(--ink);font-size:var(--type-cell)}
@@ -549,16 +602,19 @@ body{
 .trow.alt{background:var(--row-alt)}
 .trow.open{background:var(--ground)}
 
+/* 50px and not 46: the cell is two lines deep wherever it carries a
+   unit word (sec 8a), and a row that breathes is the whole point of
+   the redesign. The position toggle beside it matches. */
 .cellbtn{
-  min-height:46px;min-width:44px;
+  min-height:50px;min-width:44px;
   border:none;background:transparent;
   border-radius:6px;
   cursor:pointer;font-family:inherit;color:var(--ink);
   padding:0;text-align:left;
   display:grid;gap:2px;align-items:center;
 }
-.cellbtn.away{grid-template-columns:minmax(0, 1fr) 40px 38px}
-.cellbtn.home{grid-template-columns:38px 40px minmax(0, 1fr)}
+.cellbtn.away{grid-template-columns:minmax(0, 1fr) 44px 36px}
+.cellbtn.home{grid-template-columns:36px 44px minmax(0, 1fr)}
 .cellbtn.away.market{grid-template-columns:minmax(0, 1fr) 84px;gap:4px}
 .cellbtn.home.market{grid-template-columns:84px minmax(0, 1fr);gap:4px}
 .cellbtn.tinted{background:var(--positive-cell)}
@@ -570,7 +626,22 @@ body{
 }
 .cellbtn.away .cellname{padding-left:4px}
 .cellbtn.home .cellname{padding-right:4px;text-align:right}
-.cellv1{font-size:12px}
+/* NUMBER FIRST, UNIT WORD UNDER IT (sec 8a). The number keeps cell
+   size and cell weight; the word is small, muted and allowed to wrap
+   inside its own track, so nothing is ever cut in half and no letter
+   code is needed to make it fit. */
+.cellv1{
+  display:flex;flex-direction:column;gap:0;
+  line-height:1.15;min-width:0;
+}
+.cellnum{font-size:13px;font-weight:var(--w-medium)}
+.cellunit{
+  font-size:9px;font-weight:var(--w-regular);
+  color:var(--muted);letter-spacing:0.01em;
+  white-space:normal;overflow-wrap:anywhere;
+}
+.cellbtn.away .cellv1{align-items:flex-end}
+.cellbtn.home .cellv1{align-items:flex-start}
 .cellbtn.away .cellv1,.cellbtn.away .cellv2{text-align:right}
 .cellv2{font-size:12px;font-weight:var(--w-semibold)}
 .cellv2.positive{color:var(--positive-text)}
@@ -584,9 +655,9 @@ body{
 .sparknums b{color:var(--ink)}
 .justposted{font-size:11px;color:var(--muted);text-align:center}
 
-/* the position cell: the expand toggle, 44 x 46 */
+/* the position cell: the expand toggle, 44 x 50 (sec 8a's taller row) */
 .posbtn{
-  min-width:44px;min-height:46px;
+  min-width:44px;min-height:50px;
   border:none;background:transparent;cursor:pointer;
   font-family:inherit;color:var(--muted);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
@@ -1448,6 +1519,11 @@ body{
    the neutrals — it carries no meaning colour, because a range is not
    good news or bad news.
    -------------------------------------------------------------------- */
+
+/* sec 8b: the HOME SWITCHER on the Projections tab, in a card of its
+   own so the arrows sit on the surface the rest of the screen uses.
+   The component is the home one; only its container is new. */
+.projswitch{padding:6px 4px;gap:4px}
 
 .projsearch{gap:6px}
 .projpick{padding:10px 4px 0}

@@ -105,3 +105,29 @@ season-end leverage test's predeclaration are all untouched. The
 one genuinely new consequence — captured third-party ownership
 becoming publicly reachable beside our projections — is flagged
 for the owner's confirmation and reversible with one deploy.
+
+## The projections file (U-projections-full, UI_ALPHA_SPEC §8b)
+
+`projections.json` is written ONLY by `fantasy_edge.live.lab`, through
+its second command (`export-all`) and its own path guard — the
+one-game export may not write it and it may not write the one-game
+file. It feeds the APP's Projections tab at `web/app/`, and it is the
+same content as the Lab file over EVERY game of the slate instead of
+one: the identical per-player record (means, five-point ranges, the
+tangible chain with its truthful labels and stored reasons, the
+ceiling probability where one exists, and the week's first generation
+beside the current one), grouped per game with that game's own game
+block, and the run, context and element blocks said once at the top
+because they are facts about the generation rather than about a game.
+
+**THE SAME PUBLIC-EXPOSURE RULE, WORD FOR WORD, AND THE SAME CODE.**
+Every record is built by the LAB's own whitelists and checked by the
+lab's own validators; there is one set of builders, not two, so this
+file cannot come to carry a field the lab file refuses. Derived model
+outputs only, no raw PFF field, no value traceable to a single PFF
+column, no odds beyond the informational game line, no fantasy points.
+`lab.validate_all()` runs before anything is written.
+
+**CHURN-TOLERANT, LIKE THE LAB'S.** `projections_schema`
+("projections-1") names the iteration; the shape may change with its
+tests in the same PR. `board.json` and `lab.json` are unaffected.
