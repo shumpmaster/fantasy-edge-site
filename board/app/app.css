@@ -1381,6 +1381,195 @@ body{
 }
 
 /* --------------------------------------------------------------------
+   U6 — THE READ SHEET (sec 5.6)
+
+   The + menu's own panel, with a different body. The chips are the
+   reader's OWN WORDS in the your-read slate; a dropped one goes grey
+   and keeps its word beside it, so the change is legible without
+   colour (sec 9). Nothing here is coloured by a category, because
+   there are no categories on this screen.
+   -------------------------------------------------------------------- */
+
+.readsheet{gap:10px}
+
+.readsteps{display:flex;gap:14px;padding:0 4px 2px}
+.readstep{
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--subtle);
+}
+.readstep.on{color:var(--ink)}
+
+.readchips{display:flex;flex-wrap:wrap;gap:8px;padding:2px 0 4px}
+.readchip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:2px 2px 2px 12px;border-radius:var(--r-full);
+  background:var(--read-tint);color:var(--read-text);
+  font-size:var(--type-body);
+}
+.readchip.dropped{background:var(--panel);color:var(--muted)}
+.readchip.dropped .readspan{text-decoration:line-through}
+.readgone{
+  font-size:10px;font-weight:var(--w-semibold);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.readchipbtn{
+  min-height:44px;min-width:44px;
+  border:none;background:transparent;color:inherit;
+  font:inherit;font-weight:var(--w-semibold);font-size:var(--type-meta);
+  border-radius:var(--r-full);cursor:pointer;
+}
+
+.readwould{
+  display:flex;flex-direction:column;gap:4px;
+  padding:8px 12px;border-radius:var(--r-panel);
+  background:var(--ground);
+}
+.readwouldtext{font-size:var(--type-body);color:var(--text-2);line-height:1.45}
+
+.readactions{display:flex;align-items:center;gap:8px}
+.readactions .primary{margin-top:0;flex:1}
+
+/* The quiet button beside a primary one: same size rule, no fill. */
+.ghost{
+  min-height:44px;min-width:44px;
+  padding:0 16px;
+  border:1px solid var(--border-strong);border-radius:var(--r-button);
+  background:var(--surface);color:var(--ink);
+  font:inherit;font-weight:var(--w-semibold);cursor:pointer;
+}
+.ghost.wide{width:100%;margin-top:10px}
+
+/* --------------------------------------------------------------------
+   U7 — THE PROJECTIONS MERGE (sec 6e)
+
+   The lab's breakdown under this app's system: the roster list with
+   the search idiom above it, and one player's tables below. The
+   likeliness line is the one drawn thing here, and it is built from
+   the neutrals — it carries no meaning colour, because a range is not
+   good news or bad news.
+   -------------------------------------------------------------------- */
+
+.projsearch{gap:6px}
+.projpick{padding:10px 4px 0}
+.projlist{display:flex;flex-direction:column;gap:10px}
+.projgroup{gap:0}
+
+.projrow{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  min-height:48px;min-width:44px;width:100%;
+  padding:0 2px;
+  border:none;border-top:1px solid var(--rule);
+  background:transparent;color:var(--ink);
+  font-family:inherit;text-align:left;cursor:pointer;
+}
+.projgroup .projrow:first-of-type{border-top:none}
+.projname{
+  font-size:15px;font-weight:var(--w-semibold);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.projteam{font-size:var(--type-meta);color:var(--muted);flex:none}
+
+/* the two tables, and the small one inside a cell of the second */
+.ptscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-top:4px}
+.ptable{
+  border-collapse:collapse;width:100%;
+  font-size:var(--type-cell);font-variant-numeric:tabular-nums;
+}
+.ptable th,.ptable td{
+  padding:6px 5px;text-align:right;white-space:nowrap;
+  border-bottom:1px solid var(--rule);
+}
+.ptable thead th{
+  font-size:10px;font-weight:var(--w-semibold);
+  letter-spacing:.02em;text-transform:uppercase;color:var(--muted);
+}
+.ptable th[scope="row"]{
+  text-align:left;white-space:normal;
+  color:var(--text-2);font-weight:var(--w-medium);
+}
+/* ALL PROJECTED RESULTS — one block per stat, because eight columns
+   of five-figure numbers do not fit a phone and the likeliness line
+   has to be seen whole. */
+.presults{display:flex;flex-direction:column;gap:2px;padding-top:4px}
+.pstat{
+  display:flex;flex-direction:column;gap:6px;
+  padding:10px 0;border-top:1px solid var(--rule);
+}
+.pstat:first-of-type{border-top:none}
+.pstathead{display:flex;align-items:baseline;gap:8px}
+.pstatname{
+  font-size:var(--type-cell);font-weight:var(--w-semibold);
+  flex:1;min-width:0;
+}
+.pstatproj{
+  font-size:17px;font-weight:var(--w-semibold);
+  font-variant-numeric:tabular-nums;
+}
+.pmv{
+  font-size:var(--type-meta);font-variant-numeric:tabular-nums;
+  display:flex;align-items:baseline;gap:4px;
+}
+.pmv.up{color:var(--positive-text)}
+.pmv.dn{color:var(--negative-text)}
+.pmv.flat{color:var(--muted)}
+.pmvsub{color:var(--muted)}
+
+.ppoints{
+  display:flex;flex-wrap:wrap;gap:4px 14px;
+  font-variant-numeric:tabular-nums;
+}
+.ppoint{display:flex;flex-direction:column;gap:1px;min-width:44px}
+.ppointlabel{
+  font-size:10px;font-weight:var(--w-semibold);
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+}
+.ppointvalue{font-size:var(--type-cell);color:var(--text-2)}
+
+/* ...and the two-column tables fill the card rather than overflowing
+   it: a reason is a sentence and wraps, which it can only do against
+   a column that has a width. */
+.pel{table-layout:fixed}
+.pel th[scope="row"]{width:44%;padding-left:0;white-space:normal}
+.pel td{white-space:normal;overflow-wrap:anywhere}
+.pelval{font-weight:var(--w-semibold);font-variant-numeric:tabular-nums}
+.ptable td.ptext{
+  font-weight:var(--w-regular);white-space:normal;text-align:left;
+}
+.ptable td.preason{
+  text-align:left;white-space:normal;
+  font-size:var(--type-meta);line-height:1.45;color:var(--muted);
+}
+.ptag{
+  display:inline-block;margin-left:6px;padding:1px 7px;
+  border-radius:var(--r-full);background:var(--panel);color:var(--muted);
+  font-size:10px;font-weight:var(--w-semibold);letter-spacing:.04em;
+}
+.pbuckets{border-collapse:collapse;font-size:var(--type-meta)}
+.pbuckets th,.pbuckets td{
+  padding:1px 6px;text-align:right;border:none;white-space:nowrap;
+}
+.pbuckets th{text-align:left;color:var(--muted);font-weight:var(--w-regular)}
+
+/* THE LIKELINESS LINE, at the full width of the card it sits in. */
+.plikelab{
+  font-size:10px;letter-spacing:.04em;color:var(--muted);
+  flex:none;
+}
+.like{display:flex;align-items:center;gap:8px}
+.likezero{font-size:10px;color:var(--subtle);flex:none}
+.liketrack{
+  position:relative;flex:1;min-width:120px;height:10px;
+  background:var(--panel);border-radius:5px;
+}
+.likespan{position:absolute;top:3px;height:4px;background:var(--track);border-radius:2px}
+.likecore{position:absolute;top:1px;height:8px;background:var(--border-strong);border-radius:2px}
+.liketick{position:absolute;top:-1px;width:2px;height:12px;background:var(--ink)}
+.likedot{
+  position:absolute;top:2px;width:6px;height:6px;margin-left:-3px;
+  border-radius:3px;background:var(--read);
+}
+
+/* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
    not softened, off. Nothing in this app depends on an animation to

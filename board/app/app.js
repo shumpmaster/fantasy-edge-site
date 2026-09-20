@@ -1,5 +1,32 @@
 /* U1 — THE APP SHELL, and U2 — THE HOME MATCHUP TABLE.
  *
+ * ...and, by increment: U3 the Bets side, U3c the picture capture, U4
+ * the live board, U5 the two Fantasy sub-views, and now U6 and U7 —
+ * THE READ SHEET and THE PROJECTIONS MERGE (UI_ALPHA_SPEC sec 6d and
+ * sec 6e). Two things arrive with them, and both are the same rule
+ * this file has kept from its first line:
+ *
+ *   THE READ SHEET SAVES A REAL READ AND MOCKS NOTHING. "+ Add your
+ *   read" opens the handoff's sec 5.6 sheet on the pick it was tapped
+ *   from; Say it posts to the live service, which interprets,
+ *   validates and BANKS the read before it answers; Confirm shows his
+ *   own words back as chips he can drop, never a category and never a
+ *   node path (the reads brief's Addendum 2, as sec 1 reconciles it).
+ *   THE THIRD STEP IS NOT DRAWN. "Your number" is the effect
+ *   library's, it does not exist, and a greyed step marker or a
+ *   skeleton bar promising it would be the fake this whole surface
+ *   refuses to draw.
+ *
+ *   THE PROJECTIONS TAB READS `lab.json`. The placeholder is gone —
+ *   deleted, not reworded — and what stands there is the lab's own
+ *   player breakdown: the results table, the likeliness line and the
+ *   chain of elements, under sec 3's system, with the shared statline
+ *   and this app's search idiom. Every honesty rule that page
+ *   enforces came with it: stored numbers only, absences named with
+ *   the generation's own reason, and a strip that draws nothing
+ *   rather than assert a spread nobody produced. The lab page itself
+ *   is untouched and stays live.
+ *
  * docs/plan/UI_ALPHA_SPEC.md, realising
  * docs/design/FANTASY_EDGE_UI_HANDOFF.md: the tab bar (sec 2.2), the
  * per-tab stacks (sec 2.3), the + sheet (sec 2.4), the transition set
@@ -86,11 +113,12 @@ const TITLE_LIVE_CARD = "Live";
 const TITLE_REPORT = "Read report";
 const TITLE_TEAM = "My team";
 
-/* sec 5.3, the Projections placeholder, taken verbatim. */
-const PROJ_OVERLINE = "Coming in the merge";
-const PROJ_HEADING = "Your sandbox projections plug in here.";
-const PROJ_CONTEXT =
-  "Until the merge, projected stats appear inside the home table and the pick card; this page takes them over when the sandbox pages land.";
+/* sec 5.3's placeholder is GONE, and gone rather than reworded (the
+ * U5 rule). "Coming in the merge", "Your sandbox projections plug in
+ * here." and the line under them were a promise about a screen that
+ * did not exist; U7 is that merge, the screen exists, and a promise a
+ * screen no longer needs to make is a promise it should not be
+ * making. What the tab draws now is in the sec 6e block below. */
 
 /* sec 2.4, the three + actions. */
 const ADD_TITLE = "Add";
@@ -102,8 +130,17 @@ const ADD_STARTSIT = "Check a start/sit";
 const ADD_STARTSIT_SUB = "Compare two players for your lineup";
 
 /* The honest arms. Each stub names the increment that fills it, so
- * nothing on this surface pretends to be finished. */
-const NOTE_READS = "Saving your own read is still being built. The pick card it opens on is here already.";
+ * nothing on this surface pretends to be finished.
+ *
+ * "Saving your own read is still being built" is GONE, the U5 way:
+ * U6 built the sheet, so the admission would now be false, and a
+ * false admission is worse than none. What the + menu says instead is
+ * not a stub at all — it is a fact about what a read IS. A read is
+ * about a player and a line, and the + menu can be tapped from
+ * anywhere, so when there is no pick to attach one to it says so and
+ * offers the way there. */
+const READ_NEEDS_PICK =
+  "A read is about one player and one line, so open a pick first and add it there.";
 const ACTION_OPEN_PICK = "Open the pick";
 const NOTE_ALERTS = "Alerts are not built yet. We have not decided which events should notify you.";
 const STUB_REPORT = "The graded report on your reads is still being built.";
@@ -193,11 +230,72 @@ const PICK_CEILING = "High end";
 const PICK_NO_PROP = "This player has no captured line this week, so there is no pick card to draw and nothing is invented in its place.";
 const PICK_OTHER_MARKETS = "Other lines for him";
 
-/* The read bar is U6's. It renders, and it explains itself rather
- * than opening a sheet that does not exist yet. */
+/* The read bar, and since U6 it opens the sheet it always named. The
+ * sentence that used to stand in for the sheet is gone rather than
+ * reworded, for the reason the Fantasy stubs went at U5. */
 const ADD_READ_BUTTON = "+ Add your read";
-const NOTE_READ_SHEET =
-  "Adding your own read is still being built. Nothing is saved from this button yet, and no panel opens.";
+
+/* ------------------------------------------------------------------
+ * U6 — THE READ SHEET (UI_ALPHA_SPEC sec 6d, handoff sec 5.6)
+ * ------------------------------------------------------------------
+ * TWO STEPS, AND THE THIRD IS NOT DRAWN. The handoff's sheet has
+ * three: Say it, Confirm, Your number. Your number is the effect
+ * library's — a read probability, a "what moved it" list and a
+ * reverse-mode sentence, none of which exists yet — so it is NOT
+ * MOCKED, NOT SKELETONED and NOT PROMISED by a third step marker. The
+ * step strip names the two steps this sheet has, and the sheet ends
+ * at Confirm.
+ *
+ * THE CHIPS ARE HIS OWN WORDS. The handoff draws claim chips carrying
+ * hierarchy paths; Addendum 2 of the reads brief is a governance
+ * ruling that the taxonomy is invisible, and UI_ALPHA_SPEC sec 1
+ * records the reconciliation: the chips render THE USER'S OWN TEXT
+ * SPANS, with Drop and Add, and never a node path or a category name.
+ * The service sends nothing else, so there is nothing else to draw.
+ *
+ * AND NOTHING SAYS "+0". Addendum 2's second ruling retires the
+ * zero-effect display case outright: no read shows "no effect in the
+ * data yet", because R0 shows no effect at all. The one sentence this
+ * sheet can honestly say about a saved read is R0's own, which is
+ * what the toast says. */
+const READ_TITLE = "Your read";
+const READ_STEP_SAY = "Say it";
+const READ_STEP_CONFIRM = "Confirm";
+const READ_HINT = "Say it your way. We'll work out how much it matters.";
+const READ_PLACEHOLDER = "What do you know about this player?";
+const READ_GO = "Read it";
+const READ_BUSY = "Reading…";
+const READ_AGAIN = "Read it again";
+const READ_UNDERSTOOD = "Here's what we understood";
+const READ_CHIPS_NOTE =
+  "These are your own words, as we picked them up. Drop anything that isn't part of your read.";
+const READ_DROP = "Drop";
+const READ_ADD = "Add";
+const READ_DROPPED = "Dropped";
+const READ_EDIT = "Edit";
+const READ_LOOKS_RIGHT = "Looks right";
+const READ_CHANGED_NOTE =
+  "You changed what you said, so it has to be read again before it counts.";
+const READ_WOULD_READ = "This is what we would read:";
+const READ_BANKED_NOTE =
+  "Your words are saved already. Reading them again saves the shorter version beside them; nothing you wrote is thrown away.";
+const READ_NOTHING_FOUND =
+  "We could not match that to anything we track yet. It is saved, and it will be graded like everything else.";
+const READ_EMPTY = "There is nothing to read yet. Say what you know first.";
+const READ_SAVED_TOAST = "Saved. We'll grade it after the game.";
+const READ_OFFLINE =
+  "The service is not answering, so nothing was read and nothing was saved. Your words are still in the box.";
+const READ_DEMO =
+  "Sample data — a fabricated slate does not write to the real service, so nothing is saved from here.";
+const READ_NO_PICK =
+  "A read is about one player and one line, and this sheet was opened without one.";
+/* THE CONNECT STATE IS MY PICKS', and it is the same state: the same
+ * heading, the same button, the same promise that nothing is kept in
+ * this browser instead. What is said in between names what THIS
+ * sheet would store, because a sentence about a watchlist on a read
+ * sheet would be true of the service and wrong about the screen. */
+const READ_CONNECT_BODY =
+  "Your reads are stored by the service, not in this browser. Paste the token and this sheet can save one; without it there is nowhere for a read to go and nothing is kept here instead.";
 
 /* The deferrals, each named where it would have been. */
 const DEFER_MATCHUP =
@@ -544,6 +642,98 @@ const DFS_BOOM = "High end";
 const DFS_ROWS_DRAWN = 40;
 
 /* ------------------------------------------------------------------
+ * U7 — THE PROJECTIONS MERGE (UI_ALPHA_SPEC sec 6e, handoff sec 5.3)
+ * ------------------------------------------------------------------
+ * THE LAB'S PLAYER BREAKDOWN, ON THIS SURFACE. `lab.json` is already
+ * written beside the slate on every deploy and the lab page already
+ * renders it; U7 draws the same document under sec 3's system, with
+ * the shared statline and this app's own search idiom. THE LAB PAGE
+ * IS UNTOUCHED — it stays live as the design surface it is.
+ *
+ * EVERY HONESTY RULE OF THAT PAGE COMES WITH IT, and they are the
+ * reason this is a port and not a redesign:
+ *
+ *   * STORED NUMBERS ONLY. Every figure here is one the generation
+ *     saved. Nothing is summed, nothing is rescaled, and a share
+ *     stored as 0.62 is drawn as 0.62 rather than turned into a
+ *     percentage this page invented a denominator for.
+ *   * ABSENCES ARE NAMED. A value the generation did not carry draws
+ *     a dash and the generation's OWN reason beside it — never a
+ *     blank, and never a plausible number nobody computed.
+ *   * THE ONE ARITHMETIC IS GEOMETRY. The likeliness strip divides
+ *     each stored point by its own row's axis to place a mark. It
+ *     produces no quantity, it is never shown as a number, and a row
+ *     whose range is a single value draws no strip at all rather than
+ *     asserting a spread the generation never produced.
+ *
+ * AND THE LAB'S VOCABULARY DOES NOT CROSS. "Quantile", "grid",
+ * "p10/p90", "the chain", "TeamVolume.plays" are the right words in a
+ * document other code reads and the wrong words on a screen (sec 7),
+ * so every label and every reason on this screen goes through
+ * `plainNote` on its way to the reader, exactly as the slate's and
+ * the sheet's prose does. */
+
+const PROJ_SCOPE =
+  "One game of this week's run, from our newest set of numbers. Every figure below is one we saved; anything missing says why.";
+const PROJ_PICK_A_PLAYER = "Pick a player";
+const PROJ_SEARCH_PLACEHOLDER = "Search players in this game";
+const PROJ_SEARCH_BASIS =
+  "Matches on the names in this game's file. It is one game, so there is nobody else to find.";
+const PROJ_SEARCH_EMPTY = "Nobody in this game matches";
+const PROJ_NO_PLAYERS =
+  "This file carries no player for that game, so there is nothing to draw and nothing is invented in its place.";
+const PROJ_OFFLINE_HEAD = "The projections haven't loaded.";
+const PROJ_OFFLINE_BODY =
+  "This screen reads one file we write on each deploy. It isn't here right now, so there is nothing true to draw and nothing is being guessed at.";
+const PROJ_OFFLINE_SCHEMA =
+  "The projections file that loaded is a shape this build does not know, so none of it is drawn. That is a deliberate refusal, not a failure to try.";
+
+/* The five saved points of a stat's outcomes, in the words sec 7 sets
+ * for them. The keys stay p10..p90 in the document; these are what a
+ * reader sees above the columns. */
+const PROJ_POINTS = [
+  ["Low end", 0], ["Low-mid", 1], ["Middle", 2],
+  ["High-mid", 3], ["High end", 4]
+];
+const PROJ_MOVED_NOTE =
+  "The small number beside each projection is how far it has moved since our first run of the week.";
+const PROJ_WEEK_OPEN = "week opened at ";
+/* The same fact under the cell, short enough for a column: the number
+ * it moved FROM. The whole sentence rides the cell's own title. */
+const PROJ_FROM = "from ";
+const PROJ_NO_MOVE =
+  "no number in the first run of the week, so there is nothing to compare";
+const PROJ_RESULTS_HEAD = "All projected results";
+const PROJ_NO_RESULTS = "This run carried no projected stat for him.";
+/* A stat the run saved a range for but no projection. It is its own
+ * sentence because it is its own fact: there IS something here, and
+ * what is missing is the one number the statline reads. */
+const PROJ_NO_MEAN =
+  "This run saved a range for this stat but no projection of its own, so none is shown and none is worked out here.";
+
+/* The likeliness line, and the word "likeliness" is the LAB's, not a
+ * reader's. What the strip is, said plainly, once, above it. */
+const PROJ_LIKELY = "how likely";
+const PROJ_LIKELY_NOTE =
+  "Each line is its own scale, from zero to the wider of that stat's high end and its projection: the pale band runs from the low end to the high end, the darker core is the middle half, the tick is the midpoint and the dot is the projection. A stat with only one possible value draws no line.";
+
+const PROJ_CONTEXT_HEAD = "The circumstances";
+const PROJ_CONTEXT_NOTE =
+  "The circumstances this run happened in — read off the same row as the workings below, not numbers it multiplied.";
+const PROJ_CHAIN_HEAD = "How the projection is built";
+const PROJ_CHAIN_NOTE =
+  "In the order it is worked out: the game line our volume model read, the team's volume, this player's shares, his opportunities, then the rates applied to them.";
+const PROJ_CHAIN_ABSENT =
+  "The workings are not available for this run.";
+const PROJ_CEILING_LABEL =
+  "Ceiling probability — chance of a top-15% week at his position";
+const PROJ_PROBABILITY = "probability";
+const PROJ_FULL = "Full projection";
+const PROJ_NOT_IN_FILE =
+  "This week's projections file covers one game, and he is not in it, so there is nothing to open for him.";
+const PROJ_GENERATED = "Our numbers from ";
+
+/* ------------------------------------------------------------------
  * U2 — THE SLATE DOCUMENT
  * ------------------------------------------------------------------
  * THE TWO PATHS, the lab's idiom exactly. Real is the default; the
@@ -578,6 +768,33 @@ const REAL_DFS_URL = "../data/dfs.json";
 const DEMO_DFS_URL = "../demo/dfs.demo.json";
 const DFS_URL = DEMO ? DEMO_DFS_URL : REAL_DFS_URL;
 const DFS_SCHEMA = "dfs-1";
+
+/* U7's third document, on the same two paths and the same one switch.
+ * It is the file the lab page has always read — written beside the
+ * slate by the same deploy — and this screen reads it the same way:
+ * the schema tag first, then the fields, and nothing derived. */
+const REAL_LAB_URL = "../data/lab.json";
+const DEMO_LAB_URL = "../demo/lab.demo.json";
+const LAB_URL = DEMO ? DEMO_LAB_URL : REAL_LAB_URL;
+const LAB_SCHEMA = "lab-2";
+
+/* The eight stats the generation carries, with the app's own label and
+ * the decimals each one reads in — the board's spellings, which are
+ * the words on a box score. */
+const LAB_STATS = [
+  ["Pass yds", "pass_yds", 0],
+  ["Pass TD", "pass_tds", 2],
+  ["Carries", "rush_att", 1],
+  ["Rush yds", "rush_yds", 0],
+  ["Targets", "targets", 1],
+  ["Receptions", "receptions", 1],
+  ["Rec yds", "rec_yds", 0],
+  ["Any TD", "anytime_td", 2]
+];
+
+/* The positions a roster is grouped into, in the order they are
+ * drawn. Anything else keeps its own name and sorts after them. */
+const LAB_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
 
 /* ------------------------------------------------------------------
  * U3 — THE PICKS SERVICE
@@ -964,7 +1181,146 @@ const PLAIN_NOTES = [
     "stack to draw for it."],
   ["team_has_no_priced_receiver_in_the_live_projections",
     "We project no receiver for this team this week, so there is no " +
-    "stack to draw for it."]
+    "stack to draw for it."],
+
+  /* U7 — THE PROJECTIONS FILE'S OWN LABELS. Same rule as every entry
+   * above: the JSON is untouched, the FACT survives, and the engine
+   * object each label names — `TeamVolume.plays`, `ChainFit.td_rate`,
+   * `PlayerMeans.catch_rate` — stays in the document where the code
+   * that reads it lives. A reader is owed WHAT THE NUMBER IS, not
+   * which class held it. */
+  ["opponent (TeamEnvironment.opponent)", "who he plays"],
+  ["kickoff (the live bundle's own stamp", "kickoff"],
+  ["T-90 designation the eligible set consumed",
+    "his injury designation, as it stood when we ran the numbers"],
+  ["T-90 practice trend the eligible set consumed",
+    "his practice trend, as it stood when we ran the numbers"],
+  ["the market snapshot label the forecast read",
+    "which saved set of game lines we read"],
+  ["game line: spread, the team's own handicap",
+    "game line: the spread, from his team's side (a negative number " +
+    "means they are favoured)"],
+  ["game line: total", "game line: the total both teams are expected " +
+    "to score"],
+  ["game line: this team's implied total",
+    "game line: what his team alone is expected to score — the number " +
+    "our plays model reads"],
+  ["forecast team plays (TeamVolume.plays)",
+    "how many plays we expect his team to run"],
+  ["pass rate — p(dropback)", "how often we expect them to drop back " +
+    "to pass"],
+  ["team dropbacks (TeamVolume.dropbacks)",
+    "how many dropbacks that comes to"],
+  ["attempt rate: attempts per dropback",
+    "how many of those dropbacks become a pass attempt rather than a " +
+    "scramble or a sack"],
+  ["team pass attempts (TeamVolume.attempts)",
+    "how many pass attempts that comes to"],
+  ["team targets (TeamVolume.team_targets)",
+    "how many targets there are for the team to share"],
+  ["team carries: the rush-opportunity pool",
+    "how many carries there are for the team to share — the pool his " +
+    "carry share is a share OF"],
+  ["his target share as allocated",
+    "his share of those targets, as our depth chart gave it to him"],
+  ["his carry share as allocated",
+    "his share of those carries, as our depth chart gave it to him"],
+  ["his share of the team's pass attempts",
+    "his share of the team's pass attempts"],
+  ["catch rate per target (PlayerMeans.catch_rate)",
+    "how many of his targets he catches"],
+  ["yards per RECEPTION (PlayerMeans.yards_per_reception)",
+    "his yards per catch — per CATCH, not per target"],
+  ["yards per carry (PlayerMeans.yards_per_carry)",
+    "his yards per carry"],
+  ["yards per pass ATTEMPT", "his yards per pass attempt"],
+  ["touchdown conversion by FIELD POSITION",
+    "how often a play turns into a touchdown, by where on the field " +
+    "it starts. These are league-wide rates, not his own, and our " +
+    "numbers apply them to how much of each part of the field he " +
+    "actually sees — so there is no single rate that is 'his', and " +
+    "one is not made up here."],
+  ["receiving touchdown conversion as ONE number",
+    "his receiving touchdown rate as a single number — never saved, " +
+    "because our numbers never use one"],
+  ["rushing touchdown conversion as ONE number",
+    "his rushing touchdown rate as a single number — never saved, " +
+    "because our numbers never use one"],
+  ["no explain rows exist for this generation",
+    "This run saved no workings for these players, so there are none " +
+    "to show. The workings are saved as the numbers are made and are " +
+    "never rebuilt afterwards, so a run that saved none has none."],
+  ["the generation stored no value and no reason",
+    "This run saved neither a number nor a reason for this one, so " +
+    "nothing is shown and nothing is guessed at."],
+  ["the forward pass kept no TeamVolume for this team-week",
+    "We did not keep the team's volume for this week, so this part of " +
+    "the workings is not there to read. It is not worked out again " +
+    "here from what came after it."],
+  ["the attempt rate is a VolumeFit scalar",
+    "We keep the attempts and the dropbacks but not the rate between " +
+    "them, and dividing one by the other here would be a number we " +
+    "made up rather than one we used."],
+  ["this generation carried no T-90 designation for the player",
+    "This run carried no injury designation for him — either no " +
+    "injury report reached us in time, or he was not on one."],
+  ["the forward pass kept no TeamAllocation for this team-week",
+    "We did not keep the shares our depth chart handed out for this " +
+    "week, so they are not there to read. Working them backwards " +
+    "from the projected stats would not be those shares."],
+  ["the forward pass kept no passer split for this team-week",
+    "We did not keep how the team's pass attempts were split between " +
+    "its passers for this week — and a week our depth chart gave no " +
+    "passer has no split to keep. What we do hold is the attempts " +
+    "themselves, not the split."],
+  ["this forecast carries no per-attempt rate",
+    "We multiply his attempts by his yards-per-attempt and keep the " +
+    "PRODUCT — his passing yards. With the rate itself not saved, " +
+    "dividing that product back out would be our arithmetic here, " +
+    "not the rate our numbers used."],
+  ["this forecast carries no touchdown conversion at all",
+    "This run saved none of its touchdown rates, so the mapping is " +
+    "not there to read. What we hold is the touchdowns those rates " +
+    "produced, not the rates."],
+  ["home team? (TeamEnvironment.is_home)", "is he at home?"],
+  ["line vintage: the selected capture's stamp",
+    "when the game line we read was saved"],
+  ["line vintage: this game's T-90 moment",
+    "this game's cutoff — ninety minutes before kickoff"],
+  ["line vintage: minutes before T-90",
+    "how long before that cutoff the game line we read was saved, in " +
+    "minutes"],
+  ["line vintage: the selection rule",
+    "the rule that picked which saved game line to read"],
+  ["the generation's band",
+    "how much of the week's information this run had"],
+  ["the slate's market bundle was not in hand",
+    "We did not have the week's saved game lines when these numbers " +
+    "were made, so the circumstances our volume model read cannot be " +
+    "shown."],
+  ["has no TeamEnvironment in the bundle the forecast read",
+    "The saved game lines we read carry nothing for his team in this " +
+    "game, so the circumstances are not there to show."],
+  ["the bundle carries no live line vintage for this game",
+    "No saved game line was picked for this game, so there is no " +
+    "stamp to show for one."],
+  ["this player is not in the team's allocated share vector",
+    "Our depth chart gave him no share of this team's work, so there " +
+    "is none to show."],
+  ["this player is not one of the passers",
+    "He is not one of the passers our numbers split this team's " +
+    "attempts across, so no attempt share and no yards per attempt " +
+    "were applied to him."],
+  ["the forward pass produced no PlayerMeans for this player-week",
+    "This run produced none of his own rates, so none of what was " +
+    "applied to him can be shown."],
+  ["the touchdown conversion the chain applies is a rate PER " +
+   "FIELD-POSITION BUCKET",
+    "Touchdown conversion is a rate per part of the field, mixed " +
+    "over how much of each part he sees, so no single number is the " +
+    "rate applied to him. The whole mapping is shown instead; " +
+    "collapsing it into one figure would be our average here rather " +
+    "than the rate our numbers used."]
 ];
 
 /* The one exporter footnote that carries a value inside it: the stat
@@ -1175,6 +1531,13 @@ const ROUTES = {
   season: { tab: "fantasy", hash: "#/fantasy/season-long", root: true },
   dfs: { tab: "fantasy", hash: "#/fantasy/dfs", root: true },
   projections: { tab: "projections", hash: "#/projections", root: true },
+  /* U7's own detail: ONE player's whole breakdown, pushed onto the
+   * Projections stack. It is a detail and not a root, so the chevron
+   * pops back to the list — and a Pick card's "Full projection" link
+   * pushes it on THAT stack while switching tabs, which is the nav
+   * model's cross-tab move rather than a second router. */
+  projection: { tab: "projections", hash: "#/projections/player",
+    root: false },
   screen: { tab: "bets", hash: "#/bets/screen", root: true },
   live: { tab: "bets", hash: "#/bets/live", root: true },
   picks: { tab: "bets", hash: "#/bets/my-picks", root: true },
@@ -1296,6 +1659,12 @@ const nav = {
    * and every transition after that is a CHANGE THE READER CAUSED. */
   motion: null,
   booted: false,
+  /* WHICH SHEET IS UP, not whether one is. U1 had one sheet — the +
+   * menu — so a boolean said everything there was to say. U6 adds the
+   * read sheet, which is THE SAME COMPONENT over the same scrim with
+   * the same close rules, so this holds its name instead: "add",
+   * "read", or false for none. One renderer, two bodies; a second
+   * overlay would be a second set of closing rules to get wrong. */
   sheet: false,
   toast: null,
   game: 0,
@@ -1393,7 +1762,34 @@ const nav = {
   liveSwing: null,
   livePoll: null,
   livePollMs: null,
-  series: {}
+  series: {},
+
+  /* U6's own state, and it is the DRAFT plus what the service said
+   * about it — held for the visit, written nowhere.
+   *
+   * `text` is what he has typed (kept across a re-render so nothing
+   * eats a sentence). `saved` is the service's answer once it has
+   * one, which is what makes the read a banked thing rather than a
+   * draft. `spans` are HIS OWN WORDS as the service handed them back,
+   * and `dropped` is which of them he has taken off — an index set on
+   * the chips, never a taxonomy.
+   *
+   * THERE IS NO `read_p` HERE AND NO PLACE FOR ONE. Step 3 is the
+   * effect library's and is not mocked; a field waiting for it would
+   * be the mock. */
+  read: { player: null, market: null, line: null, side: null,
+    step: 1, text: "", saved: null, spans: [], dropped: {},
+    busy: false, note: "" },
+
+  /* U7's own state. `lab` is the breakdown document once it has
+   * arrived (null means "not asked or not answered", which is a drawn
+   * state and not an empty game), `labNote` the reason it did not,
+   * and `proj` is which player the detail is open on plus whatever
+   * has been typed into the roster search. */
+  lab: null,
+  labNote: null,
+  labAsked: false,
+  proj: { player: null, query: "" }
 };
 
 /* ------------------------------------------------------------------
@@ -1465,6 +1861,22 @@ function selectTab(tab) {
 function openDetail(route) {
   if (!ROUTES[route] || ROUTES[route].root) return;
   currentStack().push(route);
+  closeSheet();
+  navigate(route, "push");
+}
+
+/* A CROSS-TAB LINK (U7). The nav model already says what this means:
+ * the detail PUSHES onto the stack of the tab it belongs to, and the
+ * reader is moved to that tab. So back from it pops to that tab's
+ * root, which is where he would have come from had he walked in.
+ * This is the same push `openDetail` does — it just does it on
+ * somebody else's stack, which is the one thing that function cannot
+ * say. */
+function openIn(tab, route) {
+  if (!ROUTES[route] || ROUTES[route].root) return;
+  if (!nav.stacks[tab]) return;
+  nav.tab = tab;
+  nav.stacks[tab] = [rootOf(tab), route];
   closeSheet();
   navigate(route, "push");
 }
@@ -1582,8 +1994,12 @@ function closeToast() {
   renderToast();
 }
 
-function openSheet() {
-  nav.sheet = true;
+/* ONE SHEET COMPONENT, TWO BODIES (U6). `kind` names which body is
+ * drawn; everything else about it — the scrim, the handle, the rise,
+ * Escape, tapping away — is the same because it is the same
+ * component. */
+function openSheet(kind) {
+  nav.sheet = kind || "add";
   nav.toast = null;
   renderToast();
   renderSheet();
@@ -1865,6 +2281,135 @@ async function toggleWatch(playerId, market, line, side) {
     nav.picksBusy = "";
     render();
   }
+}
+
+/* ------------------------------------------------------------------
+ * U6 — THE READ, THROUGH THE SAME DOOR
+ * ------------------------------------------------------------------
+ * The same service, the same token, the same one fetch. `POST /read`
+ * already takes the pick's own context — player, market, line, side —
+ * so a read opened from a pick card arrives attached to that bet
+ * without the service learning a new field for it.
+ *
+ * THE READ IS BANKED WHEN THE SERVICE SAYS SO, which is at "Read it"
+ * and not at Confirm: the service interprets, validates and writes in
+ * one transaction and only then answers, exactly as the lab's box has
+ * always worked. So the confirm step is not a "do you want to save
+ * this" gate — it is him checking that what we picked up is what he
+ * meant, and the sheet says plainly that his words are already kept.
+ *
+ * DROPPING A CHIP IS THEREFORE AN EDIT, not a veto. The words come out
+ * of the text and the shorter read is READ AGAIN — a second row beside
+ * the first, because the ledger is append-only and a correction is a
+ * thing that happened, not a thing that unhappens. The sheet says that
+ * too, in one sentence, where he does it. */
+
+function readOpen(playerId, market) {
+  const person = playerOf(playerId);
+  const prop = person ? propOf(person, market) : null;
+  nav.read = {
+    player: playerId || null,
+    market: prop ? prop.market : (market || null),
+    line: prop ? numberOrNull(prop.line) : null,
+    side: prop ? prop.lean : null,
+    step: 1, text: "", saved: null, spans: [], dropped: {},
+    busy: false, note: ""
+  };
+  openSheet("read");
+}
+
+/* The chips he has NOT dropped, in the order they came back. */
+function readKept() {
+  return (nav.read.spans || []).filter(function (_span, index) {
+    return !nav.read.dropped[index];
+  });
+}
+
+function readHasDrops() {
+  return (nav.read.spans || []).some(function (_span, index) {
+    return !!nav.read.dropped[index];
+  });
+}
+
+/* WHAT A DROP DOES TO THE TEXT, and it is the least this page can do
+ * to it: the dropped fragment is cut out of what he wrote and the
+ * seam is tidied. Nothing is rewritten, nothing is re-ordered and no
+ * word he did not type is added. */
+function readTextWithoutDrops() {
+  let text = String(nav.read.text || "");
+  /* NOTHING DROPPED, NOTHING TOUCHED. Even collapsing his spacing
+   * would be this page editing words he wrote. */
+  if (!readHasDrops()) return text;
+  (nav.read.spans || []).forEach(function (span, index) {
+    if (!nav.read.dropped[index]) return;
+    text = text.split(span).join(" ");
+  });
+  return text.replace(/\s+/g, " ").replace(/\s+([.,;!?])/g, "$1").trim();
+}
+
+/* THE SAVE. Synchronous from his side, the lab's rule: the sheet
+ * moves to the confirm step only once the ledger has the read. */
+async function postRead() {
+  if (nav.read.busy) return;
+  if (DEMO) {
+    nav.read.note = READ_DEMO;
+    renderSheet();
+    return;
+  }
+  const text = (nav.read.step === 2 ? readTextWithoutDrops()
+    : String(nav.read.text || "")).trim();
+  if (!text) {
+    nav.read.note = READ_EMPTY;
+    renderSheet();
+    return;
+  }
+  if (!nav.read.player) {
+    nav.read.note = READ_NO_PICK;
+    renderSheet();
+    return;
+  }
+  const token = askToken();
+  if (!token) {
+    renderSheet();
+    return;
+  }
+  const body = { player_id: nav.read.player, text: text };
+  if (nav.read.market) body.market = nav.read.market;
+  if (nav.read.line !== null && nav.read.line !== undefined) {
+    body.line = nav.read.line;
+  }
+  if (nav.read.side) body.side = nav.read.side;
+  nav.read.busy = true;
+  nav.read.note = "";
+  renderSheet();
+  try {
+    const saved = await picksAsk("/read", token, body);
+    nav.read.saved = saved;
+    nav.read.text = saved && saved.text ? saved.text : text;
+    /* THE CHIPS ARE WHAT THE SERVICE SENT AND NOTHING ELSE. No span
+     * is worked out here: a page that split his sentence itself would
+     * be showing him its own reading under the words "what we
+     * understood". An answer with none is a real and drawn state. */
+    nav.read.spans = (saved && Array.isArray(saved.spans))
+      ? saved.spans : [];
+    nav.read.dropped = {};
+    nav.read.step = 2;
+    nav.read.note = nav.read.spans.length ? "" : READ_NOTHING_FOUND;
+  } catch (err) {
+    /* Never a silent drop: the words stay in the box and the line
+     * under it says the service is not answering. */
+    nav.read.note = READ_OFFLINE;
+  }
+  nav.read.busy = false;
+  renderSheet();
+}
+
+/* CONFIRM. The read is already banked, so this closes the sheet and
+ * says the one thing R0 can honestly say about it — a promise with a
+ * moment attached, which is the credibility rule's shape. */
+function confirmRead() {
+  closeSheet();
+  showToast(READ_SAVED_TOAST);
 }
 
 /* ------------------------------------------------------------------
@@ -2289,6 +2834,39 @@ function syncDfs() {
   if (nav.dfsAsked) return;
   if (currentRoute() !== "dfs") return;
   loadDfs();
+}
+
+/* U7 — THE BREAKDOWN DOCUMENT, read exactly as the other two are: the
+ * schema tag before any field, the honest arm when it does not
+ * arrive, and nothing carried forward from a document that failed its
+ * own contract. */
+async function loadLab() {
+  nav.labAsked = true;
+  try {
+    const document = await getJSON(LAB_URL);
+    if (!document || document.lab_schema !== LAB_SCHEMA) {
+      nav.lab = null;
+      nav.labNote = PROJ_OFFLINE_SCHEMA;
+    } else {
+      nav.lab = document;
+      nav.labNote = null;
+    }
+  } catch (err) {
+    nav.lab = null;
+    nav.labNote = PROJ_OFFLINE_BODY;
+  }
+  render();
+}
+
+/* ...and asked for on the same rule, on either of the two screens
+ * that read it: a reader who never opens Projections never fetches
+ * it, and one who arrives straight on a player's breakdown from a
+ * pick card fetches it once, there. */
+function syncLab() {
+  if (nav.labAsked) return;
+  const route = currentRoute();
+  if (route !== "projections" && route !== "projection") return;
+  loadLab();
 }
 
 /* The season and week the confirmed team is FOR. It is the slate
@@ -3959,14 +4537,419 @@ function renderTeam() {
       : "") + '</div></div>';
 }
 
+/* ------------------------------------------------------------------
+ * U7 — THE PROJECTIONS MERGE (sec 6e)
+ * ------------------------------------------------------------------
+ * The lab's player breakdown, read off the same document the lab page
+ * reads, drawn under this app's system. Two screens: the roster with
+ * the app's search idiom, and one player's whole breakdown pushed on
+ * top of it.
+ * ------------------------------------------------------------------ */
+
+function labPlayers() {
+  return (nav.lab && nav.lab.players) || [];
+}
+
+function labPlayerOf(playerId) {
+  const all = labPlayers();
+  for (let index = 0; index < all.length; index += 1) {
+    if (all[index].player_id === playerId) return all[index];
+  }
+  return null;
+}
+
+/* The player the detail is open on: the one asked for, or — for a
+ * reader who arrived on the list and has not chosen yet — the first
+ * in the file. Never a silent substitution for a man who is not in
+ * it: `labPlayerOf` returning null is a drawn state. */
+function labSelected() {
+  if (nav.proj.player) return labPlayerOf(nav.proj.player);
+  const all = labPlayers();
+  return all.length ? all[0] : null;
+}
+
+/* The run and the game the file is about, said in the app's words. */
+function labMeta() {
+  const run = (nav.lab && nav.lab.run) || {};
+  const game = (nav.lab && nav.lab.game) || {};
+  const parts = [];
+  if (game.away || game.home) {
+    parts.push(String(game.away || "") + " @ " + String(game.home || ""));
+  }
+  if (run.week !== undefined && run.week !== null) {
+    parts.push("Week " + run.week);
+  }
+  return parts.join(" · ");
+}
+
+/* sec 5.1's search, on this screen's own list. The idiom is the home
+ * switcher's — a 16px input, a basis line under it that says what is
+ * being matched, and the sec 8 empty state naming what was typed. */
+function projSearch() {
+  const query = String(nav.proj.query || "");
+  return '<div class="card projsearch">' +
+    '<div class="searchbar">' + icon("search", 18, 2.5) +
+    '<input class="searchinput" id="projsearch" type="text" ' +
+    'autocomplete="off" placeholder="' +
+    esc(PROJ_SEARCH_PLACEHOLDER) + '" aria-label="' +
+    esc(PROJ_SEARCH_PLACEHOLDER) + '" value="' + esc(query) + '">' +
+    '</div><div class="searchbasis">' + esc(PROJ_SEARCH_BASIS) +
+    '</div></div>';
+}
+
+function projMatches() {
+  const query = String(nav.proj.query || "").trim().toLowerCase();
+  const all = labPlayers();
+  if (!query) return all;
+  return all.filter(function (player) {
+    return String(player.name || "").toLowerCase().indexOf(query) !== -1;
+  });
+}
+
+/* The roster, grouped by position the way the file lists it. Each row
+ * is a real button at a real size (sec 9) and pushes that player's
+ * breakdown. */
+function projRoster(list) {
+  const groups = {};
+  list.forEach(function (player) {
+    const pos = String(player.pos || "").toUpperCase() || DASH;
+    (groups[pos] = groups[pos] || []).push(player);
+  });
+  const order = LAB_POS_ORDER.filter(function (pos) {
+    return groups[pos];
+  }).concat(Object.keys(groups).filter(function (pos) {
+    return LAB_POS_ORDER.indexOf(pos) === -1;
+  }).sort());
+  return order.map(function (pos) {
+    return '<div class="card projgroup"><div class="overline">' +
+      esc(pos) + '</div>' + groups[pos].map(function (player, index) {
+        return '<button class="projrow' + growClass() + '" style="--i:' +
+          index + '" data-act="projection" data-player="' +
+          esc(player.player_id) + '" aria-label="' +
+          esc(PROJ_FULL + ": " + player.name) + '">' +
+          '<span class="projname">' + esc(player.name) + '</span>' +
+          '<span class="projteam">' + esc(player.team) + '</span>' +
+          '</button>';
+      }).join("") + '</div>';
+  }).join("");
+}
+
 function renderProjections() {
-  return '<div class="page">' +
-    '<div class="pagehead"><div class="pagetitle">' +
+  const head = '<div class="pagehead"><div class="pagetitle">' +
     esc(TITLE_PROJECTIONS) + '</div><div class="pagemeta">' +
-    esc(SAMPLE_WEEK) + '</div></div>' +
-    stubCard(PROJ_OVERLINE, PROJ_HEADING, PROJ_CONTEXT) +
-    '<div class="skeleton" aria-hidden="true">' +
-    skeletonRows(SKELETON_WIDTHS) + '</div></div>';
+    esc(nav.lab ? labMeta() : "") + '</div></div>';
+  if (!nav.lab) {
+    return '<div class="page">' + head +
+      '<div class="card"><div class="cardhead">' +
+      esc(PROJ_OFFLINE_HEAD) + '</div><div class="cardbody">' +
+      esc(nav.labNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
+  }
+  return '<div class="page">' + head +
+    '<div class="card"><div class="cardbody">' + esc(PROJ_SCOPE) +
+    '</div></div>' + projSearch() +
+    '<div class="overline projpick">' + esc(PROJ_PICK_A_PLAYER) +
+    '</div><div class="projlist" id="projlist">' + projListBody() +
+    '</div></div>';
+}
+
+/* The list under the search, and the sec 8 empty state that belongs
+ * to whichever emptiness it is: nobody matched what was typed, or the
+ * file carries nobody at all. It is its own function because the
+ * keystroke handler redraws THIS and nothing else. */
+function projListBody() {
+  const list = projMatches();
+  if (list.length) return projRoster(list);
+  const typed = String(nav.proj.query || "").trim();
+  return '<div class="card"><div class="cardbody">' +
+    esc(typed ? PROJ_SEARCH_EMPTY + ' "' + typed + '"'
+      : PROJ_NO_PLAYERS) + '</div></div>';
+}
+
+/* ALL PROJECTED RESULTS. One block per stat the generation carried a
+ * number for — a stat with neither a projection nor a range is not a
+ * result and is not drawn — carrying the projection, what has moved
+ * since the week opened, the likeliness line and the five saved
+ * points of that stat's outcomes.
+ *
+ * A BLOCK RATHER THAN A WIDE TABLE ROW, and that is a decision about
+ * a phone. Eight columns of five-figure numbers cannot fit 360px, so
+ * the lab's table would either scroll sideways — taking the
+ * likeliness line half off the screen with it, which is the one thing
+ * on this screen that has to be seen whole — or drop two of the five
+ * points, which would be hiding a number the generation saved. The
+ * block keeps every figure and puts the line at full width. */
+function projResults(player) {
+  const blocks = LAB_STATS.filter(function (stat) {
+    return numberOrNull((player.proj || {})[stat[1]]) !== null ||
+      Array.isArray((player.stat_quantiles || {})[stat[1]]);
+  }).map(function (stat) {
+    const points = (player.stat_quantiles || {})[stat[1]];
+    const spread = PROJ_POINTS.map(function (point) {
+      const value = Array.isArray(points) ? points[point[1]] : null;
+      return '<span class="ppoint"><span class="ppointlabel">' +
+        esc(point[0]) + '</span><span class="ppointvalue">' +
+        esc(projNumber(value, stat[2])) + '</span></span>';
+    }).join("");
+    return '<div class="pstat"><div class="pstathead">' +
+      '<span class="pstatname">' + esc(stat[0]) + '</span>' +
+      projMoved(player, stat[1], stat[2]) +
+      '<span class="pstatproj">' +
+      esc(projNumber((player.proj || {})[stat[1]], stat[2])) +
+      '</span></div>' +
+      projLikely(points, (player.proj || {})[stat[1]]) +
+      '<div class="ppoints">' + spread + '</div></div>';
+  }).join("");
+  if (!blocks) {
+    return '<div class="cardbody">' + esc(PROJ_NO_RESULTS) + '</div>';
+  }
+  return '<div class="presults">' + blocks + '</div>';
+}
+
+/* A saved number at the precision it can carry. The page never
+ * rescales one: a share saved as 0.62 is drawn as 0.62. */
+function projNumber(value, places) {
+  const number = numberOrNull(value);
+  if (number === null) return DASH;
+  return number.toFixed(places);
+}
+
+/* THE LIKELINESS LINE. The lab's L2 strip: each stat's own scale, 0 to
+ * the wider of its high end and its projection, with the marks placed
+ * by the one division this screen is allowed to do.
+ *
+ * A DEGENERATE ROW DRAWS NOTHING, and that is the point of the guard
+ * rather than an accident of it. No range, a point that is not a
+ * number, no projection, a scale with nothing above zero, or a low
+ * end equal to the high end — the Any TD row whose whole visible
+ * range is 0 — would each draw a strip asserting a spread the
+ * generation never produced. Every one of them returns "". */
+function projLikely(points, mean) {
+  if (!Array.isArray(points)) return "";
+  const low = numberOrNull(points[0]);
+  const lowMid = numberOrNull(points[1]);
+  const middle = numberOrNull(points[2]);
+  const highMid = numberOrNull(points[3]);
+  const high = numberOrNull(points[4]);
+  const centre = numberOrNull(mean);
+  const marks = [low, lowMid, middle, highMid, high, centre];
+  for (let index = 0; index < marks.length; index += 1) {
+    if (marks[index] === null) return "";
+  }
+  if (low === high) return "";
+  const top = Math.max(high, centre);
+  if (!(top > 0)) return "";
+  return '<div class="like"><span class="plikelab">' +
+    esc(PROJ_LIKELY) + '</span><span class="likezero">0</span>' +
+    '<span class="liketrack">' +
+    '<span class="likespan" style="left:' + projShare(low, top) +
+    ';width:' + projShare(high - low, top) + '"></span>' +
+    '<span class="likecore" style="left:' + projShare(lowMid, top) +
+    ';width:' + projShare(highMid - lowMid, top) + '"></span>' +
+    '<span class="liketick" style="left:' + projShare(middle, top) +
+    '"></span>' +
+    '<span class="likedot" style="left:' + projShare(centre, top) +
+    '"></span></span></div>';
+}
+
+/* ONE MARK'S PLACE on one row's scale, as a CSS percentage. It is
+ * GEOMETRY: a saved number over its own row's scale, clamped so a
+ * projection above the high end cannot push a mark off the track it
+ * belongs to. It produces no quantity and is never shown as a
+ * number. */
+function projShare(value, top) {
+  const part = (value / top) * 100;
+  return Math.min(100, Math.max(0, part)).toFixed(2) + "%";
+}
+
+function projMoved(player, key, places) {
+  const moved = numberOrNull((player.movement || {})[key]);
+  const opened = numberOrNull((player.week_open || {})[key]);
+  if (moved === null) {
+    return '<span class="pmv flat" title="' + esc(PROJ_NO_MOVE) +
+      '">' + esc(DASH) + '</span>';
+  }
+  /* Rounded FIRST, then signed: a move of -0.004 carries shown to one
+   * decimal is not a fall, and "-0.0" would read as one. */
+  const rounded = Number(moved.toFixed(places));
+  const shown = (rounded > 0 ? "+" : "") +
+    (rounded === 0 ? Math.abs(rounded) : rounded).toFixed(places);
+  const family = rounded > 0 ? "up" : (rounded < 0 ? "dn" : "flat");
+  const from = opened === null ? DASH : opened.toFixed(places);
+  return '<span class="pmv ' + family + '" title="' +
+    esc(PROJ_WEEK_OPEN + from + " · " + PROJ_MOVED_NOTE) + '">' +
+    esc(shown) + '<span class="pmvsub">' + esc(PROJ_FROM + from) +
+    '</span></span>';
+}
+
+/* A MAPPING THE GENERATION SAVED WHOLE, drawn as the small table it
+ * is: one row per (profile, bucket). The touchdown conversion is a
+ * rate PER PART OF THE FIELD, applied as a mixture over how much of
+ * each part a player sees, so there is no single number that is "his"
+ * — collapsing them into one would be arithmetic this page invented.
+ * Anything that is not a mapping of mappings returns "" and the caller
+ * draws the saved text as it stands. */
+function projBuckets(text) {
+  let mapping;
+  try {
+    mapping = JSON.parse(text);
+  } catch (err) {
+    return "";
+  }
+  if (!mapping || typeof mapping !== "object" || Array.isArray(mapping)) {
+    return "";
+  }
+  const rows = [];
+  Object.keys(mapping).forEach(function (profile) {
+    const buckets = mapping[profile];
+    if (!buckets || typeof buckets !== "object" ||
+        Array.isArray(buckets)) {
+      return;
+    }
+    Object.keys(buckets).forEach(function (bucket) {
+      const rate = numberOrNull(buckets[bucket]);
+      rows.push('<tr><th scope="row">' + esc(profile) + " · " +
+        esc(bucket) + '</th><td>' +
+        esc(rate === null ? DASH : rate.toFixed(3)) + '</td></tr>');
+    });
+  });
+  if (!rows.length) return "";
+  return '<table class="pbuckets"><tbody>' + rows.join("") +
+    '</tbody></table>';
+}
+
+/* ONE CELL, BOTH TABLES: the value the generation saved, or the
+ * sentence saying what it did not carry — and the sentence is the
+ * generation's own, put through the plain-language layer on its way
+ * to the page. Text is drawn as it was saved; this page does not
+ * re-format a value it did not compute. */
+function projCell(cell) {
+  if (cell && cell.value !== null && cell.value !== undefined) {
+    if (typeof cell.value === "number") {
+      return '<td class="pelval">' + esc(projElement(cell.value)) +
+        '</td>';
+    }
+    const buckets = projBuckets(cell.value);
+    if (buckets) return '<td class="pelval">' + buckets + '</td>';
+    return '<td class="pelval ptext">' + esc(cell.value) + '</td>';
+  }
+  return '<td class="preason">' + esc(DASH) + ' (' +
+    esc(plainNote((cell && cell.reason) || "")) + ')</td>';
+}
+
+/* An element's value at the precision the number deserves: a share or
+ * a rate is a fraction and wants its digits, a count of plays does
+ * not. Nothing is rescaled — 0.62 is 0.62, never "62%", because the
+ * saved number is the one our numbers used. */
+function projElement(value) {
+  const number = numberOrNull(value);
+  if (number === null) return DASH;
+  const size = Math.abs(number);
+  if (size < 1) return number.toFixed(3);
+  if (size < 20) return number.toFixed(2);
+  return number.toFixed(1);
+}
+
+function projRows(player, block, which) {
+  const order = (block && block.order) || [];
+  const labels = (block && block.labels) || {};
+  const pooled = (block && block.pooled) || [];
+  const pooledLabel = (block && block.pooled_label) || "";
+  return order.map(function (element) {
+    const cell = (player[which] || {})[element] || {};
+    const tag = (pooled.indexOf(element) !== -1 && pooledLabel)
+      ? '<span class="ptag">' + esc(plainNote(pooledLabel)) + '</span>'
+      : "";
+    return '<tr class="pelrow"><th scope="row">' +
+      esc(plainNote(labels[element] || element)) + tag + '</th>' +
+      projCell(cell) + '</tr>';
+  }).join("");
+}
+
+function projContext(player) {
+  const rows = projRows(player, (nav.lab && nav.lab.context) || {},
+    "context");
+  if (!rows) return "";
+  return '<div class="card"><div class="overline">' +
+    esc(PROJ_CONTEXT_HEAD) + '</div><div class="legend">' +
+    esc(PROJ_CONTEXT_NOTE) + '</div>' +
+    '<div class="ptscroll"><table class="ptable pel"><tbody>' + rows +
+    '</tbody></table></div></div>';
+}
+
+function projChain(player) {
+  const block = (nav.lab && nav.lab.elements) || {};
+  const rows = projRows(player, block, "elements");
+  const share = numberOrNull(player.p_ceiling);
+  const probability = share === null ? ""
+    : '<tr class="pelrow"><th scope="row">' +
+      esc(PROJ_CEILING_LABEL) + '<span class="ptag">' +
+      esc(PROJ_PROBABILITY) + '</span></th><td class="pelval">' +
+      esc(pct(share)) + '</td></tr>';
+  const absent = block.generation_id ? ""
+    : '<div class="cardbody">' + esc(PROJ_CHAIN_ABSENT) + ' ' +
+      esc(plainNote(block.absent_reason || "")) + '</div>';
+  return '<div class="card"><div class="overline">' +
+    esc(PROJ_CHAIN_HEAD) + '</div><div class="legend">' +
+    esc(PROJ_CHAIN_NOTE) + '</div>' + absent +
+    '<div class="ptscroll"><table class="ptable pel"><tbody>' + rows +
+    probability + '</tbody></table></div></div>';
+}
+
+/* THE SHARED STATLINE, on its third surface (UI_ALPHA_SPEC sec 1).
+ * The same renderer the home expanded rows and the pick card call —
+ * every stat this run carried a projection for, with the absence
+ * idiom the component already has. */
+function projStatline(player) {
+  const entries = LAB_STATS.filter(function (stat) {
+    return numberOrNull((player.proj || {})[stat[1]]) !== null ||
+      Array.isArray((player.stat_quantiles || {})[stat[1]]);
+  }).map(function (stat) {
+    const value = numberOrNull((player.proj || {})[stat[1]]);
+    return { label: stat[0], value: value,
+      reason: value === null ? PROJ_NO_MEAN : "" };
+  });
+  return entries.length ? statline(entries) : "";
+}
+
+function projProvenance() {
+  const run = (nav.lab && nav.lab.run) || {};
+  if (!run.generated_ts) return "";
+  return '<div class="legend">' + esc(PROJ_GENERATED) +
+    esc(String(run.generated_ts).replace("T", " ").slice(0, 16)) +
+    ' UTC</div>';
+}
+
+function renderProjection() {
+  const player = labSelected();
+  const head = detailHead(TITLE_PROJECTIONS);
+  if (!nav.lab) {
+    return '<div class="page">' + head +
+      '<div class="card"><div class="cardhead">' +
+      esc(PROJ_OFFLINE_HEAD) + '</div><div class="cardbody">' +
+      esc(nav.labNote || PROJ_OFFLINE_BODY) + '</div></div></div>';
+  }
+  if (!player) {
+    return '<div class="page">' + head +
+      '<div class="card"><div class="cardbody">' +
+      esc(PROJ_NOT_IN_FILE) + '</div></div></div>';
+  }
+  const meta = [player.team, player.pos];
+  const where = labMeta();
+  if (where) meta.push(where);
+  return '<div class="page">' + head +
+    '<div class="card playercard">' +
+    '<div class="exphead"><span class="pickname">' +
+    esc(player.name) + '</span><span class="expteam">' +
+    esc(meta.join(" · ")) + '</span></div>' +
+    '<div class="overline">' + esc(PROJECTED) + '</div>' +
+    projStatline(player) + '</div>' +
+    '<div class="card"><div class="overline">' +
+    esc(PROJ_RESULTS_HEAD) + '</div>' +
+    '<div class="legend">' + esc(PROJ_MOVED_NOTE) + '</div>' +
+    '<div class="legend">' + esc(PROJ_LIKELY_NOTE) + '</div>' +
+    projResults(player) + '</div>' +
+    projContext(player) + projChain(player) + projProvenance() +
+    '</div>';
 }
 
 /* sec 2.2 and sec 4: the tab stays active on EVERY one of its
@@ -4649,8 +5632,13 @@ function barsSection(prop) {
     '">' + esc(gapText(prop)) + '</div>' +
     '<div class="legend">' + esc(GAP_FOOTNOTE + " " + CLIENT_GAP_RULE) +
     '</div>' +
-    '<button class="readbtn" data-act="note" data-note="' +
-    esc(NOTE_READ_SHEET) + '">' + esc(ADD_READ_BUTTON) + '</button>' +
+    /* U6: the button opens the sheet it has always named, on THIS
+     * prop — the read carries the player, the market and the line it
+     * was written against, which is the context the service already
+     * stores on a read. */
+    '<button class="readbtn" data-act="read-open" data-player="' +
+    esc(nav.pick) + '" data-market="' + esc(prop.market) + '">' +
+    esc(ADD_READ_BUTTON) + '</button>' +
     '</div>';
 }
 
@@ -4695,6 +5683,27 @@ function otherMarkets(person, prop) {
     }).join("") + '</div></div>';
 }
 
+/* U7'S CROSS-TAB LINK. The pick card is a bet; the breakdown behind
+ * it is the whole projection, and this is the door between them. It
+ * goes through the nav model's own cross-tab move — push onto the
+ * Projections stack, switch to that tab — rather than a second
+ * router, so the chevron there pops to the Projections list exactly
+ * as it would if he had walked in through the tab.
+ *
+ * The link is drawn WITHOUT ASKING FIRST whether the breakdown file
+ * has him. That file covers one game and it is not fetched until the
+ * Projections tab is opened, so the pick card cannot know — and
+ * fetching it here to find out would be a request made to decide
+ * whether to draw a button. The screen it leads to says so plainly
+ * when he is not in it, which is where somebody who followed the
+ * link can actually read it. */
+function fullProjection(person) {
+  return '<button class="ghost wide" data-act="projection" ' +
+    'data-player="' + esc(person.player_id) + '" aria-label="' +
+    esc(PROJ_FULL + ": " + person.name) + '">' + esc(PROJ_FULL) +
+    '</button>';
+}
+
 function renderPick() {
   const person = playerOf(nav.pick);
   const prop = pickProp();
@@ -4726,7 +5735,7 @@ function renderPick() {
     '</div>' + pickStatline(person, prop) +
     impliesBanner(prop) + '</div>' +
     shapeSection(prop) + barsSection(prop) + tilesSection(prop) +
-    otherMarkets(person, prop) +
+    otherMarkets(person, prop) + fullProjection(person) +
     '<button class="primary" data-act="copy" data-player="' +
     esc(person.player_id) + '" data-market="' + esc(prop.market) +
     '">' + esc(PICK_COPY) + '</button>' +
@@ -5239,7 +6248,13 @@ function renderLiveCard() {
 
 function renderReport() {
   return '<div class="page">' + detailHead(TITLE_REPORT) +
-    stubCard("Arrives in U6", "How each part of your read held up.",
+    /* The overline named the increment that would fill this screen,
+     * and that increment has now landed without filling it: the
+     * graded report is the resolution jobs' and is still to come. A
+     * marker that names our plan at a reader who cannot look it up is
+     * exactly what sec 7 retires, so what is left is the admission
+     * itself. */
+    stubCard("Not built yet", "How each part of your read held up.",
       STUB_REPORT) + '</div>';
 }
 
@@ -5248,6 +6263,7 @@ const SCREENS = {
   season: renderFantasySeason,
   dfs: renderFantasyDfs,
   projections: renderProjections,
+  projection: renderProjection,
   screen: renderBetsScreen,
   live: renderBetsLive,
   picks: renderBetsPicks,
@@ -5299,8 +6315,10 @@ function renderToast() {
   restart(node, "motion-toast");
 }
 
-/* sec 2.4 — the + sheet, over a 45% ink scrim; tapping the scrim
- * closes it, and so does Escape. */
+/* sec 2.4 — the sheet, over a 45% ink scrim; tapping the scrim closes
+ * it, and so does Escape. TWO BODIES, ONE COMPONENT (U6): the + menu
+ * and the read sheet are the same panel with the same rules, and
+ * which one is drawn is the only difference between them. */
 function renderSheet() {
   const node = el("overlay");
   if (!node) return;
@@ -5309,6 +6327,110 @@ function renderSheet() {
     node.innerHTML = "";
     return;
   }
+  const body = nav.sheet === "read" ? readSheet() : addSheet();
+  node.innerHTML = '<button class="scrim" data-act="sheet-close" ' +
+    'aria-label="Close"></button>' + body;
+  node.hidden = false;
+}
+
+/* THE READ SHEET — sec 5.6, two steps, and the third is not drawn.
+ *
+ * WITHOUT A TOKEN THERE IS NOWHERE FOR A READ TO GO, so the sheet
+ * says so and offers to take one, which is the same honest connect
+ * state My picks draws. Nothing is kept in the browser as a
+ * stand-in. */
+function readSheet() {
+  const body = (!DEMO && !readToken())
+    ? '<div class="cardhead">' + esc(CONNECT_HEAD) + '</div>' +
+      '<div class="cardbody">' + esc(READ_CONNECT_BODY) + '</div>' +
+      '<button class="primary" data-act="connect">' +
+      esc(CONNECT_BUTTON) + '</button>'
+    : (nav.read.step === 2 ? readConfirmStep() : readSayStep());
+  return '<div class="sheet readsheet" role="dialog" aria-modal="true" ' +
+    'aria-label="' + esc(READ_TITLE) + '"><div class="handle"></div>' +
+    '<div class="sheettitle">' + esc(READ_TITLE) + '</div>' +
+    readSteps() + body + '</div>';
+}
+
+/* THE STEP STRIP NAMES THE STEPS THIS SHEET HAS. The handoff's third —
+ * Your number — arrives with the effect library, and a greyed third
+ * marker here would be exactly the promise sec 6d says not to make. */
+function readSteps() {
+  return '<div class="readsteps">' +
+    [[1, READ_STEP_SAY], [2, READ_STEP_CONFIRM]].map(function (step) {
+      return '<span class="readstep' +
+        (nav.read.step === step[0] ? " on" : "") + '"' +
+        (nav.read.step === step[0] ? ' aria-current="step"' : "") +
+        '>' + esc(step[1]) + '</span>';
+    }).join("") + '</div>';
+}
+
+function readNote() {
+  return nav.read.note
+    ? '<div class="legend">' + esc(nav.read.note) + '</div>' : "";
+}
+
+function readSayStep() {
+  return '<div class="cardbody">' + esc(READ_HINT) + '</div>' +
+    '<textarea class="trackbox" id="readtext" rows="3" ' +
+    'aria-label="' + esc(READ_TITLE) + '" placeholder="' +
+    esc(READ_PLACEHOLDER) + '">' + esc(nav.read.text) + '</textarea>' +
+    '<button class="primary" data-act="read-go"' +
+    (nav.read.busy ? " disabled" : "") + '>' +
+    esc(nav.read.busy ? READ_BUSY : READ_GO) + '</button>' +
+    readNote();
+}
+
+/* STEP 2 — the chips, and they are HIS OWN WORDS (brief Addendum 2 as
+ * sec 1 reconciles it). No node path, no category name, no
+ * confidence: the service sends none of those and this step draws
+ * what the service sent. */
+function readConfirmStep() {
+  const chips = (nav.read.spans || []).map(function (span, index) {
+    const gone = !!nav.read.dropped[index];
+    return '<span class="readchip' + (gone ? " dropped" : "") + '">' +
+      '<span class="readspan">' + esc(span) + '</span>' +
+      (gone ? '<span class="readgone">' + esc(READ_DROPPED) +
+        '</span>' : "") +
+      '<button class="readchipbtn" data-act="' +
+      (gone ? "read-add" : "read-drop") + '" data-span="' + index +
+      '" aria-label="' + esc((gone ? READ_ADD : READ_DROP) + " " +
+        span) + '">' + esc(gone ? READ_ADD : READ_DROP) +
+      '</button></span>';
+  }).join("");
+  const changed = readHasDrops();
+  return '<div class="cardhead">' + esc(READ_UNDERSTOOD) + '</div>' +
+    (chips
+      ? '<div class="cardbody">' + esc(READ_CHIPS_NOTE) + '</div>' +
+        '<div class="readchips">' + chips + '</div>'
+      : "") + readNote() +
+    /* NOTHING IS SENT UNSEEN. Taking a fragment out of the middle of
+     * a sentence leaves a seam — a stray "and", a comma — and this
+     * page does not tidy it, because tidying it would mean rewriting
+     * words he wrote. So it SHOWS him the read that would go, and
+     * Edit is right there beside it. */
+    (changed
+      ? '<div class="readwould"><span class="overline">' +
+        esc(READ_WOULD_READ) + '</span><span class="readwouldtext">' +
+        esc(readTextWithoutDrops()) + '</span></div>'
+      : "") +
+    '<div class="readactions">' +
+    '<button class="ghost" data-act="read-edit">' + esc(READ_EDIT) +
+    '</button>' +
+    (changed
+      ? '<button class="primary" data-act="read-go"' +
+        (nav.read.busy ? " disabled" : "") + '>' +
+        esc(nav.read.busy ? READ_BUSY : READ_AGAIN) + '</button>'
+      : '<button class="primary" data-act="read-confirm">' +
+        esc(READ_LOOKS_RIGHT) + '</button>') +
+    '</div>' +
+    (changed
+      ? '<div class="legend">' + esc(READ_CHANGED_NOTE) + ' ' +
+        esc(READ_BANKED_NOTE) + '</div>'
+      : "");
+}
+
+function addSheet() {
   const actions = [
     { title: ADD_READ, sub: ADD_READ_SUB, colour: "var(--read)",
       act: "sheet-read" },
@@ -5323,13 +6445,10 @@ function renderSheet() {
       esc(action.title) + '</span><span class="actionsub">' +
       esc(action.sub) + '</span></span></button>';
   }).join("");
-  node.innerHTML = '<button class="scrim" data-act="sheet-close" ' +
-    'aria-label="Close"></button>' +
-    '<div class="sheet" role="dialog" aria-modal="true" aria-label="' +
-    esc(ADD_TITLE) + '"><div class="handle"></div>' +
+  return '<div class="sheet" role="dialog" aria-modal="true" ' +
+    'aria-label="' + esc(ADD_TITLE) + '"><div class="handle"></div>' +
     '<div class="sheettitle">' + esc(ADD_TITLE) + '</div>' + actions +
     '</div>';
-  node.hidden = false;
 }
 
 function renderAlpha() {
@@ -5377,6 +6496,8 @@ function render() {
   /* U5: the DFS document follows the screen too, and it is asked for
    * ONCE, the first time that sub-view is drawn. */
   syncDfs();
+  /* U7: and the breakdown document, on the same rule. */
+  syncLab();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
@@ -5482,10 +6603,41 @@ function onClick(event) {
     closeSheet();
   } else if (act === "sheet-read") {
     /* sec 2.4: Add your read opens the read sheet on a player's pick.
-     * The sheet itself is U6, so the honest arm is the note plus the
-     * pick card it will open on. */
-    closeSheet();
-    showToast(NOTE_READS, ACTION_OPEN_PICK, "pick");
+     * The + menu can be tapped from anywhere, and a read with no
+     * player and no line could never be graded — so where a pick has
+     * been opened this visit the sheet opens on it, and where none
+     * has, the menu says what a read needs and offers the way there.
+     * That is a fact about reads, not a stub. */
+    if (nav.pick) {
+      readOpen(nav.pick, nav.pickMarket);
+    } else {
+      closeSheet();
+      showToast(READ_NEEDS_PICK, ACTION_OPEN_PICK, "pick");
+    }
+  } else if (act === "read-open") {
+    readOpen(target.getAttribute("data-player"),
+      target.getAttribute("data-market"));
+  } else if (act === "read-go") {
+    postRead();
+  } else if (act === "read-drop") {
+    nav.read.dropped[Number(target.getAttribute("data-span"))] = true;
+    renderSheet();
+  } else if (act === "read-add") {
+    delete nav.read.dropped[Number(target.getAttribute("data-span"))];
+    renderSheet();
+  } else if (act === "read-edit") {
+    /* Back to his own words, with whatever he dropped already taken
+     * out of them, so Edit and Drop are the same correction from two
+     * directions rather than two rules. */
+    nav.read.text = readTextWithoutDrops();
+    nav.read.step = 1;
+    nav.read.dropped = {};
+    nav.read.note = "";
+    renderSheet();
+  } else if (act === "read-confirm") {
+    confirmRead();
+  } else if (act === "projection") {
+    openProjection(target.getAttribute("data-player"));
   } else if (act === "sheet-track") {
     openDetail("track");
   } else if (act === "sheet-startsit") {
@@ -5632,6 +6784,15 @@ function openPick(playerId, market) {
   openDetail("pick");
 }
 
+/* THE PROJECTION ROUTE (U7). One door for both ways in — a roster row
+ * on the Projections list and a Pick card's "Full projection" — and
+ * it is the cross-tab push in both cases, because a detail belongs to
+ * the Projections stack wherever it was opened from. */
+function openProjection(playerId) {
+  if (playerId) nav.proj.player = playerId;
+  openIn("projections", "projection");
+}
+
 function setSort(sort) {
   if (nav.sort === sort) return;
   for (let index = 0; index < SORTS.length; index += 1) {
@@ -5696,6 +6857,22 @@ function onInput(event) {
    * caret would take the caret with it. */
   if (target.id === "slippaste" || target.id === "manualleg") {
     nav.track.text = target.value;
+    return;
+  }
+  /* U6's one field, and it keeps its text in the draft for the same
+   * reason the others do: re-rendering the sheet under his caret
+   * would take the caret with it, and a poll or a toast must never
+   * eat a sentence he is halfway through. */
+  if (target.id === "readtext") {
+    nav.read.text = target.value;
+    return;
+  }
+  /* U7's roster filter. Only the LIST is redrawn, the same way the
+   * game search redraws only its results. */
+  if (target.id === "projsearch") {
+    nav.proj.query = target.value;
+    const list = el("projlist");
+    if (list) list.innerHTML = projListBody();
     return;
   }
   /* U3c's editable rows on the team confirm screen. A row the reader

@@ -96,9 +96,12 @@ two vocabularies meet. The fixed footer S-016 binds — this sheet
 contains no bet and no play recommendation — rides the document and
 the app renders it.
 
-**WHAT IS STILL OPEN.** S-016 calls the sheet "a PRIVATE weekly
-display for the owner" and says "THE PROGRAM ITSELF PUBLISHES
-NOTHING". `web/app/` deploys inside the board's own public mirror, so
-publishing this file is a change in that surface's audience and not a
-parameter of this exporter. It is recorded here for the ruling it
-needs, not decided here.
+**RULED (ledger, 2026-09-20).** S-016 called the sheet "a PRIVATE
+weekly display for the owner"; the owner's overnight direction put
+the DFS portion in the app, superseding that scoping FOR THIS
+SURFACE (the ledger block has the full reasoning). The sheet's
+no-bet footer, evidence labels, absence sentences and the
+season-end leverage test's predeclaration are all untouched. The
+one genuinely new consequence — captured third-party ownership
+becoming publicly reachable beside our projections — is flagged
+for the owner's confirmation and reversible with one deploy.
