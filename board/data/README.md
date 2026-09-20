@@ -65,3 +65,40 @@ CHURN-TOLERANT: `lab_schema` ("lab-1") names the iteration, and the
 shape may change freely as the design is worked on, with its tests
 updated in the same PR. `board.json` is unaffected by any of it — the
 board contract stays ceremonial and is never edited to suit the lab.
+## The DFS file (U5, UI_ALPHA_SPEC §6c)
+
+`dfs.json` is written ONLY by the shape side's own exporter at
+`fantasy_edge/research/shape/dfs_export.py` — never by the board
+exporter, which refuses that path by name — and it feeds the app's
+DFS sub-view at `web/app/`. (The path spelling is deliberate: the
+import-direction audit scans this file's source text for the dotted
+name, and prose carrying it would read as the import the wall
+forbids.) It is the FIRST file in this directory
+that is not exported from the database at all: it reshapes the weekly
+alpha sheet the shape lineage already COMMITS to the repository
+(`research/shape/alpha/ALPHA_<season>w<week>.json`) and computes
+nothing. Its export step therefore carries no secret.
+
+**THE SAME PUBLIC-EXPOSURE RULE, WORD FOR WORD.** Derived model
+outputs only; no raw PFF field and no value traceable to a single PFF
+column. The sheet reads the engine's own archived means and the
+ownership summaries under `research/shape/ownership`, and neither
+touches PFF. Every row in the file is built from the sheet's OWN
+declared column list, so a column the sheet stops declaring stops
+being published and a value it never declared cannot reach this
+public file.
+
+**S-016's HONESTY IS CARRIED, NOT RESTATED.** Each column's evidence
+class and meaning, each table's rules and each table's absence
+sentences cross into this file byte for byte; §7's plain-language
+translation happens in `web/app/app.js`, which is the one place the
+two vocabularies meet. The fixed footer S-016 binds — this sheet
+contains no bet and no play recommendation — rides the document and
+the app renders it.
+
+**WHAT IS STILL OPEN.** S-016 calls the sheet "a PRIVATE weekly
+display for the owner" and says "THE PROGRAM ITSELF PUBLISHES
+NOTHING". `web/app/` deploys inside the board's own public mirror, so
+publishing this file is a change in that surface's audience and not a
+parameter of this exporter. It is recorded here for the ruling it
+needs, not decided here.

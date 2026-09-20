@@ -107,8 +107,12 @@ const NOTE_READS = "Saving your own read is still being built. The pick card it 
 const ACTION_OPEN_PICK = "Open the pick";
 const NOTE_ALERTS = "Alerts are not built yet. We have not decided which events should notify you.";
 const STUB_REPORT = "The graded report on your reads is still being built.";
-const STUB_FANTASY_SEASON = "My team, the lineup table, the ranges and the FLEX call are still being built.";
-const STUB_FANTASY_DFS = "My team for a DFS slate — its own view — is still being built.";
+/* The two Fantasy sub-views were stubs until U5 and are not any more,
+ * so their stub sentences are GONE rather than left behind: a promise
+ * a screen no longer needs to make is a promise it should not be
+ * making. Both sub-views now draw what they have and simply do not
+ * draw what they do not — the credibility rule, which is why there is
+ * no "coming soon" left on either of them. */
 const STUB_STARTSIT = "Fantasy is here; the start/sit comparison is still being built.";
 const SLATE_HEADER = "Sunday 12:00 slate";
 const SLATE_BASIS = "our numbers vs fair market odds";
@@ -423,6 +427,123 @@ const LIVE_FULL_GAME_S = 3600;
 const LIVE_QUARTER_S = 900;
 
 /* ------------------------------------------------------------------
+ * U5 — FANTASY: SEASON LONG (UI_ALPHA_SPEC sec 6c, handoff sec 5.2)
+ * ------------------------------------------------------------------
+ * THE CREDIBILITY RULE GOVERNS THIS WHOLE SCREEN. A capability we do
+ * not have is NOT SHOWN: there is no greyed-out win chance, no "we
+ * don't know yet", no apology. The opponent side of the matchup card
+ * exists when an opponent lineup has been captured and does not exist
+ * when one has not, and the FLEX section exists when a bench was
+ * captured and does not exist when one was not. */
+
+const LINEUP_HEAD = "Your lineup";
+const LINEUP_SLOT = "SLOT";
+const LINEUP_PLAYER = "PLAYER";
+const LINEUP_RANGE = "RANGE";
+const LINEUP_PROJ = "PROJ";
+const LINEUP_OFF_SLATE =
+  "He is not on this week's slate, so we have no projection for him. His name is the one your picture showed.";
+
+/* THE TOTAL, AND WHAT IT IS. Sec 6c: "the sum of the lineup's
+ * projections, its basis said in one plain sentence". It is the one
+ * piece of arithmetic this screen does, so it says so. */
+const TEAM_TOTAL = "Our projected total";
+const TEAM_TOTAL_BASIS =
+  "Added up from the lineup below, one player at a time. It is half-PPR scoring, and it does not yet subtract fumbles or interceptions, so a passer's share of it is high by whatever his interceptions would have cost.";
+const TEAM_TOTAL_SKIPPED =
+  "Left out of the total, because we have no projection for them: ";
+
+/* THE OPPONENT. One door, and it is the U3c capture flow with the
+ * side marker set — the same picture, the same confirm screen, the
+ * same append-only store. */
+const OPP_ENTRY = "Add opponent from a picture";
+const OPP_ENTRY_SUB =
+  "A picture of his lineup. Nothing is saved until you have checked it, exactly as with your own.";
+const OPP_TOTAL = "His projected total";
+const OPP_KIND_LABEL = "Whose lineup is this?";
+const OPP_SIDE_MINE = "Mine";
+const OPP_SIDE_THEIRS = "My opponent's";
+
+/* THE COMPARISON, AND WHAT IT IS NOT. Sec 6c is explicit: a joint win
+ * chance is NOT invented from independent per-player ranges. So the
+ * card compares the two totals and names exactly what it compared. */
+const COMPARE_HEAD = "What this compares";
+const COMPARE_NOTE =
+  "Projected totals, added player by player. It is not a chance of winning: working one out means modelling every player's game together, and that is not built yet.";
+const COMPARE_AHEAD = "Ahead by ";
+const COMPARE_BEHIND = "Behind by ";
+const COMPARE_LEVEL = "Level on projected totals.";
+const COMPARE_POINTS = " points";
+
+/* SEC 5.2's FLEX call. Two cards, the captured one and the best
+ * captured bench alternative; the swap moves the total and says so. */
+const FLEX_HEAD = "The FLEX call";
+const FLEX_IN = "In your lineup";
+const FLEX_BENCH = "On your bench";
+const FLEX_SWAP = "Start him instead";
+const FLEX_SWAPPED = "Swapped. The total above has moved.";
+const FLEX_BACK = "Put your captured lineup back";
+const FLEX_BASIS =
+  "Both numbers are the same half-PPR projection the table above draws. Nothing here is a recommendation.";
+
+/* The FLEX slot as a lineup prints it, and the positions a FLEX may
+ * be filled from. Both are the LEAGUE'S vocabulary, not ours, which
+ * is why they are matched loosely against whatever the picture said. */
+const FLEX_LABELS = ["FLEX", "W/R/T", "W/R", "WRT", "RB/WR/TE"];
+const FLEX_POSITIONS = ["RB", "WR", "TE"];
+const BENCH_LABELS = ["BN", "BE", "BENCH", "RES", "IR", "TAXI"];
+
+/* ------------------------------------------------------------------
+ * U5 — FANTASY: DFS (UI_ALPHA_SPEC sec 6c)
+ * ------------------------------------------------------------------
+ * The sheet the shape lineage already builds, restyled. EVERY string
+ * in the three tables came off that sheet: this file supplies the
+ * headings and the layout and not one fact. */
+
+const DFS_TITLES = {
+  stacks: "Stacks",
+  players: "Where we differ from the crowd",
+  boom_proxy: "The high-end stand-in"
+};
+const DFS_COLUMNS = "What each column is";
+const DFS_EVIDENCE = "What the labels mean";
+const DFS_SHOWING = "Showing the first ";
+const DFS_OF = " of ";
+const DFS_SHOWING_TAIL =
+  " rows, in the sheet's own order. Nothing is re-sorted and nothing is dropped from the middle.";
+const DFS_FOOTER_HEAD = "About this sheet";
+const DFS_ENTRY_HEAD = "Your DraftKings entry";
+const DFS_ENTRY_OWN = "Owned";
+const DFS_ENTRY_PROJ = "Proj";
+const DFS_OFFLINE_HEAD = "The DFS sheet hasn't loaded.";
+const DFS_OFFLINE_BODY =
+  "This view reads one file the weekly sheet is turned into on each deploy. It isn't here right now, so there is nothing true to draw and nothing is being guessed at.";
+const DFS_OFFLINE_SCHEMA =
+  "The DFS file that loaded is a shape this build does not know, so none of it is drawn. That is a deliberate refusal, not a failure to try.";
+const DFS_UNDER_OWNED = "Both legs under-owned";
+
+/* THE GROUP A GAME IS IN, in words. `spreadT2|totalT3` is a key the
+ * sheet writes for a machine; the thirds it names are a fact a reader
+ * can have, so they are spelled out here and the key stays in the
+ * document exactly as it is (sec 7's mechanism: display strings live
+ * apart from data keys). A label this pattern does not recognise is
+ * drawn as it came, because a bucket we cannot read is not a bucket
+ * we may rename. */
+const BUCKET_THIRDS = ["bottom third", "middle third", "top third"];
+const BUCKET_SPREAD = " by spread";
+const BUCKET_TOTAL = " by total";
+const DFS_STACK_R = "Correlation";
+const DFS_STACK_TOTAL = "Both together";
+const DFS_GAP = "Rank gap";
+const DFS_BOOM = "High end";
+
+/* How many rows of the two long tables are PAINTED. The document
+ * carries every row — the DraftKings entry above reads it by id — and
+ * this is a drawing decision on a phone, stated under the table it
+ * applies to. */
+const DFS_ROWS_DRAWN = 40;
+
+/* ------------------------------------------------------------------
  * U2 — THE SLATE DOCUMENT
  * ------------------------------------------------------------------
  * THE TWO PATHS, the lab's idiom exactly. Real is the default; the
@@ -448,6 +569,15 @@ const SLATE_URL = DEMO ? DEMO_SLATE_URL : REAL_SLATE_URL;
  * than reading fields out of a shape it does not know. */
 const SLATE_SCHEMA = "slate-1";
 const FETCH_TIMEOUT_MS = 15000;
+
+/* U5's second document, on exactly the same two paths and the same
+ * one switch. It is written by the shape side's own exporter from the
+ * committed weekly sheet; this page reads it and computes nothing
+ * from it. */
+const REAL_DFS_URL = "../data/dfs.json";
+const DEMO_DFS_URL = "../demo/dfs.demo.json";
+const DFS_URL = DEMO ? DEMO_DFS_URL : REAL_DFS_URL;
+const DFS_SCHEMA = "dfs-1";
 
 /* ------------------------------------------------------------------
  * U3 — THE PICKS SERVICE
@@ -688,7 +818,153 @@ const PLAIN_NOTES = [
   ["no captured market line was found for this slate",
     "No bookmaker line was saved for this slate, so no player carries " +
     "a main line. The Props and Market views show dashes; Fantasy, " +
-    "Role and Usage are unaffected, because none of them reads a price."]
+    "Role and Usage are unaffected, because none of them reads a price."],
+
+  /* U5 — THE WEEKLY DFS SHEET'S OWN PROSE. Same rule as every entry
+   * above it: the sheet's JSON is untouched, the FACTS survive, and
+   * the governance prose that belongs in the ledger stays in the
+   * ledger. Each caveat the sheet attaches to a table is kept — a
+   * proxy still says it is a proxy, an assumption still says it is an
+   * assumption, and an absence still says which file was looked for. */
+  ["A PROJECTION HERE IS DRAWABLE-PPR",
+    "Points on our own scoring, worked out from our projected stats: " +
+    "1 per catch, 1 per 10 receiving or rushing yards, 1 per 25 " +
+    "passing yards, 4 per passing touchdown, 6 per touchdown. It is " +
+    "not DraftKings scoring — interceptions, fumbles, two-point " +
+    "conversions and return touchdowns are left out of both sides. " +
+    "It is shown here, never graded here."],
+  ["RANKS ARE WITHIN POSITION",
+    "Ranks are worked out inside each position, 1 being the highest, " +
+    "and players who tie share the better rank. The gap is his " +
+    "ownership rank minus his projection rank: a positive number " +
+    "means we like him more than the crowd does."],
+  ["THE BOOM PROXY IS COMONOTONIC BY ASSUMPTION",
+    "This column assumes every one of a player's stats has a big game " +
+    "at the same moment, which nothing in our data says is true. It " +
+    "is the assumption that makes the number possible, and it is why " +
+    "the number is a stand-in."],
+  ["The live archive's existing 21-point quantile grids are NOT",
+    "What we save for each stat is a set of likely outcomes for that " +
+    "stat on its own. Adding the high ends of those together is not " +
+    "the same thing as a high end for the player, and we do not " +
+    "pretend it is."],
+  ["THIS COLUMN IS A PROXY AND IS NEVER PRESENTED AS THE REAL NUMBER",
+    "This column is a stand-in and is never presented as the real " +
+    "number. It is not a high end we have measured; it is replaced " +
+    "the day the real one exists."],
+  ["OWNERSHIP IS READ OFF THE COMMITTED SUMMARIES",
+    "Ownership is read off the ownership files already saved for this " +
+    "week and from nowhere else — nothing is fetched. Every row that " +
+    "could not be matched to a player is counted and named rather " +
+    "than quietly dropped."],
+  ["A SCHEMA LIMIT, STATED RATHER THAN WORKED AROUND",
+    "Our projection rows carry a player id but no name, so an " +
+    "ownership row we could not match by id cannot be matched by name " +
+    "either. Those rows are counted as unmatched, and a player with " +
+    "no ownership row is shown without one. No other source is " +
+    "consulted for a name."],
+  ["PER-TABLE ABSENCE",
+    "A missing ownership file drops the ownership columns for that " +
+    "week and says which file was looked for. It is not a failed run: " +
+    "the rest of the sheet is drawn, and nothing is invented in the " +
+    "gap."],
+  ["THIS SHEET CONTAINS NO BET AND NO PLAY RECOMMENDATION",
+    "This sheet contains no bet and no play. It is a private weekly " +
+    "display: our own projections beside the ownership that was " +
+    "captured, each column labelled as what it is. Nothing here is a " +
+    "pick, a lock or an edge, and no number here has been graded " +
+    "against a result."],
+  ["PER TEAM, OFF THE LIVE PROJECTIONS THEMSELVES",
+    "The passer and the receiver in each stack are chosen off our own " +
+    "projections for that team, because nothing we save carries a " +
+    "depth chart for them."],
+  ["THE WEEK'S GAMES ARE PLACED IN THE S-010 BUCKETS",
+    "Each game is placed in a group by its spread and its total, " +
+    "using the cut values our own correlation study set, and the " +
+    "correlation shown is the one that study measured for that group."],
+  ["UNDER-OWNED (S-016): BOTH LEGS BELOW",
+    "Under-owned means both players are below the middle ownership " +
+    "for their position on this slate. It is a flag on a hypothesis " +
+    "nobody has tested yet, not a claim that it wins."],
+  ["NOTHING in this module compares a 2026 forecast",
+    "Nothing on this sheet is graded against a 2026 result. It is a " +
+    "display of this season's numbers; the scoring happens at the end " +
+    "of the season, under its own sealed protocol."],
+
+  /* ...and the six evidence classes, which are the sheet's own words
+   * for how much each column is worth. They are the honesty of this
+   * surface, so they are translated rather than dropped. */
+  ["a key, not a claim",
+    "A key, not a claim: a team, a player id, a position, a group " +
+    "name."],
+  ["the engine's own number, DISPLAYED and never scored here",
+    "Our own projection, shown here and never graded here. Its record " +
+    "is kept on the live scorecard, not on this sheet."],
+  ["a measurement read off a committed capture file",
+    "A measurement read off a file we saved — what the provider or " +
+    "the contest actually said."],
+  ["an ACCEPTED research result with support behind it",
+    "An accepted research result with evidence behind it."],
+  ["a stand-in computed under a STATED assumption",
+    "A stand-in worked out under an assumption the data cannot " +
+    "support. It is labelled, and the assumption is printed with the " +
+    "table."],
+  ["a display of a hypothesis that PREDATES ITS TEST",
+    "A hypothesis shown before it has been tested. No claim about " +
+    "chances, and no support behind it yet."],
+
+  /* ...and the sheet's per-row reason codes. They are keys, written
+   * for a machine, and each one is a real fact about that row: what
+   * could not be read, named. Said in words. */
+  /* ...and the two column meanings that are still ours rather than a
+   * reader's after the word-level glossary has run. Each keeps the
+   * fact and loses the machinery. */
+  ["the S-010 spread x total bucket of the game",
+    "Which group of games this one is in: its spread and its total, " +
+    "each cut into thirds."],
+  ["the draw-implied QB-pass x own-WR1-receiving correlation",
+    "How closely the passer's yards and his own top receiver's yards " +
+    "moved together in games like this one, measured in our own " +
+    "study."],
+  ["summed across the marginals AT ONE GRID POINT",
+    "Every one of his stats read at the same high point of its own " +
+    "range, then added together. That is the stand-in; it is not a " +
+    "high end anyone has measured."],
+  ["how many marginals the row actually had",
+    "How many of his stats we had a range for."],
+
+  ["live_projection_player_has_no_ownership_row",
+    "No ownership was captured for one of these two, so the pair's " +
+    "ownership is blank rather than filled in."],
+  ["ownership_row_share_not_readable_for_this_player",
+    "Ownership was captured for him, but the share on that row could " +
+    "not be read, so none is shown. That is not the same as having no " +
+    "row at all."],
+  ["ownership_row_matched_no_live_projection_player",
+    "This captured ownership row matched no player we project, so it " +
+    "is counted rather than dropped."],
+  ["no_ownership_summary_on_disk_for_this_week",
+    "No ownership file was saved for this week, so the ownership " +
+    "columns are blank. Nothing is estimated in their place."],
+  ["no_t90_game_line_for_this_team_pooled_r_used",
+    "No game line was saved for this team at the cutoff, so the " +
+    "correlation shown is the one measured across all games rather " +
+    "than this game's own group."],
+  ["the_bucket_carries_no_r_pooled_r_used",
+    "This game's group carries no measured correlation, so the one " +
+    "shown is the figure measured across all games."],
+  ["the_b_bucket_table_could_not_be_read_at_all",
+    "The correlation table could not be read, so the figure shown is " +
+    "the one measured across all games."],
+  ["no_positional_median_ownership_on_this_slate",
+    "There is no middle ownership for this position on this slate, so " +
+    "the under-owned flag cannot be worked out and is not shown."],
+  ["team_has_no_priced_passer_in_the_live_projections",
+    "We project no passer for this team this week, so there is no " +
+    "stack to draw for it."],
+  ["team_has_no_priced_receiver_in_the_live_projections",
+    "We project no receiver for this team this week, so there is no " +
+    "stack to draw for it."]
 ];
 
 /* The one exporter footnote that carries a value inside it: the stat
@@ -712,7 +988,8 @@ const STAT_WORDS = {
  * translated, because the sentence around them already carries the
  * fact — then the shorthand, longest phrase first so a short pattern
  * never eats a longer one's words. */
-const PLAIN_LEDGER_RE = /\s*\((?:the board's\s*)?D-\d{3}[^)]*\)/g;
+const PLAIN_LEDGER_RE =
+  /\s*\((?:the board's\s*)?[DS]-\d{3}[^)]*\)/g;
 const PLAIN_WORDS = [
   [/\bquantile grid\b/gi, "set of likely outcomes"],
   [/\bquantile band\b/gi, "range"],
@@ -735,6 +1012,19 @@ const PLAIN_WORDS = [
   [/\batt share\b/gi, "pass attempt share"],
   [/\bcaptures\b/gi, "saved prices"],
   [/\bcapture\b/gi, "saved price"],
+  /* U5's three, from the weekly sheet's shorthand. Each is a word we
+   * use among ourselves for something a reader already has a word
+   * for. */
+  [/\bdrawable[- ]PPR\b/gi, "points on our own scoring"],
+  /* ...and the SHAPE ledger's codes, the same rule sec 7 wrote for
+   * the board's: a reader cannot look one up, and the sentence around
+   * it already carries the fact. */
+  [/\bthe S-0\d{2}\b/g, "our"],
+  [/\bS-0\d{2}'s\b/g, "our"],
+  [/\bS-0\d{2}\b/g, "our own research"],
+  [/\bthe gsis id\b/gi, "our own player id"],
+  [/\bgsis id\b/gi, "our own player id"],
+  [/\bthe B table\b/g, "our correlation table"],
   /* ...and last of all, the field names themselves. An exporter
    * sentence that quotes one of its own stat keys — `rushing_yards`,
    * `pass_tds` — puts a column name in front of a reader; the key is
@@ -1055,9 +1345,32 @@ const nav = {
    * service says so. */
   shot: { slip: null, team: null },
   capture: { busy: "", note: "" },
-  team: { slots: null, kind: "season_long", surface: null,
-    saved: null },
+  team: { slots: null, kind: "season_long", side: "mine",
+    surface: null, saved: null },
   teams: null,
+
+  /* U5's own state, and it is held for the visit like the rest.
+   *
+   * `opponents` is the second side of the same store — the newest
+   * confirmed lineup per kind for the team he is PLAYING — and null
+   * means "not asked or not answered", which is a drawn state and not
+   * an empty opponent.
+   *
+   * `flex` is the FLEX call, and it is A VIEW OF HIS OWN LINEUP,
+   * never a write: the captured team is untouched in the store, the
+   * table draws whoever this names in the FLEX slot, and putting it
+   * back is one tap. `dfs` is the weekly sheet's document.
+   *
+   * THE FLEX SWAP IS NOT A CONFIRMATION. Nothing about it reaches the
+   * service: a lineup in the store is a lineup somebody confirmed
+   * from a picture, and a swap he is trying out on screen is not
+   * that. He saves a new lineup by confirming a new picture, exactly
+   * as he did the first one. */
+  opponents: null,
+  flex: null,
+  dfs: null,
+  dfsNote: null,
+  dfsAsked: false,
 
   /* U4's own state, and it is held for the visit like the rest of it.
    *
@@ -1888,7 +2201,11 @@ async function saveTeam() {
   render();
   try {
     const saved = await picksAsk("/team", token, {
-      kind: nav.team.kind, season: week.season, week: week.week,
+      /* U5: WHOSE LINEUP THIS IS travels with the confirmation, so
+       * the store keeps his team and his opponent's apart without
+       * anything here having to remember which is on screen. */
+      kind: nav.team.kind, side: nav.team.side,
+      season: week.season, week: week.week,
       slots: slots.map(function (slot) {
         return {
           slot_label: slot.slot_label,
@@ -1901,6 +2218,10 @@ async function saveTeam() {
     });
     nav.team.saved = saved;
     nav.teams = null;
+    nav.opponents = null;
+    /* A newly confirmed lineup is a different lineup, so the FLEX
+     * call starts again from what the picture actually said. */
+    nav.flex = null;
     nav.picksOffline = false;
     nav.picksBusy = "";
     render();
@@ -1923,11 +2244,51 @@ async function loadTeams(force) {
   try {
     const answer = await picksAsk("/team", token, null);
     nav.teams = (answer && answer.teams) || {};
+    /* U5: the other side of the same answer. An opponent nobody has
+     * captured is simply absent from it, which is what the matchup
+     * card reads to decide whether it has two sides or one. */
+    nav.opponents = (answer && answer.opponents) || {};
     nav.picksOffline = false;
   } catch (err) {
     nav.picksOffline = true;
   }
   render();
+}
+
+/* ------------------------------------------------------------------
+ * U5 — THE DFS DOCUMENT
+ * ------------------------------------------------------------------
+ * `loadSlate`'s rule, applied to the second document: it either
+ * arrived or it did not, there is no cached yesterday, and a shape
+ * this build does not know is refused out loud rather than read
+ * field by field on a guess. */
+async function loadDfs() {
+  nav.dfsAsked = true;
+  try {
+    const document = await getJSON(DFS_URL);
+    if (!document || document.dfs_schema !== DFS_SCHEMA) {
+      nav.dfs = null;
+      nav.dfsNote = DFS_OFFLINE_SCHEMA;
+    } else {
+      nav.dfs = document;
+      nav.dfsNote = null;
+    }
+  } catch (err) {
+    nav.dfs = null;
+    nav.dfsNote = DFS_OFFLINE_BODY;
+  }
+  render();
+}
+
+/* ASKED FOR WHEN IT IS LOOKED AT, once. `syncLivePoll`'s rule without
+ * the poll: the weekly sheet does not change while the reader is on
+ * the screen, so this is one request the first time the DFS sub-view
+ * is drawn and nothing after it. A reader who never opens the tab
+ * never fetches it. */
+function syncDfs() {
+  if (nav.dfsAsked) return;
+  if (currentRoute() !== "dfs") return;
+  loadDfs();
 }
 
 /* The season and week the confirmed team is FOR. It is the slate
@@ -2880,18 +3241,612 @@ function teamHeldLine(held) {
     ", saved for week " + held.week + ".";
 }
 
+/* ------------------------------------------------------------------
+ * U5 — SEASON LONG (UI_ALPHA_SPEC sec 6c, handoff sec 5.2)
+ * ------------------------------------------------------------------
+ * THE LINEUP IS THE CAPTURE'S; THE NUMBERS ARE THE EXPORTER'S. Every
+ * row here is a slot the reader confirmed from a picture, joined to
+ * `slate.json` by the player id the service resolved. A slot we could
+ * not resolve keeps the words the picture showed and carries no
+ * number at all — the join is ours, and a projection hung on a guess
+ * would be worse than a dash. */
+
+function heldTeam(kind) {
+  return (nav.teams || {})[kind] || null;
+}
+
+function heldOpponent(kind) {
+  return (nav.opponents || {})[kind] || null;
+}
+
+/* Which slot is the FLEX, and which are the bench, in the league's
+ * own vocabulary rather than ours. A label this list does not know is
+ * neither: it is simply a starting slot, which is the safe reading. */
+function labelIn(list, label) {
+  const text = String(label || "").toUpperCase().replace(/\s+/g, "");
+  return list.some(function (name) {
+    return text.indexOf(name.replace(/\s+/g, "")) === 0;
+  });
+}
+
+function isFlexSlot(label) {
+  return labelIn(FLEX_LABELS, label);
+}
+
+function isBenchSlot(label) {
+  return labelIn(BENCH_LABELS, label);
+}
+
+/* ONE ROW PER CONFIRMED SLOT, joined once. Everything below reads
+ * this and nothing re-joins. */
+function lineupRows(held) {
+  return ((held && held.slots) || []).map(function (slot, index) {
+    const person = slot.player_id ? playerOf(slot.player_id) : null;
+    const fan = (person && person.fantasy) || null;
+    const where = slot.player_id ? gameOfPlayer(slot.player_id) : null;
+    return {
+      index: index,
+      label: slot.slot_label || "",
+      player_id: slot.player_id || null,
+      /* HIS OWN WORDS WHERE WE HAVE NO PLAYER. The picture said a
+       * name; we say the same name back rather than a blank row. */
+      name: person ? person.name : (slot.player_text || DASH),
+      person: person,
+      fan: fan,
+      proj: fan && fan.proj !== null && fan.proj !== undefined
+        ? fan.proj : null,
+      game: where
+        ? (where.side === "away"
+          ? "at " + where.game.home
+          : "vs " + where.game.away)
+        : (slot.opponent_text || ""),
+      bench: isBenchSlot(slot.slot_label),
+      flex: isFlexSlot(slot.slot_label)
+    };
+  });
+}
+
+/* THE STARTERS, WITH THE FLEX CALL APPLIED. The store is untouched:
+ * this swaps the row the table draws, and `nav.flex` is the whole of
+ * the change. */
+function startingRows(rows, mine) {
+  const starters = rows.filter(function (row) { return !row.bench; });
+  /* THE CALL IS ON HIS OWN LINEUP AND ON NOBODY ELSE'S. The opponent's
+   * rows go through this same function — one reader, one shape — and
+   * they are never swapped: a start/sit decision belongs to the man
+   * making it, and applying it to the other team would move a number
+   * he cannot move. */
+  if (!mine || !nav.flex) return starters;
+  const chosen = rows.filter(function (row) {
+    return row.player_id === nav.flex;
+  })[0];
+  if (!chosen) return starters;
+  return starters.map(function (row) {
+    if (!row.flex) return row;
+    return {
+      index: row.index, label: row.label,
+      player_id: chosen.player_id, name: chosen.name,
+      person: chosen.person, fan: chosen.fan, proj: chosen.proj,
+      game: chosen.game, bench: false, flex: true, swapped: true
+    };
+  });
+}
+
+/* THE ONE PIECE OF ARITHMETIC THIS SCREEN DOES, and it says so on
+ * screen: the projections added up, and the rows that had none named
+ * rather than counted as zero. */
+function lineupTotal(rows) {
+  let total = 0;
+  let counted = 0;
+  const skipped = [];
+  rows.forEach(function (row) {
+    if (row.proj === null) {
+      skipped.push(row.name);
+      return;
+    }
+    total += row.proj;
+    counted += 1;
+  });
+  return { total: counted ? total : null, counted: counted,
+    skipped: skipped };
+}
+
+/* Sec 4's range bar, on points rather than on a market line. It is
+ * drawn ONLY where the document carries a low and a high end; where
+ * it does not, the cell is the sec 3.1 dash and the table's own
+ * footnote says why (the same sentence Home's Fantasy view uses). */
+const POINTS_RANGE_W = 88;
+const POINTS_RANGE_H = 18;
+
+function pointsRange(fan) {
+  const lo = fan && fan.p10;
+  const hi = fan && fan.p90;
+  if (lo === null || lo === undefined || hi === null ||
+      hi === undefined) {
+    return null;
+  }
+  const proj = fan.proj === null || fan.proj === undefined
+    ? lo : fan.proj;
+  const top = Math.max(hi, proj, 30);
+  const at = function (value) {
+    return ((Math.max(0, value) / top) * (POINTS_RANGE_W - 8) +
+      4).toFixed(1);
+  };
+  const mid = (POINTS_RANGE_H / 2).toFixed(1);
+  return '<span class="rangebar"><svg width="' + POINTS_RANGE_W +
+    '" height="' + POINTS_RANGE_H + '" viewBox="0 0 ' +
+    POINTS_RANGE_W + ' ' + POINTS_RANGE_H + '" role="img" ' +
+    'aria-label="' + esc(PICK_FLOOR + " " + num(lo) + ", " +
+      PICK_CEILING.toLowerCase() + " " + num(hi)) + '">' +
+    '<line x1="4" y1="' + mid + '" x2="' + (POINTS_RANGE_W - 4) +
+    '" y2="' + mid + '" stroke="var(--track)" stroke-width="2"></line>' +
+    '<line x1="' + at(lo) + '" y1="' + mid + '" x2="' + at(hi) +
+    '" y2="' + mid + '" stroke="var(--border-strong)" ' +
+    'stroke-width="6" stroke-linecap="round"></line>' +
+    '<circle cx="' + at(proj) + '" cy="' + mid +
+    '" r="3.5" fill="var(--ink)"></circle></svg></span>';
+}
+
+function lineupRow(row, index) {
+  const bar = pointsRange(row.fan);
+  const classes = ["lineuprow"];
+  if (row.flex) classes.push("flex");
+  return '<button class="' + classes.join(" ") + growClass() +
+    '" style="--i:' + Math.min(index, 8) + '" data-act="player" ' +
+    'data-player="' + esc(row.player_id || "") + '"' +
+    (row.person ? "" : " disabled") + ' aria-label="' +
+    esc(row.label + ", " + row.name + ", " +
+      LINEUP_PROJ.toLowerCase() + " " +
+      (row.proj === null ? DASH : num(row.proj))) + '">' +
+    '<span class="lineupslot">' + esc(row.label) + '</span>' +
+    '<span class="lineupwho"><span class="lineupname">' +
+    esc(row.name) + '</span>' +
+    (row.game
+      ? '<span class="lineupgame">' + esc(row.game) + '</span>'
+      : "") + '</span>' +
+    '<span class="lineupbar">' +
+    (bar || '<span class="lineuprange absent"' +
+      (row.fan && row.fan.range_reason
+        ? ' title="' + esc(plainNote(row.fan.range_reason)) + '"'
+        : "") + '>' + esc(DASH) + '</span>') + '</span>' +
+    '<span class="lineupproj' + (row.proj === null ? " absent" : "") +
+    '"' + (row.proj === null && !row.person
+      ? ' title="' + esc(LINEUP_OFF_SLATE) + '"'
+      : "") + '>' +
+    esc(row.proj === null ? DASH : num(row.proj)) + '</span></button>';
+}
+
+function lineupTable(rows) {
+  const anyRange = rows.some(function (row) {
+    return !!pointsRange(row.fan);
+  });
+  const offSlate = rows.some(function (row) {
+    return !row.person;
+  });
+  return '<div class="card"><div class="overline">' +
+    esc(LINEUP_HEAD) + '</div>' +
+    '<div class="lineuphead">' +
+    '<span class="lineupslot">' + esc(LINEUP_SLOT) + '</span>' +
+    '<span class="lineupwho">' + esc(LINEUP_PLAYER) + '</span>' +
+    '<span class="lineupbar">' + esc(LINEUP_RANGE) + '</span>' +
+    '<span class="lineupproj">' + esc(LINEUP_PROJ) + '</span>' +
+    '</div>' +
+    rows.map(lineupRow).join("") +
+    '<div class="legend">' + esc(LEGEND_FANTASY) + '</div>' +
+    (anyRange
+      ? ""
+      : '<div class="legend">' + esc(RANGE_ABSENT) + '</div>') +
+    (offSlate
+      ? '<div class="legend">' + esc(LINEUP_OFF_SLATE) + '</div>'
+      : "") + '</div>';
+}
+
+/* THE MATCHUP CARD, and the whole of sec 6c's rule about it. OUR
+ * total always. HIS total and the comparison ONLY where an opponent
+ * lineup has been captured — and the comparison is of TWO TOTALS,
+ * named as such. No joint chance is invented from per-player ranges;
+ * the sentence under it says exactly what was compared, so the
+ * absence of a win chance is a fact stated once rather than a hole
+ * the reader has to notice. */
+function matchupCard(mine, theirs) {
+  const ours = lineupTotal(mine);
+  const his = theirs ? lineupTotal(theirs) : null;
+  const both = ours.total !== null && his && his.total !== null;
+  const edge = both ? ours.total - his.total : null;
+  return '<div class="card teamcard">' +
+    '<div class="teamtotals">' +
+    '<div class="teamside"><div class="overline">' +
+    esc(TEAM_TOTAL) + '</div><div class="teambig">' +
+    esc(ours.total === null ? DASH : num(ours.total)) +
+    '</div></div>' +
+    (his
+      ? '<div class="teamside them"><div class="overline">' +
+        esc(OPP_TOTAL) + '</div><div class="teambig">' +
+        esc(his.total === null ? DASH : num(his.total)) +
+        '</div></div>'
+      : "") + '</div>' +
+    (both
+      ? '<div class="teamverdict ' +
+        (edge > 0 ? "positive" : (edge < 0 ? "negative" : "absent")) +
+        '">' + esc(edge === 0
+          ? COMPARE_LEVEL
+          : (edge > 0 ? COMPARE_AHEAD : COMPARE_BEHIND) +
+            num(Math.abs(edge)) + COMPARE_POINTS) + '</div>'
+      : "") +
+    '<div class="legend">' + esc(TEAM_TOTAL_BASIS) + '</div>' +
+    (ours.skipped.length
+      ? '<div class="legend">' + esc(TEAM_TOTAL_SKIPPED +
+        ours.skipped.join(", ") + ".") + '</div>'
+      : "") +
+    (both
+      ? '<div class="overline comparehead">' + esc(COMPARE_HEAD) +
+        '</div><div class="legend">' + esc(COMPARE_NOTE) + '</div>'
+      : "") + '</div>';
+}
+
+/* SEC 5.2's FLEX call, and sec 6c's shape for it: the captured FLEX
+ * player and the best captured bench alternative at an eligible
+ * position. NO BENCH CAPTURED, OR NO ELIGIBLE MAN ON IT, AND THIS
+ * SECTION DOES NOT RENDER — a capability we do not have is not shown,
+ * and a one-sided "call" is not a call. */
+function flexAlternative(rows) {
+  const bench = rows.filter(function (row) {
+    return row.bench && row.person && row.proj !== null &&
+      FLEX_POSITIONS.indexOf(String(row.person.pos || "")) >= 0;
+  });
+  bench.sort(function (a, b) { return b.proj - a.proj; });
+  return bench[0] || null;
+}
+
+/* THE RATIONALE, AND IT IS A FACT AND NOT AN OPINION. It is read off
+ * the role and usage blocks the exporter already publishes, and it
+ * says only what those blocks carry: a share where one exists, a
+ * workload where one exists, and nothing at all where neither does. */
+function flexReason(row) {
+  const parts = [];
+  const role = (row.person && row.person.role) || {};
+  const usage = (row.person && row.person.usage) || {};
+  if (role.share !== null && role.share !== undefined) {
+    parts.push(pct(role.share) + " " +
+      plainNote(role.share_label || "share"));
+  }
+  if (usage.opp_per_game !== null && usage.opp_per_game !== undefined) {
+    parts.push(num(usage.opp_per_game) + " " +
+      plainNote(usage.opp_word || "") + " a game over " +
+      usage.opp_games + (usage.opp_games === 1 ? " game" : " games"));
+  }
+  return parts.join(" · ");
+}
+
+function flexCard(row, current) {
+  const bar = pointsRange(row.fan);
+  const reason = flexReason(row);
+  return '<div class="flexcard' + (current ? " current" : "") + '">' +
+    '<div class="overline">' + esc(current ? FLEX_IN : FLEX_BENCH) +
+    '</div>' +
+    '<div class="flexname">' + esc(row.name) + '</div>' +
+    '<div class="flexmeta">' +
+    esc((row.person ? row.person.pos + " · " : "") + row.game) +
+    '</div>' +
+    '<div class="flexproj">' + esc(num(row.proj)) + '</div>' +
+    (bar || '<span class="lineuprange absent">' + esc(DASH) +
+      '</span>') +
+    (reason
+      ? '<div class="flexreason">' + esc(reason) + '</div>'
+      : "") +
+    (current
+      ? (nav.flex
+        ? '<button class="flexswap" data-act="flex-clear">' +
+          esc(FLEX_BACK) + '</button>'
+        : "")
+      : '<button class="flexswap" data-act="flex-swap" ' +
+        'data-player="' + esc(row.player_id) + '">' + esc(FLEX_SWAP) +
+        '</button>') + '</div>';
+}
+
+function flexSection(rows) {
+  const starters = startingRows(rows, true);
+  const current = starters.filter(function (row) {
+    return row.flex;
+  })[0];
+  if (!current || !current.person) return "";
+  const other = flexAlternative(rows);
+  if (!other || other.player_id === current.player_id) return "";
+  return '<div class="card"><div class="overline">' +
+    esc(FLEX_HEAD) + '</div>' +
+    '<div class="flexpair">' + flexCard(current, true) +
+    flexCard(other, false) + '</div>' +
+    '<div class="legend">' + esc(FLEX_BASIS) + '</div></div>';
+}
+
 function renderFantasySeason() {
+  const held = heldTeam("season_long");
+  /* NO TEAM CAPTURED YET AND THE DOOR IS THE SCREEN (sec 6c). There
+   * is no empty table, no zeroed total and no promise: the one thing
+   * to do here is the one thing on screen. */
+  if (!held) {
+    return '<div class="page">' + fantasyHead() +
+      teamEntryCard("season_long") + lineupSkeleton() + '</div>';
+  }
+  const rows = lineupRows(held);
+  const starters = startingRows(rows, true);
+  const opponent = heldOpponent("season_long");
+  const theirs = opponent
+    ? startingRows(lineupRows(opponent), false) : null;
   return '<div class="page">' + fantasyHead() +
-    stubCard("Still being built", "My team, and the calls on it.",
-      STUB_FANTASY_SEASON) + teamEntryCard("season_long") +
-    lineupSkeleton() + '</div>';
+    matchupCard(starters, theirs) +
+    lineupTable(starters) +
+    flexSection(rows) +
+    /* THE OPPONENT DOOR, and it is only offered while there is no
+     * opponent to show. Once one is captured the card above carries
+     * both sides and the door has done its job. */
+    (opponent ? "" : opponentEntryCard()) +
+    teamEntryCard("season_long") + '</div>';
+}
+
+function opponentEntryCard() {
+  return '<div class="card"><button class="primary" ' +
+    'data-act="team-open" data-kind="season_long" ' +
+    'data-side="opponent">' + esc(OPP_ENTRY) + '</button>' +
+    '<div class="legend">' + esc(OPP_ENTRY_SUB) + '</div></div>';
+}
+
+/* ------------------------------------------------------------------
+ * U5 — DFS (UI_ALPHA_SPEC sec 6c)
+ * ------------------------------------------------------------------
+ * The weekly sheet, restyled and NOT re-said. Every label, every
+ * meaning, every rule and every absence sentence below was written by
+ * the sheet; this page lays them out and translates them through the
+ * same plain-language layer every other exporter sentence goes
+ * through. Nothing here computes a number. */
+
+function dfsTable(name) {
+  return ((nav.dfs && nav.dfs.tables) || {})[name] || null;
+}
+
+function dfsSentence(key) {
+  return ((nav.dfs && nav.dfs.sentences) || {})[key] || "";
+}
+
+/* The sheet's players table, by id, so the reader's own entry can be
+ * joined to it. Built once per render that needs it. */
+function dfsPlayerIndex() {
+  const table = dfsTable("players");
+  const index = {};
+  ((table && table.rows) || []).forEach(function (row) {
+    index[String(row.player_id)] = row;
+  });
+  return index;
+}
+
+/* WHY AN OWNERSHIP CELL IS EMPTY, in the sheet's own words. A table
+ * whose ownership file was missing carries its own absence sentence;
+ * a player who simply had no ownership row is covered by the sheet's
+ * stated join limit. Either way the sentence is the sheet's. */
+function ownershipAbsence() {
+  const table = dfsTable("players");
+  const absence = (table && table.absence) || [];
+  if (absence.length) return absence.join(" ");
+  return dfsSentence("name_join_limit");
+}
+
+function evidenceChip(label) {
+  const meaning = ((nav.dfs && nav.dfs.evidence_classes) ||
+    {})[label] || "";
+  return '<span class="evidence"' +
+    (meaning ? ' title="' + esc(plainNote(meaning)) + '"' : "") + '>' +
+    esc(label) + '</span>';
+}
+
+function dfsColumnList(table) {
+  const columns = (table && table.columns) || [];
+  if (!columns.length) return "";
+  return '<div class="overline">' + esc(DFS_COLUMNS) + '</div>' +
+    '<div class="colnotes">' + columns.map(function (column) {
+      return '<div class="colnote"><span class="colname">' +
+        esc(column.column) + '</span>' + evidenceChip(
+        column.evidence_class) + '<span class="colmeaning">' +
+        esc(plainNote(column.meaning)) + '</span></div>';
+    }).join("") + '</div>';
+}
+
+function dfsRules(table) {
+  return ((table && table.rules) || []).map(function (rule) {
+    return '<div class="legend">' + esc(plainNote(rule.text)) +
+      '</div>';
+  }).join("");
+}
+
+function dfsAbsence(table) {
+  return ((table && table.absence) || []).map(function (line) {
+    return '<div class="legend">' + esc(plainNote(line)) + '</div>';
+  }).join("");
+}
+
+function dfsTrim(table, drawn) {
+  const total = (table && table.n_rows) || 0;
+  if (total <= drawn) return "";
+  return '<div class="legend">' + esc(DFS_SHOWING + drawn + DFS_OF +
+    total + DFS_SHOWING_TAIL) + '</div>';
+}
+
+function dfsSection(name, body, drawn) {
+  const table = dfsTable(name);
+  return '<div class="card"><div class="cardhead">' +
+    esc(DFS_TITLES[name]) + '</div>' +
+    (table && table.present ? body(table) : "") +
+    dfsAbsence(table) +
+    (table && table.present ? dfsTrim(table, drawn) : "") +
+    dfsRules(table) + dfsColumnList(table) + '</div>';
+}
+
+function bucketWords(label) {
+  const parts = String(label || "").match(
+    /^spreadT([123])\|totalT([123])$/);
+  if (!parts) return String(label || "");
+  return BUCKET_THIRDS[Number(parts[1]) - 1] + BUCKET_SPREAD + " · " +
+    BUCKET_THIRDS[Number(parts[2]) - 1] + BUCKET_TOTAL;
+}
+
+function stackCards(table) {
+  return '<div class="stacklist">' + (table.rows || []).map(
+    function (row, index) {
+      return '<div class="stackcard' + growClass() + '" style="--i:' +
+        Math.min(index, 8) + '">' +
+        '<div class="stacktop"><span class="stackteam">' +
+        esc(row.team) + '</span>' +
+        (row.under_owned
+          ? '<span class="chip read">' + esc(DFS_UNDER_OWNED) +
+            '</span>'
+          : "") + '</div>' +
+        '<div class="stacknums">' +
+        '<span class="stacknum"><b>' +
+        esc(num(row.combined_projection)) + '</b>' +
+        esc(DFS_STACK_TOTAL) + '</span>' +
+        '<span class="stacknum"><b>' + esc(num(row.stack_r)) + '</b>' +
+        esc(DFS_STACK_R) + '</span>' +
+        (row.qb_ownership === undefined
+          ? ""
+          : '<span class="stacknum"><b>' +
+            esc(row.qb_ownership === null
+              ? DASH : pct(row.qb_ownership)) + '</b>QB ' +
+            esc(DFS_ENTRY_OWN.toLowerCase()) + '</span>') +
+        (row.wr1_ownership === undefined
+          ? ""
+          : '<span class="stacknum"><b>' +
+            esc(row.wr1_ownership === null
+              ? DASH : pct(row.wr1_ownership)) + '</b>WR ' +
+            esc(DFS_ENTRY_OWN.toLowerCase()) + '</span>') +
+        '</div>' +
+        '<div class="stackmeta">' + esc(bucketWords(row.bucket)) +
+        '</div>' +
+        (row.note
+          ? '<div class="stackmeta">' + esc(plainNote(row.note)) +
+            '</div>'
+          : "") + '</div>';
+    }).join("") + '</div>';
+}
+
+function gapRows(table) {
+  return '<div class="gaplist">' +
+    (table.rows || []).slice(0, DFS_ROWS_DRAWN).map(
+      function (row, index) {
+        return '<div class="gaprow' + growClass() + '" style="--i:' +
+          Math.min(index, 8) + '">' +
+          '<span class="gapcol"><span class="gapname">' +
+          esc(row.name || row.player_id) + '</span>' +
+          '<span class="gapmeta">' +
+          esc(row.position + " · " + row.team) + '</span></span>' +
+          '<span class="gapnums">' +
+          '<span class="gapnum"><b>' + esc(num(row.projection)) +
+          '</b>' + esc(DFS_ENTRY_PROJ) + '</span>' +
+          (row.ownership === undefined
+            ? ""
+            : '<span class="gapnum"><b>' +
+              esc(row.ownership === null ? DASH : pct(row.ownership)) +
+              '</b>' + esc(DFS_ENTRY_OWN) + '</span>') +
+          (row.rank_gap === undefined
+            ? ""
+            : '<span class="gapnum big"><b>' +
+              esc(row.rank_gap === null ? DASH : String(row.rank_gap)) +
+              '</b>' + esc(DFS_GAP) + '</span>') +
+          '</span></div>';
+      }).join("") + '</div>';
+}
+
+function boomRows(table) {
+  return '<div class="gaplist">' +
+    (table.rows || []).slice(0, DFS_ROWS_DRAWN).map(
+      function (row, index) {
+        return '<div class="gaprow' + growClass() + '" style="--i:' +
+          Math.min(index, 8) + '">' +
+          '<span class="gapcol"><span class="gapname">' +
+          esc(row.name || row.player_id) + '</span>' +
+          '<span class="gapmeta">' +
+          esc(row.position + " · " + row.team) + '</span></span>' +
+          '<span class="gapnums">' +
+          '<span class="gapnum"><b>' + esc(num(row.projection)) +
+          '</b>' + esc(DFS_ENTRY_PROJ) + '</span>' +
+          '<span class="gapnum big"><b>' +
+          esc(row.boom_proxy === null ? DASH : num(row.boom_proxy)) +
+          '</b>' + esc(DFS_BOOM) + '</span></span></div>';
+      }).join("") + '</div>';
+}
+
+/* THE READER'S OWN ENTRY, above the three tables. His players, our
+ * projection and the sheet's ownership beside each, joined by the id
+ * the service resolved. A player the sheet does not carry gets a
+ * dash; an ownership the sheet does not carry gets a dash and the
+ * sheet's own sentence about why. */
+function dkEntryCard() {
+  const held = heldTeam("dfs_entry");
+  if (!held) return teamEntryCard("dfs_entry");
+  const index = dfsPlayerIndex();
+  const slots = held.slots || [];
+  let anyMissingOwnership = false;
+  const body = slots.map(function (slot, position) {
+    const row = slot.player_id ? index[String(slot.player_id)] : null;
+    const person = slot.player_id ? playerOf(slot.player_id) : null;
+    const owned = row && "ownership" in row ? row.ownership : null;
+    if (!row || owned === null || owned === undefined) {
+      anyMissingOwnership = true;
+    }
+    return '<div class="gaprow' + growClass() + '" style="--i:' +
+      Math.min(position, 8) + '">' +
+      '<span class="gapcol"><span class="gapname">' +
+      esc((row && row.name) || (person && person.name) ||
+        slot.player_text || DASH) + '</span>' +
+      '<span class="gapmeta">' +
+      esc([slot.slot_label || "",
+        slot.salary === null || slot.salary === undefined
+          ? "" : TEAM_SALARY + " " + slot.salary].filter(
+        function (part) { return part; }).join(" · ")) +
+      '</span></span>' +
+      '<span class="gapnums">' +
+      '<span class="gapnum"><b>' +
+      esc(row ? num(row.projection) : DASH) + '</b>' +
+      esc(DFS_ENTRY_PROJ) + '</span>' +
+      '<span class="gapnum big"><b>' +
+      esc(owned === null || owned === undefined ? DASH : pct(owned)) +
+      '</b>' + esc(DFS_ENTRY_OWN) + '</span></span></div>';
+  }).join("");
+  const absence = anyMissingOwnership ? ownershipAbsence() : "";
+  return '<div class="card"><div class="cardhead">' +
+    esc(DFS_ENTRY_HEAD) + '</div>' +
+    '<div class="gaplist">' + body + '</div>' +
+    (absence
+      ? '<div class="legend">' + esc(plainNote(absence)) + '</div>'
+      : "") + '</div>';
+}
+
+function dfsFooter() {
+  const footer = dfsSentence("no_bet_footer");
+  if (!footer) return "";
+  return '<div class="card"><div class="overline">' +
+    esc(DFS_FOOTER_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(plainNote(footer)) + '</div>' +
+    ["season_rule", "ownership_rule"].map(function (key) {
+      const line = dfsSentence(key);
+      return line
+        ? '<div class="legend">' + esc(plainNote(line)) + '</div>'
+        : "";
+    }).join("") + '</div>';
 }
 
 function renderFantasyDfs() {
+  if (!nav.dfs) {
+    return '<div class="page">' + fantasyHead() +
+      '<div class="card"><div class="cardhead">' +
+      esc(DFS_OFFLINE_HEAD) + '</div><div class="cardbody">' +
+      esc(nav.dfsNote || DFS_OFFLINE_BODY) + '</div></div>' +
+      teamEntryCard("dfs_entry") + lineupSkeleton() + '</div>';
+  }
   return '<div class="page">' + fantasyHead() +
-    stubCard("Still being built", "My team, built for a slate.",
-      STUB_FANTASY_DFS) + teamEntryCard("dfs_entry") +
-    lineupSkeleton() + '</div>';
+    dkEntryCard() +
+    dfsSection("stacks", stackCards, Infinity) +
+    dfsSection("players", gapRows, DFS_ROWS_DRAWN) +
+    dfsSection("boom_proxy", boomRows, DFS_ROWS_DRAWN) +
+    dfsFooter() + '</div>';
 }
 
 /* ------------------------------------------------------------------
@@ -2912,6 +3867,23 @@ function teamKindToggle() {
       return '<button data-act="team-kind" data-kind="' +
         esc(pair[0]) + '" aria-pressed="' +
         (nav.team.kind === pair[0]) + '">' + esc(pair[1]) +
+        '</button>';
+    }).join("") + '</div></div>';
+}
+
+/* U5's second question, and the same shape as the first: whose lineup
+ * the picture was. It is a fact only he knows, so he answers it, and
+ * the answer travels with the confirmation into the store. */
+function teamSideToggle() {
+  return '<div class="card"><div class="overline">' +
+    esc(OPP_KIND_LABEL) + '</div>' +
+    '<div class="seg" role="group" aria-label="' +
+    esc(OPP_KIND_LABEL) + '">' +
+    [["mine", OPP_SIDE_MINE],
+      ["opponent", OPP_SIDE_THEIRS]].map(function (pair) {
+      return '<button data-act="team-side" data-side="' +
+        esc(pair[0]) + '" aria-pressed="' +
+        (nav.team.side === pair[0]) + '">' + esc(pair[1]) +
         '</button>';
     }).join("") + '</div></div>';
 }
@@ -2974,7 +3946,7 @@ function renderTeam() {
         '</div>'
       : "") + '</div>' +
     shotPicker("team", "shot-team", SHOT_READ_TEAM) +
-    teamSlotRows() + teamKindToggle() +
+    teamSlotRows() + teamKindToggle() + teamSideToggle() +
     '<div class="card">' +
     (nav.team.saved
       ? '<div class="cardbody">' + esc(TEAM_SAVED) + '</div>'
@@ -4402,6 +5374,9 @@ function render() {
    * leaving the Live segment stops the asking without any screen
    * having to remember to. */
   syncLivePoll();
+  /* U5: the DFS document follows the screen too, and it is asked for
+   * ONCE, the first time that sub-view is drawn. */
+  syncDfs();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
@@ -4565,9 +5540,28 @@ function onClick(event) {
      * the one who knows which team it was. */
     nav.team.kind = target.getAttribute("data-kind") === "dfs_entry"
       ? "dfs_entry" : "season_long";
+    /* U5: and WHOSE lineup he is about to read. The opponent door
+     * sets it here; every other door is his own team, which is what
+     * every capture before U5 was. He can still change it on the
+     * confirm screen — the picture is what it is and he is the one
+     * who knows whose it was. */
+    nav.team.side = target.getAttribute("data-side") === "opponent"
+      ? "opponent" : "mine";
     openDetail("team");
   } else if (act === "team-kind") {
     nav.team.kind = target.getAttribute("data-kind");
+    render();
+  } else if (act === "team-side") {
+    nav.team.side = target.getAttribute("data-side");
+    render();
+  } else if (act === "flex-swap") {
+    /* Sec 5.2: the other card swaps into FLEX, the total moves, and a
+     * toast says it did. Nothing is written anywhere. */
+    nav.flex = target.getAttribute("data-player");
+    render();
+    showToast(FLEX_SWAPPED);
+  } else if (act === "flex-clear") {
+    nav.flex = null;
     render();
   } else if (act === "team-drop") {
     (nav.team.slots || []).splice(

@@ -1221,6 +1221,165 @@ body{
   letter-spacing:var(--track-overline);color:var(--muted);
 }
 
+
+/* --------------------------------------------------------------------
+   U5 — FANTASY: SEASON LONG AND DFS (UI_ALPHA_SPEC sec 6c)
+
+   Phone first, and flat against the ground like everything else that
+   is not the home table. Colour still MEANS something: the FLEX row
+   wears the your-read slate the handoff gives it (sec 5.2, "the FLEX
+   row is tinted slate"), the totals comparison wears positive or
+   negative because it IS a comparison, and every other surface here
+   is neutral.
+   -------------------------------------------------------------------- */
+
+/* the lineup table, sec 5.2: SLOT - PLAYER - RANGE - PROJ */
+.lineuprow,.lineuphead{
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr) 88px 46px;
+  gap:8px;align-items:center;
+}
+.lineuphead{
+  padding:6px 2px;border-bottom:1px solid var(--rule);
+  font-size:var(--type-overline);font-weight:var(--w-semibold);
+  letter-spacing:var(--track-overline);color:var(--muted);
+}
+.lineuphead .lineupbar,.lineuphead .lineupproj{text-align:right}
+.lineuprow{
+  width:100%;min-height:44px;padding:6px 2px;
+  border:none;border-bottom:1px solid var(--rule);
+  background:none;font:inherit;color:inherit;text-align:left;
+  cursor:pointer;border-radius:var(--r-panel);
+}
+.lineuprow:last-of-type{border-bottom:none}
+.lineuprow[disabled]{cursor:default}
+.lineuprow.flex{background:var(--read-tint)}
+.lineupslot{
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+}
+.lineupwho{display:flex;flex-direction:column;gap:1px;min-width:0}
+.lineupname{
+  font-size:var(--type-cell);font-weight:var(--w-semibold);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.lineupgame{font-size:var(--type-meta);color:var(--muted)}
+.lineupbar{display:flex;justify-content:flex-end}
+.lineuprange.absent{color:var(--disabled)}
+.lineupproj{
+  font-size:15px;font-weight:var(--w-semibold);text-align:right;
+}
+.lineupproj.absent{color:var(--disabled);font-weight:var(--w-regular)}
+
+/* the matchup card, sec 5.2: INK, and its own text colours on it —
+   the `.implies` banner's idiom, which is the only other dark panel
+   in this file. Fantasy totals are 30/600 (sec 3.2). */
+.teamcard{background:var(--ink);color:var(--ground)}
+.teamcard .overline{color:var(--track)}
+.teamcard .legend{color:var(--track)}
+.teamtotals{display:flex;gap:12px}
+.teamside{display:flex;flex-direction:column;gap:2px;flex:1}
+.teamside.them{text-align:right}
+.teambig{font-size:30px;font-weight:var(--w-semibold);line-height:1.05}
+.teamverdict{
+  display:inline-block;align-self:flex-start;margin-top:6px;
+  padding:6px 12px;border-radius:var(--r-full);
+  font-size:var(--type-cell);font-weight:var(--w-semibold);
+}
+.teamverdict.positive{background:var(--positive-tint);color:var(--positive-text)}
+.teamverdict.negative{background:var(--negative-tint);color:var(--negative-text)}
+.teamverdict.absent{background:var(--panel);color:var(--muted);font-weight:var(--w-regular)}
+.comparehead{padding-top:6px}
+
+/* the FLEX call, sec 5.2: two option cards, the starter outlined. */
+.flexpair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.flexcard{
+  display:flex;flex-direction:column;gap:3px;
+  background:var(--ground);border:1px solid var(--rule-2);
+  border-radius:var(--r-panel);padding:10px;
+}
+.flexcard.current{border:1.5px solid var(--read)}
+.flexname{font-size:15px;font-weight:var(--w-semibold)}
+.flexmeta{font-size:var(--type-meta);color:var(--muted)}
+.flexproj{font-size:22px;font-weight:var(--w-semibold);line-height:1.1}
+.flexreason{font-size:var(--type-meta);color:var(--text-2);line-height:1.4}
+.flexswap{
+  margin-top:6px;min-height:44px;border-radius:var(--r-full);
+  border:1px solid var(--border-strong);background:var(--surface);
+  color:var(--ink);font:inherit;font-size:var(--type-cell);
+  font-weight:var(--w-semibold);cursor:pointer;
+}
+
+/* the three DFS tables */
+.stacklist{display:flex;flex-direction:column;gap:8px;padding-top:6px}
+.stackcard{
+  display:flex;flex-direction:column;gap:4px;
+  background:var(--ground);border-radius:var(--r-panel);padding:10px;
+}
+.stacktop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.stackteam{font-size:16px;font-weight:var(--w-semibold)}
+.stacknums{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px 12px;
+}
+.stacknum{
+  display:flex;flex-direction:column;gap:1px;
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);
+}
+.stacknum b{
+  font-size:15px;font-weight:var(--w-semibold);color:var(--ink);
+  letter-spacing:normal;text-transform:none;
+}
+.stackmeta{font-size:var(--type-meta);color:var(--muted);line-height:1.4}
+
+.gaplist{display:flex;flex-direction:column;gap:2px;padding-top:6px}
+.gaprow{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;min-height:44px;padding:4px 0;
+  border-bottom:1px solid var(--rule);
+}
+.gaprow:last-of-type{border-bottom:none}
+.gapcol{display:flex;flex-direction:column;gap:1px;min-width:0}
+.gapname{
+  font-size:var(--type-cell);font-weight:var(--w-semibold);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.gapmeta{font-size:var(--type-meta);color:var(--muted)}
+.gapnums{display:flex;gap:12px;flex:none}
+.gapnum{
+  display:flex;flex-direction:column;align-items:flex-end;gap:1px;
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);min-width:40px;
+}
+.gapnum b{
+  font-size:14px;font-weight:var(--w-semibold);color:var(--ink);
+  letter-spacing:normal;text-transform:none;
+}
+.gapnum.big b{font-size:17px}
+
+/* the evidence label, exactly as the sheet declares it */
+.evidence{
+  display:inline-block;padding:2px 7px;border-radius:var(--r-full);
+  background:var(--panel);color:var(--muted);
+  font-size:10px;font-weight:var(--w-semibold);letter-spacing:.06em;
+}
+.colnotes{display:flex;flex-direction:column;gap:4px;padding-top:6px}
+.colnote{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.colname{
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  color:var(--ink);
+}
+.colmeaning{
+  flex:1 1 100%;font-size:var(--type-meta);color:var(--muted);
+  line-height:1.45;
+}
+
+@media (max-width: 359px){
+  .flexpair{grid-template-columns:1fr}
+  .lineuprow,.lineuphead{grid-template-columns:34px minmax(0,1fr) 62px 42px}
+}
+
 /* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
