@@ -102,20 +102,146 @@ const ADD_STARTSIT_SUB = "Compare two players for your lineup";
 const NOTE_READS = "Your read arrives in U6. The pick card it opens on is here already.";
 const ACTION_OPEN_PICK = "Open the pick";
 const NOTE_ALERTS = "Alerts are unruled: which events notify is open question 5 in the handoff.";
-const STUB_PICK = "The pick card — distribution, probability bars, context tiles — arrives in U3.";
-const STUB_TRACK = "Slip import, leg matching and the break-even check arrive in U3.";
 const STUB_LIVE_CARD = "The live chance chart and its swings arrive in U4, on the live contract this app already has.";
 const STUB_REPORT = "The graded read report arrives in U6, with the reads engine behind it.";
-const STUB_SCREEN = "The screen list — outcome shapes, side pills and gaps — arrives in U3.";
 const STUB_LIVE_BOARD = "The live board arrives in U4.";
 const STUB_FANTASY_SEASON = "My team, the lineup table, the ranges and the FLEX call arrive in U5.";
 const STUB_FANTASY_DFS = "My team for a DFS slate — its own sub-view — arrives in U5.";
-const STUB_PICKS = "My picks — the watchlist you saved and the slips you brought back — arrives in U3.";
 const STUB_STARTSIT = "Fantasy is here; the start/sit comparison itself arrives in U5.";
 const SLATE_HEADER = "Sunday 12:00 slate";
 const SLATE_BASIS = "model vs no-vig market";
 const LIVE_OVERLINE = "Closest to hitting";
 const PICKS_OVERLINE = "Saved and placed";
+
+/* ------------------------------------------------------------------
+ * U3 — THE BETS SIDE'S OWN WORDS
+ * ------------------------------------------------------------------
+ * Every sentence a reader sees on the Screen list, the Pick card,
+ * Track a slip and My picks is a constant here, for the reason the
+ * rest of this file keeps them: a promise made in an expression is a
+ * promise nobody can grep for. */
+
+/* sec 5.4, the sort. Both of these read a number the exporter
+ * published — `gap_pts` and `model_p` — and neither computes one. */
+const SORT_GAP = "gap";
+const SORT_CHANCE = "chance";
+const SORTS = [[SORT_GAP, "Biggest gap"], [SORT_CHANCE, "Model chance"]];
+const SORT_GROUP_LABEL = "Sort";
+
+/* sec 5.4's gap text, and the sec 7.3 arm beside it. */
+const GAP_VS = " vs mkt";
+const NO_REAL_GAP = "No real gap";
+
+/* THE THREE PIECES OF ARITHMETIC THIS PAGE IS ALLOWED TO DO, named on
+ * screen wherever their answer appears (UI_ALPHA_SPEC sec 4). Nothing
+ * else here is computed: every other number is read off the exporter's
+ * document or off the service's stored row. */
+const CLIENT_GAP_RULE =
+  "Shown when the model beats the no-vig market by 3 points or more. That threshold is this page's own rule, applied to the gap the exporter published.";
+const CLIENT_BREAK_EVEN_NOTE =
+  "Break-even is one divided by the payout multiple you entered — this page's own division, and the only thing it works out about the price.";
+const CLIENT_PREVIEW_NOTE =
+  "Preview only: this page multiplies the published chance of each leg. The saved slip's number is computed and stored by the service, and that is the one you will see afterwards.";
+
+/* D-123, and it rides every screen a product appears on. */
+const INDEPENDENCE_NOTE =
+  "Assumes the legs are independent — correlated legs are the coherent simulator's job.";
+
+/* sec 5.5, the Pick card. */
+const PICK_WATCH_ADD = "Save to watchlist";
+const PICK_WATCH_REMOVE = "Remove from watchlist";
+const PICK_WATCH_SAVED = "Saved to your watchlist.";
+const PICK_WATCH_GONE = "Removed from your watchlist.";
+const PICK_COPY = "Copy pick to place it";
+const PICK_COPIED = "Copied. Place it in your app, then bring the slip back.";
+const PICK_PLACED = "I placed it";
+const PICK_IMPLIES = "What the line implies";
+const PICK_SHAPE = "Outcome shape";
+const PICK_BAND = "Where the projection sits";
+const PICK_BARS = "Chance";
+const PICK_MODEL = "Model";
+const PICK_MARKET = "Market, no-vig";
+const PICK_CONTEXT = "Context";
+const PICK_FLOOR = "Floor";
+const PICK_MEDIAN = "Median";
+/* The 90th percentile's own word, as the handoff's sec 5.5 caption
+ * spells it. It is the STAT distribution's upper quantile and has
+ * nothing to do with the fantasy-point sort D-075 sec 0 excluded —
+ * the same distinction `live_ceiling_probs` already carries. */
+const PICK_CEILING = "Ceiling";
+const PICK_NO_PROP = "This player has no captured line this week, so there is no pick card to draw and nothing is invented in its place.";
+const PICK_OTHER_MARKETS = "Other lines for him";
+
+/* The read bar is U6's. It renders, and it explains itself rather
+ * than opening a sheet that does not exist yet. */
+const ADD_READ_BUTTON = "+ Add your read";
+const NOTE_READ_SHEET =
+  "The read sheet arrives with the reads increment in U6. Nothing is saved from this button yet, and no sheet opens.";
+
+/* The deferrals, each named where it would have been. */
+const DEFER_MATCHUP =
+  "The matchup tile is deferred: its man/zone rates and corner grades are PFF-derived, and each one needs its own wall ruling before it appears here.";
+const DEFER_SCREENSHOT = "Screenshot";
+const DEFER_SCREENSHOT_NOTE =
+  "Screenshot input is deferred. Paste the slip's text or enter the legs by hand; nothing here reads an image yet.";
+
+/* sec 5.7, Track a slip. */
+const TRACK_PASTE = "Paste";
+const TRACK_MANUAL = "Manual";
+const TRACK_INPUT_LABEL = "How the slip arrives";
+const TRACK_PLACEHOLDER = "Paste the slip's text";
+const TRACK_PARSE = "Match the legs";
+const TRACK_ADD_LEG = "Add a leg";
+const TRACK_LEGS = "Matched legs";
+const TRACK_UNPARSED = "Not matched";
+const TRACK_UNPARSED_NOTE =
+  "These lines were not understood, so nothing was guessed from them. Add them by hand or leave them off the slip.";
+const TRACK_SAME_LINE = "Same line you screened";
+const TRACK_MOVED_TO = "Moved your way";
+const TRACK_MOVED_AGAINST = "Moved against you";
+const TRACK_OFF_LADDER = "Off the published ladder — no chance shown for this line";
+const TRACK_UNMATCHED_LEG = "Not from your screen";
+const TRACK_PAYOUT = "Payout multiple";
+const TRACK_STAKE = "Stake";
+const TRACK_VERDICT = "The slip, honestly";
+const TRACK_ALL_HIT = "Model chance all legs hit";
+const TRACK_BREAK_EVEN = "Break-even at this payout";
+const TRACK_SAVE = "Track this slip";
+const TRACK_SAVED = "Slip tracked. It is in My picks.";
+const TRACK_WORST = "Moved most: ";
+const TRACK_EMPTY =
+  "Nothing is matched yet. Paste the slip's text, or add a leg by hand.";
+const TRACK_BIGGER = "Worth taking at this payout, on these numbers.";
+const TRACK_SMALLER = "Not worth taking at this payout, on these numbers.";
+const TRACK_NO_VERDICT =
+  "No verdict: a leg carries no published chance, so there is no product to take.";
+
+/* sec 5.4's My picks segment (the owner's third). */
+const TRACK_MANUAL_HINT = "e.g. D. Hale more 5.5 receptions";
+const STORED_BY_SERVICE =
+  "These two numbers were computed and stored by the service when the slip was saved; this page is reading them back.";
+const NO_CAPTURED_ROWS =
+  "No market line was captured for this slate, so there is nothing to screen. That is the capture's silence, not an empty week.";
+const PICKS_WATCH = "Watchlist";
+const PICKS_SLIPS = "Tracked slips";
+const PICKS_EMPTY_WATCH = "Nothing on your watchlist yet. The bookmark on a pick card puts it here.";
+const PICKS_EMPTY_SLIPS = "No slips tracked yet. Bring one back from Track a slip.";
+const PICKS_REMOVE = "Remove";
+
+/* THE CONNECT STATE. Without a token there is nowhere for a watchlist
+ * or a slip to live, and this page does not pretend otherwise: it
+ * says so and offers to take the token, exactly as the lab's reads
+ * box does (R0's idiom). Nothing is kept locally as a stand-in. */
+const CONNECT_HEAD = "Connect to your picks service.";
+const CONNECT_BODY =
+  "Your watchlist and your slips are stored by the service, not in this browser. Paste the token and they load; without it there is nothing to show and nothing is kept here instead.";
+const CONNECT_BUTTON = "Paste the token";
+const CONNECT_PROMPT =
+  "Paste the picks token. It is kept in this browser only and sent to the picks service.";
+const SERVICE_OFFLINE =
+  "The picks service is not answering right now, so your watchlist and slips are not shown. Nothing was lost and nothing is being guessed at.";
+const SERVICE_DEMO =
+  "Sample data — a fabricated slate does not write to the real service, so the watchlist and the slips are read-only here.";
 
 /* ------------------------------------------------------------------
  * U2 — THE SLATE DOCUMENT
@@ -143,6 +269,27 @@ const SLATE_URL = DEMO ? DEMO_SLATE_URL : REAL_SLATE_URL;
  * than reading fields out of a shape it does not know. */
 const SLATE_SCHEMA = "slate-1";
 const FETCH_TIMEOUT_MS = 15000;
+
+/* ------------------------------------------------------------------
+ * U3 — THE PICKS SERVICE
+ * ------------------------------------------------------------------
+ * THE ONE HOST THIS APP NAMES, and it is the same deploy the lab's
+ * read box already writes to (D-123: one service, one bearer token,
+ * one user). The watchlist and the slips are USER-AUTHORED objects
+ * and the site is static, so they live there and nowhere else — which
+ * is why the honest arm below is a connect state and not a local
+ * cache pretending to be storage.
+ *
+ * THE TOKEN IS THE READER'S OWN, kept in HIS browser under the house
+ * key shape (`fe.<what>.v<n>`) and sent to this service and nowhere
+ * else. It is the same key the lab's box uses, because it is the same
+ * token for the same service, and both touches are guarded: storage
+ * that refuses — a private window, blocked site data — leaves him
+ * able to paste a token per visit rather than leaving the segment
+ * broken. It is the ONLY thing this app ever writes to a browser. */
+
+const SERVICE_URL = "https://fantasy-edge-production-ab88.up.railway.app";
+const PICKS_TOKEN_KEY = "fe.reads.token.v1";
 
 /* THE ONE DISPLAY RULE THIS FILE OWNS (handoff sec 7.3): a gap under
  * three points is not an edge and is never drawn as one. It lives
@@ -466,7 +613,24 @@ const nav = {
   view: "props",
   exp: null,
   search: false,
-  query: ""
+  query: "",
+
+  /* U3's own state, held for the visit like the rest of it. The
+   * Screen list's sort; which prop a pick card was opened on; the
+   * service's answers once they have arrived (null means "not asked
+   * or not answered", which is a drawn state, not an empty list); and
+   * the slip being built, which is a draft and not a stored thing
+   * until the service says it is. */
+  sort: SORT_GAP,
+  pickMarket: null,
+  watch: null,
+  slips: null,
+  picksAsked: false,
+  picksOffline: false,
+  picksBusy: "",
+  hasToken: false,
+  track: { input: "paste", text: "", legs: [], unparsed: [],
+    payout: "", stake: "", saved: null }
 };
 
 /* ------------------------------------------------------------------
@@ -796,17 +960,193 @@ function stubRows(rows, mark, route) {
 /* ONE fetch in this file, so there is one timeout and one error shape.
  * `no-store` because the file is rewritten on every deploy and a
  * cached yesterday is the one thing this screen must never show. */
-async function getJSON(url) {
+async function getJSON(url, options) {
   const controller = new AbortController();
   const timer = window.setTimeout(function () { controller.abort(); },
     FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(url, {
-      signal: controller.signal, cache: "no-store" });
+    const response = await fetch(url, Object.assign({
+      signal: controller.signal, cache: "no-store" }, options || {}));
     if (!response.ok) throw new Error("HTTP " + response.status);
     return await response.json();
   } finally {
     window.clearTimeout(timer);
+  }
+}
+
+/* ------------------------------------------------------------------
+ * U3 — the picks service, through that one fetch
+ * ------------------------------------------------------------------ */
+
+/* Both touches guarded, the lab's way: a browser that refuses storage
+ * still lets him paste a token for the visit. */
+function readToken() {
+  try {
+    return window.localStorage.getItem(PICKS_TOKEN_KEY) || "";
+  } catch (err) {
+    return "";
+  }
+}
+
+function writeToken(token) {
+  try {
+    window.localStorage.setItem(PICKS_TOKEN_KEY, token);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+/* Asked when he ASKS to connect, and on the first write that needs
+ * it. Nothing is prompted merely to look at a screen. */
+function askToken() {
+  const held = readToken();
+  if (held) return held;
+  let typed = "";
+  try {
+    typed = window.prompt(CONNECT_PROMPT) || "";
+  } catch (err) {
+    typed = "";
+  }
+  typed = typed.trim();
+  if (typed) writeToken(typed);
+  nav.hasToken = !!typed;
+  return typed;
+}
+
+/* Every call to the service carries the bearer token and nothing else
+ * about the reader, and every one of them goes through the page's ONE
+ * fetch, because a second one would be a second timeout and a second
+ * error shape to get wrong. */
+async function picksAsk(path, token, body, method) {
+  const headers = { Authorization: "Bearer " + token };
+  if (body) headers["Content-Type"] = "application/json";
+  return getJSON(SERVICE_URL + path, {
+    method: method || (body ? "POST" : "GET"),
+    headers: headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+}
+
+/* The segment asks ONCE per visit. A fabricated slate never writes to
+ * the real service and never reads from it either: a demo page that
+ * loaded somebody's real watchlist would be a sample screen showing
+ * real rows. */
+async function loadPicks(force) {
+  if (DEMO) return;
+  if (nav.picksAsked && !force) return;
+  const token = readToken();
+  nav.hasToken = !!token;
+  if (!token) {
+    nav.picksAsked = true;
+    render();
+    return;
+  }
+  nav.picksAsked = true;
+  try {
+    const watch = await picksAsk("/watchlist", token, null);
+    const slips = await picksAsk("/slips", token, null);
+    nav.watch = (watch && watch.watchlist) || [];
+    nav.slips = (slips && slips.slips) || [];
+    nav.picksOffline = false;
+  } catch (err) {
+    nav.picksOffline = true;
+  }
+  render();
+}
+
+/* THE BOOKMARK. It is a state on the service, so the button waits for
+ * the service to say so before it changes: "saved" here means the row
+ * exists, exactly as "saved" means the ledger has it on a read. */
+async function toggleWatch(playerId, market, line, side) {
+  if (DEMO) {
+    showToast(SERVICE_DEMO);
+    return;
+  }
+  const token = askToken();
+  if (!token) return;
+  const held = watchedEntry(playerId, market);
+  nav.picksBusy = playerId + "|" + market;
+  render();
+  try {
+    if (held) {
+      await picksAsk("/watchlist/remove", token,
+        { player_id: playerId, market: market });
+      nav.watch = (nav.watch || []).filter(function (row) {
+        return !(row.player_id === playerId && row.market === market);
+      });
+      nav.picksOffline = false;
+      nav.picksBusy = "";
+      render();
+      showToast(PICK_WATCH_GONE);
+      return;
+    }
+    const saved = await picksAsk("/watchlist", token, {
+      player_id: playerId, market: market, line: line, side: side });
+    nav.watch = [{
+      watchlist_id: saved.watchlist_id, player_id: playerId,
+      market: market, line: saved.line === undefined ? line : saved.line,
+      side: saved.side === undefined ? side : saved.side,
+      added_at: saved.added_at || null, removed_at: null
+    }].concat((nav.watch || []).filter(function (row) {
+      return !(row.player_id === playerId && row.market === market);
+    }));
+    nav.picksOffline = false;
+    nav.picksBusy = "";
+    render();
+    showToast(PICK_WATCH_SAVED);
+  } catch (err) {
+    /* Never a silent drop: the bookmark does not change and the line
+     * under it says the service is not answering. */
+    nav.picksOffline = true;
+    nav.picksBusy = "";
+    render();
+  }
+}
+
+/* THE SAVE. The slip's own numbers come BACK from the service, which
+ * computed and stored them; the preview this page drew before the
+ * save is replaced by the stored answer rather than kept beside it. */
+async function saveSlip() {
+  if (DEMO) {
+    showToast(SERVICE_DEMO);
+    return;
+  }
+  const legs = nav.track.legs;
+  if (!legs.length || nav.picksBusy === "slip") return;
+  const token = askToken();
+  if (!token) return;
+  nav.picksBusy = "slip";
+  render();
+  try {
+    const saved = await picksAsk("/slips", token, {
+      input: nav.track.input === "manual" ? "manual" : "paste",
+      source: null,
+      stake: numberOrNull(nav.track.stake),
+      payout_multiple: numberOrNull(nav.track.payout),
+      legs: legs.map(function (leg) {
+        return {
+          player_id: leg.player_id, player_text: leg.text,
+          market: leg.market, side: leg.side,
+          line_placed: leg.line_placed,
+          line_screened: leg.line_screened,
+          p_at_screened: leg.p_at_screened,
+          p_at_placed: leg.p_at_placed,
+          p_reason: leg.p_reason
+        };
+      })
+    });
+    nav.track.saved = saved;
+    nav.slips = null;
+    nav.picksAsked = false;
+    nav.picksOffline = false;
+    nav.picksBusy = "";
+    render();
+    showToast(TRACK_SAVED);
+  } catch (err) {
+    nav.picksOffline = true;
+    nav.picksBusy = "";
+    render();
   }
 }
 
@@ -915,6 +1255,125 @@ function statline(entries) {
         : "") + '>' +
       (absent ? DASH : esc(num(entry.value))) + '</span></div>';
   }).join("") + '</div>';
+}
+
+/* ------------------------------------------------------------------
+ * U3 — READING THE PROPS
+ * ------------------------------------------------------------------
+ * Every function in this block is a LOOKUP. The exporter published a
+ * ladder, a distribution, a quantile band, a sentence and four
+ * tiles per prop; these find the right one and hand it to a renderer.
+ * None of them derives a probability, and the three places this page
+ * is allowed to work something out are each named on screen where
+ * their answer appears. */
+
+function numberOrNull(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const parsed = Number(value);
+  return isFinite(parsed) ? parsed : null;
+}
+
+/* Every (player, prop) on the slate, once, with the game each one
+ * belongs to so a row can say who he is playing. */
+function allProps() {
+  const out = [];
+  games().forEach(function (game) {
+    ["away", "home"].forEach(function (side) {
+      (game.players[side] || []).forEach(function (id) {
+        const person = playerOf(id);
+        if (!person) return;
+        (person.props || []).forEach(function (prop) {
+          out.push({ id: id, person: person, prop: prop, game: game,
+            side: side });
+        });
+      });
+    });
+  });
+  return out;
+}
+
+function opponentOf(game, side) {
+  return side === "away" ? game.home : game.away;
+}
+
+function gameOfPlayer(playerId) {
+  let found = null;
+  games().forEach(function (game) {
+    ["away", "home"].forEach(function (side) {
+      if ((game.players[side] || []).indexOf(playerId) >= 0) {
+        found = { game: game, side: side };
+      }
+    });
+  });
+  return found;
+}
+
+function propOf(person, market) {
+  if (!person) return null;
+  const list = person.props || [];
+  for (let index = 0; index < list.length; index += 1) {
+    if (list[index].market === market) return list[index];
+  }
+  return person.key_prop
+    ? propOf(person, person.key_prop.market)
+    : (list[0] || null);
+}
+
+/* The prop the pick card is standing on: the one the row named, or
+ * this player's key prop when the address carries no market. */
+function pickProp() {
+  const person = playerOf(nav.pick);
+  if (!person) return null;
+  if (nav.pickMarket) {
+    const named = (person.props || []).filter(function (prop) {
+      return prop.market === nav.pickMarket;
+    })[0];
+    if (named) return named;
+  }
+  if (person.key_prop) {
+    return propOf(person, person.key_prop.market);
+  }
+  return (person.props || [])[0] || null;
+}
+
+/* SEC 7.3, ONCE, AND THE ONLY PLACE IT LIVES. The exporter ships
+ * `gap_pts` and says nothing about whether it is an edge. */
+function isEdge(prop) {
+  return !!prop && prop.gap_pts >= GAP_MIN;
+}
+
+function gapText(prop) {
+  if (!isEdge(prop)) return NO_REAL_GAP;
+  return (prop.gap_pts > 0 ? "+" : "") + prop.gap_pts + GAP_VS;
+}
+
+/* A rung is LOOKED UP, never interpolated: the exporter published
+ * every line it read, and a line it did not read has no number here
+ * (UI_ALPHA_SPEC sec 4's LINE_OFF_LADDER). */
+function rungAt(prop, line) {
+  const rungs = (prop && prop.alt_ladder) || [];
+  for (let index = 0; index < rungs.length; index += 1) {
+    if (rungs[index].line === line) return rungs[index];
+  }
+  return null;
+}
+
+/* The published chance of one SIDE at one rung. Both sides ride every
+ * rung, so this is a read and not a subtraction. */
+function rungChance(rung, side) {
+  if (!rung) return null;
+  return side === "less" ? rung.p_less : rung.p_more;
+}
+
+function watchedEntry(playerId, market) {
+  const rows = nav.watch || [];
+  for (let index = 0; index < rows.length; index += 1) {
+    if (rows[index].player_id === playerId &&
+        rows[index].market === market && !rows[index].removed_at) {
+      return rows[index];
+    }
+  }
+  return null;
 }
 
 /* ------------------------------------------------------------------
@@ -1032,8 +1491,10 @@ function cellValues(person) {
     const line = num(prop.line) + prop.unit;
     /* SEC 7.3, AND THIS IS THE WHOLE OF IT. At GAP_MIN and above the
      * gap is an edge and is drawn as one; below it the cell is a grey
-     * dash, never a small number a reader could take for one. */
-    const big = prop.gap_pts >= GAP_MIN;
+     * dash, never a small number a reader could take for one. The
+     * rule itself lives in `isEdge`, once, so the home table and the
+     * Screen list cannot come to disagree about what an edge is. */
+    const big = isEdge(prop);
     return { v1: line, v2: big ? signed(prop.gap_pts) : DASH,
       tone: big ? "positive" : "absent", big: big };
   }
@@ -1070,9 +1531,7 @@ function cellValues(person) {
   /* market: the cell IS the sparkline, so it has no v1 or v2 — but it
    * still carries the tint, because the gap is the same gap. */
   const prop = person.key_prop;
-  return { v1: "", v2: "",
-    tone: "absent",
-    big: !!(prop && prop.gap_pts >= GAP_MIN) };
+  return { v1: "", v2: "", tone: "absent", big: isEdge(prop) };
 }
 
 function cellLabel(person, team, slot) {
@@ -1374,7 +1833,7 @@ function playersIn(game) {
 
 function gapsIn(game) {
   return playersIn(game).filter(function (person) {
-    return person.key_prop && person.key_prop.gap_pts >= GAP_MIN;
+    return isEdge(person.key_prop);
   }).length;
 }
 
@@ -1528,12 +1987,203 @@ function betsHead() {
     '</div></div>' + subToggle("bets");
 }
 
+/* ------------------------------------------------------------------
+ * U3 — THE DRAWN PIECES
+ * ------------------------------------------------------------------ */
+
+/* sec 5.4's mini outcome-shape histogram, drawn from the published
+ * distribution and nothing else. The bars are scaled to the TALLEST
+ * bar in this prop's own distribution, which is a drawing decision
+ * and not a probability: the numbers underneath are unchanged and the
+ * chart carries its summary in an aria-label (sec 9). */
+const HIST_W = 76;
+const HIST_H = 26;
+const HIST_GAP = 1;
+
+function histogram(prop, tall) {
+  const bars = (prop && prop.distribution) || [];
+  if (!bars.length) return "";
+  const height = tall ? 120 : HIST_H;
+  const width = tall ? 300 : HIST_W;
+  const peak = bars.reduce(function (held, bar) {
+    return Math.max(held, bar.p);
+  }, 0) || 1;
+  const step = width / bars.length;
+  const lean = prop.lean;
+  const cells = bars.map(function (bar, index) {
+    const size = Math.max(1, (bar.p / peak) * (height - 2));
+    /* The bars on the side the model leans are ink; the others are
+     * track grey (sec 4's distribution chart). Which side a bar is on
+     * is decided by the LINE, which the exporter published beside it. */
+    const past = lean === "less"
+      ? bar.k < Math.ceil(prop.line)
+      : bar.k >= Math.ceil(prop.line);
+    return '<rect x="' + (index * step + HIST_GAP).toFixed(1) +
+      '" y="' + (height - size).toFixed(1) +
+      '" width="' + Math.max(1, step - HIST_GAP * 2).toFixed(1) +
+      '" height="' + size.toFixed(1) + '" rx="1" fill="' +
+      (past ? "var(--ink)" : "var(--track)") + '"></rect>';
+  }).join("");
+  const marker = '<line x1="' +
+    (Math.min(bars.length, Math.ceil(prop.line)) * step).toFixed(1) +
+    '" y1="0" x2="' +
+    (Math.min(bars.length, Math.ceil(prop.line)) * step).toFixed(1) +
+    '" y2="' + height + '" stroke="var(--heating)" ' +
+    'stroke-width="1.5" stroke-dasharray="3 2"></line>';
+  const labels = tall
+    ? '<div class="histlabels">' + bars.map(function (bar) {
+      return '<span>' + esc(bar.label) + '</span>';
+    }).join("") + '</div>'
+    : "";
+  return '<span class="hist' + (tall ? " tall" : "") + '">' +
+    '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' +
+    width + ' ' + height + '" role="img" aria-label="' +
+    esc("Outcome shape: " + bars.map(function (bar) {
+      return bar.label + " " + pct(bar.p);
+    }).join(", ") + ". Line " + prop.line) + '">' +
+    cells + marker + '</svg>' + labels + '</span>';
+}
+
+/* sec 4's range bar, for the markets that carry no P(k): the 10th to
+ * 90th percentile as a segment with the median as a dot. Every number
+ * in it is one the exporter read off the grid. */
+function rangeBar(prop, tall) {
+  const band = prop && prop.floor_median_ceiling;
+  if (!band || band.p10 === null || band.p90 === null) return "";
+  const width = tall ? 300 : HIST_W;
+  const height = tall ? 34 : HIST_H;
+  const lo = Math.min(band.p10, prop.line);
+  const hi = Math.max(band.p90, prop.line);
+  const span = (hi - lo) || 1;
+  const at = function (value) {
+    return (((value - lo) / span) * (width - 8) + 4).toFixed(1);
+  };
+  const mid = (height / 2).toFixed(1);
+  return '<span class="rangebar' + (tall ? " tall" : "") + '">' +
+    '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' +
+    width + ' ' + height + '" role="img" aria-label="' +
+    esc("Floor " + num(band.p10) + ", median " + num(band.p50) +
+      ", " + PICK_CEILING.toLowerCase() + " " + num(band.p90) +
+      ". Line " + prop.line) + '">' +
+    '<line x1="4" y1="' + mid + '" x2="' + (width - 4) + '" y2="' + mid +
+    '" stroke="var(--track)" stroke-width="2"></line>' +
+    '<line x1="' + at(band.p10) + '" y1="' + mid + '" x2="' +
+    at(band.p90) + '" y2="' + mid +
+    '" stroke="var(--border-strong)" stroke-width="8" ' +
+    'stroke-linecap="round"></line>' +
+    '<circle cx="' + at(band.p50) + '" cy="' + mid +
+    '" r="4" fill="var(--ink)"></circle>' +
+    '<line x1="' + at(prop.line) + '" y1="2" x2="' + at(prop.line) +
+    '" y2="' + (height - 2) + '" stroke="var(--heating)" ' +
+    'stroke-width="1.5" stroke-dasharray="3 2"></line>' +
+    '</svg></span>';
+}
+
+function shapeFor(prop, tall) {
+  if (prop && prop.distribution) return histogram(prop, tall);
+  return rangeBar(prop, tall);
+}
+
+/* sec 4's probability bar: a track, the value as a fill, the
+ * uncertainty band behind it, and a 50% tick. The band is ALWAYS
+ * drawn where one exists (honesty rule sec 7.1). */
+function probBar(label, value, band, note, tone) {
+  const width = value === null || value === undefined
+    ? 0 : Math.max(0, Math.min(1, value)) * 100;
+  const lo = band ? Math.max(0, Math.min(1, band[0])) * 100 : null;
+  const hi = band ? Math.max(0, Math.min(1, band[1])) * 100 : null;
+  return '<div class="probrow"><div class="problabel">' +
+    '<span>' + esc(label) + '</span>' +
+    '<span class="probvalue">' + esc(pct(value)) +
+    (note ? '<span class="probnote"> ' + esc(note) + '</span>' : "") +
+    '</span></div>' +
+    '<div class="probtrack" role="img" aria-label="' +
+    esc(label + " " + pct(value) +
+      (band ? ", range " + pct(band[0]) + " to " + pct(band[1]) : "")) +
+    '">' +
+    (band
+      ? '<span class="probband" style="left:' + lo.toFixed(1) +
+        '%;width:' + Math.max(0.5, hi - lo).toFixed(1) + '%"></span>'
+      : "") +
+    '<span class="probfill ' + esc(tone || "") + '" style="width:' +
+    width.toFixed(1) + '%"></span>' +
+    '<span class="probtick"></span></div></div>';
+}
+
+/* ------------------------------------------------------------------
+ * sec 5.4 — THE SCREEN LIST
+ * ------------------------------------------------------------------ */
+
+function sortToggle() {
+  return '<div class="seg sortseg" role="group" aria-label="' +
+    esc(SORT_GROUP_LABEL) + '">' + SORTS.map(function (sort) {
+      return '<button data-act="sort" data-sort="' + esc(sort[0]) +
+        '" aria-pressed="' + (nav.sort === sort[0]) + '">' +
+        esc(sort[1]) + '</button>';
+    }).join("") + '</div>';
+}
+
+/* BOTH SORTS READ A PUBLISHED NUMBER. `gap_pts` and `model_p` are the
+ * exporter's; the order they are put in is a display decision and the
+ * only thing decided here. */
+function screenRows() {
+  const rows = allProps();
+  rows.sort(function (one, two) {
+    if (nav.sort === SORT_CHANCE) {
+      return (two.prop.model_p - one.prop.model_p) ||
+        (two.prop.gap_pts - one.prop.gap_pts) ||
+        one.person.name.localeCompare(two.person.name);
+    }
+    return (two.prop.gap_pts - one.prop.gap_pts) ||
+      (two.prop.model_p - one.prop.model_p) ||
+      one.person.name.localeCompare(two.person.name);
+  });
+  return rows;
+}
+
+function screenRow(entry, index) {
+  const prop = entry.prop;
+  const edge = isEdge(prop);
+  const label = entry.person.name + ", " + entry.person.pos +
+    " against " + opponentOf(entry.game, entry.side) + ", " +
+    prop.market_label + " " + prop.line + ", " + prop.lean_label +
+    " " + pct(prop.model_p) + ", " + gapText(prop);
+  return '<button class="screenrow' + growClass() + '" style="--i:' +
+    Math.min(index, 8) + '" data-act="prop" data-player="' +
+    esc(entry.id) + '" data-market="' + esc(prop.market) +
+    '" aria-label="' + esc(label) + '">' +
+    '<span class="screencol">' +
+    '<span class="screenname">' + esc(entry.person.name) + '</span>' +
+    '<span class="screenmeta">' + esc(entry.person.pos + " · vs " +
+      opponentOf(entry.game, entry.side) + " · " + prop.market +
+      " " + prop.line) + '</span></span>' +
+    shapeFor(prop, false) +
+    '<span class="screennums">' +
+    '<span class="sidepill ' + esc(prop.lean) + '">' +
+    esc(prop.lean_label) + '</span>' +
+    '<span class="screenp">' + esc(pct(prop.model_p)) + '</span>' +
+    '<span class="screengap ' + (edge ? "positive" : "absent") + '">' +
+    esc(gapText(prop)) + '</span></span></button>';
+}
+
 function renderBetsScreen() {
+  if (!nav.slate) {
+    return '<div class="page">' + betsHead() +
+      '<div class="cardhead offhead">' + esc(OFFLINE_HEAD) + '</div>' +
+      '<div class="legend">' + esc(nav.slateNote || OFFLINE_BODY) +
+      '</div></div>';
+  }
+  const rows = screenRows();
   return '<div class="page">' + betsHead() +
     '<div class="slatehead"><div class="slatetitle">' + esc(SLATE_HEADER) +
     '</div><div class="pagemeta">' + esc(SLATE_BASIS) + '</div></div>' +
-    stubCard("Arrives in U3", "Screen the slate.", STUB_SCREEN) +
-    stubRows(SAMPLE_SCREEN_ROWS, "U3", "pick") + '</div>';
+    sortToggle() +
+    (rows.length
+      ? '<div class="screenlist">' +
+        rows.map(screenRow).join("") + '</div>'
+      : '<div class="legend">' + esc(NO_CAPTURED_ROWS) + '</div>') +
+    '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
+    '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div></div>';
 }
 
 function renderBetsLive() {
@@ -1543,17 +2193,118 @@ function renderBetsLive() {
     stubRows(SAMPLE_LIVE_ROWS, "U4", "card") + '</div>';
 }
 
-/* The owner's third segment: the watchlist and the slips already
- * tracked, which is where a pick saved on the Pick card and a slip
- * brought back from Track a slip both land. Content is U3; the two
- * stub rows below open the two routes that will fill it. */
+/* ------------------------------------------------------------------
+ * THE OWNER'S THIRD BETS SEGMENT — MY PICKS
+ * ------------------------------------------------------------------
+ * The watchlist and the tracked slips, both of which live on the
+ * SERVICE. Without a token there is nothing to show, and this segment
+ * says exactly that: it does not keep a local copy, it does not show
+ * yesterday's, and it does not pretend a bookmark was saved. */
+
+function connectCard() {
+  return '<div class="card"><div class="cardhead">' +
+    esc(CONNECT_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(CONNECT_BODY) + '</div>' +
+    '<button class="primary" data-act="connect">' +
+    esc(CONNECT_BUTTON) + '</button></div>';
+}
+
+function watchRows() {
+  const rows = nav.watch || [];
+  if (!rows.length) {
+    return '<div class="card"><div class="cardbody">' +
+      esc(PICKS_EMPTY_WATCH) + '</div></div>';
+  }
+  return '<div class="card"><div class="overline">' +
+    esc(PICKS_WATCH) + '</div>' + rows.map(function (row, index) {
+      const person = playerOf(row.player_id);
+      const prop = person ? propOf(person, row.market) : null;
+      return '<div class="watchrow' + growClass() + '" style="--i:' +
+        Math.min(index, 8) + '">' +
+        '<button class="watchopen" data-act="prop" data-player="' +
+        esc(row.player_id) + '" data-market="' + esc(row.market) +
+        '" aria-label="' + esc("Open " +
+          (person ? person.name : row.player_id) + ", " +
+          row.market) + '">' +
+        '<span class="watchname">' +
+        esc(person ? person.name : row.player_id) + '</span>' +
+        '<span class="watchmeta">' + esc(
+          (row.side === "less" ? "Less " : "More ") +
+          (row.line === null || row.line === undefined
+            ? "" : row.line + " ") + row.market) + '</span></button>' +
+        '<span class="watchp">' +
+        esc(prop ? pct(prop.model_p) : DASH) + '</span>' +
+        '<button class="watchdrop" data-act="unwatch" data-player="' +
+        esc(row.player_id) + '" data-market="' + esc(row.market) +
+        '" aria-label="' + esc(PICK_WATCH_REMOVE) + '">' +
+        esc(PICKS_REMOVE) + '</button></div>';
+    }).join("") + '</div>';
+}
+
+function slipRows() {
+  const rows = nav.slips || [];
+  if (!rows.length) {
+    return '<div class="card"><div class="cardbody">' +
+      esc(PICKS_EMPTY_SLIPS) + '</div></div>';
+  }
+  return rows.map(function (slip, index) {
+    const worth = (slip.p_all_hit !== null &&
+      slip.p_all_hit !== undefined &&
+      slip.p_break_even !== null && slip.p_break_even !== undefined)
+      ? (slip.p_all_hit >= slip.p_break_even ? "positive" : "negative")
+      : "absent";
+    return '<div class="card' + growClass() + '" style="--i:' +
+      Math.min(index, 8) + '">' +
+      '<div class="overline">' + esc(PICKS_SLIPS) + '</div>' +
+      '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
+      '</span><span class="verdictvalue">' + esc(pct(slip.p_all_hit)) +
+      '</span></div>' +
+      '<div class="verdictrow"><span>' + esc(TRACK_BREAK_EVEN) +
+      '</span><span class="verdictvalue">' +
+      esc(pct(slip.p_break_even)) + '</span></div>' +
+      '<div class="slipleglist">' + (slip.legs || []).map(
+        function (leg) {
+          const person = playerOf(leg.player_id);
+          return '<div class="slipleg"><span>' +
+            esc((person ? person.name : (leg.player_text ||
+              TRACK_UNMATCHED_LEG)) + " · " +
+              (leg.side === "less" ? "Less " : "More ") +
+              leg.line_placed + " " + (leg.market || "")) + '</span>' +
+            '<span class="legp' + (leg.p_at_placed === null
+              ? " absent" : "") + '">' +
+            esc(leg.p_at_placed === null || leg.p_at_placed === undefined
+              ? DASH : pct(leg.p_at_placed)) + '</span></div>';
+        }).join("") + '</div>' +
+      '<div class="verdict ' + worth + '">' +
+      esc(worth === "absent" ? TRACK_NO_VERDICT
+        : (worth === "positive" ? TRACK_BIGGER : TRACK_SMALLER)) +
+      '</div>' +
+      '<div class="legend">' +
+      esc(slip.independence_note || INDEPENDENCE_NOTE) + '</div>' +
+      '<div class="legend">' + esc(STORED_BY_SERVICE) + '</div>' +
+      (slip.p_reason
+        ? '<div class="legend">' + esc(slip.p_reason) + '</div>'
+        : "") + '</div>';
+  }).join("");
+}
+
 function renderBetsPicks() {
-  return '<div class="page">' + betsHead() +
-    '<div class="overline">' + esc(PICKS_OVERLINE) + '</div>' +
-    stubCard("Arrives in U3", "Everything you saved or placed.",
-      STUB_PICKS) +
-    stubRows(SAMPLE_WATCHLIST_ROWS, "U3", "pick") +
-    stubRows(SAMPLE_SLIP_ROWS, "U3", "track") + '</div>';
+  const head = '<div class="page">' + betsHead() +
+    '<div class="overline">' + esc(PICKS_OVERLINE) + '</div>';
+  if (DEMO) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(SERVICE_DEMO) + '</div></div></div>';
+  }
+  if (!nav.hasToken) {
+    return head + connectCard() + '</div>';
+  }
+  if (nav.picksOffline) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(SERVICE_OFFLINE) + '</div></div>' +
+      '<button class="primary" data-act="picks-retry">' +
+      esc(CONNECT_BUTTON) + '</button></div>';
+  }
+  return head + watchRows() + slipRows() + '</div>';
 }
 
 function detailHead(title) {
@@ -1563,16 +2314,484 @@ function detailHead(title) {
     '<div class="pagetitle">' + esc(title) + '</div></div>';
 }
 
+/* ------------------------------------------------------------------
+ * sec 5.5 — THE PICK CARD
+ * ------------------------------------------------------------------ */
+
+/* The bookmark, sec 5.5's header control. It is a state on the
+ * SERVICE, so without a token it says what it would do and connects
+ * rather than pretending to save. */
+function watchButton(playerId, prop) {
+  const saved = !!watchedEntry(playerId, prop.market);
+  const busy = nav.picksBusy === playerId + "|" + prop.market;
+  return '<button class="watchbtn' + (saved ? " saved" : "") +
+    '" data-act="watch" data-player="' + esc(playerId) +
+    '" data-market="' + esc(prop.market) + '" data-line="' +
+    esc(prop.line) + '" data-side="' + esc(prop.lean) +
+    '" aria-pressed="' + saved + '" aria-label="' +
+    esc(saved ? PICK_WATCH_REMOVE : PICK_WATCH_ADD) + '">' +
+    (busy ? "…" : (saved ? "★" : "☆")) + '</button>';
+}
+
+/* THE PLAYER BLOCK USES THE ONE SHARED STATLINE RENDERER — the same
+ * `statline()` the home expanded rows call, and the owner's standing
+ * requirement (UI_ALPHA_SPEC sec 1). It is handed the record's own
+ * `projected_line` with the prop's threshold attached to the row the
+ * prop is about, which is what the threshold slot in that component
+ * was built for. A second statline is not written here. */
+function pickStatline(person, prop) {
+  const entries = (person.projected_line || []).map(function (entry) {
+    const mine = entry.label.toLowerCase() ===
+      String(prop.market_label || "").toLowerCase();
+    return mine
+      ? { label: entry.label, value: entry.value, reason: entry.reason,
+        threshold: prop.line_label }
+      : entry;
+  });
+  return statline(entries);
+}
+
+function impliesBanner(prop) {
+  const implies = prop.line_implies || {};
+  if (!implies.text) return "";
+  return '<div class="implies" title="' + esc(implies.basis || "") +
+    '"><span class="overline">' + esc(PICK_IMPLIES) + '</span>' +
+    '<span class="impliestext">' + esc(implies.text) + '</span>' +
+    (implies.basis
+      ? '<span class="impliesbasis">' + esc(implies.basis) + '</span>'
+      : "") + '</div>';
+}
+
+function bandCaption(prop) {
+  const band = prop.floor_median_ceiling || {};
+  if (band.p10 === null || band.p10 === undefined) return "";
+  return '<div class="fmc" title="' + esc(band.basis || "") + '">' +
+    [[PICK_FLOOR, band.p10], [PICK_MEDIAN, band.p50],
+      [PICK_CEILING, band.p90]].map(function (cell) {
+      return '<span class="fmccell"><span class="fmclabel">' +
+        esc(cell[0]) + '</span><span class="fmcvalue">' +
+        esc(num(cell[1])) + '</span></span>';
+    }).join("") + '</div>';
+}
+
+function shapeSection(prop) {
+  const counted = !!prop.distribution;
+  const body = shapeFor(prop, true);
+  const note = counted ? "" : (prop.distribution_reason || "");
+  return '<div class="card"><div class="overline">' +
+    esc(counted ? PICK_SHAPE : PICK_BAND) + '</div>' +
+    (body || '<div class="cardbody">' + esc(note) + '</div>') +
+    bandCaption(prop) +
+    (counted
+      ? '<div class="legend">' + esc(prop.distribution_method
+        ? "Outcome bars off the generation's own draws." : "") +
+        '</div>'
+      : '<div class="legend">' + esc(note) + '</div>') +
+    '</div>';
+}
+
+function barsSection(prop) {
+  const odds = prop.odds || [];
+  const book = (prop.book ? prop.book + " " : "") +
+    (odds.length === 2
+      ? (odds[0] > 0 ? "+" + odds[0] : odds[0]) + " / " +
+        (odds[1] > 0 ? "+" + odds[1] : odds[1])
+      : "");
+  return '<div class="card"><div class="overline">' + esc(PICK_BARS) +
+    '</div>' +
+    probBar(PICK_MODEL, prop.model_p, prop.model_band, "",
+      isEdge(prop) ? "positive" : "") +
+    probBar(PICK_MARKET, prop.market_p_novig, null, book, "") +
+    '<div class="gapline ' + (isEdge(prop) ? "positive" : "absent") +
+    '">' + esc(gapText(prop)) + '</div>' +
+    '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
+    '<button class="readbtn" data-act="note" data-note="' +
+    esc(NOTE_READ_SHEET) + '">' + esc(ADD_READ_BUTTON) + '</button>' +
+    '</div>';
+}
+
+/* sec 5.5's 2x2. FOUR TILES, and the fifth the handoff draws is named
+ * as deferred underneath rather than filled with a substitute
+ * (UI_ALPHA_SPEC sec 2's PFF wall). */
+function tilesSection(prop) {
+  const tiles = (prop.context_tiles || []).map(function (tile) {
+    const absent = tile.value === null || tile.value === undefined;
+    return '<div class="tile' + (absent ? " absent" : "") +
+      '" title="' + esc(absent ? (tile.reason || "")
+        : (tile.detail || "")) + '">' +
+      '<span class="tilelabel">' + esc(tile.label) + '</span>' +
+      '<span class="tilevalue">' + esc(absent ? DASH : tile.value) +
+      '</span>' +
+      '<span class="tiledetail">' +
+      esc(absent ? (tile.reason || "") : (tile.detail || "")) +
+      '</span></div>';
+  }).join("");
+  return '<div class="card"><div class="overline">' +
+    esc(PICK_CONTEXT) + '</div>' +
+    '<div class="tiles">' + tiles + '</div>' +
+    '<div class="legend">' + esc(DEFER_MATCHUP) + '</div></div>';
+}
+
+function otherMarkets(person, prop) {
+  const others = (person.props || []).filter(function (entry) {
+    return entry.market !== prop.market;
+  });
+  if (!others.length) return "";
+  return '<div class="card"><div class="overline">' +
+    esc(PICK_OTHER_MARKETS) + '</div><div class="otherlines">' +
+    others.map(function (entry) {
+      return '<button class="otherline" data-act="prop" ' +
+        'data-player="' + esc(person.player_id) + '" data-market="' +
+        esc(entry.market) + '" aria-label="' +
+        esc(entry.market_label + " " + entry.line + ", " +
+          entry.lean_label + " " + pct(entry.model_p)) + '">' +
+        '<span>' + esc(entry.market_label + " " + entry.line) +
+        '</span><span class="otherp">' + esc(entry.lean_label + " " +
+          pct(entry.model_p)) + '</span></button>';
+    }).join("") + '</div></div>';
+}
+
 function renderPick() {
-  return '<div class="page">' + detailHead(TITLE_PICK) +
-    stubCard("Arrives in U3", "The pick card lands here.", STUB_PICK) +
-    '<div class="skeleton" aria-hidden="true">' +
-    skeletonRows(SKELETON_WIDTHS.slice(0, 4)) + '</div></div>';
+  const person = playerOf(nav.pick);
+  const prop = pickProp();
+  const head = '<div class="pagehead">' +
+    '<button class="backbtn" data-act="back" aria-label="Back">' +
+    icon("back") + '</button>' +
+    '<div class="pagetitle">' + esc(TITLE_PICK) + '</div>' +
+    (person && prop ? watchButton(person.player_id, prop) : "") +
+    '</div>';
+  if (!person || !prop) {
+    return '<div class="page">' + head +
+      '<div class="card"><div class="cardbody">' + esc(PICK_NO_PROP) +
+      '</div></div></div>';
+  }
+  const where = gameOfPlayer(person.player_id);
+  const against = where
+    ? " · vs " + opponentOf(where.game, where.side) : "";
+  return '<div class="page">' + head +
+    '<div class="card playercard">' +
+    '<div class="exphead"><span class="pickname">' +
+    esc(person.name) + '</span><span class="expteam">' +
+    esc(person.team + " " + person.pos + against) + '</span></div>' +
+    '<div class="pickline">' + esc(prop.market_label + " " +
+      prop.line) + ' <span class="sidepill ' + esc(prop.lean) + '">' +
+    esc(prop.lean_label) + '</span></div>' +
+    '<div class="overline" title="' +
+    esc(person.projected_line_template) + '">' + esc(PROJECTED) +
+    '</div>' + pickStatline(person, prop) +
+    impliesBanner(prop) + '</div>' +
+    shapeSection(prop) + barsSection(prop) + tilesSection(prop) +
+    otherMarkets(person, prop) +
+    '<button class="primary" data-act="copy" data-player="' +
+    esc(person.player_id) + '" data-market="' + esc(prop.market) +
+    '">' + esc(PICK_COPY) + '</button>' +
+    '<div class="legend">' + esc(prop.basis) + '</div></div>';
+}
+
+/* ------------------------------------------------------------------
+ * sec 5.7 — TRACK A SLIP
+ * ------------------------------------------------------------------ */
+
+/* The words a pick'em slip uses for a side, mapped to the app's two.
+ * A book's "over" is this app's "More" and is stored as `more`; the
+ * page never shows the book's word back. */
+const SIDE_WORDS = { more: "more", over: "more", less: "less",
+  under: "less" };
+
+/* THE PARSER. It matches or it does not — it never guesses.
+ *
+ * A line becomes a leg only when all three of the player, the market
+ * and the side are found IN THE SLATE the page already has: the
+ * player by his own listed name, the market by the exporter's own
+ * word for it, the side by one of the four words above. Anything
+ * short of that is kept verbatim as an unmatched line and offered for
+ * manual entry, because a leg assembled out of a partial match is a
+ * bet the reader did not place. */
+function parseSlip(text) {
+  const lines = String(text || "").split(/[\r\n]+/)
+    .map(function (line) { return line.trim(); })
+    .filter(function (line) { return line.length > 0; });
+  const legs = [];
+  const unparsed = [];
+  let pending = "";
+  lines.forEach(function (line) {
+    const context = (pending ? pending + " " : "") + line;
+    const side = line.match(/\b(more|less|over|under)\b/i);
+    const number = line.match(/(\d+(?:\.\d+)?)/);
+    if (!side || !number) {
+      pending = context;
+      return;
+    }
+    const leg = matchLeg(context, SIDE_WORDS[side[1].toLowerCase()],
+      Number(number[1]));
+    if (leg) {
+      legs.push(leg);
+    } else {
+      unparsed.push(context);
+    }
+    pending = "";
+  });
+  if (pending) unparsed.push(pending);
+  return { legs: legs, unparsed: unparsed };
+}
+
+/* One leg, or null. Nothing here reads a probability out of anything
+ * but the published ladder. */
+function matchLeg(text, side, line) {
+  const hay = String(text).toLowerCase();
+  let best = null;
+  let bestRank = 0;
+  allProps().forEach(function (entry) {
+    const name = entry.person.name.toLowerCase();
+    const surname = name.split(" ").slice(-1)[0];
+    /* A FULL NAME BEATS A SURNAME, always. Two men on one slate can
+     * share a surname, and picking whichever of them was iterated
+     * last would put somebody else's bet on the reader's slip. A
+     * surname that matches more than one player is AMBIGUOUS and
+     * therefore no match at all: it falls through to the unmatched
+     * list, where he can enter it himself. */
+    const rank = hay.indexOf(name) >= 0 ? 2
+      : (surname.length >= 3 && hay.indexOf(surname) >= 0 ? 1 : 0);
+    if (!rank) return;
+    const market = String(entry.prop.market).toLowerCase();
+    const label = String(entry.prop.market_label).toLowerCase();
+    if (hay.indexOf(market) < 0 && hay.indexOf(label) < 0) return;
+    if (rank > bestRank) {
+      best = entry;
+      bestRank = rank;
+    } else if (rank === bestRank && best &&
+        best.id !== entry.id) {
+      best = null;            // two men answer to it: match nobody
+    }
+  });
+  if (!best) return null;
+  const prop = best.prop;
+  const placed = rungAt(prop, line);
+  const screened = rungAt(prop, prop.line);
+  return {
+    text: text,
+    player_id: best.id,
+    name: best.person.name,
+    market: prop.market,
+    market_label: prop.market_label,
+    side: side,
+    side_label: side === "less" ? "Less" : "More",
+    line_placed: line,
+    line_screened: prop.line,
+    p_at_screened: rungChance(screened, side),
+    p_at_placed: rungChance(placed, side),
+    p_reason: placed ? null : TRACK_OFF_LADDER
+  };
+}
+
+/* sec 5.7's move note. Both numbers are published rungs, so this
+ * compares two readings and works nothing out. */
+function moveNote(leg) {
+  if (leg.p_at_placed === null || leg.p_at_placed === undefined) {
+    return { text: TRACK_OFF_LADDER, tone: "absent" };
+  }
+  if (leg.line_placed === leg.line_screened) {
+    return { text: TRACK_SAME_LINE, tone: "" };
+  }
+  const better = leg.p_at_placed > leg.p_at_screened;
+  return {
+    text: (better ? TRACK_MOVED_TO : TRACK_MOVED_AGAINST) + ": " +
+      leg.line_screened + " → " + leg.line_placed + " · " +
+      pct(leg.p_at_screened) + " → " + pct(leg.p_at_placed),
+    tone: better ? "positive" : "negative"
+  };
+}
+
+/* THE LEG THAT MOVED MOST, by the size of the change in its published
+ * chance. It is a comparison of stored numbers, not a decomposition. */
+function biggestMover(legs) {
+  let held = null;
+  legs.forEach(function (leg) {
+    if (leg.p_at_placed === null || leg.p_at_placed === undefined ||
+        leg.p_at_screened === null) {
+      return;
+    }
+    const moved = Math.abs(leg.p_at_placed - leg.p_at_screened);
+    if (!held || moved > held.moved) held = { leg: leg, moved: moved };
+  });
+  return held && held.moved > 0 ? held.leg : null;
+}
+
+/* THE PREVIEW PRODUCT — one of the three things this page is allowed
+ * to work out, and it says so on screen every time it is drawn
+ * (UI_ALPHA_SPEC sec 4). The SAVED slip's number is the service's. */
+function previewProduct(legs) {
+  if (!legs.length) return null;
+  let product = 1;
+  for (let index = 0; index < legs.length; index += 1) {
+    const value = legs[index].p_at_placed;
+    if (value === null || value === undefined) return null;
+    product *= value;
+  }
+  return product;
+}
+
+/* ...and the break-even quotient, the second of the three. */
+function breakEven(payout) {
+  const value = numberOrNull(payout);
+  if (value === null || value <= 0) return null;
+  return 1 / value;
+}
+
+function trackInputs() {
+  return '<div class="seg" role="group" aria-label="' +
+    esc(TRACK_INPUT_LABEL) + '">' +
+    ['<button data-act="track-input" data-input="paste" ' +
+      'aria-pressed="' + (nav.track.input === "paste") + '">' +
+      esc(TRACK_PASTE) + '</button>',
+    '<button data-act="track-input" data-input="manual" ' +
+      'aria-pressed="' + (nav.track.input === "manual") + '">' +
+      esc(TRACK_MANUAL) + '</button>',
+    '<button class="deferred" data-act="note" data-note="' +
+      esc(DEFER_SCREENSHOT_NOTE) + '" aria-pressed="false" ' +
+      'aria-label="' + esc(DEFER_SCREENSHOT + ", deferred") + '">' +
+      esc(DEFER_SCREENSHOT) + '</button>'].join("") + '</div>';
+}
+
+function trackEntry() {
+  if (nav.track.input === "manual") {
+    return '<div class="card"><div class="overline">' +
+      esc(TRACK_MANUAL) + '</div>' +
+      '<input class="trackline" id="manualleg" type="text" ' +
+      'autocomplete="off" aria-label="' + esc(TRACK_ADD_LEG) +
+      '" placeholder="' + esc(TRACK_MANUAL_HINT) + '" value="' +
+      esc(nav.track.text) + '">' +
+      '<button class="primary" data-act="track-manual">' +
+      esc(TRACK_ADD_LEG) + '</button></div>';
+  }
+  return '<div class="card"><div class="overline">' +
+    esc(TRACK_PASTE) + '</div>' +
+    '<textarea class="trackbox" id="slippaste" rows="5" ' +
+    'aria-label="' + esc(TRACK_PLACEHOLDER) + '" placeholder="' +
+    esc(TRACK_PLACEHOLDER) + '">' + esc(nav.track.text) +
+    '</textarea>' +
+    '<button class="primary" data-act="track-parse">' +
+    esc(TRACK_PARSE) + '</button></div>';
+}
+
+function trackLegs() {
+  if (!nav.track.legs.length) {
+    return '<div class="card"><div class="cardbody">' +
+      esc(TRACK_EMPTY) + '</div></div>';
+  }
+  return '<div class="card"><div class="overline">' + esc(TRACK_LEGS) +
+    '</div>' + nav.track.legs.map(function (leg, index) {
+      const note = moveNote(leg);
+      return '<div class="leg' + growClass() + '" style="--i:' +
+        index + '">' +
+        '<div class="legtop"><span class="legname">' +
+        esc(leg.name || leg.text) + '</span>' +
+        '<span class="legp' + (leg.p_at_placed === null
+          ? " absent" : "") + '">' +
+        esc(leg.p_at_placed === null || leg.p_at_placed === undefined
+          ? DASH : pct(leg.p_at_placed)) + '</span></div>' +
+        '<div class="legbet">' + esc(leg.side_label + " " +
+          leg.line_placed + " " + leg.market) + '</div>' +
+        '<div class="legnote ' + esc(note.tone) + '">' +
+        esc(note.text) + '</div>' +
+        '<button class="legdrop" data-act="track-drop" data-leg="' +
+        index + '" aria-label="' + esc("Remove " +
+          (leg.name || leg.text)) + '">' + esc(PICKS_REMOVE) +
+        '</button></div>';
+    }).join("") + '</div>' +
+    (nav.track.unparsed.length
+      ? '<div class="card"><div class="overline">' +
+        esc(TRACK_UNPARSED) + '</div>' +
+        nav.track.unparsed.map(function (line) {
+          return '<div class="unparsed">' + esc(line) + '</div>';
+        }).join("") +
+        '<div class="legend">' + esc(TRACK_UNPARSED_NOTE) +
+        '</div></div>'
+      : "");
+}
+
+function trackVerdict() {
+  const saved = nav.track.saved;
+  const legs = nav.track.legs;
+  const product = saved ? saved.p_all_hit : previewProduct(legs);
+  const even = saved ? saved.p_break_even : breakEven(nav.track.payout);
+  const mover = biggestMover(legs);
+  const tone = (product !== null && product !== undefined &&
+    even !== null && even !== undefined)
+    ? (product >= even ? "positive" : "negative") : "absent";
+  const verdict = tone === "absent" ? TRACK_NO_VERDICT
+    : (tone === "positive" ? TRACK_BIGGER : TRACK_SMALLER);
+  return '<div class="card"><div class="overline">' +
+    esc(TRACK_VERDICT) + '</div>' +
+    '<div class="payouts">' +
+    '<label class="payoutcell"><span>' + esc(TRACK_PAYOUT) +
+    '</span><input class="payoutinput" id="slippayout" type="text" ' +
+    'inputmode="decimal" autocomplete="off" aria-label="' +
+    esc(TRACK_PAYOUT) + '" value="' + esc(nav.track.payout) +
+    '"></label>' +
+    '<label class="payoutcell"><span>' + esc(TRACK_STAKE) +
+    '</span><input class="payoutinput" id="slipstake" type="text" ' +
+    'inputmode="decimal" autocomplete="off" aria-label="' +
+    esc(TRACK_STAKE) + '" value="' + esc(nav.track.stake) +
+    '"></label></div>' +
+    '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
+    '</span><span class="verdictvalue" id="vall">' + esc(pct(product)) +
+    '</span></div>' +
+    '<div class="verdictrow"><span>' + esc(TRACK_BREAK_EVEN) +
+    '</span><span class="verdictvalue" id="veven">' + esc(pct(even)) +
+    '</span></div>' +
+    '<div class="verdict ' + esc(tone) + '" id="vsay">' + esc(verdict) +
+    (mover ? " " + esc(TRACK_WORST + mover.name) : "") + '</div>' +
+    '<div class="legend">' +
+    esc(saved ? saved.independence_note || INDEPENDENCE_NOTE
+      : INDEPENDENCE_NOTE) + '</div>' +
+    '<div class="legend">' +
+    esc(saved ? STORED_BY_SERVICE : CLIENT_PREVIEW_NOTE) + '</div>' +
+    '<div class="legend">' + esc(CLIENT_BREAK_EVEN_NOTE) + '</div>' +
+    (saved && saved.p_reason
+      ? '<div class="legend">' + esc(saved.p_reason) + '</div>'
+      : "") +
+    (saved ? ""
+      : '<button class="primary" data-act="track-save"' +
+        (nav.track.legs.length ? "" : " disabled") + '>' +
+        esc(nav.picksBusy === "slip" ? "…" : TRACK_SAVE) +
+        '</button>') +
+    (nav.picksOffline
+      ? '<div class="legend">' + esc(SERVICE_OFFLINE) + '</div>'
+      : "") + '</div>';
+}
+
+/* The verdict's three numbers, redrawn in place as a payout is typed.
+ * The break-even is this page's own quotient and the product is its
+ * own preview — both labelled underneath — and neither the legs nor
+ * the fields around them are re-rendered, so the caret stays put. */
+function redrawVerdict() {
+  const all = el("vall");
+  const even = el("veven");
+  const say = el("vsay");
+  if (!all || !even || !say) return;
+  const legs = nav.track.legs;
+  const product = nav.track.saved
+    ? nav.track.saved.p_all_hit : previewProduct(legs);
+  const breaks = nav.track.saved
+    ? nav.track.saved.p_break_even : breakEven(nav.track.payout);
+  all.textContent = pct(product);
+  even.textContent = pct(breaks);
+  const known = product !== null && product !== undefined &&
+    breaks !== null && breaks !== undefined;
+  const tone = known ? (product >= breaks ? "positive" : "negative")
+    : "absent";
+  const mover = biggestMover(legs);
+  say.className = "verdict " + tone;
+  say.textContent = (known
+    ? (tone === "positive" ? TRACK_BIGGER : TRACK_SMALLER)
+    : TRACK_NO_VERDICT) + (mover ? " " + TRACK_WORST + mover.name : "");
 }
 
 function renderTrack() {
   return '<div class="page">' + detailHead(TITLE_TRACK) +
-    stubCard("Arrives in U3", "Bring the slip back.", STUB_TRACK) + '</div>';
+    trackInputs() + trackEntry() + trackLegs() + trackVerdict() +
+    '</div>';
 }
 
 function renderLiveCard() {
@@ -1832,6 +3051,46 @@ function onClick(event) {
     closeSheet();
     swapSub("fantasy", "season");
     showToast(STUB_STARTSIT);
+  } else if (act === "prop") {
+    /* sec 5.4: a Screen row opens THAT prop's pick card, not just
+     * that player's — a man with two captured markets has two rows
+     * and they are different bets. */
+    openPick(target.getAttribute("data-player"),
+      target.getAttribute("data-market"));
+  } else if (act === "sort") {
+    setSort(target.getAttribute("data-sort"));
+  } else if (act === "watch") {
+    toggleWatch(target.getAttribute("data-player"),
+      target.getAttribute("data-market"),
+      numberOrNull(target.getAttribute("data-line")),
+      target.getAttribute("data-side"));
+  } else if (act === "unwatch") {
+    toggleWatch(target.getAttribute("data-player"),
+      target.getAttribute("data-market"), null, null);
+  } else if (act === "copy") {
+    copyPick(target.getAttribute("data-player"),
+      target.getAttribute("data-market"));
+  } else if (act === "track-input") {
+    nav.track.input = target.getAttribute("data-input");
+    render();
+  } else if (act === "track-parse") {
+    parseIntoTrack(nav.track.text);
+  } else if (act === "track-manual") {
+    addManualLeg(nav.track.text);
+  } else if (act === "track-drop") {
+    nav.track.legs.splice(Number(target.getAttribute("data-leg")), 1);
+    nav.track.saved = null;
+    render();
+  } else if (act === "track-save") {
+    saveSlip();
+  } else if (act === "connect" || act === "picks-retry") {
+    if (askToken()) {
+      nav.picksAsked = false;
+      nav.picksOffline = false;
+      loadPicks(true);
+    } else {
+      render();
+    }
   } else if (act === "toast-go") {
     const route = target.getAttribute("data-route");
     closeToast();
@@ -1861,13 +3120,66 @@ function closeSearch() {
   renderSearch();
 }
 
-/* THE PICK STUB ROUTE. U3 fills the card; until then the route exists
- * and the player it was opened for rides the address, so nothing
- * about this call changes on the day it does. */
-function openPick(playerId) {
+/* THE PICK ROUTE. The player — and, since U3, the MARKET — the card
+ * was opened for ride the shell's own state; a cell on the home table
+ * names no market and lands on his key prop, a Screen row names one
+ * and lands on that bet. */
+function openPick(playerId, market) {
   if (playerId) nav.pick = playerId;
+  nav.pickMarket = market || null;
   closeSearch();
   openDetail("pick");
+}
+
+function setSort(sort) {
+  if (nav.sort === sort) return;
+  for (let index = 0; index < SORTS.length; index += 1) {
+    if (SORTS[index][0] === sort) {
+      nav.sort = sort;
+      render();
+      return;
+    }
+  }
+}
+
+/* sec 5.5's primary action. The clipboard is asked politely and the
+ * toast is shown either way: a copy that silently failed would leave
+ * the reader pasting nothing into his book. */
+function copyPick(playerId, market) {
+  const person = playerOf(playerId);
+  const prop = person ? propOf(person, market) : null;
+  if (!person || !prop) return;
+  const line = person.name + " " + prop.lean_label + " " + prop.line +
+    " " + prop.market;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(line);
+    }
+  } catch (err) {
+    /* a browser that will not take it still gets the toast, and the
+     * pick is on the screen he is reading */
+  }
+  showToast(PICK_COPIED, PICK_PLACED, "track");
+}
+
+function parseIntoTrack(text) {
+  const parsed = parseSlip(text);
+  nav.track.legs = parsed.legs;
+  nav.track.unparsed = parsed.unparsed;
+  nav.track.saved = null;
+  render();
+}
+
+/* MANUAL ENTRY IS THE SAME PARSER ON ONE LINE. A line that does not
+ * match is kept as written and listed as unmatched, exactly as a
+ * pasted one is — there is one rule for what counts as a leg. */
+function addManualLeg(text) {
+  const parsed = parseSlip(text);
+  nav.track.legs = nav.track.legs.concat(parsed.legs);
+  nav.track.unparsed = nav.track.unparsed.concat(parsed.unparsed);
+  nav.track.saved = null;
+  nav.track.text = "";
+  render();
 }
 
 /* The search input is the one control in this app that is not a
@@ -1876,7 +3188,25 @@ function openPick(playerId) {
  * take the caret with it, so only the RESULTS are redrawn. */
 function onInput(event) {
   const target = event.target;
-  if (!target || target.id !== "gamesearch") return;
+  if (!target) return;
+  /* U3's four fields keep their own text in the shell's state and are
+   * NOT re-rendered on each keystroke: only the verdict numbers
+   * change as a payout is typed, and re-drawing the field under the
+   * caret would take the caret with it. */
+  if (target.id === "slippaste" || target.id === "manualleg") {
+    nav.track.text = target.value;
+    return;
+  }
+  if (target.id === "slippayout" || target.id === "slipstake") {
+    if (target.id === "slippayout") {
+      nav.track.payout = target.value;
+    } else {
+      nav.track.stake = target.value;
+    }
+    redrawVerdict();
+    return;
+  }
+  if (target.id !== "gamesearch") return;
   nav.query = target.value;
   const panel = el("searchoverlay");
   if (!panel) return;
@@ -1941,3 +3271,10 @@ nav.booted = true;
  * app rather than a blank page, and a network that never answers shows
  * the honest arm rather than a spinner that means nothing. */
 loadSlate();
+
+/* ...and the reader's own objects, which live on the service. The
+ * token is READ (never prompted) at boot so the segment knows which
+ * of its two honest states to draw: connected, or the connect card.
+ * Nothing is asked of the service without one. */
+nav.hasToken = !DEMO && !!readToken();
+if (nav.hasToken) loadPicks(false);

@@ -834,6 +834,217 @@ body{
    drawn before its turn. */
 .grow{animation:grow var(--dur-grow-long) ease-out both;animation-delay:calc(var(--i,0) * var(--stagger))}
 
+
+/* --------------------------------------------------------------------
+   U3 — THE BETS SIDE: the Screen list, the Pick card, Track a slip
+   and My picks.
+
+   Everything here is built from the sec 3 tokens above and adds no
+   colour of its own. The two charts (the outcome histogram and the
+   range bar) are drawn in SVG by the script and are sized here; the
+   probability bar is the sec 4 component — a 12px track, a 6px fill,
+   the uncertainty band behind it and a tick at 50%.
+   -------------------------------------------------------------------- */
+
+.sortseg{margin-top:2px}
+
+.screenlist{display:flex;flex-direction:column;gap:8px}
+
+.screenrow{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 76px 76px;
+  align-items:center;
+  gap:10px;
+  min-width:44px;
+  min-height:64px;
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--rule-2);
+  border-radius:var(--r-row);
+  background:var(--surface);
+  color:inherit;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+.screencol{display:flex;flex-direction:column;gap:2px;min-width:0}
+.screenname{font-size:15px;font-weight:var(--w-semibold)}
+.screenmeta{font-size:var(--type-meta);color:var(--muted)}
+.screennums{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.screenp{font-size:var(--type-row);font-weight:var(--w-semibold);line-height:1.05}
+.screengap{font-size:var(--type-meta);font-weight:var(--w-semibold)}
+.screengap.positive{color:var(--positive-text)}
+.screengap.absent{color:var(--muted);font-weight:var(--w-regular)}
+
+.sidepill{
+  display:inline-block;
+  padding:1px 8px;
+  border-radius:var(--r-full);
+  font-size:10px;
+  font-weight:var(--w-semibold);
+  letter-spacing:0.04em;
+  background:var(--panel);
+  color:var(--text-2);
+}
+.sidepill.more{background:var(--positive-tint);color:var(--positive-text)}
+.sidepill.less{background:var(--read-tint);color:var(--read-text)}
+
+.hist,.rangebar{display:flex;flex-direction:column;gap:2px}
+.hist.tall,.rangebar.tall{width:100%}
+.hist.tall svg,.rangebar.tall svg{width:100%;height:auto}
+.histlabels{
+  display:grid;
+  grid-template-columns:repeat(11,1fr);
+  font-size:10px;
+  color:var(--muted);
+  text-align:center;
+}
+
+/* sec 4's probability bar. */
+.probrow{display:flex;flex-direction:column;gap:4px;padding-top:6px}
+.problabel{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:var(--type-cell)}
+.probvalue{font-weight:var(--w-semibold)}
+.probnote{font-weight:var(--w-regular);color:var(--muted);font-size:var(--type-meta)}
+.probtrack{position:relative;height:12px;border-radius:6px;background:var(--track)}
+.probband{position:absolute;top:0;height:12px;border-radius:6px;background:var(--border-strong)}
+.probfill{position:absolute;top:3px;height:6px;border-radius:3px;background:var(--ink)}
+.probfill.positive{background:var(--positive)}
+.probtick{position:absolute;left:50%;top:-2px;width:1px;height:16px;background:var(--surface)}
+.gapline{font-size:var(--type-cell);font-weight:var(--w-semibold);padding-top:8px}
+.gapline.positive{color:var(--positive-text)}
+.gapline.absent{color:var(--muted);font-weight:var(--w-regular)}
+
+.playercard{gap:8px}
+.pickname{font-size:var(--type-section);font-weight:var(--w-semibold)}
+.pickline{font-size:var(--type-body);color:var(--text-2);display:flex;align-items:center;gap:8px}
+
+.watchbtn{
+  min-width:44px;
+  min-height:44px;
+  margin-left:auto;
+  border:none;
+  background:none;
+  color:var(--subtle);
+  font-size:20px;
+  cursor:pointer;
+}
+.watchbtn.saved{color:var(--positive)}
+
+.implies{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  padding:10px 12px;
+  border-radius:var(--r-panel);
+  background:var(--ink);
+  color:var(--ground);
+}
+.implies .overline{color:var(--track);padding:0}
+.impliestext{font-size:var(--type-body);font-weight:var(--w-medium)}
+.impliesbasis{font-size:var(--type-meta);color:var(--track)}
+
+.fmc{display:flex;gap:10px;padding-top:8px}
+.fmccell{display:flex;flex-direction:column;gap:1px;flex:1;background:var(--ground);border-radius:var(--r-panel);padding:6px 8px}
+.fmclabel{font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase}
+.fmcvalue{font-size:16px;font-weight:var(--w-semibold)}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding-top:6px}
+.tile{display:flex;flex-direction:column;gap:2px;background:var(--ground);border-radius:var(--r-panel);padding:8px 10px}
+.tilelabel{font-size:10px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase}
+.tilevalue{font-size:15px;font-weight:var(--w-semibold)}
+.tile.absent .tilevalue{color:var(--disabled);font-weight:var(--w-regular)}
+.tiledetail{font-size:10px;color:var(--muted);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+.otherlines{display:flex;flex-direction:column;gap:6px;padding-top:6px}
+.otherline{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  min-height:44px;width:100%;padding:8px 10px;
+  border:1px solid var(--rule-2);border-radius:var(--r-panel);
+  background:var(--ground);color:inherit;font:inherit;cursor:pointer;
+}
+.otherp{font-weight:var(--w-semibold);font-size:var(--type-cell)}
+
+.readbtn{
+  min-height:44px;width:100%;margin-top:10px;
+  border:1.5px dashed var(--read);border-radius:var(--r-button);
+  background:var(--read-tint);color:var(--read-text);
+  font:inherit;font-weight:var(--w-semibold);cursor:pointer;
+}
+
+.primary{
+  min-height:48px;width:100%;margin-top:10px;
+  border:none;border-radius:var(--r-button);
+  background:var(--ink);color:var(--ground);
+  font:inherit;font-weight:var(--w-semibold);font-size:15px;cursor:pointer;
+}
+.primary[disabled]{background:var(--disabled);cursor:default}
+
+.trackbox,.trackline{
+  width:100%;min-height:44px;margin-top:6px;
+  padding:10px 12px;
+  border:1px solid var(--rule-2);border-radius:var(--r-panel);
+  background:var(--ground);color:var(--ink);
+  font-family:var(--text);
+  /* sec 9: 16px, which is what stops iOS zooming an input on focus */
+  font-size:16px;
+  resize:vertical;
+}
+
+.leg{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--rule)}
+.leg:first-of-type{border-top:none}
+.legtop{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.legname{font-size:15px;font-weight:var(--w-semibold)}
+.legp{font-size:var(--type-row);font-weight:var(--w-semibold)}
+.legp.absent{color:var(--disabled);font-weight:var(--w-regular)}
+.legbet{font-size:var(--type-cell);color:var(--text-2)}
+.legnote{font-size:var(--type-meta);color:var(--muted)}
+.legnote.positive{color:var(--positive-text)}
+.legnote.negative{color:var(--negative-text)}
+.legdrop,.watchdrop{
+  align-self:flex-start;min-height:44px;min-width:44px;
+  border:none;background:none;padding:0 6px;
+  color:var(--muted);font:inherit;font-size:var(--type-meta);cursor:pointer;
+}
+.unparsed{font-size:var(--type-cell);color:var(--text-2);padding:4px 0;border-top:1px solid var(--rule)}
+
+.payouts{display:flex;gap:10px;padding-top:6px}
+.payoutcell{display:flex;flex-direction:column;gap:4px;flex:1;font-size:var(--type-meta);color:var(--muted)}
+.payoutinput{
+  min-height:44px;width:100%;
+  padding:8px 10px;
+  border:1px solid var(--rule-2);border-radius:var(--r-panel);
+  background:var(--ground);color:var(--ink);
+  font-family:var(--text);font-size:16px;
+}
+.verdictrow{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding-top:8px;font-size:var(--type-cell)}
+.verdictvalue{font-size:var(--type-row);font-weight:var(--w-semibold)}
+.verdict{
+  margin-top:10px;padding:10px 12px;border-radius:var(--r-panel);
+  font-size:var(--type-cell);font-weight:var(--w-semibold);
+  background:var(--panel);color:var(--text-2);
+}
+.verdict.positive{background:var(--positive-tint);color:var(--positive-text)}
+.verdict.negative{background:var(--negative-tint);color:var(--negative-text)}
+.verdict.absent{background:var(--panel);color:var(--muted);font-weight:var(--w-regular)}
+
+.watchrow{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--rule)}
+.watchrow:first-of-type{border-top:none}
+.watchopen{
+  display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0;
+  min-height:44px;padding:4px 0;
+  border:none;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer;
+}
+.watchname{font-size:15px;font-weight:var(--w-semibold)}
+.watchmeta{font-size:var(--type-meta);color:var(--muted)}
+.watchp{font-size:var(--type-cell);font-weight:var(--w-semibold)}
+
+.slipleglist{display:flex;flex-direction:column;gap:4px;padding-top:8px}
+.slipleg{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:var(--type-cell)}
+.slipleg .legp{font-size:var(--type-cell)}
+
+.seg button.deferred{color:var(--disabled)}
+
 /* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
