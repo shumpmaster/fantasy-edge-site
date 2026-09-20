@@ -106,9 +106,7 @@ const ADD_STARTSIT_SUB = "Compare two players for your lineup";
 const NOTE_READS = "Saving your own read is still being built. The pick card it opens on is here already.";
 const ACTION_OPEN_PICK = "Open the pick";
 const NOTE_ALERTS = "Alerts are not built yet. We have not decided which events should notify you.";
-const STUB_LIVE_CARD = "The live chance chart and its swings are still being built, on the live feed this app already reads.";
 const STUB_REPORT = "The graded report on your reads is still being built.";
-const STUB_LIVE_BOARD = "The live board is still being built.";
 const STUB_FANTASY_SEASON = "My team, the lineup table, the ranges and the FLEX call are still being built.";
 const STUB_FANTASY_DFS = "My team for a DFS slate — its own view — is still being built.";
 const STUB_STARTSIT = "Fantasy is here; the start/sit comparison is still being built.";
@@ -318,6 +316,111 @@ const SERVICE_OFFLINE =
   "The picks service is not answering right now, so your watchlist and slips are not shown. Nothing was lost and nothing is being guessed at.";
 const SERVICE_DEMO =
   "Sample data — a fabricated slate does not write to the real service, so the watchlist and the slips are read-only here.";
+
+/* ------------------------------------------------------------------
+ * U4 — BETS -> LIVE (UI_ALPHA_SPEC sec 6b, handoff sec 5.8 / 5.9)
+ * ------------------------------------------------------------------
+ * THE LAB'S RULE, PORTED WHOLE: this page renders stored numbers and
+ * works none out. The service computes every chance, every band,
+ * every state and every "needs N" and hands them over; what happens
+ * here is the same two kinds of arithmetic the lab allows —
+ *
+ *   1. GEOMETRY. A stored `t` over the axis the answer declares, and
+ *      a stored chance over the height of a box. It produces no
+ *      quantity and is never shown as a number.
+ *   2. PRESENTATION ROUNDING. 0.74 printed as "74%", a stored band
+ *      printed as "74–81".
+ *
+ * There is NO THRESHOLD IN THIS FILE. Alive, Heating, Hit and Long
+ * shot are read off `state` as the service sends them; the two
+ * cut-offs behind them live on the service side, in one place
+ * (`ops/reads_service/live.py`), exactly as the lab keeps them in the
+ * document that authored them.
+ *
+ * AND THE SERIES IS ACCUMULATED, NEVER INVENTED. Each answer carries
+ * the bet's own points — the chance before kickoff and the chance
+ * now. This page appends the new one to the ones it was already
+ * handed, so the line grows as the game does; nothing is
+ * interpolated between two polls and nothing is carried past the last
+ * one (honesty rule 7: stale data freezes). */
+
+/* The cadence, and it is the SERVICE'S: `poll_interval_s` rides every
+ * answer (the ruled upper bound on how often this page may ask)
+ * and this is only the fallback before the first answer. */
+const LIVE_POLL_MS = 60000;
+
+/* Said under the list, so the reader knows what the screen is doing
+ * and what it stops doing when he leaves it. */
+const LIVE_POLL_NOTE =
+  "This screen asks the service for new numbers about once a minute while it is open, and stops asking the moment you leave it.";
+
+const LIVE_SERVICE_NOTE =
+  "Every chance here was worked out by the service from what has actually happened in the game so far; this screen only draws them.";
+
+const LIVE_CONNECT_HEAD = "Connect to your picks service.";
+const LIVE_CONNECT_BODY =
+  "Live chances are worked out by the service, not in this browser. Paste the token and the board loads; without it there is nothing to show and nothing is guessed at in its place.";
+const LIVE_OFFLINE =
+  "The service is not answering right now, so no live chance is shown. The last numbers you saw are not carried forward.";
+const LIVE_EMPTY =
+  "Nothing is live right now. Bets you track show up here at kickoff, and so do this week's lines once their games start.";
+const LIVE_NO_SLATE =
+  "The slate has not loaded, so this screen does not know which week to ask the service about.";
+
+/* The state's own word, so colour is never the only signal. The map
+ * is the lab's, in the handoff's wording: a cashed bet reads "Hit" on
+ * this surface (sec 5.8's chip set). */
+const LIVE_STATE_WORDS = {
+  pregame: "Pregame",
+  alive: "Alive",
+  heating: "Heating",
+  long_shot: "Long shot",
+  cashed: "Hit",
+  lost: "Lost"
+};
+
+/* ...and the tone each one is drawn in (sec 3.1's live mapping:
+ * alive slate, heating amber, hit positive, everything else muted). */
+const LIVE_STATE_TONE = {
+  pregame: "muted",
+  alive: "read",
+  heating: "heating",
+  long_shot: "muted",
+  cashed: "positive",
+  lost: "muted"
+};
+
+const LIVE_NEEDS = "Needs ";
+const LIVE_HIT_WORD = "Hit";
+const LIVE_SETTLED = "Settled";
+const LIVE_RANGE = "range ";
+const LIVE_PREGAME_CHANCE = "Chance before kickoff";
+const LIVE_SINCE_KICKOFF = " since kickoff";
+const LIVE_CHART_LIVE = "Live chance";
+const LIVE_CHART_DONE = "Chance";
+const LIVE_DASHED_NOTE = "Dashed line = the chance before kickoff.";
+const LIVE_SWINGS = "What moved it";
+const LIVE_SUMMARY_HEAD = "Banked so far, beside what we projected";
+
+/* The statline's two column heads when it carries banked values. The
+ * projected one is the home table's own sentinel, reused rather than
+ * re-spelled: it is the same column. */
+const BANKED_HEAD = "NOW";
+const LIVE_COUNTS = " live";
+const LIVE_COUNTS_HIT = " hit";
+const LIVE_OPEN = "Open the live card";
+const LIVE_UPDATED = "Updated ";
+const LIVE_UPDATED_TAIL = " ago";
+const LIVE_FRESH = "Updated just now";
+
+/* The card's sparkline and chart, in the handoff's own sizes. */
+const LIVE_SPARK_W = 96;
+const LIVE_SPARK_H = 32;
+const LIVE_CHART_W = 320;
+const LIVE_CHART_H = 168;
+const LIVE_CHART_PAD = 10;
+const LIVE_FULL_GAME_S = 3600;
+const LIVE_QUARTER_S = 900;
 
 /* ------------------------------------------------------------------
  * U2 — THE SLATE DOCUMENT
@@ -954,7 +1057,30 @@ const nav = {
   capture: { busy: "", note: "" },
   team: { slots: null, kind: "season_long", surface: null,
     saved: null },
-  teams: null
+  teams: null,
+
+  /* U4's own state, and it is held for the visit like the rest of it.
+   *
+   * `live` is the service's last answer (null means "not asked or not
+   * answered", which is a drawn state and not an empty board);
+   * `liveBet` is the bet the card is open on; `liveSwing` is the
+   * selected dot; `livePoll` is the interval handle, which exists
+   * ONLY while the segment is on screen and visible.
+   *
+   * `series` is the one thing this page accumulates: `{bet_id: [the
+   * points the service has handed it, in the order they arrived]}`.
+   * Every point in it came off an answer — none is interpolated,
+   * none is carried forward past the last update, and the whole of it
+   * is dropped when the tab is closed. */
+  live: null,
+  liveNote: null,
+  liveAsked: false,
+  liveOffline: false,
+  liveBet: null,
+  liveSwing: null,
+  livePoll: null,
+  livePollMs: null,
+  series: {}
 };
 
 /* ------------------------------------------------------------------
@@ -1429,6 +1555,143 @@ async function toggleWatch(playerId, market, line, side) {
 }
 
 /* ------------------------------------------------------------------
+ * U4 — THE LIVE POLL
+ * ------------------------------------------------------------------
+ * Delivery is a CLIENT POLL and nothing else: no push, no socket, no
+ * new credential (UI_ALPHA_SPEC sec 6b). The rules it keeps:
+ *
+ *   IT ASKS ONLY WHILE SOMEBODY IS LOOKING. The interval exists while
+ *   the Live segment or the Live card is the screen AND the tab is
+ *   visible, and it is cleared the moment either stops being true —
+ *   a backgrounded phone must not poll a service all afternoon.
+ *
+ *   IT KEEPS THE SERVICE'S CADENCE. `poll_interval_s` rides the
+ *   answer, so the page never holds a cadence the service did not
+ *   state.
+ *
+ *   IT ACCUMULATES WHAT IT WAS HANDED. Each answer's points are
+ *   appended to the series already held for that bet, in the order
+ *   they arrived, and a point that is not newer than the last one
+ *   held is not appended twice. Nothing is computed. */
+
+function liveOnScreen() {
+  const route = currentRoute();
+  return route === "live" || route === "card";
+}
+
+function liveHidden() {
+  try {
+    return document.visibilityState === "hidden";
+  } catch (err) {
+    return false;
+  }
+}
+
+function livePollMs() {
+  const stated = nav.live && numberOrNull(nav.live.poll_interval_s);
+  return stated === null ? LIVE_POLL_MS : stated * 1000;
+}
+
+/* THE ONE PLACE THE POLL IS TURNED ON OR OFF. `render()` calls it on
+ * every screen change and the visibility listener calls it when the
+ * tab is hidden or shown, so there is no path that leaves an interval
+ * running behind a screen nobody is on. */
+function syncLivePoll() {
+  const wanted = !DEMO && nav.hasToken && liveOnScreen() && !liveHidden();
+  if (!wanted) {
+    if (nav.livePoll) {
+      window.clearInterval(nav.livePoll);
+      nav.livePoll = null;
+    }
+    return;
+  }
+  const every = livePollMs();
+  if (nav.livePoll && nav.livePollMs !== every) {
+    /* THE CADENCE IS THE SERVICE'S. The first answer states it, and
+     * an interval armed before that answer is re-armed to it rather
+     * than kept on this file's fallback. */
+    window.clearInterval(nav.livePoll);
+    nav.livePoll = null;
+  }
+  if (!nav.livePoll) {
+    nav.livePollMs = every;
+    nav.livePoll = window.setInterval(function () {
+      loadLive(true);
+    }, every);
+  }
+  /* The first ask is immediate and every later one is the interval's.
+   * `liveAsked` is what keeps this from being a second poll: a render
+   * that happens between two ticks asks nothing. */
+  loadLive(false);
+}
+
+/* ONE ANSWER, ACCUMULATED. Every point here came off the service; the
+ * only decision this function makes is whether a point is new, and it
+ * makes it by comparing the stored `t` it was handed. */
+function accumulate(answer) {
+  (answer.bets || []).forEach(function (bet) {
+    const held = nav.series[bet.bet_id] || [];
+    (bet.trace || []).forEach(function (point) {
+      const last = held.length ? held[held.length - 1] : null;
+      if (last && !(point.t > last.t)) return;
+      held.push(point);
+    });
+    nav.series[bet.bet_id] = held;
+  });
+}
+
+function seriesFor(bet) {
+  if (!bet) return [];
+  const held = nav.series[bet.bet_id];
+  return held && held.length ? held : (bet.trace || []);
+}
+
+async function loadLive(force) {
+  if (DEMO) return;
+  if (nav.liveAsked && !force) return;
+  const token = readToken();
+  nav.hasToken = !!token;
+  if (!token) {
+    nav.liveAsked = true;
+    render();
+    return;
+  }
+  const week = slateWeekNumbers();
+  if (!week) {
+    nav.liveAsked = true;
+    nav.liveNote = LIVE_NO_SLATE;
+    render();
+    return;
+  }
+  nav.liveAsked = true;
+  try {
+    const answer = await picksAsk(
+      "/live?season=" + encodeURIComponent(week.season) +
+      "&week=" + encodeURIComponent(week.week), token, null);
+    nav.live = answer;
+    nav.liveNote = null;
+    nav.liveOffline = false;
+    accumulate(answer);
+  } catch (err) {
+    /* Never a silent drop and never a stale number dressed as a fresh
+     * one: the board says the service is not answering and the line
+     * stops where the last update left it. */
+    nav.liveOffline = true;
+  }
+  render();
+}
+
+/* Which slate to ask about. The slate document already says, so the
+ * page does not derive a second answer to that question. */
+function slateWeekNumbers() {
+  const run = nav.slate && nav.slate.run;
+  const season = run ? numberOrNull(run.season) : null;
+  const week = run ? numberOrNull(run.week) : null;
+  if (season === null || week === null) return null;
+  return { season: season, week: week };
+}
+
+/* ------------------------------------------------------------------
  * U3c — READING A PICTURE
  * ------------------------------------------------------------------
  * The picture goes to the service, which reads it under a schema our
@@ -1750,6 +2013,11 @@ async function loadSlate() {
   }
   nav.game = 0;
   nav.exp = null;
+  /* U4: the live board is asked for a SEASON AND A WEEK, and the
+   * slate is where they come from. A board that gave up before the
+   * document arrived asks again now that it has. */
+  nav.liveAsked = false;
+  nav.liveNote = null;
   render();
 }
 
@@ -1824,9 +2092,26 @@ function signed(points) {
  * and the live card do — and a banked value (U4) arrives as a second
  * entry list beside the projected one, not as a second renderer. */
 function statline(entries) {
-  return '<div class="statline">' + (entries || []).map(function (entry) {
+  /* THE BANKED COLUMN IS THE SAME COMPONENT, not a second one (U4).
+   * A list whose entries carry `banked` draws one more cell per row —
+   * what the game has actually produced, beside what we projected —
+   * and a list without it is byte for byte the row the home table and
+   * the pick card have always drawn. */
+  const paired = (entries || []).some(function (entry) {
+    return entry && "banked" in entry;
+  });
+  return '<div class="statline' + (paired ? " banked" : "") + '">' +
+    (paired
+      ? '<div class="statrow stathead">' +
+        '<span class="statlabel"></span>' +
+        '<span class="statbanked">' + esc(BANKED_HEAD) + '</span>' +
+        '<span class="statvalue">' + esc(PROJECTED) +
+        '</span></div>'
+      : "") +
+    (entries || []).map(function (entry) {
     const absent = entry.value === null || entry.value === undefined;
     const spelled = labelTitle(entry.label);
+    const off = entry.banked === null || entry.banked === undefined;
     return '<div class="statrow">' +
       '<span class="statlabel"' +
       (spelled ? ' title="' + esc(spelled) + '"' : "") + '>' +
@@ -1834,6 +2119,13 @@ function statline(entries) {
       (entry.threshold
         ? '<span class="statthreshold">' + esc(entry.threshold) +
           '</span>'
+        : "") +
+      (paired
+        ? '<span class="statbanked' + (off ? " absent" : "") + '"' +
+          (off && entry.banked_reason
+            ? ' title="' + esc(plainNote(entry.banked_reason)) + '"'
+            : "") + '>' +
+          (off ? DASH : esc(num(entry.banked))) + '</span>'
         : "") +
       '<span class="statvalue' + (absent ? " absent" : "") + '"' +
       (absent && entry.reason
@@ -2966,11 +3258,191 @@ function renderBetsScreen() {
     '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div></div>';
 }
 
+/* ------------------------------------------------------------------
+ * sec 5.8 — THE LIVE LIST
+ * ------------------------------------------------------------------ */
+
+/* The chance a row shows, and the ONE place it is read: the live one
+ * when the service computed it, the pregame one when it did not —
+ * which before kickoff is the same number, honestly named. It is a
+ * READ of two stored fields and never a computation. */
+function liveChance(bet) {
+  const now = numberOrNull(bet.p_now);
+  return now === null ? numberOrNull(bet.p_pregame) : now;
+}
+
+function liveBand(bet) {
+  return numberOrNull(bet.p_now) === null ? bet.band_pregame : bet.band;
+}
+
+function bandText(band) {
+  if (!band || band.length < 2) return "";
+  return LIVE_RANGE + Math.round(band[0] * 100) + "–" +
+    Math.round(band[1] * 100);
+}
+
+function stateWord(bet) {
+  return LIVE_STATE_WORDS[bet.state] || String(bet.state || "");
+}
+
+function stateTone(bet) {
+  return LIVE_STATE_TONE[bet.state] || "muted";
+}
+
+/* What the bet still asks for, in the service's own words for it. The
+ * number and the unit both ride the answer; a settled bet says so
+ * instead. */
+function needLine(bet) {
+  if (bet.state === "cashed") return LIVE_HIT_WORD;
+  if (bet.state === "lost") return LIVE_SETTLED;
+  const left = numberOrNull(bet.need_now);
+  if (left === null) return DASH;
+  return LIVE_NEEDS + left + " " + (bet.need_unit || "");
+}
+
+function gameClock(bet) {
+  const game = bet.game || {};
+  if (!game.period) return "";
+  return "Q" + game.period + (game.clock ? " " + game.clock : "");
+}
+
+/* THE SPARKLINE — geometry over the accumulated series and nothing
+ * else. `aria-hidden` because the row's own text carries every number
+ * on it. */
+function liveSpark(bet) {
+  const series = seriesFor(bet);
+  if (!series.length) return "";
+  const axis = numberOrNull((bet.game || {}).axis_max_s) ||
+    LIVE_FULL_GAME_S;
+  const usableW = LIVE_SPARK_W - SPARK_PAD * 2;
+  const usableH = LIVE_SPARK_H - SPARK_PAD * 2;
+  const x = function (t) {
+    return SPARK_PAD + Math.max(0, Math.min(1, t / axis)) * usableW;
+  };
+  const y = function (p) {
+    return SPARK_PAD + (1 - Math.max(0, Math.min(1, p))) * usableH;
+  };
+  const path = series.map(function (point, index) {
+    return (index ? "L" : "M") + x(point.t).toFixed(1) + " " +
+      y(point.p).toFixed(1);
+  }).join(" ");
+  const last = series[series.length - 1];
+  const pregame = series[0];
+  const future = LIVE_SPARK_W - SPARK_PAD - x(last.t);
+  return '<svg class="livespark" width="' + LIVE_SPARK_W +
+    '" height="' + LIVE_SPARK_H + '" viewBox="0 0 ' + LIVE_SPARK_W +
+    ' ' + LIVE_SPARK_H + '" aria-hidden="true" focusable="false">' +
+    (future > 0
+      ? '<rect class="sparkfuture" x="' + x(last.t).toFixed(1) +
+        '" y="0" width="' + future.toFixed(1) + '" height="' +
+        LIVE_SPARK_H + '"></rect>'
+      : "") +
+    '<line class="sparkpregame" x1="' + SPARK_PAD + '" y1="' +
+    y(pregame.p).toFixed(1) + '" x2="' + (LIVE_SPARK_W - SPARK_PAD) +
+    '" y2="' + y(pregame.p).toFixed(1) + '"></line>' +
+    '<path class="sparkline" d="' + path + '"></path>' +
+    '<circle class="sparknow ' + stateTone(bet) + '" cx="' +
+    x(last.t).toFixed(1) + '" cy="' + y(last.p).toFixed(1) +
+    '" r="3"></circle></svg>';
+}
+
+function liveRow(bet, index) {
+  const chance = liveChance(bet);
+  const label = bet.player.name + ", " + stateWord(bet) + ", " +
+    bet.label + " " + (bet.line_label || "") + ", " + needLine(bet) +
+    ", " + pct(chance) + ". " + LIVE_OPEN;
+  return '<button class="liverow' + growClass() + '" style="--i:' +
+    Math.min(index, 8) + '" data-act="livecard" data-bet="' +
+    esc(bet.bet_id) + '" aria-label="' + esc(label) + '">' +
+    '<span class="livecol">' +
+    '<span class="liveline">' +
+    '<span class="livename">' + esc(bet.player.name) + '</span>' +
+    '<span class="chip ' + stateTone(bet) + '">' + esc(stateWord(bet)) +
+    '</span></span>' +
+    '<span class="livemeta">' + esc(
+      bet.label + " " + (bet.line_label || "") +
+      (gameClock(bet) ? " · " + gameClock(bet) : "")) + '</span>' +
+    '<span class="liveneed">' + esc(needLine(bet)) + '</span>' +
+    '</span>' + liveSpark(bet) +
+    '<span class="livep ' + stateTone(bet) + '">' +
+    esc(pct(chance)) + '</span></button>';
+}
+
+function liveHead() {
+  const summary = (nav.live && nav.live.summary) || {};
+  const counts = [];
+  if (summary.live !== undefined) {
+    counts.push(summary.live + LIVE_COUNTS);
+  }
+  if (summary.hit !== undefined) {
+    counts.push(summary.hit + LIVE_COUNTS_HIT);
+  }
+  return counts.length
+    ? '<div class="pagemeta">' + esc(counts.join(" · ")) + '</div>'
+    : "";
+}
+
+function liveFreshness() {
+  if (!nav.live) return "";
+  const age = numberOrNull(nav.live.age_s);
+  if (age === null || age <= 0) return LIVE_FRESH;
+  return LIVE_UPDATED + age + "s" + LIVE_UPDATED_TAIL;
+}
+
+/* The connect state is MY PICKS'S, word for word in its own words:
+ * the live board lives on the same service and behaves the same way
+ * without a token — it says so, and keeps nothing locally instead. */
+function liveConnectCard() {
+  return '<div class="card"><div class="cardhead">' +
+    esc(LIVE_CONNECT_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(LIVE_CONNECT_BODY) + '</div>' +
+    '<button class="primary" data-act="connect">' +
+    esc(CONNECT_BUTTON) + '</button></div>';
+}
+
+function liveBets() {
+  return (nav.live && nav.live.bets) || [];
+}
+
+function betById(betId) {
+  const all = liveBets();
+  for (let i = 0; i < all.length; i += 1) {
+    if (all[i].bet_id === betId) return all[i];
+  }
+  return null;
+}
+
 function renderBetsLive() {
-  return '<div class="page">' + betsHead() +
-    '<div class="overline">' + esc(LIVE_OVERLINE) + '</div>' +
-    stubCard("Arrives in U4", "Watch a bet live.", STUB_LIVE_BOARD) +
-    stubRows(SAMPLE_LIVE_ROWS, "U4", "card") + '</div>';
+  const head = '<div class="page">' + betsHead() + liveHead() +
+    '<div class="overline">' + esc(LIVE_OVERLINE) + '</div>';
+  if (DEMO) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(SERVICE_DEMO) + '</div></div>' +
+      stubRows(SAMPLE_LIVE_ROWS, "Sample", "card") + '</div>';
+  }
+  if (!nav.hasToken) return head + liveConnectCard() + '</div>';
+  if (nav.liveOffline) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(LIVE_OFFLINE) + '</div></div>' +
+      '<button class="primary" data-act="live-retry">' +
+      esc(CONNECT_BUTTON) + '</button></div>';
+  }
+  if (nav.liveNote) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(nav.liveNote) + '</div></div></div>';
+  }
+  const bets = liveBets();
+  if (!bets.length) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc((nav.live && nav.live.reason) || LIVE_EMPTY) +
+      '</div></div></div>';
+  }
+  return head +
+    '<div class="livelist">' + bets.map(liveRow).join("") + '</div>' +
+    '<div class="legend">' + esc(liveFreshness()) + '</div>' +
+    '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div>' +
+    '<div class="legend">' + esc(LIVE_POLL_NOTE) + '</div>' +
+    '<div class="legend">' + esc(LIVE_SERVICE_NOTE) + '</div></div>';
 }
 
 /* ------------------------------------------------------------------
@@ -3636,9 +4108,161 @@ function renderTrack() {
     '</div>';
 }
 
+/* ------------------------------------------------------------------
+ * sec 5.9 — THE LIVE CARD (without the read panel: R1's effect
+ * library owns it, and "advance to next play" is not shipped, per the
+ * handoff's own note on its prototype)
+ * ------------------------------------------------------------------ */
+
+/* THE LIVE CHANCE CHART — sec 4. Quarter gridlines, the ink line over
+ * the accumulated series, the band behind it in the state's tint, the
+ * dashed pregame reference and the future shaded. Every coordinate is
+ * a stored `t` and a stored chance over the box; no value drawn here
+ * is ever printed as a number. */
+function liveChart(bet) {
+  const series = seriesFor(bet);
+  if (!series.length) return "";
+  const axis = numberOrNull((bet.game || {}).axis_max_s) ||
+    LIVE_FULL_GAME_S;
+  const left = LIVE_CHART_PAD;
+  const top = LIVE_CHART_PAD;
+  const width = LIVE_CHART_W - LIVE_CHART_PAD * 2;
+  const height = LIVE_CHART_H - LIVE_CHART_PAD * 2;
+  const x = function (t) {
+    return left + Math.max(0, Math.min(1, t / axis)) * width;
+  };
+  const y = function (p) {
+    return top + (1 - Math.max(0, Math.min(1, p))) * height;
+  };
+  const line = series.map(function (point, index) {
+    return (index ? "L" : "M") + x(point.t).toFixed(1) + " " +
+      y(point.p).toFixed(1);
+  }).join(" ");
+  const up = series.map(function (point) {
+    return x(point.t).toFixed(1) + "," + y(point.hi).toFixed(1);
+  });
+  const down = series.slice().reverse().map(function (point) {
+    return x(point.t).toFixed(1) + "," + y(point.lo).toFixed(1);
+  });
+  const quarters = [];
+  for (let q = LIVE_QUARTER_S; q < axis; q += LIVE_QUARTER_S) {
+    quarters.push('<line class="chartgrid" x1="' + x(q).toFixed(1) +
+      '" y1="' + top + '" x2="' + x(q).toFixed(1) + '" y2="' +
+      (top + height) + '"></line>');
+  }
+  const last = series[series.length - 1];
+  const pregame = series[0];
+  const future = left + width - x(last.t);
+  const title = (bet.state === "cashed" || bet.state === "lost")
+    ? LIVE_CHART_DONE : LIVE_CHART_LIVE;
+  return '<div class="card">' +
+    '<div class="overline">' + esc(title) + '</div>' +
+    '<svg class="livechart" viewBox="0 0 ' + LIVE_CHART_W + ' ' +
+    LIVE_CHART_H + '" role="img" aria-label="' + esc(
+      title + " for " + bet.player.name + ", now " + pct(liveChance(bet)) +
+      ", " + bandText(liveBand(bet))) + '">' +
+    (future > 0
+      ? '<rect class="chartfuture" x="' + x(last.t).toFixed(1) +
+        '" y="' + top + '" width="' + future.toFixed(1) +
+        '" height="' + height + '"></rect>'
+      : "") +
+    quarters.join("") +
+    (series.length > 1
+      ? '<polygon class="chartband ' + stateTone(bet) + '" points="' +
+        up.concat(down).join(" ") + '"></polygon>'
+      : "") +
+    '<line class="chartpregame" x1="' + left + '" y1="' +
+    y(pregame.p).toFixed(1) + '" x2="' + (left + width) + '" y2="' +
+    y(pregame.p).toFixed(1) + '"></line>' +
+    '<path class="chartline" d="' + line + '"></path>' +
+    '<circle class="chartnow ' + stateTone(bet) + '" cx="' +
+    x(last.t).toFixed(1) + '" cy="' + y(last.p).toFixed(1) +
+    '" r="4.5"></circle></svg>' +
+    '<div class="legend">' + esc(LIVE_DASHED_NOTE) + '</div></div>';
+}
+
+/* THE SELECTED-SWING PANEL. The swings are the answer's own `events`
+ * with their own `why` lines; when the answer carries none it carries
+ * the SENTENCE saying why, and that is what is drawn. Nothing on this
+ * screen invents a swing. */
+function liveSwings(bet) {
+  const events = bet.events || [];
+  if (!events.length) {
+    return '<div class="card">' +
+      '<div class="overline">' + esc(LIVE_SWINGS) + '</div>' +
+      '<div class="cardbody">' +
+      esc(bet.events_reason || "") + '</div></div>';
+  }
+  const index = nav.liveSwing === null
+    ? events.length - 1
+    : Math.max(0, Math.min(nav.liveSwing, events.length - 1));
+  const event = events[index];
+  return '<div class="card">' +
+    '<div class="overline">' + esc(LIVE_SWINGS) + '</div>' +
+    '<div class="swingdots">' + events.map(function (row, at) {
+      return '<button class="swingdot' + (at === index ? " on" : "") +
+        '" data-act="swing" data-index="' + at + '" aria-label="' +
+        esc(row.clock + " " + row.title) + '"></button>';
+    }).join("") + '</div>' +
+    '<div class="swinghead">' + esc(event.clock || "") + '</div>' +
+    '<div class="cardhead">' + esc(event.title || "") + '</div>' +
+    '<div class="swingdelta ' + (event.delta_pts >= 0 ? "positive"
+      : "negative") + '">' + esc(signed(event.delta_pts) + " pts") +
+    '</div>' +
+    '<ul class="swingwhy">' + (event.why || []).map(function (why) {
+      return '<li>' + esc(why) + '</li>';
+    }).join("") + '</ul></div>';
+}
+
+function liveSummary(bet) {
+  const chance = liveChance(bet);
+  const band = liveBand(bet);
+  const move = numberOrNull(bet.delta_pregame_pts);
+  return '<div class="card livesummary">' +
+    '<div class="liveline">' +
+    '<div class="cardhead">' + esc(bet.player.name) + '</div>' +
+    '<span class="chip ' + stateTone(bet) + '">' +
+    esc(stateWord(bet)) + '</span></div>' +
+    '<div class="pagemeta">' + esc(
+      bet.label + " " + (bet.line_label || "") +
+      (gameClock(bet) ? " · " + gameClock(bet) : "")) + '</div>' +
+    '<div class="livebig">' + esc(needLine(bet)) + '</div>' +
+    '<div class="livepct ' + stateTone(bet) + '">' +
+    esc(pct(chance)) + '</div>' +
+    '<div class="pagemeta">' + esc(bandText(band)) + '</div>' +
+    (numberOrNull(bet.p_now) === null
+      ? '<div class="pagemeta">' + esc(LIVE_PREGAME_CHANCE) + '</div>'
+      : "") +
+    (move === null
+      ? ""
+      : '<div class="livemove ' + (move >= 0 ? "positive" : "negative") +
+        '">' + esc(signed(move) + " pts" + LIVE_SINCE_KICKOFF) +
+        '</div>') +
+    '<div class="legend">' + esc(bet.calibration_note || "") +
+    '</div>' +
+    (bet.reason
+      ? '<div class="legend">' + esc(plainNote(bet.reason)) + '</div>'
+      : "") +
+    '<div class="overline">' + esc(LIVE_SUMMARY_HEAD) + '</div>' +
+    statline(bet.statline || []) + '</div>';
+}
+
 function renderLiveCard() {
-  return '<div class="page">' + detailHead(TITLE_LIVE_CARD) +
-    stubCard("Arrives in U4", "One bet, watched.", STUB_LIVE_CARD) + '</div>';
+  const head = '<div class="page">' + detailHead(TITLE_LIVE_CARD);
+  if (DEMO) {
+    return head + stubCard("Sample", "One bet, watched.",
+      SERVICE_DEMO) + '</div>';
+  }
+  if (!nav.hasToken) return head + liveConnectCard() + '</div>';
+  const bet = betById(nav.liveBet);
+  if (!bet) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(nav.liveOffline ? LIVE_OFFLINE : LIVE_EMPTY) +
+      '</div></div></div>';
+  }
+  return head + liveSummary(bet) + liveChart(bet) + liveSwings(bet) +
+    '<div class="legend">' + esc(liveFreshness()) + '</div>' +
+    '<div class="legend">' + esc(LIVE_SERVICE_NOTE) + '</div></div>';
 }
 
 function renderReport() {
@@ -3774,6 +4398,10 @@ function render() {
   renderToast();
   renderSheet();
   renderSearch();
+  /* U4: the poll follows the screen. Every render reconciles it, so
+   * leaving the Live segment stops the asking without any screen
+   * having to remember to. */
+  syncLivePoll();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
@@ -3948,14 +4576,28 @@ function onClick(event) {
     render();
   } else if (act === "team-save") {
     saveTeam();
-  } else if (act === "connect" || act === "picks-retry") {
+  } else if (act === "connect" || act === "picks-retry" ||
+      act === "live-retry") {
     if (askToken()) {
       nav.picksAsked = false;
       nav.picksOffline = false;
+      nav.liveAsked = false;
+      nav.liveOffline = false;
       loadPicks(true);
+      if (liveOnScreen()) loadLive(true);
     } else {
       render();
     }
+  } else if (act === "livecard") {
+    /* sec 5.8: a row opens THAT bet's card. The selection is held on
+     * the page and the card reads the same answer the list did, so
+     * the two can never show different numbers for one bet. */
+    nav.liveBet = target.getAttribute("data-bet");
+    nav.liveSwing = null;
+    openDetail("card");
+  } else if (act === "swing") {
+    nav.liveSwing = Number(target.getAttribute("data-index"));
+    render();
   } else if (act === "toast-go") {
     const route = target.getAttribute("data-route");
     closeToast();
@@ -4139,6 +4781,11 @@ document.addEventListener("change", onChange);
 document.addEventListener("keydown", onKeyDown);
 window.addEventListener("hashchange", onHashChange);
 
+/* U4's own listener, and the whole of the "pause when hidden" rule: a
+ * backgrounded tab asks a service nothing, and a tab brought back
+ * asks once immediately rather than waiting out a minute. */
+document.addEventListener("visibilitychange", syncLivePoll);
+
 /* Boot order matters: the address is reconciled and normalised
  * BEFORE the first paint. Where `replaceState` is missing, normalising
  * writes the hash instead, and writing it fires a hashchange — doing
@@ -4170,6 +4817,10 @@ loadSlate();
  * Nothing is asked of the service without one. */
 nav.hasToken = !DEMO && !!readToken();
 if (nav.hasToken) {
+  /* ...and the live board, if that is the screen he opened on. The
+   * poll is reconciled here rather than started, because the one
+   * place it turns on is `syncLivePoll`. */
+  syncLivePoll();
   loadPicks(false);
   /* ...and the team he has already confirmed, so Fantasy says which
    * one is his rather than offering to read a picture he has read. */

@@ -1111,6 +1111,116 @@ body{
 .slotname{font-size:15px;font-weight:var(--w-semibold)}
 .slotmeta{font-size:var(--type-meta);color:var(--muted)}
 
+
+/* --------------------------------------------------------------------
+   U4 — BETS -> LIVE (handoff sec 5.8 the list, sec 5.9 the card)
+
+   COLOUR IS THE STATE'S AND NOTHING ELSE'S. sec 3.1's live mapping:
+   Alive wears the your-read slate, Heating the amber, Hit the
+   positive, and Long shot / lost / pregame stay muted. Every one of
+   them also carries its WORD in the chip, so colour is never the only
+   signal (sec 9).
+   -------------------------------------------------------------------- */
+
+.livelist{display:flex;flex-direction:column;gap:10px;padding:4px 0}
+
+.liverow{
+  display:flex;align-items:center;gap:10px;
+  min-height:72px;padding:12px 14px;
+  background:var(--surface);border:none;border-radius:var(--r-row);
+  font-family:inherit;color:var(--ink);text-align:left;cursor:pointer;
+}
+.livecol{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.liveline{display:flex;align-items:center;gap:8px}
+.livename{font-size:15px;font-weight:var(--w-semibold)}
+.livemeta{font-size:var(--type-meta);color:var(--muted)}
+.liveneed{font-size:13px;color:var(--text-2)}
+.livep{font-size:22px;font-weight:var(--w-semibold);min-width:56px;text-align:right}
+
+/* The state chip, sec 4's status pill. */
+.chip{
+  display:inline-flex;align-items:center;
+  padding:2px 8px;border-radius:999px;
+  font-size:10px;font-weight:var(--w-semibold);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.chip.read{background:var(--read-tint);color:var(--read-text)}
+.chip.heating{background:var(--heating-tint);color:var(--heating-text)}
+.chip.positive{background:var(--positive-tint);color:var(--positive-text)}
+.chip.negative{background:var(--negative-tint);color:var(--negative-text)}
+.chip.muted{background:var(--panel);color:var(--muted)}
+
+.livep.read{color:var(--read-text)}
+.livep.heating{color:var(--heating-text)}
+.livep.positive{color:var(--positive-text)}
+.livep.muted{color:var(--muted)}
+
+/* sec 4's sparkline: ink line, a state-coloured now dot, the dashed
+   pregame reference and the shaded future. */
+.livespark{flex:none}
+.sparkfuture{fill:var(--ground)}
+.sparkpregame{stroke:var(--border-strong);stroke-width:1;stroke-dasharray:3 3}
+.sparkline{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linejoin:round}
+.sparknow.read{fill:var(--read)}
+.sparknow.heating{fill:var(--heating)}
+.sparknow.positive{fill:var(--positive)}
+.sparknow.muted{fill:var(--muted)}
+
+/* --- sec 5.9, the card ------------------------------------------- */
+
+.livesummary .livebig{font-size:30px;font-weight:var(--w-semibold)}
+.livepct{font-size:46px;font-weight:var(--w-semibold);line-height:1.05}
+.livepct.read{color:var(--read-text)}
+.livepct.heating{color:var(--heating-text)}
+.livepct.positive{color:var(--positive-text)}
+.livepct.muted{color:var(--muted)}
+.livemove{font-size:13px;font-weight:var(--w-semibold)}
+.livemove.positive{color:var(--positive-text)}
+.livemove.negative{color:var(--negative-text)}
+
+.livechart{width:100%;height:auto}
+.chartfuture{fill:var(--ground)}
+.chartgrid{stroke:var(--rule);stroke-width:1}
+.chartband{opacity:.5}
+.chartband.read{fill:var(--read-tint)}
+.chartband.heating{fill:var(--heating-tint)}
+.chartband.positive{fill:var(--positive-tint)}
+.chartband.muted{fill:var(--panel)}
+.chartpregame{stroke:var(--border-strong);stroke-width:1;stroke-dasharray:4 4}
+.chartline{fill:none;stroke:var(--ink);stroke-width:2;stroke-linejoin:round}
+.chartnow.read{fill:var(--read)}
+.chartnow.heating{fill:var(--heating)}
+.chartnow.positive{fill:var(--positive)}
+.chartnow.muted{fill:var(--muted)}
+
+.swingdots{display:flex;gap:8px;flex-wrap:wrap}
+.swingdot{
+  min-width:44px;min-height:44px;border:none;background:transparent;
+  position:relative;cursor:pointer;
+}
+.swingdot::after{
+  content:"";position:absolute;left:50%;top:50%;
+  width:10px;height:10px;margin:-5px 0 0 -5px;
+  border-radius:50%;background:var(--track);
+}
+.swingdot.on::after{background:var(--ink);box-shadow:0 0 0 3px var(--rule)}
+.swinghead{font-size:var(--type-meta);color:var(--muted)}
+.swingdelta{font-size:15px;font-weight:var(--w-semibold)}
+.swingdelta.positive{color:var(--positive-text)}
+.swingdelta.negative{color:var(--negative-text)}
+.swingwhy{margin:0;padding-left:18px;font-size:13px;color:var(--text-2);line-height:1.5}
+
+/* THE STATLINE'S BANKED COLUMN (U4). Same component, one more cell:
+   what the game has produced, beside what we projected. */
+.statline.banked .statrow{display:grid;grid-template-columns:1fr auto auto;gap:10px}
+.statline.banked .statbanked{min-width:44px;text-align:right;font-weight:var(--w-semibold)}
+.statline.banked .statvalue{min-width:48px;text-align:right}
+.statbanked.absent{color:var(--disabled);font-weight:var(--w-regular)}
+.stathead .statbanked,.stathead .statvalue{
+  font-size:var(--type-overline);font-weight:var(--w-semibold);
+  letter-spacing:var(--track-overline);color:var(--muted);
+}
+
 /* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
