@@ -3570,10 +3570,15 @@ function cellValues(person) {
     const trend = role.trend_pts_vs_prior4;
     const shown = trend !== null && trend !== undefined &&
       Math.abs(trend) >= TREND_MIN;
+    /* WHERE THE SHARE CAME FROM (sec 6c). The exporter writes the
+     * sentence — this side never composes one — and it rides as the
+     * cell's tooltip, through `plainNote` like every other sentence
+     * the document hands us. No code and no new vocabulary on
+     * screen: it is the same words a reader already has. */
     return { v1: pct(role.share), v1unit: "",
       v2: shown ? signed(trend) : DASH,
       tone: shown ? (trend > 0 ? "positive" : "negative") : "absent",
-      big: false };
+      big: false, title: role.share_basis || "" };
   }
 
   if (nav.view === "usage") {
@@ -3654,7 +3659,10 @@ function playerCell(id, side, team, slot) {
    * views. An empty one is disabled rather than silently inert. */
   return '<button class="' + classes.join(" ") +
     '" data-act="player" data-player="' + esc(id || "") + '"' +
-    (person ? "" : " disabled") + ' aria-label="' +
+    (person ? "" : " disabled") +
+    (values.title
+      ? ' title="' + esc(plainNote(values.title)) + '"'
+      : "") + ' aria-label="' +
     esc(cellLabel(person, team, slot)) + '">' +
     cellBody(person, side) + '</button>';
 }

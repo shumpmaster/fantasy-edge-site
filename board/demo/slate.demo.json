@@ -1046,6 +1046,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -1873,6 +1875,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -2700,6 +2704,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -6,
         "trend_reason": null
       },
@@ -3174,6 +3180,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 5,
         "trend_reason": null
       },
@@ -3633,6 +3641,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -4107,6 +4117,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -4934,6 +4946,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": -5,
         "trend_reason": null
       },
@@ -5761,6 +5775,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -6588,6 +6604,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -7062,6 +7080,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 6,
         "trend_reason": null
       },
@@ -7536,6 +7556,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -8010,6 +8032,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 5,
         "trend_reason": null
       },
@@ -8484,6 +8508,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -9311,6 +9337,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": 4,
         "trend_reason": null
       },
@@ -10138,6 +10166,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -10965,6 +10995,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -11060,6 +11092,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": 0,
         "trend_reason": null
       },
@@ -11503,6 +11537,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -7,
         "trend_reason": null
       },
@@ -11598,6 +11634,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 6,
         "trend_reason": null
       },
@@ -12041,6 +12079,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -12868,6 +12908,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": 2,
         "trend_reason": null
       },
@@ -13695,6 +13737,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -14497,6 +14541,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -14971,6 +15017,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -6,
         "trend_reason": null
       },
@@ -15430,6 +15478,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -15904,6 +15954,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -16731,6 +16783,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -17558,6 +17612,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 4,
         "trend_reason": null
       },
@@ -18032,6 +18088,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -18506,6 +18564,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -6,
         "trend_reason": null
       },
@@ -18965,6 +19025,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": 3,
         "trend_reason": null
       },
@@ -19439,6 +19501,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -19534,6 +19598,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -20330,6 +20396,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 0,
         "trend_reason": null
       },
@@ -21157,6 +21225,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 6,
         "trend_reason": null
       },
@@ -21631,6 +21701,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -5,
         "trend_reason": null
       },
@@ -22105,6 +22177,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 4,
         "trend_reason": null
       },
@@ -22932,6 +23006,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 6,
         "trend_reason": null
       },
@@ -23381,6 +23457,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 3,
         "trend_reason": null
       },
@@ -23476,6 +23554,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": 4,
         "trend_reason": null
       },
@@ -23540,6 +23620,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -5,
         "trend_reason": null
       },
@@ -23983,6 +24065,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -6,
         "trend_reason": null
       },
@@ -24053,6 +24137,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -24849,6 +24935,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -7,
         "trend_reason": null
       },
@@ -25323,6 +25411,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -4,
         "trend_reason": null
       },
@@ -25772,6 +25862,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -26231,6 +26323,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -26326,6 +26420,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -5,
         "trend_reason": null
       },
@@ -27122,6 +27218,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": 0,
         "trend_reason": null
       },
@@ -27949,6 +28047,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -28776,6 +28876,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -29250,6 +29352,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -29724,6 +29828,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 3,
         "trend_pts_vs_prior4": -6,
         "trend_reason": null
       },
@@ -30183,6 +30289,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -4,
         "trend_reason": null
       },
@@ -30657,6 +30765,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -31484,6 +31594,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -32311,6 +32423,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 2,
         "trend_reason": null
       },
@@ -33138,6 +33252,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -33612,6 +33728,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 3,
         "trend_reason": null
       },
@@ -34086,6 +34204,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 3,
         "trend_reason": null
       },
@@ -34545,6 +34665,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -35019,6 +35141,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -5,
         "trend_reason": null
       },
@@ -35114,6 +35238,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -35910,6 +36036,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 6,
         "trend_reason": null
       },
@@ -36005,6 +36133,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, leaned toward his usual role while the sample is small",
+        "share_basis_games": 0,
         "trend_pts_vs_prior4": null,
         "trend_reason": "the trailing weekly actuals for this player are not reachable: stats_nflverse_latest holds no prior week of this season with both his own line and his team's, so the realized share has no denominator. Nothing is extrapolated from a partial window"
       },
@@ -36448,6 +36578,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -3,
         "trend_reason": null
       },
@@ -36543,6 +36675,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 4,
         "trend_reason": null
       },
@@ -36971,6 +37105,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": -2,
         "trend_reason": null
       },
@@ -37445,6 +37581,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -1,
         "trend_reason": null
       },
@@ -38272,6 +38410,8 @@
         "share_type": "attempts",
         "share_label": "att share",
         "share_reason": null,
+        "share_basis": null,
+        "share_basis_games": null,
         "trend_pts_vs_prior4": 3,
         "trend_reason": null
       },
@@ -39099,6 +39239,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 2,
         "trend_reason": null
       },
@@ -39926,6 +40068,8 @@
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -40400,6 +40544,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 7,
         "trend_reason": null
       },
@@ -40874,6 +41020,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": 2,
         "trend_reason": null
       },
@@ -41333,6 +41481,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 4,
         "trend_pts_vs_prior4": 1,
         "trend_reason": null
       },
@@ -41807,6 +41957,8 @@
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
+        "share_basis": "his share this season, as measured",
+        "share_basis_games": 5,
         "trend_pts_vs_prior4": -7,
         "trend_reason": null
       },

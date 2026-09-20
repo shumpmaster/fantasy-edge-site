@@ -4,12 +4,12 @@
     "season": 2026,
     "week": 2,
     "band": "EARLY",
-    "snapshot_kind": "refresh",
+    "snapshot_kind": "final",
     "source": "engine",
     "engine_version": "m1.2b-2 + m1.2i top-cell raise (D-070 build; live shadow m1.2e / D-074; D-084 adopt)",
-    "generation_id": "2026w02-20260919T162559Z",
-    "generated_ts": "2026-09-19T16:25:59.998510+00:00",
-    "cutoff_ts": "2026-09-19T16:25:59.998510+00:00",
+    "generation_id": "2026w02-20260920T152135Z",
+    "generated_ts": "2026-09-20T15:21:35.192434+00:00",
+    "cutoff_ts": "2026-09-20T15:21:35.192434+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w02-20260915T153354Z",
     "week_open_generated_ts": "2026-09-15T15:33:54.590276+00:00"
@@ -90,7 +90,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w02-20260919T162559Z",
+    "generation_id": "2026w02-20260920T152135Z",
     "absent_reason": null
   },
   "players": [
@@ -102,22 +102,22 @@
       "game_id": "2026_02_CAR_ATL",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 211.9175,
-        "pass_tds": 1.5225,
-        "rush_att": 1.5,
-        "rush_yds": 6.598829236751101,
-        "targets": 0.0,
-        "receptions": 0.0,
-        "rec_yds": 0.0,
-        "anytime_td": 0.0675
+        "pass_yds": 210.5575,
+        "pass_tds": 1.435,
+        "rush_att": 0.55,
+        "rush_yds": 2.1930240876627916,
+        "targets": 0.005,
+        "receptions": 0.0025,
+        "rec_yds": 0.0175,
+        "anytime_td": 0.04
       },
       "stat_quantiles": {
         "pass_yds": [
-          123.0,
-          161.0,
-          203.0,
-          257.0,
-          311.0
+          126.0,
+          162.0,
+          208.0,
+          252.0,
+          297.0
         ],
         "pass_tds": [
           0.0,
@@ -128,17 +128,17 @@
         ],
         "rush_att": [
           0.0,
+          0.0,
+          0.0,
           1.0,
-          1.0,
-          2.0,
-          3.0
+          1.0
         ],
         "rush_yds": [
           0.0,
           0.0,
-          3.9513947525455677,
-          9.87848688136392,
-          17.781276386455055
+          0.0,
+          2.963546064409176,
+          7.902789505091135
         ],
         "targets": [
           0.0,
@@ -180,14 +180,14 @@
         "anytime_td": 0.0775
       },
       "movement": {
-        "pass_yds": 1.2199999999999989,
-        "pass_tds": 0.09250000000000003,
-        "rush_att": 0.09000000000000008,
-        "rush_yds": 0.6075269432038803,
-        "targets": -0.005,
-        "receptions": -0.005,
-        "rec_yds": -0.03,
-        "anytime_td": -0.009999999999999995
+        "pass_yds": -0.13999999999998636,
+        "pass_tds": 0.0050000000000001155,
+        "rush_att": -0.8599999999999999,
+        "rush_yds": -3.798278205884429,
+        "targets": 0.0,
+        "receptions": -0.0025,
+        "rec_yds": -0.012499999999999997,
+        "anytime_td": -0.0375
       },
       "context": {
         "opponent": {
@@ -257,7 +257,7 @@
           "reason": null
         },
         "carry_share": {
-          "value": 0.05341248557098629,
+          "value": 0.019287640499586284,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -294,7 +294,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0725
+      "p_ceiling": 0.055
     },
     {
       "player_id": "00-0035208",
@@ -306,12 +306,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0375,
-        "rush_yds": 0.0804656799099801,
-        "targets": 4.01,
-        "receptions": 3.09,
-        "rec_yds": 32.5775,
-        "anytime_td": 0.37
+        "rush_att": 0.105,
+        "rush_yds": 0.2936997316714272,
+        "targets": 3.695,
+        "receptions": 2.8075,
+        "rec_yds": 31.1075,
+        "anytime_td": 0.345
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -343,11 +343,11 @@
           0.0
         ],
         "targets": [
+          1.0,
           2.0,
-          3.0,
           4.0,
           5.0,
-          7.0
+          6.0
         ],
         "receptions": [
           1.0,
@@ -358,10 +358,10 @@
         ],
         "rec_yds": [
           7.0,
-          16.0,
-          28.0,
-          44.0,
-          64.0
+          14.0,
+          25.0,
+          42.0,
+          67.0
         ],
         "anytime_td": [
           0.0,
@@ -384,12 +384,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.025,
-        "rush_yds": -0.17300121180645717,
-        "targets": -0.05750000000000011,
-        "receptions": 0.08000000000000007,
-        "rec_yds": -1.1375000000000028,
-        "anytime_td": 0.065
+        "rush_att": 0.042499999999999996,
+        "rush_yds": 0.04023283995498994,
+        "targets": -0.37250000000000005,
+        "receptions": -0.20249999999999968,
+        "rec_yds": -2.6075000000000017,
+        "anytime_td": 0.03999999999999998
       },
       "context": {
         "opponent": {
@@ -455,11 +455,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.13973701087322904,
+          "value": 0.12954685212873732,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017265027084697058,
+          "value": 0.004255958232303078,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -496,7 +496,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1475
+      "p_ceiling": 0.1125
     },
     {
       "player_id": "00-0036970",
@@ -510,414 +510,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 3.2175,
-        "receptions": 1.615,
-        "rec_yds": 29.32,
-        "anytime_td": 0.1875
-      },
-      "stat_quantiles": {
-        "pass_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "pass_tds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_att": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "targets": [
-          1.0,
-          2.0,
-          3.0,
-          4.0,
-          6.0
-        ],
-        "receptions": [
-          0.0,
-          1.0,
-          1.0,
-          2.0,
-          3.0
-        ],
-        "rec_yds": [
-          0.0,
-          5.0,
-          23.0,
-          44.0,
-          69.0
-        ],
-        "anytime_td": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "week_open": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.0075,
-        "rush_yds": 0.02903596468449753,
-        "targets": 3.035,
-        "receptions": 1.685,
-        "rec_yds": 27.975,
-        "anytime_td": 0.2
-      },
-      "movement": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": -0.0075,
-        "rush_yds": -0.02903596468449753,
-        "targets": 0.18249999999999966,
-        "receptions": -0.07000000000000006,
-        "rec_yds": 1.3449999999999989,
-        "anytime_td": -0.012500000000000011
-      },
-      "context": {
-        "opponent": {
-          "value": "CAR",
-          "reason": null
-        },
-        "kickoff_ts": {
-          "value": "2026-09-20T17:00+00:00",
-          "reason": null
-        },
-        "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "line_label": {
-          "value": "SAME-CUTOFF",
-          "reason": null
-        }
-      },
-      "elements": {
-        "line_spread": {
-          "value": 2.5,
-          "reason": null
-        },
-        "line_total": {
-          "value": 43.5,
-          "reason": null
-        },
-        "line_implied_total": {
-          "value": 20.5,
-          "reason": null
-        },
-        "team_plays": {
-          "value": 60.548351984375884,
-          "reason": null
-        },
-        "team_p_dropback": {
-          "value": 0.5763357145851313,
-          "reason": null
-        },
-        "team_dropbacks": {
-          "value": 34.89617770786733,
-          "reason": null
-        },
-        "team_attempt_rate": {
-          "value": 0.8710526315789474,
-          "reason": null
-        },
-        "team_attempts": {
-          "value": 30.39640742448444,
-          "reason": null
-        },
-        "team_targets": {
-          "value": 28.80465195009049,
-          "reason": null
-        },
-        "team_carries": {
-          "value": 27.885682898306023,
-          "reason": null
-        },
-        "target_share": {
-          "value": 0.10884338253015062,
-          "reason": null
-        },
-        "carry_share": {
-          "value": 0.00013115169862848019,
-          "reason": null
-        },
-        "qb_attempt_weight": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "catch_rate": {
-          "value": 0.4995263641433049,
-          "reason": null
-        },
-        "yards_per_reception": {
-          "value": 17.072041166840464,
-          "reason": null
-        },
-        "yards_per_carry": {
-          "value": 3.0,
-          "reason": null
-        },
-        "yards_per_attempt": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "td_rates": {
-          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
-          "reason": null
-        },
-        "td_rate_receiving": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        },
-        "td_rate_rushing": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        }
-      },
-      "td_rates_pooled": true,
-      "p_ceiling": 0.1375
-    },
-    {
-      "player_id": "00-0037238",
-      "name": "Drake London",
-      "team": "ATL",
-      "pos": "WR",
-      "game_id": "2026_02_CAR_ATL",
-      "n_draws": 400,
-      "proj": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.7375,
-        "rush_yds": 2.7166381535749906,
-        "targets": 6.1325,
-        "receptions": 3.715,
-        "rec_yds": 40.0425,
-        "anytime_td": 0.27
-      },
-      "stat_quantiles": {
-        "pass_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "pass_tds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_att": [
-          0.0,
-          0.0,
-          1.0,
-          1.0,
-          2.0
-        ],
-        "rush_yds": [
-          0.0,
-          0.0,
-          0.0,
-          3.305415243893521,
-          9.089891920707183
-        ],
-        "targets": [
-          3.0,
-          4.0,
-          6.0,
-          8.0,
-          10.0
-        ],
-        "receptions": [
-          1.0,
-          2.0,
-          4.0,
-          5.0,
-          6.0
-        ],
-        "rec_yds": [
-          10.0,
-          19.0,
-          36.0,
-          53.0,
-          78.0
-        ],
-        "anytime_td": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "week_open": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.6825,
-        "rush_yds": 2.5554991604351813,
-        "targets": 6.03,
-        "receptions": 3.7925,
-        "rec_yds": 40.64,
-        "anytime_td": 0.2725
-      },
-      "movement": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.05500000000000005,
-        "rush_yds": 0.16113899313980928,
-        "targets": 0.10250000000000004,
-        "receptions": -0.07750000000000012,
-        "rec_yds": -0.5975000000000037,
-        "anytime_td": -0.0025000000000000022
-      },
-      "context": {
-        "opponent": {
-          "value": "CAR",
-          "reason": null
-        },
-        "kickoff_ts": {
-          "value": "2026-09-20T17:00+00:00",
-          "reason": null
-        },
-        "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "line_label": {
-          "value": "SAME-CUTOFF",
-          "reason": null
-        }
-      },
-      "elements": {
-        "line_spread": {
-          "value": 2.5,
-          "reason": null
-        },
-        "line_total": {
-          "value": 43.5,
-          "reason": null
-        },
-        "line_implied_total": {
-          "value": 20.5,
-          "reason": null
-        },
-        "team_plays": {
-          "value": 60.548351984375884,
-          "reason": null
-        },
-        "team_p_dropback": {
-          "value": 0.5763357145851313,
-          "reason": null
-        },
-        "team_dropbacks": {
-          "value": 34.89617770786733,
-          "reason": null
-        },
-        "team_attempt_rate": {
-          "value": 0.8710526315789474,
-          "reason": null
-        },
-        "team_attempts": {
-          "value": 30.39640742448444,
-          "reason": null
-        },
-        "team_targets": {
-          "value": 28.80465195009049,
-          "reason": null
-        },
-        "team_carries": {
-          "value": 27.885682898306023,
-          "reason": null
-        },
-        "target_share": {
-          "value": 0.21076553122512484,
-          "reason": null
-        },
-        "carry_share": {
-          "value": 0.024587942491471202,
-          "reason": null
-        },
-        "qb_attempt_weight": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "catch_rate": {
-          "value": 0.6179970924078523,
-          "reason": null
-        },
-        "yards_per_reception": {
-          "value": 10.985672964243243,
-          "reason": null
-        },
-        "yards_per_carry": {
-          "value": 3.6286072132936003,
-          "reason": null
-        },
-        "yards_per_attempt": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "td_rates": {
-          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
-          "reason": null
-        },
-        "td_rate_receiving": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        },
-        "td_rate_rushing": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        }
-      },
-      "td_rates_pooled": true,
-      "p_ceiling": 0.1875
-    },
-    {
-      "player_id": "00-0037741",
-      "name": "Jahan Dotson",
-      "team": "ATL",
-      "pos": "WR",
-      "game_id": "2026_02_CAR_ATL",
-      "n_draws": 400,
-      "proj": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.035,
-        "rush_yds": 0.1126519518739721,
-        "targets": 5.655,
-        "receptions": 2.4475,
-        "rec_yds": 56.655,
-        "anytime_td": 0.2175
+        "targets": 5.6325,
+        "receptions": 2.8825,
+        "rec_yds": 49.35,
+        "anytime_td": 0.295
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -956,46 +552,46 @@
           9.0
         ],
         "receptions": [
-          0.0,
           1.0,
-          2.0,
+          1.0,
           3.0,
-          5.0
+          4.0,
+          6.0
         ],
         "rec_yds": [
-          0.0,
-          22.0,
-          51.0,
-          81.0,
-          111.0
+          5.0,
+          20.0,
+          43.0,
+          70.0,
+          95.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
-          0.0,
+          1.0,
           1.0
         ]
       },
       "week_open": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0325,
-        "rush_yds": 0.09655881589197608,
-        "targets": 5.3375,
-        "receptions": 2.3825,
-        "rec_yds": 53.415,
-        "anytime_td": 0.1925
+        "rush_att": 0.0075,
+        "rush_yds": 0.02903596468449753,
+        "targets": 3.035,
+        "receptions": 1.685,
+        "rec_yds": 27.975,
+        "anytime_td": 0.2
       },
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0025000000000000022,
-        "rush_yds": 0.01609313598199602,
-        "targets": 0.3174999999999999,
-        "receptions": 0.06499999999999995,
-        "rec_yds": 3.240000000000002,
-        "anytime_td": 0.024999999999999994
+        "rush_att": -0.0075,
+        "rush_yds": -0.02903596468449753,
+        "targets": 2.5975,
+        "receptions": 1.1974999999999998,
+        "rec_yds": 21.375,
+        "anytime_td": 0.09499999999999997
       },
       "context": {
         "opponent": {
@@ -1061,11 +657,415 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.1870893577744929,
+          "value": 0.1916907482955378,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017265027084697058,
+          "value": 0.0,
+          "reason": null
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "catch_rate": {
+          "value": 0.4995263641433049,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 17.072041166840464,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 3.0,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "td_rates": {
+          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.335
+    },
+    {
+      "player_id": "00-0037238",
+      "name": "Drake London",
+      "team": "ATL",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.585,
+        "rush_yds": 2.2910659409236995,
+        "targets": 8.2775,
+        "receptions": 5.1425,
+        "rec_yds": 54.45,
+        "anytime_td": 0.34
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          3.305415243893521,
+          7.437184298760423
+        ],
+        "targets": [
+          4.0,
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "receptions": [
+          2.0,
+          3.0,
+          5.0,
+          7.0,
+          8.0
+        ],
+        "rec_yds": [
+          18.0,
+          30.0,
+          48.0,
+          72.0,
+          100.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.6825,
+        "rush_yds": 2.5554991604351813,
+        "targets": 6.03,
+        "receptions": 3.7925,
+        "rec_yds": 40.64,
+        "anytime_td": 0.2725
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.09750000000000003,
+        "rush_yds": -0.2644332195114818,
+        "targets": 2.2474999999999996,
+        "receptions": 1.35,
+        "rec_yds": 13.810000000000002,
+        "anytime_td": 0.0675
+      },
+      "context": {
+        "opponent": {
+          "value": "CAR",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T17:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "SAME-CUTOFF",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": 2.5,
+          "reason": null
+        },
+        "line_total": {
+          "value": 43.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 20.5,
+          "reason": null
+        },
+        "team_plays": {
+          "value": 60.548351984375884,
+          "reason": null
+        },
+        "team_p_dropback": {
+          "value": 0.5763357145851313,
+          "reason": null
+        },
+        "team_dropbacks": {
+          "value": 34.89617770786733,
+          "reason": null
+        },
+        "team_attempt_rate": {
+          "value": 0.8710526315789474,
+          "reason": null
+        },
+        "team_attempts": {
+          "value": 30.39640742448444,
+          "reason": null
+        },
+        "team_targets": {
+          "value": 28.80465195009049,
+          "reason": null
+        },
+        "team_carries": {
+          "value": 27.885682898306023,
+          "reason": null
+        },
+        "target_share": {
+          "value": 0.2857307376814679,
+          "reason": null
+        },
+        "carry_share": {
+          "value": 0.01984534555005734,
+          "reason": null
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "catch_rate": {
+          "value": 0.6179970924078523,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 10.985672964243243,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 3.6286072132936003,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "td_rates": {
+          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.31
+    },
+    {
+      "player_id": "00-0037741",
+      "name": "Jahan Dotson",
+      "team": "ATL",
+      "pos": "WR",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 2.9775,
+        "receptions": 1.33,
+        "rec_yds": 31.8075,
+        "anytime_td": 0.095
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          23.0,
+          49.0,
+          76.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0325,
+        "rush_yds": 0.09655881589197608,
+        "targets": 5.3375,
+        "receptions": 2.3825,
+        "rec_yds": 53.415,
+        "anytime_td": 0.1925
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -0.0325,
+        "rush_yds": -0.09655881589197608,
+        "targets": -2.3600000000000003,
+        "receptions": -1.0524999999999998,
+        "rec_yds": -21.607499999999998,
+        "anytime_td": -0.0975
+      },
+      "context": {
+        "opponent": {
+          "value": "CAR",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T17:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "SAME-CUTOFF",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": 2.5,
+          "reason": null
+        },
+        "line_total": {
+          "value": 43.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 20.5,
+          "reason": null
+        },
+        "team_plays": {
+          "value": 60.548351984375884,
+          "reason": null
+        },
+        "team_p_dropback": {
+          "value": 0.5763357145851313,
+          "reason": null
+        },
+        "team_dropbacks": {
+          "value": 34.89617770786733,
+          "reason": null
+        },
+        "team_attempt_rate": {
+          "value": 0.8710526315789474,
+          "reason": null
+        },
+        "team_attempts": {
+          "value": 30.39640742448444,
+          "reason": null
+        },
+        "team_targets": {
+          "value": 28.80465195009049,
+          "reason": null
+        },
+        "team_carries": {
+          "value": 27.885682898306023,
+          "reason": null
+        },
+        "target_share": {
+          "value": 0.10520433171323303,
+          "reason": null
+        },
+        "carry_share": {
+          "value": 0.0,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -1102,7 +1102,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.21
+      "p_ceiling": 0.0525
     },
     {
       "player_id": "00-0037746",
@@ -1114,12 +1114,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 8.845,
-        "rush_yds": 37.86632331541251,
-        "targets": 1.6175,
-        "receptions": 1.25,
-        "rec_yds": 9.065,
-        "anytime_td": 0.4975
+        "rush_att": 7.5475,
+        "rush_yds": 31.82735898167868,
+        "targets": 0.5175,
+        "receptions": 0.4,
+        "rec_yds": 3.18,
+        "anytime_td": 0.3625
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1137,46 +1137,46 @@
           0.0
         ],
         "rush_att": [
-          5.0,
-          7.0,
+          4.0,
+          6.0,
+          8.0,
           9.0,
-          11.0,
-          13.0
+          11.0
         ],
         "rush_yds": [
-          14.237244008802811,
-          21.830440813497646,
-          34.16938562112675,
-          49.355779230516404,
-          64.54217283990609
+          10.440645606455396,
+          18.03384241115023,
+          27.52533841701877,
+          42.71173202640843,
+          58.84727523638496
         ],
         "targets": [
           0.0,
+          0.0,
+          0.0,
           1.0,
-          1.0,
-          2.0,
-          3.0
+          2.0
         ],
         "receptions": [
           0.0,
           0.0,
+          0.0,
           1.0,
-          2.0,
-          3.0
+          1.0
         ],
         "rec_yds": [
           0.0,
           0.0,
-          5.0,
-          14.0,
-          24.0
+          0.0,
+          4.0,
+          12.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
           1.0,
-          2.0
+          1.0
         ]
       },
       "week_open": {
@@ -1192,12 +1192,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.0649999999999995,
-        "rush_yds": 0.0711862200439981,
-        "targets": -0.09000000000000008,
-        "receptions": -0.10250000000000004,
-        "rec_yds": 0.09750000000000014,
-        "anytime_td": 0.020000000000000018
+        "rush_att": -1.3624999999999998,
+        "rush_yds": -5.967778113689828,
+        "targets": -1.19,
+        "receptions": -0.9525,
+        "rec_yds": -5.7875,
+        "anytime_td": -0.11499999999999999
       },
       "context": {
         "opponent": {
@@ -1263,11 +1263,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.0584014915453417,
+          "value": 0.018355832707316666,
           "reason": null
         },
         "carry_share": {
-          "value": 0.3220390687129784,
+          "value": 0.2671428843881075,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -1304,7 +1304,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.12
+      "p_ceiling": 0.0275
     },
     {
       "player_id": "00-0038542",
@@ -1316,12 +1316,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 17.3475,
-        "rush_yds": 73.53659824831664,
-        "targets": 8.3375,
-        "receptions": 6.5275,
-        "rec_yds": 44.2575,
-        "anytime_td": 0.77
+        "rush_att": 19.95,
+        "rush_yds": 86.94350544069358,
+        "targets": 7.68,
+        "receptions": 6.0725,
+        "rec_yds": 40.645,
+        "anytime_td": 0.79
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1339,39 +1339,39 @@
           0.0
         ],
         "rush_att": [
-          12.0,
           14.0,
-          17.0,
-          21.0,
-          24.0
+          16.0,
+          20.0,
+          23.0,
+          26.0
         ],
         "rush_yds": [
-          38.36024947747345,
-          53.70434926846282,
-          70.96646153332587,
-          92.06459874593627,
-          111.244723484673
+          48.90931808377865,
+          63.29441163783119,
+          84.39254885044159,
+          105.490686063052,
+          128.50683574953604
         ],
         "targets": [
           4.0,
-          7.0,
+          6.0,
           8.0,
-          10.0,
+          9.0,
           12.0
         ],
         "receptions": [
           3.0,
-          5.0,
+          4.0,
           6.0,
           8.0,
-          10.0
+          9.0
         ],
         "rec_yds": [
-          18.0,
-          27.0,
-          42.0,
-          58.0,
-          74.0
+          15.0,
+          26.0,
+          36.0,
+          53.0,
+          73.0
         ],
         "anytime_td": [
           0.0,
@@ -1394,12 +1394,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.317499999999999,
-        "rush_yds": 2.752347900008772,
-        "targets": -0.2624999999999993,
-        "receptions": -0.2625000000000002,
-        "rec_yds": -1.697499999999998,
-        "anytime_td": -0.010000000000000009
+        "rush_att": 2.919999999999998,
+        "rush_yds": 16.15925509238572,
+        "targets": -0.9199999999999999,
+        "receptions": -0.7175000000000002,
+        "rec_yds": -5.309999999999995,
+        "anytime_td": 0.010000000000000009
       },
       "context": {
         "opponent": {
@@ -1465,11 +1465,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.295163226051661,
+          "value": 0.26947149747370724,
           "reason": null
         },
         "carry_share": {
-          "value": 0.6318034451290155,
+          "value": 0.7188898827018656,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -1506,7 +1506,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.715
+      "p_ceiling": 0.77
     },
     {
       "player_id": "00-0031610",
@@ -1518,618 +1518,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0075,
-        "rush_yds": 0.04782394183329006,
-        "targets": 2.3525,
-        "receptions": 1.9325,
-        "rec_yds": 14.9675,
-        "anytime_td": 0.1725
-      },
-      "stat_quantiles": {
-        "pass_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "pass_tds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_att": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "targets": [
-          1.0,
-          1.0,
-          2.0,
-          3.0,
-          4.0
-        ],
-        "receptions": [
-          0.0,
-          1.0,
-          2.0,
-          3.0,
-          4.0
-        ],
-        "rec_yds": [
-          0.0,
-          4.0,
-          11.0,
-          23.0,
-          34.0
-        ],
-        "anytime_td": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "week_open": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.005,
-        "rush_yds": 0.02391197091664503,
-        "targets": 2.465,
-        "receptions": 2.085,
-        "rec_yds": 14.8,
-        "anytime_td": 0.2225
-      },
-      "movement": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.0024999999999999996,
-        "rush_yds": 0.02391197091664503,
-        "targets": -0.11249999999999982,
-        "receptions": -0.15249999999999986,
-        "rec_yds": 0.16749999999999865,
-        "anytime_td": -0.05000000000000002
-      },
-      "context": {
-        "opponent": {
-          "value": "ATL",
-          "reason": null
-        },
-        "kickoff_ts": {
-          "value": "2026-09-20T17:00+00:00",
-          "reason": null
-        },
-        "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "line_label": {
-          "value": "SAME-CUTOFF",
-          "reason": null
-        }
-      },
-      "elements": {
-        "line_spread": {
-          "value": -2.5,
-          "reason": null
-        },
-        "line_total": {
-          "value": 43.5,
-          "reason": null
-        },
-        "line_implied_total": {
-          "value": 23.0,
-          "reason": null
-        },
-        "team_plays": {
-          "value": 61.20241455208409,
-          "reason": null
-        },
-        "team_p_dropback": {
-          "value": 0.5966701244562703,
-          "reason": null
-        },
-        "team_dropbacks": {
-          "value": 36.51765230781626,
-          "reason": null
-        },
-        "team_attempt_rate": {
-          "value": 0.8710526315789474,
-          "reason": null
-        },
-        "team_attempts": {
-          "value": 31.808797141808377,
-          "reason": null
-        },
-        "team_targets": {
-          "value": 30.14307966811851,
-          "reason": null
-        },
-        "team_carries": {
-          "value": 27.024273922712013,
-          "reason": null
-        },
-        "target_share": {
-          "value": 0.07795546121547774,
-          "reason": null
-        },
-        "carry_share": {
-          "value": 0.00013577701820552925,
-          "reason": null
-        },
-        "qb_attempt_weight": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "catch_rate": {
-          "value": 0.8108994338096035,
-          "reason": null
-        },
-        "yards_per_reception": {
-          "value": 7.291827478393036,
-          "reason": null
-        },
-        "yards_per_carry": {
-          "value": 3.0,
-          "reason": null
-        },
-        "yards_per_attempt": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "td_rates": {
-          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
-          "reason": null
-        },
-        "td_rate_receiving": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        },
-        "td_rate_rushing": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        }
-      },
-      "td_rates_pooled": true,
-      "p_ceiling": 0.075
-    },
-    {
-      "player_id": "00-0036265",
-      "name": "AJ Dillon",
-      "team": "CAR",
-      "pos": "RB",
-      "game_id": "2026_02_CAR_ATL",
-      "n_draws": 400,
-      "proj": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 6.6325,
-        "rush_yds": 29.458462922739713,
-        "targets": 1.08,
-        "receptions": 0.8075,
-        "rec_yds": 5.4025,
-        "anytime_td": 0.28
-      },
-      "stat_quantiles": {
-        "pass_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "pass_tds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_att": [
-          3.0,
-          5.0,
-          6.0,
-          8.0,
-          10.0
-        ],
-        "rush_yds": [
-          9.479794987205052,
-          14.746347757874526,
-          25.279453299213472,
-          38.9724905029541,
-          55.82545936909642
-        ],
-        "targets": [
-          0.0,
-          0.0,
-          1.0,
-          2.0,
-          3.0
-        ],
-        "receptions": [
-          0.0,
-          0.0,
-          1.0,
-          1.0,
-          2.0
-        ],
-        "rec_yds": [
-          0.0,
-          0.0,
-          0.0,
-          9.0,
-          15.0
-        ],
-        "anytime_td": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          1.0
-        ]
-      },
-      "week_open": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 6.355,
-        "rush_yds": 31.02262909562855,
-        "targets": 1.1725,
-        "receptions": 0.925,
-        "rec_yds": 6.3925,
-        "anytime_td": 0.2925
-      },
-      "movement": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.27749999999999986,
-        "rush_yds": -1.5641661728888359,
-        "targets": -0.09250000000000003,
-        "receptions": -0.11750000000000005,
-        "rec_yds": -0.9900000000000002,
-        "anytime_td": -0.012499999999999956
-      },
-      "context": {
-        "opponent": {
-          "value": "ATL",
-          "reason": null
-        },
-        "kickoff_ts": {
-          "value": "2026-09-20T17:00+00:00",
-          "reason": null
-        },
-        "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "line_label": {
-          "value": "SAME-CUTOFF",
-          "reason": null
-        }
-      },
-      "elements": {
-        "line_spread": {
-          "value": -2.5,
-          "reason": null
-        },
-        "line_total": {
-          "value": 43.5,
-          "reason": null
-        },
-        "line_implied_total": {
-          "value": 23.0,
-          "reason": null
-        },
-        "team_plays": {
-          "value": 61.20241455208409,
-          "reason": null
-        },
-        "team_p_dropback": {
-          "value": 0.5966701244562703,
-          "reason": null
-        },
-        "team_dropbacks": {
-          "value": 36.51765230781626,
-          "reason": null
-        },
-        "team_attempt_rate": {
-          "value": 0.8710526315789474,
-          "reason": null
-        },
-        "team_attempts": {
-          "value": 31.808797141808377,
-          "reason": null
-        },
-        "team_targets": {
-          "value": 30.14307966811851,
-          "reason": null
-        },
-        "team_carries": {
-          "value": 27.024273922712013,
-          "reason": null
-        },
-        "target_share": {
-          "value": 0.034355044245312376,
-          "reason": null
-        },
-        "carry_share": {
-          "value": 0.23872563085698367,
-          "reason": null
-        },
-        "qb_attempt_weight": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "catch_rate": {
-          "value": 0.7658436793245522,
-          "reason": null
-        },
-        "yards_per_reception": {
-          "value": 6.939613143388316,
-          "reason": null
-        },
-        "yards_per_carry": {
-          "value": 4.625198339760124,
-          "reason": null
-        },
-        "yards_per_attempt": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "td_rates": {
-          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
-          "reason": null
-        },
-        "td_rate_receiving": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        },
-        "td_rate_rushing": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        }
-      },
-      "td_rates_pooled": true,
-      "p_ceiling": 0.025
-    },
-    {
-      "player_id": "00-0036555",
-      "name": "Chuba Hubbard",
-      "team": "CAR",
-      "pos": "RB",
-      "game_id": "2026_02_CAR_ATL",
-      "n_draws": 400,
-      "proj": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 9.89,
-        "rush_yds": 44.695659733322174,
-        "targets": 2.2775,
-        "receptions": 1.905,
-        "rec_yds": 12.275,
-        "anytime_td": 0.4025
-      },
-      "stat_quantiles": {
-        "pass_yds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "pass_tds": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rush_att": [
-          6.0,
-          8.0,
-          10.0,
-          12.0,
-          14.0
-        ],
-        "rush_yds": [
-          17.67037710387158,
-          28.064716576737208,
-          40.53792394417597,
-          57.16886710076098,
-          74.83924420463256
-        ],
-        "targets": [
-          1.0,
-          1.0,
-          2.0,
-          3.0,
-          4.0
-        ],
-        "receptions": [
-          0.0,
-          1.0,
-          2.0,
-          3.0,
-          4.0
-        ],
-        "rec_yds": [
-          0.0,
-          3.0,
-          9.0,
-          18.0,
-          28.0
-        ],
-        "anytime_td": [
-          0.0,
-          0.0,
-          0.0,
-          1.0,
-          1.0
-        ]
-      },
-      "week_open": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 9.53,
-        "rush_yds": 42.115264959183335,
-        "targets": 2.415,
-        "receptions": 2.0025,
-        "rec_yds": 13.31,
-        "anytime_td": 0.48
-      },
-      "movement": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.3600000000000012,
-        "rush_yds": 2.5803947741388384,
-        "targets": -0.13750000000000018,
-        "receptions": -0.09749999999999992,
-        "rec_yds": -1.0350000000000001,
-        "anytime_td": -0.07749999999999996
-      },
-      "context": {
-        "opponent": {
-          "value": "ATL",
-          "reason": null
-        },
-        "kickoff_ts": {
-          "value": "2026-09-20T17:00+00:00",
-          "reason": null
-        },
-        "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-        },
-        "line_label": {
-          "value": "SAME-CUTOFF",
-          "reason": null
-        }
-      },
-      "elements": {
-        "line_spread": {
-          "value": -2.5,
-          "reason": null
-        },
-        "line_total": {
-          "value": 43.5,
-          "reason": null
-        },
-        "line_implied_total": {
-          "value": 23.0,
-          "reason": null
-        },
-        "team_plays": {
-          "value": 61.20241455208409,
-          "reason": null
-        },
-        "team_p_dropback": {
-          "value": 0.5966701244562703,
-          "reason": null
-        },
-        "team_dropbacks": {
-          "value": 36.51765230781626,
-          "reason": null
-        },
-        "team_attempt_rate": {
-          "value": 0.8710526315789474,
-          "reason": null
-        },
-        "team_attempts": {
-          "value": 31.808797141808377,
-          "reason": null
-        },
-        "team_targets": {
-          "value": 30.14307966811851,
-          "reason": null
-        },
-        "team_carries": {
-          "value": 27.024273922712013,
-          "reason": null
-        },
-        "target_share": {
-          "value": 0.07613801750163651,
-          "reason": null
-        },
-        "carry_share": {
-          "value": 0.3570640953253022,
-          "reason": null
-        },
-        "qb_attempt_weight": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "catch_rate": {
-          "value": 0.8390402597917777,
-          "reason": null
-        },
-        "yards_per_reception": {
-          "value": 6.443639342682589,
-          "reason": null
-        },
-        "yards_per_carry": {
-          "value": 4.564264687571899,
-          "reason": null
-        },
-        "yards_per_attempt": {
-          "value": null,
-          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-        },
-        "td_rates": {
-          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
-          "reason": null
-        },
-        "td_rate_receiving": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        },
-        "td_rate_rushing": {
-          "value": null,
-          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-        }
-      },
-      "td_rates_pooled": true,
-      "p_ceiling": 0.105
-    },
-    {
-      "player_id": "00-0037005",
-      "name": "Tommy Tremble",
-      "team": "CAR",
-      "pos": "TE",
-      "game_id": "2026_02_CAR_ATL",
-      "n_draws": 400,
-      "proj": {
-        "pass_yds": 0.0,
-        "pass_tds": 0.0,
-        "rush_att": 0.005,
-        "rush_yds": 0.010247987535705012,
-        "targets": 3.4825,
-        "receptions": 2.42,
-        "rec_yds": 21.2925,
-        "anytime_td": 0.175
+        "rush_att": 0.065,
+        "rush_yds": 0.12639184627369512,
+        "targets": 3.66,
+        "receptions": 2.91,
+        "rec_yds": 22.0525,
+        "anytime_td": 0.3175
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2169,45 +1563,45 @@
         ],
         "receptions": [
           1.0,
-          1.0,
           2.0,
           3.0,
-          4.0
+          4.0,
+          5.0
         ],
         "rec_yds": [
-          0.0,
+          1.0,
           9.0,
-          19.0,
+          18.0,
           30.0,
-          43.0
+          45.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
-          0.0,
+          1.0,
           1.0
         ]
       },
       "week_open": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0,
-        "rush_yds": 0.0,
-        "targets": 3.8125,
-        "receptions": 2.6925,
-        "rec_yds": 25.4175,
-        "anytime_td": 0.1425
+        "rush_att": 0.005,
+        "rush_yds": 0.02391197091664503,
+        "targets": 2.465,
+        "receptions": 2.085,
+        "rec_yds": 14.8,
+        "anytime_td": 0.2225
       },
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.005,
-        "rush_yds": 0.010247987535705012,
-        "targets": -0.33000000000000007,
-        "receptions": -0.27249999999999996,
-        "rec_yds": -4.125,
-        "anytime_td": 0.0325
+        "rush_att": 0.060000000000000005,
+        "rush_yds": 0.1024798753570501,
+        "targets": 1.1950000000000003,
+        "receptions": 0.8250000000000002,
+        "rec_yds": 7.252499999999998,
+        "anytime_td": 0.095
       },
       "context": {
         "opponent": {
@@ -2273,11 +1667,617 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.11973843447180187,
+          "value": 0.12438855016244897,
           "reason": null
         },
         "carry_share": {
-          "value": 0.00013577701820552925,
+          "value": 0.00237365636722918,
+          "reason": null
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "catch_rate": {
+          "value": 0.8108994338096035,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 7.291827478393036,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 3.0,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "td_rates": {
+          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.175
+    },
+    {
+      "player_id": "00-0036265",
+      "name": "AJ Dillon",
+      "team": "CAR",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 4.3275,
+        "rush_yds": 19.715340297001184,
+        "targets": 0.3425,
+        "receptions": 0.265,
+        "rec_yds": 1.9425,
+        "anytime_td": 0.1325
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          2.0,
+          3.0,
+          4.0,
+          5.0,
+          7.0
+        ],
+        "rush_yds": [
+          4.213242216535579,
+          8.426484433071158,
+          16.852968866142316,
+          26.33276385334737,
+          37.91917994882021
+        ],
+        "targets": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          1.0
+        ],
+        "receptions": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          8.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 6.355,
+        "rush_yds": 31.02262909562855,
+        "targets": 1.1725,
+        "receptions": 0.925,
+        "rec_yds": 6.3925,
+        "anytime_td": 0.2925
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": -2.0275000000000007,
+        "rush_yds": -11.307288798627365,
+        "targets": -0.8300000000000001,
+        "receptions": -0.66,
+        "rec_yds": -4.45,
+        "anytime_td": -0.15999999999999998
+      },
+      "context": {
+        "opponent": {
+          "value": "ATL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T17:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "SAME-CUTOFF",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -2.5,
+          "reason": null
+        },
+        "line_total": {
+          "value": 43.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 23.0,
+          "reason": null
+        },
+        "team_plays": {
+          "value": 61.20241455208409,
+          "reason": null
+        },
+        "team_p_dropback": {
+          "value": 0.5966701244562703,
+          "reason": null
+        },
+        "team_dropbacks": {
+          "value": 36.51765230781626,
+          "reason": null
+        },
+        "team_attempt_rate": {
+          "value": 0.8710526315789474,
+          "reason": null
+        },
+        "team_attempts": {
+          "value": 31.808797141808377,
+          "reason": null
+        },
+        "team_targets": {
+          "value": 30.14307966811851,
+          "reason": null
+        },
+        "team_carries": {
+          "value": 27.024273922712013,
+          "reason": null
+        },
+        "target_share": {
+          "value": 0.011771190668796208,
+          "reason": null
+        },
+        "carry_share": {
+          "value": 0.1574968562718939,
+          "reason": null
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "catch_rate": {
+          "value": 0.7658436793245522,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 6.939613143388316,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.625198339760124,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "td_rates": {
+          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.0
+    },
+    {
+      "player_id": "00-0036555",
+      "name": "Chuba Hubbard",
+      "team": "CAR",
+      "pos": "RB",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 11.1925,
+        "rush_yds": 52.13800679589403,
+        "targets": 2.4275,
+        "receptions": 2.085,
+        "rec_yds": 13.1925,
+        "anytime_td": 0.565
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          6.0,
+          9.0,
+          11.0,
+          14.0,
+          16.0
+        ],
+        "rush_yds": [
+          19.749244998444702,
+          33.261886313170024,
+          47.81396157518191,
+          65.4843386790535,
+          86.27301762478476
+        ],
+        "targets": [
+          1.0,
+          1.0,
+          2.0,
+          3.0,
+          5.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rec_yds": [
+          0.0,
+          4.0,
+          10.0,
+          19.0,
+          32.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          2.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 9.53,
+        "rush_yds": 42.115264959183335,
+        "targets": 2.415,
+        "receptions": 2.0025,
+        "rec_yds": 13.31,
+        "anytime_td": 0.48
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 1.6625000000000014,
+        "rush_yds": 10.022741836710694,
+        "targets": 0.012500000000000178,
+        "receptions": 0.08250000000000002,
+        "rec_yds": -0.11749999999999972,
+        "anytime_td": 0.08499999999999996
+      },
+      "context": {
+        "opponent": {
+          "value": "ATL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T17:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "SAME-CUTOFF",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -2.5,
+          "reason": null
+        },
+        "line_total": {
+          "value": 43.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 23.0,
+          "reason": null
+        },
+        "team_plays": {
+          "value": 61.20241455208409,
+          "reason": null
+        },
+        "team_p_dropback": {
+          "value": 0.5966701244562703,
+          "reason": null
+        },
+        "team_dropbacks": {
+          "value": 36.51765230781626,
+          "reason": null
+        },
+        "team_attempt_rate": {
+          "value": 0.8710526315789474,
+          "reason": null
+        },
+        "team_attempts": {
+          "value": 31.808797141808377,
+          "reason": null
+        },
+        "team_targets": {
+          "value": 30.14307966811851,
+          "reason": null
+        },
+        "team_carries": {
+          "value": 27.024273922712013,
+          "reason": null
+        },
+        "target_share": {
+          "value": 0.08368442178866503,
+          "reason": null
+        },
+        "carry_share": {
+          "value": 0.4094714959095393,
+          "reason": null
+        },
+        "qb_attempt_weight": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "catch_rate": {
+          "value": 0.8390402597917777,
+          "reason": null
+        },
+        "yards_per_reception": {
+          "value": 6.443639342682589,
+          "reason": null
+        },
+        "yards_per_carry": {
+          "value": 4.564264687571899,
+          "reason": null
+        },
+        "yards_per_attempt": {
+          "value": null,
+          "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
+        },
+        "td_rates": {
+          "value": "{\"receiving\": {\"inside_10\": 0.45454545454545453, \"open_field\": 0.017241379310344827, \"red_zone_11_20\": 0.1891891891891892}, \"rushing\": {\"inside_10\": 0.3888888888888889, \"open_field\": 0.008241758241758242, \"red_zone_11_20\": 0.03896103896103896}}",
+          "reason": null
+        },
+        "td_rate_receiving": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        },
+        "td_rate_rushing": {
+          "value": null,
+          "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
+        }
+      },
+      "td_rates_pooled": true,
+      "p_ceiling": 0.195
+    },
+    {
+      "player_id": "00-0037005",
+      "name": "Tommy Tremble",
+      "team": "CAR",
+      "pos": "TE",
+      "game_id": "2026_02_CAR_ATL",
+      "n_draws": 400,
+      "proj": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 2.915,
+        "receptions": 2.0125,
+        "rec_yds": 19.3075,
+        "anytime_td": 0.1175
+      },
+      "stat_quantiles": {
+        "pass_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pass_tds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_att": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rush_yds": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "targets": [
+          1.0,
+          2.0,
+          3.0,
+          4.0,
+          5.0
+        ],
+        "receptions": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rec_yds": [
+          0.0,
+          7.0,
+          16.0,
+          27.0,
+          39.0
+        ],
+        "anytime_td": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "week_open": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 3.8125,
+        "receptions": 2.6925,
+        "rec_yds": 25.4175,
+        "anytime_td": 0.1425
+      },
+      "movement": {
+        "pass_yds": 0.0,
+        "pass_tds": 0.0,
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": -0.8975,
+        "receptions": -0.6799999999999997,
+        "rec_yds": -6.109999999999999,
+        "anytime_td": -0.024999999999999994
+      },
+      "context": {
+        "opponent": {
+          "value": "ATL",
+          "reason": null
+        },
+        "kickoff_ts": {
+          "value": "2026-09-20T17:00+00:00",
+          "reason": null
+        },
+        "injury_designation": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "injury_trend": {
+          "value": null,
+          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+        },
+        "line_label": {
+          "value": "SAME-CUTOFF",
+          "reason": null
+        }
+      },
+      "elements": {
+        "line_spread": {
+          "value": -2.5,
+          "reason": null
+        },
+        "line_total": {
+          "value": 43.5,
+          "reason": null
+        },
+        "line_implied_total": {
+          "value": 23.0,
+          "reason": null
+        },
+        "team_plays": {
+          "value": 61.20241455208409,
+          "reason": null
+        },
+        "team_p_dropback": {
+          "value": 0.5966701244562703,
+          "reason": null
+        },
+        "team_dropbacks": {
+          "value": 36.51765230781626,
+          "reason": null
+        },
+        "team_attempt_rate": {
+          "value": 0.8710526315789474,
+          "reason": null
+        },
+        "team_attempts": {
+          "value": 31.808797141808377,
+          "reason": null
+        },
+        "team_targets": {
+          "value": 30.14307966811851,
+          "reason": null
+        },
+        "team_carries": {
+          "value": 27.024273922712013,
+          "reason": null
+        },
+        "target_share": {
+          "value": 0.09701156978559987,
+          "reason": null
+        },
+        "carry_share": {
+          "value": 0.0,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -2314,7 +2314,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1175
+      "p_ceiling": 0.07
     },
     {
       "player_id": "00-0038102",
@@ -2324,22 +2324,22 @@
       "game_id": "2026_02_CAR_ATL",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 6.226250000000004,
-        "pass_tds": 0.0375,
-        "rush_att": 2.1275,
-        "rush_yds": 11.729879377795175,
+        "pass_yds": 6.434473684210526,
+        "pass_tds": 0.05,
+        "rush_att": 1.275,
+        "rush_yds": 6.631067387001971,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.16
+        "anytime_td": 0.07
       },
       "stat_quantiles": {
         "pass_yds": [
           3.894736842105263,
-          4.868421052631579,
-          6.078947368421052,
-          7.394736842105263,
-          8.763157894736842
+          4.921052631578947,
+          6.342105263157895,
+          7.842105263157895,
+          9.052631578947368
         ],
         "pass_tds": [
           0.0,
@@ -2350,17 +2350,17 @@
         ],
         "rush_att": [
           0.0,
+          0.0,
           1.0,
           2.0,
-          3.0,
-          4.0
+          3.0
         ],
         "rush_yds": [
           0.0,
-          2.321599085164804,
-          6.964797255494412,
-          16.25119359615363,
-          27.85918902197765
+          0.0,
+          3.482398627747206,
+          9.286396340659216,
+          17.41199313873603
         ],
         "targets": [
           0.0,
@@ -2388,7 +2388,7 @@
           0.0,
           0.0,
           0.0,
-          1.0
+          0.0
         ]
       },
       "week_open": {
@@ -2402,14 +2402,14 @@
         "anytime_td": 0.1425
       },
       "movement": {
-        "pass_yds": -0.9581617647058769,
-        "pass_tds": -0.020000000000000004,
-        "rush_att": -0.004999999999999893,
-        "rush_yds": 1.3407234716826792,
+        "pass_yds": -0.7499380804953546,
+        "pass_tds": -0.0075,
+        "rush_att": -0.8574999999999999,
+        "rush_yds": -3.758088519110525,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.017500000000000016
+        "anytime_td": -0.07249999999999998
       },
       "context": {
         "opponent": {
@@ -2479,7 +2479,7 @@
           "reason": null
         },
         "carry_share": {
-          "value": 0.07896387358834156,
+          "value": 0.045991251299341646,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -2526,22 +2526,22 @@
       "game_id": "2026_02_CAR_ATL",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 230.37125,
-        "pass_tds": 1.585,
-        "rush_att": 2.6825,
-        "rush_yds": 12.216077978095637,
+        "pass_yds": 238.0755263157897,
+        "pass_tds": 1.4875,
+        "rush_att": 2.9175,
+        "rush_yds": 12.443365464500605,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.09
+        "anytime_td": 0.0875
       },
       "stat_quantiles": {
         "pass_yds": [
           144.10526315789474,
-          180.13157894736844,
-          224.92105263157896,
-          273.60526315789474,
-          324.2368421052632
+          182.07894736842107,
+          234.6578947368421,
+          290.15789473684214,
+          334.94736842105266
         ],
         "pass_tds": [
           0.0,
@@ -2552,17 +2552,17 @@
         ],
         "rush_att": [
           1.0,
-          1.0,
+          2.0,
           3.0,
           4.0,
           5.0
         ],
         "rush_yds": [
           0.0,
-          2.997197622922666,
+          3.996263497230221,
           9.990658743075553,
-          17.983185737535994,
-          25.97571273199644
+          16.98411986322844,
+          26.974778606303992
         ],
         "targets": [
           0.0,
@@ -2604,14 +2604,14 @@
         "anytime_td": 0.09
       },
       "movement": {
-        "pass_yds": -6.714338235294264,
-        "pass_tds": -0.022499999999999964,
-        "rush_att": -0.06499999999999995,
-        "rush_yds": -0.7992526994460416,
+        "pass_yds": 0.9899380804954205,
+        "pass_tds": -0.11999999999999988,
+        "rush_att": 0.16999999999999993,
+        "rush_yds": -0.5719652130410733,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.0
+        "anytime_td": -0.0025000000000000022
       },
       "context": {
         "opponent": {
@@ -2681,7 +2681,7 @@
           "reason": null
         },
         "carry_share": {
-          "value": 0.10263156648200526,
+          "value": 0.11029277594621772,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -2718,7 +2718,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.125
+      "p_ceiling": 0.0775
     },
     {
       "player_id": "00-0039342",
@@ -2730,12 +2730,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0325,
-        "rush_yds": 0.11466359387172162,
-        "targets": 2.915,
-        "receptions": 1.435,
-        "rec_yds": 19.595,
-        "anytime_td": 0.1325
+        "rush_att": 0.0475,
+        "rush_yds": 0.1689779278109582,
+        "targets": 3.405,
+        "receptions": 1.7375,
+        "rec_yds": 22.645,
+        "anytime_td": 0.15
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2771,21 +2771,21 @@
           2.0,
           3.0,
           4.0,
-          5.0
+          6.0
         ],
         "receptions": [
           0.0,
-          0.0,
           1.0,
-          2.0,
-          3.0
+          1.0,
+          3.0,
+          4.0
         ],
         "rec_yds": [
           0.0,
-          0.0,
-          16.0,
-          30.0,
-          48.0
+          2.0,
+          18.0,
+          36.0,
+          53.0
         ],
         "anytime_td": [
           0.0,
@@ -2808,12 +2808,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.0175,
-        "rush_yds": 0.014081493984246518,
-        "targets": -0.11249999999999982,
-        "receptions": -0.03749999999999987,
-        "rec_yds": -1.6700000000000017,
-        "anytime_td": -0.009999999999999981
+        "rush_att": -0.0025000000000000022,
+        "rush_yds": 0.06839582792348309,
+        "targets": 0.37749999999999995,
+        "receptions": 0.2650000000000001,
+        "rec_yds": 1.379999999999999,
+        "anytime_td": 0.007500000000000007
       },
       "context": {
         "opponent": {
@@ -2879,11 +2879,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.09612883214386721,
+          "value": 0.11561621811358579,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017873911823577525,
+          "value": 0.001254562794590112,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -2920,7 +2920,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.03
+      "p_ceiling": 0.035
     },
     {
       "player_id": "00-0039344",
@@ -2932,12 +2932,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 5.6675,
-        "rush_yds": 24.37756217687946,
-        "targets": 1.7925,
-        "receptions": 1.1225,
-        "rec_yds": 15.0275,
-        "anytime_td": 0.355
+        "rush_att": 6.76,
+        "rush_yds": 28.280518596118704,
+        "targets": 1.7825,
+        "receptions": 1.125,
+        "rec_yds": 14.1975,
+        "anytime_td": 0.365
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2955,18 +2955,18 @@
           0.0
         ],
         "rush_att": [
-          3.0,
           4.0,
           5.0,
-          7.0,
-          9.0
+          6.0,
+          8.0,
+          11.0
         ],
         "rush_yds": [
-          5.876471396596093,
-          12.73235469262487,
-          21.54706178751901,
-          31.341180781845832,
-          46.03235927333607
+          9.794118994326823,
+          15.670590390922916,
+          25.46470938524974,
+          37.217652178441924,
+          51.90883066993215
         ],
         "targets": [
           0.0,
@@ -2985,8 +2985,8 @@
         "rec_yds": [
           0.0,
           0.0,
-          9.0,
-          21.0,
+          8.0,
+          22.0,
           39.0
         ],
         "anytime_td": [
@@ -3010,12 +3010,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.10999999999999943,
-        "rush_yds": -1.0308310241529028,
-        "targets": -0.06499999999999995,
-        "receptions": -0.047499999999999876,
-        "rec_yds": 0.042500000000000426,
-        "anytime_td": -0.030000000000000027
+        "rush_att": 0.9824999999999999,
+        "rush_yds": 2.8721253950863392,
+        "targets": -0.07499999999999996,
+        "receptions": -0.04499999999999993,
+        "rec_yds": -0.7874999999999996,
+        "anytime_td": -0.020000000000000018
       },
       "context": {
         "opponent": {
@@ -3081,11 +3081,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.06221035974952845,
+          "value": 0.05827466763225726,
           "reason": null
         },
         "carry_share": {
-          "value": 0.21505793796331996,
+          "value": 0.25672453569846926,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -3122,7 +3122,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0625
+      "p_ceiling": 0.045
     },
     {
       "player_id": "00-0039491",
@@ -3134,12 +3134,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0475,
-        "rush_yds": 0.13075672985371764,
-        "targets": 5.805,
-        "receptions": 4.6125,
-        "rec_yds": 62.8125,
-        "anytime_td": 0.27
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 5.215,
+        "receptions": 4.07,
+        "rec_yds": 55.2725,
+        "anytime_td": 0.1875
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3171,25 +3171,25 @@
           0.0
         ],
         "targets": [
-          3.0,
+          2.0,
           4.0,
           5.0,
-          8.0,
+          7.0,
           9.0
         ],
         "receptions": [
           2.0,
           3.0,
           4.0,
-          6.0,
+          5.0,
           7.0
         ],
         "rec_yds": [
-          19.0,
-          33.0,
-          56.0,
-          84.0,
-          115.0
+          15.0,
+          27.0,
+          47.0,
+          75.0,
+          106.0
         ],
         "anytime_td": [
           0.0,
@@ -3212,12 +3212,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0075,
-        "rush_yds": -0.05431433393923657,
-        "targets": -0.16500000000000004,
-        "receptions": 0.004999999999999893,
-        "rec_yds": 1.8350000000000009,
-        "anytime_td": 0.015000000000000013
+        "rush_att": -0.04,
+        "rush_yds": -0.1850710637929542,
+        "targets": -0.7549999999999999,
+        "receptions": -0.5374999999999996,
+        "rec_yds": -5.704999999999998,
+        "anytime_td": -0.0675
       },
       "context": {
         "opponent": {
@@ -3283,11 +3283,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.19362243640862348,
+          "value": 0.17060321887470106,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017873911823577525,
+          "value": 0.0,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -3324,7 +3324,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.32
+      "p_ceiling": 0.2
     },
     {
       "player_id": "00-0040124",
@@ -3336,12 +3336,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.025,
-        "rush_yds": 0.04023283995499005,
-        "targets": 5.545,
-        "receptions": 3.3875,
-        "rec_yds": 57.29,
-        "anytime_td": 0.2075
+        "rush_att": 0.0,
+        "rush_yds": 0.0,
+        "targets": 7.2625,
+        "receptions": 4.52,
+        "rec_yds": 79.0575,
+        "anytime_td": 0.245
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3373,25 +3373,25 @@
           0.0
         ],
         "targets": [
-          3.0,
           4.0,
           5.0,
           7.0,
-          9.0
+          9.0,
+          11.0
         ],
         "receptions": [
-          1.0,
           2.0,
           3.0,
-          5.0,
-          6.0
+          4.0,
+          6.0,
+          7.0
         ],
         "rec_yds": [
-          10.0,
-          27.0,
-          50.0,
-          80.0,
-          109.0
+          25.0,
+          40.0,
+          70.0,
+          108.0,
+          148.0
         ],
         "anytime_td": [
           0.0,
@@ -3414,12 +3414,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.0225,
-        "rush_yds": -0.0985704578897256,
-        "targets": 0.13750000000000018,
-        "receptions": 0.012500000000000178,
-        "rec_yds": -0.3400000000000034,
-        "anytime_td": 0.024999999999999994
+        "rush_att": -0.0475,
+        "rush_yds": -0.13880329784471565,
+        "targets": 1.8550000000000004,
+        "receptions": 1.1449999999999996,
+        "rec_yds": 21.427500000000002,
+        "anytime_td": 0.0625
       },
       "context": {
         "opponent": {
@@ -3485,11 +3485,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.17969477865651545,
+          "value": 0.2320086496059424,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017873911823577525,
+          "value": 0.0,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -3526,7 +3526,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.255
+      "p_ceiling": 0.3775
     },
     {
       "player_id": "00-0040187",
@@ -3538,12 +3538,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0,
-        "rush_yds": 0.0,
-        "targets": 2.2725,
-        "receptions": 1.5725,
-        "rec_yds": 13.39,
-        "anytime_td": 0.1175
+        "rush_att": 0.0475,
+        "rush_yds": 0.13663983380940012,
+        "targets": 1.635,
+        "receptions": 1.1175,
+        "rec_yds": 8.635,
+        "anytime_td": 0.0875
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3577,30 +3577,30 @@
         "targets": [
           0.0,
           1.0,
+          1.0,
           2.0,
-          3.0,
-          4.0
+          3.0
         ],
         "receptions": [
           0.0,
-          1.0,
+          0.0,
           1.0,
           2.0,
           3.0
         ],
         "rec_yds": [
           0.0,
-          3.0,
-          9.0,
-          20.0,
-          32.0
+          0.0,
+          6.0,
+          13.0,
+          21.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
           0.0,
-          1.0
+          0.0
         ]
       },
       "week_open": {
@@ -3616,12 +3616,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.0025,
-        "rush_yds": -0.0068319916904700075,
-        "targets": -0.19499999999999984,
-        "receptions": -0.16999999999999993,
-        "rec_yds": -0.8125,
-        "anytime_td": -0.03
+        "rush_att": 0.045,
+        "rush_yds": 0.12980784211893012,
+        "targets": -0.8324999999999998,
+        "receptions": -0.625,
+        "rec_yds": -5.567500000000001,
+        "anytime_td": -0.06
       },
       "context": {
         "opponent": {
@@ -3687,11 +3687,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.07795546121547774,
+          "value": 0.05903214158500528,
           "reason": null
         },
         "carry_share": {
-          "value": 0.00013577701820552925,
+          "value": 0.0014697349018017885,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -3728,7 +3728,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.045
+      "p_ceiling": 0.0125
     },
     {
       "player_id": "00-0040218",
@@ -3740,12 +3740,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.04,
-        "rush_yds": 0.13276837185146714,
-        "targets": 2.49,
-        "receptions": 1.6025,
-        "rec_yds": 14.545,
-        "anytime_td": 0.21
+        "rush_att": 0.455,
+        "rush_yds": 1.6837443521163353,
+        "targets": 1.3875,
+        "receptions": 0.905,
+        "rec_yds": 8.2075,
+        "anytime_td": 0.125
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3766,36 +3766,36 @@
           0.0,
           0.0,
           0.0,
-          0.0,
-          0.0
+          1.0,
+          1.0
         ],
         "rush_yds": [
           0.0,
           0.0,
           0.0,
-          0.0,
-          0.0
+          0.8046567990998009,
+          6.437254392798407
         ],
         "targets": [
-          1.0,
-          1.0,
-          2.0,
-          3.0,
-          5.0
-        ],
-        "receptions": [
           0.0,
           1.0,
           1.0,
           2.0,
           3.0
         ],
-        "rec_yds": [
+        "receptions": [
+          0.0,
           0.0,
           1.0,
-          10.0,
-          22.0,
-          35.0
+          2.0,
+          2.0
+        ],
+        "rec_yds": [
+          0.0,
+          0.0,
+          3.0,
+          13.0,
+          23.0
         ],
         "anytime_td": [
           0.0,
@@ -3818,12 +3818,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0049999999999999975,
-        "rush_yds": 0.024139703972994045,
-        "targets": -0.0924999999999998,
-        "receptions": -0.0024999999999999467,
-        "rec_yds": -0.7449999999999992,
-        "anytime_td": -0.015000000000000013
+        "rush_att": 0.42000000000000004,
+        "rush_yds": 1.5751156842378622,
+        "targets": -1.195,
+        "receptions": -0.7,
+        "rec_yds": -7.0825,
+        "anytime_td": -0.1
       },
       "context": {
         "opponent": {
@@ -3889,11 +3889,11 @@
           "reason": null
         },
         "target_share": {
-          "value": 0.08220117439175915,
+          "value": 0.04760937178299814,
           "reason": null
         },
         "carry_share": {
-          "value": 0.0017873911823577525,
+          "value": 0.014925130810917054,
           "reason": null
         },
         "qb_attempt_weight": {
@@ -3930,7 +3930,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.02
+      "p_ceiling": 0.0075
     }
   ]
 }
