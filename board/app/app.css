@@ -876,6 +876,36 @@ body{
 .screengap.positive{color:var(--positive-text)}
 .screengap.absent{color:var(--muted);font-weight:var(--w-regular)}
 
+/* UI_ALPHA_SPEC sec 5 — THE BLIND-SPOT RULE'S TWO PIECES OF TYPE.
+   Both are sec 3.1's `muted` at the footnote size: the same family as
+   the basis lines under a card, because this is the same KIND of
+   sentence — something the page says about its own number, in a voice
+   that is quieter than the number. It is NOT a warning colour: a
+   blind-spot row is not an error and not a negative, it is a row we
+   do not believe, and dressing it in red would make it as loud as the
+   edge it is being kept away from.
+
+   The row itself keeps every value and every tint it had; the only
+   thing `.screenrow.blind` changes is the rule on its left edge, so
+   the band is legible while scrolling without colour being the only
+   signal (sec 9: the divider's own words are above it either way). */
+.blindnote{
+  font-size:var(--type-meta);
+  color:var(--muted);
+  line-height:1.4;
+  font-weight:var(--w-regular);
+}
+.blinddivider{
+  font-size:var(--type-meta);
+  font-weight:var(--w-semibold);
+  color:var(--muted);
+  letter-spacing:0.02em;
+  padding:14px 12px 2px;
+  border-top:1px solid var(--rule);
+  margin-top:6px;
+}
+.screenrow.blind{border-left:3px solid var(--border-strong)}
+
 .sidepill{
   display:inline-block;
   padding:1px 8px;
@@ -1041,6 +1071,7 @@ body{
 
 .slipleglist{display:flex;flex-direction:column;gap:4px;padding-top:8px}
 .slipleg{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:var(--type-cell)}
+.sliplegtext{display:flex;flex-direction:column;gap:2px;min-width:0}
 .slipleg .legp{font-size:var(--type-cell)}
 
 .seg button.deferred{color:var(--disabled)}

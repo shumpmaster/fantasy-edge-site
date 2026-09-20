@@ -1,6 +1,6 @@
 {
   "slate_schema": "slate-1",
-  "generated_at": "2026-09-20T02:15:12.570554+00:00",
+  "generated_at": "2026-09-20T03:14:56.643435+00:00",
   "poll_interval_s": 1800,
   "run": {
     "season": 2026,
@@ -33465,27 +33465,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 54.5,
-        "line_label": "54.5+",
-        "book": "betmgm",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
+        "book": "fanduel",
         "odds": [
-          -115,
-          -115
+          -132,
+          -130
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.765,
+        "model_p": 0.725,
         "model_band": [
-          0.75,
-          0.8
+          0.7,
+          0.75
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 27,
+        "market_p_novig": 0.498348,
+        "gap_pts": 23,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -34579,204 +34579,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.522657
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.527689
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.53677
+        },
+        {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.503014
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.715,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.715,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.715,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.721875,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.765,
+          "model_p": 0.725,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.494977
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.495955
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.765,
+          "model_p": 0.725,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.765,
+          "model_p": 0.725,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -34816,27 +34841,27 @@
       "pos": "WR",
       "slot": "WR2",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 17.5,
-        "line_label": "17.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 1.5,
+        "line_label": "2+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          -152,
+          -138
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "more",
         "lean_label": "More",
-        "model_p": 0.795,
+        "model_p": 0.675,
         "model_band": [
-          0.75,
-          0.8
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 30,
+        "market_p_novig": 0.509866,
+        "gap_pts": 17,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -35885,49 +35910,59 @@
       },
       "market_series": [
         {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.423216
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.423216
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.808333,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.808333,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.808333,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.804167,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
@@ -35942,62 +35977,62 @@
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.795,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.524606
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.510121
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.503095
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
@@ -36007,77 +36042,77 @@
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.379747
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.795,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.795,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.395971
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -36117,27 +36152,27 @@
       "pos": "WR",
       "slot": "WR3",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 8.5,
-        "line_label": "8.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 1.5,
+        "line_label": "2+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          104,
+          -138
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "more",
         "lean_label": "More",
-        "model_p": 0.875,
+        "model_p": 0.825,
         "model_band": [
-          0.85,
-          0.9
+          0.8,
+          0.85
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 38,
+        "market_p_novig": 0.458115,
+        "gap_pts": 37,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -37141,199 +37176,209 @@
       },
       "market_series": [
         {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.423216
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.423216
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.8625,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.8625,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.8625,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.502106
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.502106
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.8625,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.524606
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.379747
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.534653
+          "book_p": 0.395971
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -37373,27 +37418,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 3.5,
-        "line_label": "4+",
-        "book": "fanduel",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 30.5,
+        "line_label": "30.5+",
+        "book": "fanatics",
         "odds": [
-          106,
-          -140
+          -115,
+          -115
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.925,
+        "model_p": 0.595,
         "model_band": [
-          0.9,
-          0.95
+          0.55,
+          0.6
         ],
-        "market_p_novig": 0.545799,
-        "gap_pts": 38,
+        "market_p_novig": 0.5,
+        "gap_pts": 9,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -38487,229 +38532,224 @@
       },
       "market_series": [
         {
-          "t": "2026-09-14T23:31:16+00:00",
+          "t": "2026-09-14T21:00:16+00:00",
           "model_p": null,
-          "book_p": 0.417062
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-14T23:55:33+00:00",
           "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-15T01:55:31+00:00",
-          "model_p": null,
-          "book_p": 0.477343
+          "book_p": 0.504212
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.472311
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.419857
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.419857
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.925,
+          "model_p": 0.59375,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.925,
+          "model_p": 0.59375,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.925,
+          "model_p": 0.59375,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.925,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.925,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.925,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.925,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -45640,27 +45680,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 3.5,
-        "line_label": "4+",
-        "book": "fanduel",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 53.5,
+        "line_label": "53.5+",
+        "book": "bovada",
         "odds": [
-          -188,
-          -140
+          -115,
+          -190
         ],
-        "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
+        "odds_snapshot_ts": "2026-09-19T20:52:42+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.725,
+        "model_p": 0.655,
         "model_band": [
-          0.7,
-          0.75
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.47191,
-        "gap_pts": 25,
+        "market_p_novig": 0.550539,
+        "gap_pts": 10,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -46754,229 +46794,214 @@
       },
       "market_series": [
         {
-          "t": "2026-09-14T23:31:16+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-14T23:55:33+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.477343
+          "book_p": 0.498982
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.472311
+          "book_p": 0.498982
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.419857
-        },
-        {
-          "t": "2026-09-15T15:30:51+00:00",
-          "model_p": null,
-          "book_p": 0.419857
+          "book_p": 0.494977
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.675,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.675,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.675,
+          "model_p": 0.595,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.675,
+          "model_p": 0.615,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.725,
+          "model_p": 0.655,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.725,
+          "model_p": 0.655,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.725,
+          "model_p": 0.655,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -48362,27 +48387,27 @@
       "pos": "WR",
       "slot": "WR3",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 1.5,
-        "line_label": "2+",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 14.5,
+        "line_label": "14.5+",
         "book": "fanduel",
         "odds": [
-          -102,
-          -138
+          -113,
+          -113
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "more",
         "lean_label": "More",
-        "model_p": 0.725,
+        "model_p": 0.6625,
         "model_band": [
-          0.7,
-          0.75
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.465486,
-        "gap_pts": 26,
+        "market_p_novig": 0.5,
+        "gap_pts": 16,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -49433,207 +49458,207 @@
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.423216
+          "book_p": 0.518507
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.423216
+          "book_p": 0.518507
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6375,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6375,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6375,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6875,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.725,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.524606
+          "book_p": 0.509047
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.509047
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.379747
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.725,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.725,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -73272,18 +73297,18 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 35.5,
-        "line_label": "35.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
         "book": "draftkings",
         "odds": [
-          -109,
-          -115
+          124,
+          100
         ],
-        "odds_snapshot_ts": "2026-09-20T00:24:30+00:00",
+        "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
         "model_p": 0.825,
@@ -73291,8 +73316,8 @@
           0.8,
           0.85
         ],
-        "market_p_novig": 0.50632,
-        "gap_pts": 32,
+        "market_p_novig": 0.528302,
+        "gap_pts": 30,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -74374,54 +74399,64 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.522657
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.527689
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.735,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.735,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.735,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
@@ -74431,52 +74466,52 @@
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
@@ -74486,52 +74521,52 @@
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
@@ -74541,7 +74576,7 @@
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
@@ -74551,42 +74586,42 @@
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -101676,27 +101711,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 5.5,
-        "line_label": "6+",
-        "book": "fanduel",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 63.5,
+        "line_label": "63.5+",
+        "book": "bovada",
         "odds": [
-          -132,
-          -108
+          -145,
+          110
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.775,
+        "model_p": 0.653125,
         "model_band": [
-          0.75,
-          0.8
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.477148,
-        "gap_pts": 30,
+        "market_p_novig": 0.44586,
+        "gap_pts": 21,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -102791,198 +102826,198 @@
       "market_series": [
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.775,
+          "model_p": 0.667857,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.775,
+          "model_p": 0.667857,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.775,
+          "model_p": 0.667857,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.442478
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.442478
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.775,
+          "model_p": 0.665,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.775,
+          "model_p": 0.665,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.601707
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.601707
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.775,
+          "model_p": 0.665,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.775,
+          "model_p": 0.653125,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.455408
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -136045,27 +136080,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 1.5,
-        "line_label": "2+",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 14.5,
+        "line_label": "14.5+",
         "book": "fanduel",
         "odds": [
-          -188,
-          -138
+          -113,
+          -113
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "more",
         "lean_label": "More",
-        "model_p": 0.775,
+        "model_p": 0.64375,
         "model_band": [
-          0.75,
-          0.8
+          0.6,
+          0.65
         ],
-        "market_p_novig": 0.52959,
-        "gap_pts": 25,
+        "market_p_novig": 0.5,
+        "gap_pts": 14,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -137116,207 +137151,207 @@
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.423216
+          "book_p": 0.518507
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.423216
+          "book_p": 0.518507
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.825,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.825,
+          "model_p": 0.6625,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.524606
+          "book_p": 0.509047
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.509047
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.379747
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.775,
+          "model_p": 0.64375,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.775,
+          "model_p": 0.64375,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.395971
+          "book_p": 0.510121
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -143661,27 +143696,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 46.5,
-        "line_label": "46.5+",
-        "book": "draftkings",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
+        "book": "fanduel",
         "odds": [
-          -114,
-          -110
+          116,
+          -130
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.785,
+        "model_p": 0.775,
         "model_band": [
           0.75,
           0.8
         ],
-        "market_p_novig": 0.495788,
-        "gap_pts": 29,
+        "market_p_novig": 0.549726,
+        "gap_pts": 23,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -144775,219 +144810,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.505023
+          "book_p": 0.522657
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.505023
+          "book_p": 0.527689
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.503014
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.804167,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.804167,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.804167,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.815,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.815,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.489742
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.489742
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.491797
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.785,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.489742
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.785,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.625
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.563319
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -149700,27 +149745,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 4.5,
-        "line_label": "5+",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 60.5,
+        "line_label": "60.5+",
         "book": "fanduel",
         "odds": [
-          -136,
-          -130
+          -113,
+          -113
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.775,
+        "model_p": 0.635,
         "model_band": [
-          0.75,
-          0.8
+          0.6,
+          0.65
         ],
-        "market_p_novig": 0.495158,
-        "gap_pts": 28,
+        "market_p_novig": 0.5,
+        "gap_pts": 14,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -150816,227 +150861,227 @@
         {
           "t": "2026-09-14T23:31:16+00:00",
           "model_p": null,
-          "book_p": 0.530612
+          "book_p": 0.5
         },
         {
           "t": "2026-09-14T23:55:33+00:00",
           "model_p": null,
-          "book_p": 0.518507
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.522657
+          "book_p": 0.496905
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.527689
+          "book_p": 0.496905
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.53677
+          "book_p": 0.483561
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.53677
+          "book_p": 0.496986
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.725,
+          "model_p": 0.61875,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.725,
+          "model_p": 0.61875,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.725,
+          "model_p": 0.61875,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.775,
+          "model_p": 0.635,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.775,
+          "model_p": 0.635,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.575163
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.566511
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.557522
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.775,
+          "model_p": 0.635,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.775,
+          "model_p": 0.635,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -184350,27 +184395,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 37.5,
-        "line_label": "37.5+",
-        "book": "draftkings",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 3.5,
+        "line_label": "4+",
+        "book": "fanduel",
         "odds": [
-          -111,
-          -111
+          106,
+          -140
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.81875,
+        "model_p": 0.825,
         "model_band": [
           0.8,
           0.85
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 32,
+        "market_p_novig": 0.545799,
+        "gap_pts": 28,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -185464,199 +185509,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.477343
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.472311
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.775,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.50516
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.50516
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.50516
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.503095
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.503095
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.490953
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.479695
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.507129
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.507129
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.507129
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.507129
+          "book_p": 0.544592
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -193935,27 +194010,27 @@
       "pos": "WR",
       "slot": "WR3",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 3.5,
-        "line_label": "4+",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 37.5,
+        "line_label": "37.5+",
         "book": "fanduel",
         "odds": [
-          -132,
-          -140
+          -113,
+          -113
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.775,
+        "model_p": 0.6125,
         "model_band": [
-          0.75,
-          0.8
+          0.6,
+          0.65
         ],
-        "market_p_novig": 0.506234,
-        "gap_pts": 27,
+        "market_p_novig": 0.5,
+        "gap_pts": 11,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -195049,229 +195124,199 @@
       },
       "market_series": [
         {
-          "t": "2026-09-14T23:31:16+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-14T23:55:33+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-15T01:55:31+00:00",
-          "model_p": null,
-          "book_p": 0.477343
-        },
-        {
-          "t": "2026-09-15T03:18:08+00:00",
-          "model_p": null,
-          "book_p": 0.472311
-        },
-        {
-          "t": "2026-09-15T14:58:31+00:00",
-          "model_p": null,
-          "book_p": 0.419857
-        },
-        {
-          "t": "2026-09-15T15:30:51+00:00",
-          "model_p": null,
-          "book_p": 0.419857
-        },
-        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.825,
+          "model_p": 0.65625,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.825,
+          "model_p": 0.65625,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.825,
+          "model_p": 0.65625,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6125,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.50516
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.50516
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.50516
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.503095
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6125,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.503095
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6125,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.775,
+          "model_p": 0.6125,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.507129
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -203054,27 +203099,27 @@
       "pos": "WR",
       "slot": "WR3",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 54.5,
-        "line_label": "54.5+",
-        "book": "betmgm",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
+        "book": "fanduel",
         "odds": [
-          -115,
-          -115
+          110,
+          -130
         ],
-        "odds_snapshot_ts": "2026-09-20T00:24:30+00:00",
+        "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.935417,
+        "model_p": 0.875,
         "model_band": [
-          0.9,
-          0.95
+          0.85,
+          0.9
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 44,
+        "market_p_novig": 0.542744,
+        "gap_pts": 33,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -204168,204 +204213,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.522657
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.527689
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.53677
+        },
+        {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.503014
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.95051,
+          "model_p": 0.925,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.95051,
+          "model_p": 0.925,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.95051,
+          "model_p": 0.925,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.935417,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.935417,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.494977
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.495955
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.935417,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.935417,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -220490,27 +220560,27 @@
       "pos": "WR",
       "slot": "WR2",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 50.5,
-        "line_label": "50.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 3.5,
+        "line_label": "4+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          -162,
+          -140
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.815625,
+        "model_p": 0.675,
         "model_band": [
-          0.8,
-          0.85
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 32,
+        "market_p_novig": 0.485442,
+        "gap_pts": 19,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -221606,222 +221676,227 @@
         {
           "t": "2026-09-14T23:31:16+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.417062
         },
         {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.477343
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.472311
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.419857
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.419857
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.832143,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.832143,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.832143,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.503095
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.815625,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.815625,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.479695
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.815625,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.815625,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.489879
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -229249,27 +229324,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 33.5,
-        "line_label": "33.5+",
-        "book": "betrivers",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 3.5,
+        "line_label": "4+",
+        "book": "fanduel",
         "odds": [
-          -113,
-          -117
+          -102,
+          -140
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
-        "lean": "more",
-        "lean_label": "More",
-        "model_p": 0.746429,
+        "lean": "less",
+        "lean_label": "Less",
+        "model_p": 0.575,
         "model_band": [
-          0.7,
-          0.75
+          0.55,
+          0.6
         ],
-        "market_p_novig": 0.495955,
-        "gap_pts": 25,
+        "market_p_novig": 0.536012,
+        "gap_pts": 4,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -230363,199 +230438,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.477343
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.472311
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.705,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.705,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.705,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.505023
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.503095
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.503014
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.740625,
+          "model_p": 0.525,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.509047
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.510258
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.510258
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.510258
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.746429,
+          "model_p": 0.575,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.479695
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.746429,
+          "model_p": 0.575,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.746429,
+          "model_p": 0.575,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -251955,27 +252060,27 @@
       "pos": "WR",
       "slot": "WR",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 81.5,
-        "line_label": "81.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 6.5,
+        "line_label": "7+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          -106,
+          -122
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.791667,
+        "model_p": 0.675,
         "model_band": [
-          0.75,
-          0.8
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 29,
+        "market_p_novig": 0.516439,
+        "gap_pts": 16,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -253069,209 +253174,199 @@
       },
       "market_series": [
         {
-          "t": "2026-09-15T14:58:31+00:00",
-          "model_p": null,
-          "book_p": 0.5
-        },
-        {
-          "t": "2026-09-15T15:30:51+00:00",
-          "model_p": null,
-          "book_p": 0.5
-        },
-        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.810714,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.810714,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.810714,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.520305
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.489879
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.791667,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.534653
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -265593,27 +265688,27 @@
       "pos": "WR",
       "slot": "WR3",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 3.5,
-        "line_label": "4+",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 34.5,
+        "line_label": "34.5+",
         "book": "fanduel",
         "odds": [
-          120,
-          -140
+          -113,
+          -113
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.875,
+        "model_p": 0.558333,
         "model_band": [
-          0.85,
-          0.9
+          0.55,
+          0.6
         ],
-        "market_p_novig": 0.562044,
-        "gap_pts": 31,
+        "market_p_novig": 0.5,
+        "gap_pts": 6,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -266707,229 +266802,199 @@
       },
       "market_series": [
         {
-          "t": "2026-09-14T23:31:16+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-14T23:55:33+00:00",
-          "model_p": null,
-          "book_p": 0.417062
-        },
-        {
-          "t": "2026-09-15T01:55:31+00:00",
-          "model_p": null,
-          "book_p": 0.477343
-        },
-        {
-          "t": "2026-09-15T03:18:08+00:00",
-          "model_p": null,
-          "book_p": 0.472311
-        },
-        {
-          "t": "2026-09-15T14:58:31+00:00",
-          "model_p": null,
-          "book_p": 0.419857
-        },
-        {
-          "t": "2026-09-15T15:30:51+00:00",
-          "model_p": null,
-          "book_p": 0.419857
-        },
-        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.875,
+          "model_p": 0.605,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.875,
+          "model_p": 0.605,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.875,
+          "model_p": 0.605,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.496905
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.875,
+          "model_p": 0.558333,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.875,
+          "model_p": 0.558333,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.507129
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.875,
+          "model_p": 0.558333,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.875,
+          "model_p": 0.558333,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -274936,27 +275001,27 @@
       "pos": "WR",
       "slot": "WR2",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 51.5,
-        "line_label": "51.5+",
-        "book": "betrivers",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
+        "book": "draftkings",
         "odds": [
-          -115,
-          -117
+          112,
+          100
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.8375,
+        "model_p": 0.825,
         "model_band": [
           0.8,
           0.85
         ],
-        "market_p_novig": 0.501996,
-        "gap_pts": 34,
+        "market_p_novig": 0.514563,
+        "gap_pts": 31,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -276052,227 +276117,227 @@
         {
           "t": "2026-09-14T23:31:16+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.530612
         },
         {
           "t": "2026-09-14T23:55:33+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.518507
         },
         {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.496986
+          "book_p": 0.522657
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.496986
+          "book_p": 0.527689
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.496986
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.847222,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.847222,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.847222,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.8375,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.8375,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.8375,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.8375,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.496905
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -297127,27 +297192,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 42.5,
-        "line_label": "42.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          -130,
+          -130
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.865625,
+        "model_p": 0.825,
         "model_band": [
-          0.85,
-          0.9
+          0.8,
+          0.85
         ],
         "market_p_novig": 0.5,
-        "gap_pts": 37,
+        "gap_pts": 32,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -298229,199 +298294,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.522657
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.527689
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.53677
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.53677
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.853125,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.853125,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.853125,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.865625,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.508203
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.865625,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.865625,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.865625,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -306018,27 +306113,27 @@
       "pos": "WR",
       "slot": "WR2",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 52.5,
-        "line_label": "52.5+",
-        "book": "draftkings",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 4.5,
+        "line_label": "5+",
+        "book": "fanduel",
         "odds": [
-          -113,
-          -114
+          -138,
+          -130
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.908929,
+        "model_p": 0.875,
         "model_band": [
-          0.9,
-          0.95
+          0.85,
+          0.9
         ],
-        "market_p_novig": 0.501032,
-        "gap_pts": 41,
+        "market_p_novig": 0.493618,
+        "gap_pts": 38,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -307132,209 +307227,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.530612
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.518507
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.522657
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.527689
+        },
+        {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.496986
+          "book_p": 0.53677
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.891667,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.891667,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.891667,
+          "model_p": 0.825,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.908929,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.496986
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.487685
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.908929,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.575163
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.566511
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.557522
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.908929,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.908929,
+          "model_p": 0.875,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -308685,27 +308800,27 @@
       "pos": "TE",
       "slot": "TE",
       "key_prop": {
-        "market": "receiving yards",
-        "market_label": "Receiving yards",
-        "unit": "cy",
-        "unit_word": "rec yds",
-        "line": 42.5,
-        "line_label": "42.5+",
+        "market": "receptions",
+        "market_label": "Receptions",
+        "unit": "r",
+        "unit_word": "receptions",
+        "line": 3.5,
+        "line_label": "4+",
         "book": "fanduel",
         "odds": [
-          -113,
-          -113
+          -154,
+          -140
         ],
         "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.81875,
+        "model_p": 0.675,
         "model_band": [
-          0.8,
-          0.85
+          0.65,
+          0.7
         ],
-        "market_p_novig": 0.5,
-        "gap_pts": 32,
+        "market_p_novig": 0.490347,
+        "gap_pts": 18,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -309799,199 +309914,229 @@
       },
       "market_series": [
         {
+          "t": "2026-09-14T23:31:16+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-14T23:55:33+00:00",
+          "model_p": null,
+          "book_p": 0.417062
+        },
+        {
+          "t": "2026-09-15T01:55:31+00:00",
+          "model_p": null,
+          "book_p": 0.477343
+        },
+        {
+          "t": "2026-09-15T03:18:08+00:00",
+          "model_p": null,
+          "book_p": 0.472311
+        },
+        {
+          "t": "2026-09-15T14:58:31+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
+          "t": "2026-09-15T15:30:51+00:00",
+          "model_p": null,
+          "book_p": 0.419857
+        },
+        {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.433489
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.405904
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.508203
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.548179
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.49484
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.455408
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.465347
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.479695
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.81875,
+          "model_p": 0.675,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.520305
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.5
+          "book_p": 0.544592
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -325051,27 +325196,27 @@
       "pos": "WR",
       "slot": "WR2",
       "key_prop": {
-        "market": "receptions",
-        "market_label": "Receptions",
-        "unit": "r",
-        "unit_word": "receptions",
-        "line": 3.5,
-        "line_label": "4+",
-        "book": "fanduel",
+        "market": "receiving yards",
+        "market_label": "Receiving yards",
+        "unit": "cy",
+        "unit_word": "rec yds",
+        "line": 44.5,
+        "line_label": "44.5+",
+        "book": "draftkings",
         "odds": [
-          -220,
-          -140
+          -112,
+          -114
         ],
-        "odds_snapshot_ts": "2026-09-20T01:20:26+00:00",
+        "odds_snapshot_ts": "2026-09-19T14:51:37+00:00",
         "lean": "less",
         "lean_label": "Less",
-        "model_p": 0.775,
+        "model_p": 0.64375,
         "model_band": [
-          0.75,
-          0.8
+          0.6,
+          0.65
         ],
-        "market_p_novig": 0.459016,
-        "gap_pts": 32,
+        "market_p_novig": 0.502077,
+        "gap_pts": 14,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
         "calibration": "layer"
       },
@@ -326167,227 +326312,227 @@
         {
           "t": "2026-09-14T23:31:16+00:00",
           "model_p": null,
-          "book_p": 0.417062
+          "book_p": 0.5
         },
         {
           "t": "2026-09-14T23:55:33+00:00",
           "model_p": null,
-          "book_p": 0.417062
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T01:55:31+00:00",
           "model_p": null,
-          "book_p": 0.477343
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T03:18:08+00:00",
           "model_p": null,
-          "book_p": 0.472311
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T14:58:31+00:00",
           "model_p": null,
-          "book_p": 0.419857
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T15:30:51+00:00",
           "model_p": null,
-          "book_p": 0.419857
+          "book_p": 0.5
         },
         {
           "t": "2026-09-15T15:33:54.590276+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-15T17:39:08.953365+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-16T17:37:07.617603+00:00",
-          "model_p": 0.775,
+          "model_p": 0.625,
           "book_p": null
         },
         {
           "t": "2026-09-17T05:03:45+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T10:10:53+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T15:07:15+00:00",
           "model_p": null,
-          "book_p": 0.433489
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T17:37:04.617066+00:00",
-          "model_p": 0.725,
+          "model_p": 0.620833,
           "book_p": null
         },
         {
           "t": "2026-09-17T19:08:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T19:24:45+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:18:36+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-17T22:25:35+00:00",
           "model_p": null,
-          "book_p": 0.405904
+          "book_p": 0.5
         },
         {
           "t": "2026-09-18T00:32:00+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T00:46:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T03:05:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T06:09:30+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T11:32:49+00:00",
           "model_p": null,
-          "book_p": 0.548179
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T16:35:57+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T17:03:55.378784+00:00",
-          "model_p": 0.775,
+          "model_p": 0.64375,
           "book_p": null
         },
         {
           "t": "2026-09-18T18:58:29+00:00",
           "model_p": null,
-          "book_p": 0.455408
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T19:49:04+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T21:36:08+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T22:42:12+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.490953
         },
         {
           "t": "2026-09-18T23:36:38+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:20:28+00:00",
           "model_p": null,
-          "book_p": 0.465347
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T01:39:08+00:00",
           "model_p": null,
-          "book_p": 0.479695
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T03:02:11+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T06:08:36+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T11:16:43+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T14:27:26.500438+00:00",
-          "model_p": 0.775,
+          "model_p": 0.64375,
           "book_p": null
         },
         {
           "t": "2026-09-19T14:51:37+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T16:25:59.998510+00:00",
-          "model_p": 0.775,
+          "model_p": 0.64375,
           "book_p": null
         },
         {
           "t": "2026-09-19T18:08:18+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T18:17:19+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:52:42+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T20:59:47+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T22:43:03+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-19T23:17:00+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T00:24:30+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         },
         {
           "t": "2026-09-20T01:20:26+00:00",
           "model_p": null,
-          "book_p": 0.544592
+          "book_p": 0.5
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",

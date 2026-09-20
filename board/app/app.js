@@ -132,6 +132,15 @@ const SORT_GROUP_LABEL = "Sort";
 const GAP_VS = " vs mkt";
 const NO_REAL_GAP = "No real gap";
 
+/* UI_ALPHA_SPEC sec 5's two sentences, verbatim. The first rides
+ * every blind-spot row, card and leg; the second heads the band they
+ * are sorted into on the Biggest-gap view. They are OUR admission
+ * about OUR model, so they are written once and said the same way
+ * everywhere the reader can meet one. */
+const BLIND_SPOT_NOTE =
+  "a gap this size is usually our blind spot, not an edge";
+const BLIND_SPOT_DIVIDER = "Probably our blind spots, not edges";
+
 /* THE THREE PIECES OF ARITHMETIC THIS PAGE IS ALLOWED TO DO, named on
  * screen wherever their answer appears (UI_ALPHA_SPEC sec 4). Nothing
  * else here is computed: every other number is read off the exporter's
@@ -296,6 +305,26 @@ const PICKS_TOKEN_KEY = "fe.reads.token.v1";
  * here, on the client, because it is a decision about a screen — the
  * exporter ships the number and says nothing about it. */
 const GAP_MIN = 3;
+
+/* THE SECOND DISPLAY RULE, AND THE ONLY OTHER THRESHOLD THIS FILE
+ * OWNS. docs/DECISIONS.md, OWNER DIRECTION 2026-09-20 ("there has to
+ * be some level of realism in there"), realised as UI_ALPHA_SPEC sec
+ * 5: a published gap of twenty-five points or more is not an edge we
+ * found, it is the shape of a blind spot we have already named — a
+ * trailing window that believes one quiet game, and a negative tail
+ * the simulator does not carry. It is the same species as GAP_MIN
+ * above: a decision about a SCREEN, declared once, checkable against
+ * the screen. Roughly five times the calibration layer's own
+ * reliability band; moving it is a ledger edit, not a knob.
+ *
+ * IT CHANGES WHAT IS SAID, NEVER WHAT IS SHOWN. Every prop the
+ * exporter published still renders, with its own gap, its own chance,
+ * its own line and its own odds. A blind-spot candidate is SORTED
+ * behind the moderate gaps in the one view that makes an edge claim
+ * and is LABELLED wherever it appears. Nothing is filtered, nothing
+ * is rounded away, and no number on any of these screens is a
+ * different number because of this constant. */
+const BLIND_SPOT_GAP_PTS = 25;
 
 /* ...and the same shape for the Role trend, which sec 5.1 shows at
  * plus or minus five and hides below. */
@@ -1132,6 +1161,8 @@ async function saveSlip() {
           line_screened: leg.line_screened,
           p_at_screened: leg.p_at_screened,
           p_at_placed: leg.p_at_placed,
+          /* What he saw at save time, stored as submitted. */
+          blind_spot: leg.blind_spot,
           p_reason: leg.p_reason
         };
       })
@@ -1342,6 +1373,22 @@ function isEdge(prop) {
   return !!prop && prop.gap_pts >= GAP_MIN;
 }
 
+/* UI_ALPHA_SPEC sec 5, ONCE, AND THE ONLY PLACE IT LIVES. Same shape
+ * as `isEdge` above and for the same reason: the Screen's sort, the
+ * Screen's note, the Pick card, the home cell and a saved slip's leg
+ * all ask THIS question, so they cannot come to disagree about what a
+ * blind-spot candidate is. */
+function isBlindSpot(prop) {
+  return !!prop && prop.gap_pts >= BLIND_SPOT_GAP_PTS;
+}
+
+/* The Biggest-gap view's two bands, as a number to sort on: moderate
+ * gaps first, blind-spot candidates behind them. It is an ORDER, not
+ * a filter — every row is still in the list. */
+function gapBand(prop) {
+  return isBlindSpot(prop) ? 1 : 0;
+}
+
 function gapText(prop) {
   if (!isEdge(prop)) return NO_REAL_GAP;
   return (prop.gap_pts > 0 ? "+" : "") + prop.gap_pts + GAP_VS;
@@ -1493,8 +1540,16 @@ function cellValues(person) {
      * gap is an edge and is drawn as one; below it the cell is a grey
      * dash, never a small number a reader could take for one. The
      * rule itself lives in `isEdge`, once, so the home table and the
-     * Screen list cannot come to disagree about what an edge is. */
-    const big = isEdge(prop);
+     * Screen list cannot come to disagree about what an edge is.
+     *
+     * AND UI_ALPHA_SPEC SEC 5 CAPS IT. The exporter already keeps
+     * blind-spot candidates out of `key_prop` where it can; where
+     * EVERY key-market prop a player has is at or above the
+     * threshold it falls back to priority order, and that cell must
+     * not then wear the arrow — the sec 7.3 arrow is an edge claim
+     * and a blind spot is not an edge. The LINE still draws: nothing
+     * about this player's cell is hidden, only the claim. */
+    const big = isEdge(prop) && !isBlindSpot(prop);
     return { v1: line, v2: big ? signed(prop.gap_pts) : DASH,
       tone: big ? "positive" : "absent", big: big };
   }
@@ -1831,9 +1886,14 @@ function playersIn(game) {
   return out;
 }
 
+/* THE "HAS N GAPS" CHIP COUNTS WHAT THE TABLE WILL DRAW, and after
+ * UI_ALPHA_SPEC sec 5 that is the same two questions the cell asks.
+ * A chip that counted a blind-spot key prop would promise an edge one
+ * tap before the cell declines to draw one — the ledger's own words,
+ * "never dresses a blind-spot row as an edge", one level up. */
 function gapsIn(game) {
   return playersIn(game).filter(function (person) {
-    return isEdge(person.key_prop);
+    return isEdge(person.key_prop) && !isBlindSpot(person.key_prop);
   }).length;
 }
 
@@ -2130,25 +2190,54 @@ function screenRows() {
   const rows = allProps();
   rows.sort(function (one, two) {
     if (nav.sort === SORT_CHANCE) {
+      /* MODEL CHANCE MAKES NO EDGE CLAIM, so it is not re-ordered
+       * (UI_ALPHA_SPEC sec 5): a blind-spot candidate sits wherever
+       * its published chance puts it, and carries its note there. */
       return (two.prop.model_p - one.prop.model_p) ||
         (two.prop.gap_pts - one.prop.gap_pts) ||
         one.person.name.localeCompare(two.person.name);
     }
-    return (two.prop.gap_pts - one.prop.gap_pts) ||
+    /* BIGGEST GAP IS AN EDGE CLAIM AND IS THE DEFAULT VIEW, which is
+     * how the deployed week-2 slate came to lead with the model's
+     * blind spots dressed as its best finds. The band comes first in
+     * the comparison, so every moderate gap is above every blind-spot
+     * candidate; inside each band the order is the published gap,
+     * exactly as it was. NOTHING IS DROPPED — this moves rows, it
+     * does not remove them. */
+    return (gapBand(one.prop) - gapBand(two.prop)) ||
+      (two.prop.gap_pts - one.prop.gap_pts) ||
       (two.prop.model_p - one.prop.model_p) ||
       one.person.name.localeCompare(two.person.name);
   });
   return rows;
 }
 
+/* Where the sec 5 divider goes: the first blind-spot candidate in the
+ * Biggest-gap order, or nowhere. In the Model-chance view the rows are
+ * interleaved by design and there is no band to head, so the divider
+ * does not appear at all. */
+function blindSpotDividerAt(rows) {
+  if (nav.sort !== SORT_GAP) return -1;
+  for (let index = 0; index < rows.length; index += 1) {
+    if (isBlindSpot(rows[index].prop)) return index;
+  }
+  return -1;
+}
+
 function screenRow(entry, index) {
   const prop = entry.prop;
   const edge = isEdge(prop);
+  /* THE NOTE IS SPOKEN AS WELL AS SHOWN. A reader on a screen reader
+   * meets the same admission a reader on glass does, in the same
+   * sentence, on the same row. */
+  const blind = isBlindSpot(prop);
   const label = entry.person.name + ", " + entry.person.pos +
     " against " + opponentOf(entry.game, entry.side) + ", " +
     prop.market_label + " " + prop.line + ", " + prop.lean_label +
-    " " + pct(prop.model_p) + ", " + gapText(prop);
-  return '<button class="screenrow' + growClass() + '" style="--i:' +
+    " " + pct(prop.model_p) + ", " + gapText(prop) +
+    (blind ? ". " + BLIND_SPOT_NOTE : "");
+  return '<button class="screenrow' + (blind ? " blind" : "") +
+    growClass() + '" style="--i:' +
     Math.min(index, 8) + '" data-act="prop" data-player="' +
     esc(entry.id) + '" data-market="' + esc(prop.market) +
     '" aria-label="' + esc(label) + '">' +
@@ -2156,7 +2245,9 @@ function screenRow(entry, index) {
     '<span class="screenname">' + esc(entry.person.name) + '</span>' +
     '<span class="screenmeta">' + esc(entry.person.pos + " · vs " +
       opponentOf(entry.game, entry.side) + " · " + prop.market +
-      " " + prop.line) + '</span></span>' +
+      " " + prop.line) + '</span>' +
+    (blind ? '<span class="blindnote">' + esc(BLIND_SPOT_NOTE) +
+      '</span>' : "") + '</span>' +
     shapeFor(prop, false) +
     '<span class="screennums">' +
     '<span class="sidepill ' + esc(prop.lean) + '">' +
@@ -2174,13 +2265,22 @@ function renderBetsScreen() {
       '</div></div>';
   }
   const rows = screenRows();
+  /* EVERY ROW IN `rows` IS DRAWN. The divider is inserted BETWEEN two
+   * of them; it never stands in for one, and there is no branch here
+   * that skips a prop (UI_ALPHA_SPEC sec 5: no number is hidden). */
+  const divider = blindSpotDividerAt(rows);
   return '<div class="page">' + betsHead() +
     '<div class="slatehead"><div class="slatetitle">' + esc(SLATE_HEADER) +
     '</div><div class="pagemeta">' + esc(SLATE_BASIS) + '</div></div>' +
     sortToggle() +
     (rows.length
       ? '<div class="screenlist">' +
-        rows.map(screenRow).join("") + '</div>'
+        rows.map(function (entry, index) {
+          return (index === divider
+            ? '<div class="blinddivider">' + esc(BLIND_SPOT_DIVIDER) +
+              '</div>'
+            : "") + screenRow(entry, index);
+        }).join("") + '</div>'
       : '<div class="legend">' + esc(NO_CAPTURED_ROWS) + '</div>') +
     '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
     '<div class="legend">' + esc(CALIBRATION_NOTE) + '</div></div>';
@@ -2265,11 +2365,20 @@ function slipRows() {
       '<div class="slipleglist">' + (slip.legs || []).map(
         function (leg) {
           const person = playerOf(leg.player_id);
-          return '<div class="slipleg"><span>' +
+          /* THE SERVICE'S OWN STORED FLAG, not a fresh reading. It
+           * says what this surface said about the prop on the day he
+           * saved it, which is the leg's `p_at_placed` philosophy
+           * applied to the sentence beside it (UI_ALPHA_SPEC sec 5). */
+          return '<div class="slipleg"><span class="sliplegtext">' +
+            '<span>' +
             esc((person ? person.name : (leg.player_text ||
               TRACK_UNMATCHED_LEG)) + " · " +
               (leg.side === "less" ? "Less " : "More ") +
               leg.line_placed + " " + (leg.market || "")) + '</span>' +
+            (leg.blind_spot
+              ? '<span class="blindnote">' + esc(BLIND_SPOT_NOTE) +
+                '</span>'
+              : "") + '</span>' +
             '<span class="legp' + (leg.p_at_placed === null
               ? " absent" : "") + '">' +
             esc(leg.p_at_placed === null || leg.p_at_placed === undefined
@@ -2402,6 +2511,13 @@ function barsSection(prop) {
     probBar(PICK_MODEL, prop.model_p, prop.model_band, "",
       isEdge(prop) ? "positive" : "") +
     probBar(PICK_MARKET, prop.market_p_novig, null, book, "") +
+    /* UI_ALPHA_SPEC sec 5: ABOVE the gap line, so the admission is
+     * read before the number it qualifies rather than after it. The
+     * gap itself still prints, tinted as it always was — this card
+     * says what it thinks of the number, it does not withhold it. */
+    (isBlindSpot(prop)
+      ? '<div class="blindnote">' + esc(BLIND_SPOT_NOTE) + '</div>'
+      : "") +
     '<div class="gapline ' + (isEdge(prop) ? "positive" : "absent") +
     '">' + esc(gapText(prop)) + '</div>' +
     '<div class="legend">' + esc(CLIENT_GAP_RULE) + '</div>' +
@@ -2580,6 +2696,13 @@ function matchLeg(text, side, line) {
     line_screened: prop.line,
     p_at_screened: rungChance(screened, side),
     p_at_placed: rungChance(placed, side),
+    /* UI_ALPHA_SPEC sec 5, and the same philosophy as `p_at_placed`
+     * beside it: THE LEG RECORDS WHAT HE SAW. Whether we called this
+     * prop a blind-spot candidate is a fact about the moment he saved
+     * the slip, so it is decided here, travels with the leg to the
+     * service and comes back stored — rather than being re-derived
+     * next week off a gap that has since moved. */
+    blind_spot: isBlindSpot(prop),
     p_reason: placed ? null : TRACK_OFF_LADDER
   };
 }
@@ -2694,6 +2817,9 @@ function trackLegs() {
           leg.line_placed + " " + leg.market) + '</div>' +
         '<div class="legnote ' + esc(note.tone) + '">' +
         esc(note.text) + '</div>' +
+        (leg.blind_spot
+          ? '<div class="blindnote">' + esc(BLIND_SPOT_NOTE) + '</div>'
+          : "") +
         '<button class="legdrop" data-act="track-drop" data-leg="' +
         index + '" aria-label="' + esc("Remove " +
           (leg.name || leg.text)) + '">' + esc(PICKS_REMOVE) +
