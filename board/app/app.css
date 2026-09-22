@@ -1646,6 +1646,52 @@ body{
 }
 
 /* --------------------------------------------------------------------
+   R1d — YOUR NUMBER (READS_R1_SPEC sec 6)
+   --------------------------------------------------------------------
+   ONE BLOCK FOR THE ONE COMPONENT, drawn identically on the pick
+   card, in My picks, on the live card and in an expanded home row.
+   It is built from the read colour's own three tokens — the family
+   sec 3.1 gives to the reader's own material — so a number that is
+   HIS is visibly his without a new colour being invented for it, and
+   it animates nothing, so reduced motion has nothing to turn off.
+   -------------------------------------------------------------------- */
+
+.yournum{
+  display:flex;flex-direction:column;gap:2px;
+  margin-top:10px;padding:10px 12px;
+  background:var(--read-tint);border-radius:10px;
+}
+.yournum.compact{margin-top:6px;padding:8px 10px}
+.yournumbet{
+  font-size:var(--type-meta);color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.yournumline{
+  display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;
+  font-variant-numeric:tabular-nums;
+}
+.yournummine{
+  font-size:var(--type-card);font-weight:var(--w-semibold);
+  color:var(--read-text);
+}
+.yournumdot{color:var(--subtle);font-size:var(--type-meta)}
+.yournummodel{font-size:var(--type-body);color:var(--text-2)}
+.yournumband{
+  font-size:var(--type-meta);color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+.yournumlabel{
+  font-size:var(--type-meta);color:var(--read-text);line-height:1.4;
+}
+.watchgroup{display:flex;flex-direction:column}
+.readtouch{
+  display:inline-block;align-self:flex-start;
+  font-size:var(--type-meta);color:var(--read-text);
+  background:var(--read-tint);border-radius:6px;padding:2px 6px;
+  margin-top:4px;
+}
+
+/* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
    not softened, off. Nothing in this app depends on an animation to

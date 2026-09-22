@@ -1,0 +1,69 @@
+{
+  "sample": true,
+  "reason_sample": "FABRICATED. These are not anybody's reads and not the engine's numbers: this file stands in for the reads service's own answer so the whole of \"your number\" can be looked at offline, and it is reachable only at ?demo=1. Nothing here is written to or read from the real service.",
+  "season": 2026,
+  "week": 5,
+  "generation_id": "sample-gen",
+  "reason": null,
+  "scenarios": [
+    {
+      "scenario_id": "sample-scn-001",
+      "read_id": "sample-read-001",
+      "player_id": "demo-007",
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "line": 5.5,
+      "side": "more",
+      "model_p": 0.550921,
+      "scenario_p": 0.612,
+      "band_lo": 0.574,
+      "band_hi": 0.651,
+      "generation_id": "sample-gen",
+      "created_at": "2026-10-11T15:10:00Z"
+    },
+    {
+      "scenario_id": "sample-scn-002",
+      "read_id": "sample-read-001",
+      "player_id": "demo-004",
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "line": 3.5,
+      "side": "less",
+      "model_p": 0.578982,
+      "scenario_p": 0.541,
+      "band_lo": 0.502,
+      "band_hi": 0.579,
+      "generation_id": "sample-gen",
+      "created_at": "2026-10-11T15:10:00Z"
+    },
+    {
+      "scenario_id": "sample-scn-003",
+      "read_id": "sample-read-001",
+      "player_id": "demo-012",
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "line": 4.5,
+      "side": "more",
+      "model_p": 0.569518,
+      "scenario_p": 0.623,
+      "band_lo": 0.586,
+      "band_hi": 0.661,
+      "generation_id": "sample-gen",
+      "created_at": "2026-10-11T15:10:00Z"
+    }
+  ],
+  "watchlist": [
+    {
+      "player_id": "demo-007",
+      "market": "receptions",
+      "line": 5.5,
+      "side": "more"
+    },
+    {
+      "player_id": "demo-012",
+      "market": "receptions",
+      "line": 4.5,
+      "side": "more"
+    }
+  ]
+}

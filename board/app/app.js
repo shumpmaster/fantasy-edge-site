@@ -299,6 +299,48 @@ const READ_NO_PICK =
 const READ_CONNECT_BODY =
   "Your reads are stored by the service, not in this browser. Paste the token and this sheet can save one; without it there is nowhere for a read to go and nothing is kept here instead.";
 
+/* ------------------------------------------------------------------
+ * sec 6 — YOUR NUMBER (READS_R1_SPEC sec 6)
+ * ------------------------------------------------------------------
+ * THE STEP THE READ SHEET WOULD NOT MOCK IS BUILT. The effect library
+ * exists, the service recomputes the published generation through it
+ * and STORES the answer, and what is drawn below is that stored
+ * answer — his probability beside the model's, on the side he took,
+ * with the band the recompute ran at its own endpoints.
+ *
+ * THE FOUR RULES THIS SURFACE KEEPS, and every one of them is the
+ * reason it is one component rather than four renderers:
+ *
+ *   IT IS ALWAYS LABELLED HIS. "Your read applied — this is your
+ *   number, not the model's" rides every appearance, fixed, because
+ *   the one way this feature could do harm is by a reader coming away
+ *   believing the engine said what his own read said.
+ *
+ *   IT COMPUTES NOTHING. The service stores the probability on the
+ *   side the read was taken on — the complement is taken there, where
+ *   the exporter's own clamp lives — so this page formats a stored
+ *   number and never works one out. That is UI_ALPHA_SPEC sec 4's
+ *   hard rule and it is why there is no arithmetic anywhere below.
+ *
+ *   THE SENTENCE FOR AN EMPTY ANSWER IS THE SERVICE'S, VERBATIM.
+ *   There are three different facts — we cannot size this kind of
+ *   read, this week's projection is not ready yet, nothing this read
+ *   touches has a line posted — and the service knows which one is
+ *   true. The page prints what it was handed. A fourth wording
+ *   invented here would be this screen making a claim about our own
+ *   capability that nothing behind it checked.
+ *
+ *   A GAME-LEVEL READ IS SLATE-WIDE. One read about a game moves
+ *   every player in it whose opportunity it touches, so a row it
+ *   reaches says so and opens onto the same component. */
+const YOUR_NUMBER_HEAD = "Your number";
+const YOUR_NUMBER_WITH = "With your read: ";
+const YOUR_NUMBER_MODEL = "the model says ";
+const YOUR_NUMBER_LABEL =
+  "your read applied — this is your number, not the model's";
+const YOUR_NUMBER_BAND = "could land ";
+const YOUR_NUMBER_TOUCH = "your read touches this game";
+
 /* The deferrals, each named where it would have been. */
 const DEFER_MATCHUP =
   "The matchup tile is on hold: its coverage rates and cornerback grades come from Pro Football Focus data, and each one needs its own sign-off before it can appear here.";
@@ -837,6 +879,15 @@ const PROJ_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
 
 const SERVICE_URL = "https://fantasy-edge-production-ab88.up.railway.app";
 const PICKS_TOKEN_KEY = "fe.reads.token.v1";
+
+/* THE FABRICATED ANSWER, on the one switch the other three documents
+ * use. `GET /scenarios` is a service answer rather than an exported
+ * document, so demo mode cannot simply point at a different file on
+ * the same path — it stands one in for the answer, which is what lets
+ * the whole of "your number" be looked at offline without a token and
+ * without a row of anybody's real reads on screen. Demo never asks
+ * the service and the service never fills a demo screen. */
+const DEMO_SCENARIOS_URL = "../demo/scenarios.demo.json";
 
 /* THE ONE DISPLAY RULE THIS FILE OWNS (handoff sec 7.3): a gap under
  * three points is not an edge and is never drawn as one. It lives
@@ -1931,6 +1982,22 @@ const nav = {
     step: 1, text: "", saved: null, spans: [], dropped: {},
     busy: false, note: "" },
 
+  /* R1d's own state, and it is the service's answer held for the
+   * visit like everything else here.
+   *
+   * `scenarios` is the rows `GET /scenarios` handed back — null means
+   * "not asked or not answered", which is a drawn state and not an
+   * empty board — and `scenarioReason` is the service's own sentence
+   * when there is nothing to show, kept VERBATIM because the page has
+   * no wording of its own for it.
+   *
+   * THERE IS NO SECOND COPY OF A PROBABILITY HERE. A row is held as
+   * the service sent it and every surface reads that row; nothing is
+   * recomputed, rescaled or complemented on the way to a screen. */
+  scenarios: null,
+  scenarioReason: null,
+  scenariosAsked: false,
+
   /* THE PROJECTIONS STATE (U7, widened to the whole slate at sec 8b).
    * `projections` is the breakdown document once it has arrived (null
    * means "not asked or not answered", which is a drawn state and not
@@ -2548,6 +2615,11 @@ async function postRead() {
     nav.read.dropped = {};
     nav.read.step = 2;
     nav.read.note = nav.read.spans.length ? "" : READ_NOTHING_FOUND;
+    /* R1d: THE SAVE ALREADY CARRIES HIS NUMBER. `POST /read` computes
+     * and stores the scenarios before it answers, so the sheet shows
+     * them on the spot rather than making him go and look — and the
+     * rest of the app picks the same rows up on its next ask. */
+    loadScenarios(true);
   } catch (err) {
     /* Never a silent drop: the words stay in the box and the line
      * under it says the service is not answering. */
@@ -2563,6 +2635,193 @@ async function postRead() {
 function confirmRead() {
   closeSheet();
   showToast(READ_SAVED_TOAST);
+}
+
+/* ------------------------------------------------------------------
+ * R1d — YOUR NUMBER (READS_R1_SPEC sec 6)
+ * ------------------------------------------------------------------
+ * The load, the lookup and the ONE component every surface draws it
+ * with. Nothing in this block does arithmetic on a probability: the
+ * service stores his number and the model's on the side the read was
+ * taken, and these functions find the row and format what is on it. */
+
+/* Asked once per visit, and only once the slate has said which week
+ * this is — the same rule the live board keeps, for the same reason:
+ * the page already knows which slate it is looking at and does not
+ * derive a second answer to that question.
+ *
+ * DEMO NEVER TOUCHES THE SERVICE. It reads the fabricated answer
+ * instead, so the whole surface can be looked at offline without a
+ * token and without one row of anybody's real reads on screen. */
+async function loadScenarios(force) {
+  if (nav.scenariosAsked && !force) return;
+  if (DEMO) {
+    nav.scenariosAsked = true;
+    try {
+      const sample = await getJSON(DEMO_SCENARIOS_URL);
+      nav.scenarios = (sample && sample.scenarios) || [];
+      nav.scenarioReason = (sample && sample.reason) || null;
+      /* THE FABRICATED SAVED BETS THE SAMPLE ROWS SIT UNDER, so My
+       * picks can be looked at with a number on it offline. They come
+       * out of the same bundled file, they never go near the service,
+       * and the demo card above them still says the segment is
+       * sample data. */
+      nav.watch = (sample && sample.watchlist) || [];
+    } catch (err) {
+      nav.scenarios = [];
+    }
+    render();
+    return;
+  }
+  const token = readToken();
+  nav.hasToken = !!token;
+  if (!token) return;
+  const week = slateWeekNumbers();
+  if (!week) return;
+  nav.scenariosAsked = true;
+  try {
+    const answer = await picksAsk(
+      "/scenarios?season=" + encodeURIComponent(week.season) +
+      "&week=" + encodeURIComponent(week.week), token, null);
+    nav.scenarios = (answer && answer.scenarios) || [];
+    /* THE SENTENCE IS THE SERVICE'S, WORD FOR WORD. Which of the
+     * three facts is true is something only the service knows, and a
+     * wording chosen here would be this page asserting one of them on
+     * its own authority. */
+    nav.scenarioReason = (answer && answer.reason) || null;
+  } catch (err) {
+    /* Never a silent drop and never a number dressed as fresh: the
+     * surfaces simply do not draw his number, and nothing invents one
+     * in its place. */
+    nav.scenarios = null;
+  }
+  render();
+}
+
+/* Every stored row for one player, in the order the service sent
+ * them. A game-level read reaches players he never wrote about, which
+ * is the slate-wide propagation and is exactly what this finds. */
+function scenariosOf(playerId) {
+  if (!playerId) return [];
+  return (nav.scenarios || []).filter(function (row) {
+    return row && row.player_id === playerId;
+  });
+}
+
+/* The row for one bet. The service sends the reader's own word for
+ * the market beside the number, so the match is made on the word the
+ * Screen, the watchlist and the live board all use — this page keeps
+ * no second mapping of its own to get wrong. A row whose market word
+ * we cannot match is simply not drawn here; the player-level surfaces
+ * still find it. */
+function scenarioFor(playerId, market) {
+  const wanted = String(market || "").toLowerCase();
+  const found = scenariosOf(playerId).filter(function (row) {
+    return String(row.market_word || row.market || "").toLowerCase()
+      === wanted;
+  });
+  return found.length ? found[0] : null;
+}
+
+/* What the row is about, in the app's own words for a side and a
+ * line. The market word is the service's; the side words are the two
+ * this app has always used. */
+function scenarioBetLine(row) {
+  const market = String(row.market_word || row.market || "");
+  const line = (row.line === null || row.line === undefined)
+    ? "" : row.line + " ";
+  return (row.side === "less" ? "Less " : "More ") + line + market;
+}
+
+/* THE BAND, IN CHANCES AND SAID AS ONE. The live card's `bandText`
+ * writes "range 57–65", which is right beside a percentage on a live
+ * board and WRONG here: this block sits under "Receptions 5.5", where
+ * a bare 57–65 reads as a range of catches rather than a range of
+ * chances. So both ends carry their percent sign and the line says
+ * what it is about in ordinary words (UI_ALPHA_SPEC sec 8 — no string
+ * on screen requires decoding, and nothing on this one asks a reader
+ * to work out which quantity he is looking at).
+ *
+ * Both ends are STORED FIELDS of the row, formatted by the same `pct`
+ * every chance on this app goes through. Nothing is computed. */
+function scenarioBand(row) {
+  const lo = numberOrNull(row.band_lo);
+  const hi = numberOrNull(row.band_hi);
+  if (lo === null || hi === null) return "";
+  return YOUR_NUMBER_BAND + pct(lo) + "–" + pct(hi);
+}
+
+/* THE ONE SHARED COMPONENT (READS_R1_SPEC sec 6). The pick card, My
+ * picks, the live card and an expanded home row all call THIS, and a
+ * second copy is how four surfaces come to say four different things
+ * about whose number it is.
+ *
+ * Every value drawn is a stored field of the row: `scenario_p` is his
+ * number ON HIS SIDE, `model_p` is the model's on the same side, and
+ * the band is the two endpoints the recompute ran at. The band goes
+ * through `bandText`, which is the live card's own band renderer, so
+ * there is one way a range is written on this app. */
+function yourNumber(row, compact) {
+  if (!row) return "";
+  return '<div class="yournum' + (compact ? " compact" : "") + '">' +
+    '<div class="overline">' + esc(YOUR_NUMBER_HEAD) + '</div>' +
+    '<div class="yournumbet">' + esc(scenarioBetLine(row)) + '</div>' +
+    '<div class="yournumline">' +
+    '<span class="yournummine">' + esc(YOUR_NUMBER_WITH) +
+    esc(pct(row.scenario_p)) + '</span>' +
+    /* THE SEPARATOR TRAVELS WITH THE MODEL'S HALF, so a narrow phone
+     * wraps the line into two readable halves rather than leaving a
+     * middle dot stranded at the end of the first one. */
+    '<span class="yournummodel"><span class="yournumdot">·</span> ' +
+    esc(YOUR_NUMBER_MODEL) + esc(pct(row.model_p)) +
+    '</span></div>' +
+    (scenarioBand(row)
+      ? '<div class="yournumband">' + esc(scenarioBand(row)) +
+        '</div>'
+      : "") +
+    '<div class="yournumlabel">' + esc(YOUR_NUMBER_LABEL) +
+    '</div></div>';
+}
+
+/* The slate-wide marker. A row a game-level read reached says so, and
+ * opening it shows the same component — never a different one and
+ * never a number without the label on it. */
+function touchedChip() {
+  return '<span class="readtouch">' + esc(YOUR_NUMBER_TOUCH) +
+    '</span>';
+}
+
+/* The service's own sentence for an empty answer, drawn where the
+ * number would have been. `plainNote` is the translation layer every
+ * other service sentence goes through on this page; it changes no
+ * fact and these three are already written in ordinary words. */
+function scenarioReasonNote(reason) {
+  return reason
+    ? '<div class="legend">' + esc(plainNote(reason)) + '</div>' : "";
+}
+
+/* THE SAME SENTENCE, FOR THE BOARD RATHER THAN FOR ONE SAVE.
+ *
+ * `GET /scenarios` answers with a sentence when it could not put a
+ * number in front of him — the projection is not published yet, the
+ * read is one we cannot size, nothing it touches has a line posted.
+ * Without this the number would simply be GONE after a refresh, with
+ * the service's explanation sitting unread in memory, and a number
+ * that vanishes without a word is the thing this whole surface exists
+ * not to do.
+ *
+ * IT IS DRAWN ONLY WHEN THERE IS NOTHING TO DRAW. The sentence is
+ * about the answer as a whole, not about one bet, so it appears where
+ * the component would have been and only when the board carries no
+ * rows at all. A sentence under a bet while his other numbers are on
+ * screen would be answering a question nobody asked.
+ *
+ * VERBATIM, like every other appearance of it: the three facts and
+ * their three sentences are the service's, and this page knows none
+ * of them by heart. */
+function scenarioBoardNote() {
+  if ((nav.scenarios || []).length) return "";
+  return scenarioReasonNote(nav.scenarioReason);
 }
 
 /* ------------------------------------------------------------------
@@ -3111,6 +3370,12 @@ async function loadSlate() {
    * document arrived asks again now that it has. */
   nav.liveAsked = false;
   nav.liveNote = null;
+  /* R1d: and his own numbers, for the same reason and off the same
+   * two fields — `GET /scenarios` is asked by season and week, and
+   * the slate is where they come from. A pass that gave up before the
+   * document arrived asks again now that it has. */
+  nav.scenariosAsked = false;
+  loadScenarios(false);
   render();
 }
 
@@ -3677,10 +3942,19 @@ function expandedCard(id) {
     return '<div class="expcard empty">' + esc(DASH) + '</div>';
   }
   const points = person.fantasy && person.fantasy.proj;
+  /* R1d, THE SLATE-WIDE HALF. One read about a game moves every
+   * player in it whose opportunity it touches, so a row his read
+   * reached says so — and opening the row shows the SAME component
+   * the pick card draws, never a number without the label on it. */
+  const touched = scenariosOf(id);
   return '<div class="expcard">' +
     '<div class="exphead"><span class="expname">' +
     esc(person.name) + '</span><span class="expteam">' +
     esc(person.team + " " + person.pos) + '</span></div>' +
+    (touched.length ? touchedChip() : "") +
+    touched.map(function (row) { return yourNumber(row, true); })
+      .join("") +
+    scenarioBoardNote() +
     '<div class="overline" title="' +
     esc(plainNote(person.projected_line_template)) + '">' +
     esc(PROJECTED) +
@@ -5497,7 +5771,11 @@ function screenRow(entry, index) {
     " against " + opponentOf(entry.game, entry.side) + ", " +
     prop.market_label + " " + prop.line + ", " + prop.lean_label +
     " " + pct(prop.model_p) + ", " + gapText(prop) +
-    (blind ? ". " + BLIND_SPOT_NOTE : "");
+    (blind ? ". " + BLIND_SPOT_NOTE : "") +
+    /* ...and the marker is SPOKEN as well as shown, the blind-spot
+     * note's own rule: a reader on a screen reader meets the same
+     * fact on the same row. */
+    (scenariosOf(entry.id).length ? ". " + YOUR_NUMBER_TOUCH : "");
   return '<button class="screenrow' + (blind ? " blind" : "") +
     growClass() + '" style="--i:' +
     Math.min(index, 8) + '" data-act="prop" data-player="' +
@@ -5512,7 +5790,11 @@ function screenRow(entry, index) {
       opponentOf(entry.game, entry.side) + " · " + prop.market_label +
       " " + prop.line) + '</span>' +
     (blind ? '<span class="blindnote">' + esc(BLIND_SPOT_NOTE) +
-      '</span>' : "") + '</span>' +
+      '</span>' : "") +
+    /* R1d, the slate-wide marker: a row his read reached says so, and
+     * tapping it opens the pick card, where the same component draws
+     * his number. The row itself stays a row of PUBLISHED numbers. */
+    (scenariosOf(entry.id).length ? touchedChip() : "") + '</span>' +
     shapeFor(prop, false) +
     '<span class="screennums">' +
     '<span class="sidepill ' + esc(prop.lean) + '">' +
@@ -5771,7 +6053,11 @@ function watchRows() {
     esc(PICKS_WATCH) + '</div>' + rows.map(function (row, index) {
       const person = playerOf(row.player_id);
       const prop = person ? propOf(person, row.market) : null;
-      return '<div class="watchrow' + growClass() + '" style="--i:' +
+      /* R1d: a saved bet he has written a read on carries his own
+       * number under it, in the one shared component. */
+      const mine = scenarioFor(row.player_id, row.market);
+      return (mine ? '<div class="watchgroup">' : "") +
+        '<div class="watchrow' + growClass() + '" style="--i:' +
         Math.min(index, 8) + '">' +
         '<button class="watchopen" data-act="prop" data-player="' +
         esc(row.player_id) + '" data-market="' + esc(row.market) +
@@ -5789,7 +6075,8 @@ function watchRows() {
         '<button class="watchdrop" data-act="unwatch" data-player="' +
         esc(row.player_id) + '" data-market="' + esc(row.market) +
         '" aria-label="' + esc(PICK_WATCH_REMOVE) + '">' +
-        esc(PICKS_REMOVE) + '</button></div>';
+        esc(PICKS_REMOVE) + '</button></div>' +
+        (mine ? yourNumber(mine, true) + '</div>' : "");
     }).join("") + '</div>';
 }
 
@@ -5834,7 +6121,10 @@ function slipRows() {
             '<span class="legp' + (leg.p_at_placed === null
               ? " absent" : "") + '">' +
             esc(leg.p_at_placed === null || leg.p_at_placed === undefined
-              ? DASH : pct(leg.p_at_placed)) + '</span></div>';
+              ? DASH : pct(leg.p_at_placed)) + '</span></div>' +
+            /* R1d: a leg he has written a read on carries his own
+             * number too — the same component, nothing restated. */
+            yourNumber(scenarioFor(leg.player_id, leg.market), true);
         }).join("") + '</div>' +
       '<div class="verdict ' + worth + '">' +
       esc(worth === "absent" ? TRACK_NO_VERDICT
@@ -5854,8 +6144,13 @@ function renderBetsPicks() {
   const head = '<div class="page">' + betsHead() +
     '<div class="overline">' + esc(PICKS_OVERLINE) + '</div>';
   if (DEMO) {
+    /* The demo note stays exactly where it was — the segment is
+     * sample data and says so first — and R1d's face is drawn under
+     * it off the bundled file, so "your number" on a saved bet can be
+     * looked at without a token and without anybody's real rows. */
     return head + '<div class="card"><div class="cardbody">' +
-      esc(SERVICE_DEMO) + '</div></div></div>';
+      esc(SERVICE_DEMO) + '</div></div>' + watchRows() +
+      scenarioBoardNote() + '</div>';
   }
   if (!nav.hasToken) {
     return head + connectCard() + '</div>';
@@ -5866,7 +6161,8 @@ function renderBetsPicks() {
       '<button class="primary" data-act="picks-retry">' +
       esc(CONNECT_BUTTON) + '</button></div>';
   }
-  return head + watchRows() + slipRows() + '</div>';
+  return head + watchRows() + scenarioBoardNote() + slipRows() +
+    '</div>';
 }
 
 function detailHead(title) {
@@ -6082,7 +6378,14 @@ function renderPick() {
     esc(plainNote(person.projected_line_template)) + '">' +
     esc(PROJECTED) +
     '</div>' + pickStatline(person, prop) +
-    impliesBanner(prop) + '</div>' +
+    impliesBanner(prop) +
+    /* R1d: HIS NUMBER BESIDE THE MODEL'S, on the bet this card is
+     * about. The same component My picks and the live card draw. */
+    yourNumber(scenarioFor(person.player_id, prop.market)) +
+    /* ...or, when there is no number to put here, the service's own
+     * sentence saying why — never a silent gap. */
+    scenarioBoardNote() +
+    '</div>' +
     shapeSection(prop) + barsSection(prop) + tilesSection(prop) +
     otherMarkets(person, prop) + fullProjection(person) +
     '<button class="primary" data-act="copy" data-player="' +
@@ -6577,6 +6880,11 @@ function liveSummary(bet) {
     (bet.reason
       ? '<div class="legend">' + esc(plainNote(bet.reason)) + '</div>'
       : "") +
+    /* R1d: his number beside the model's, on this bet, in the one
+     * shared component — the live card is the third surface sec 6
+     * names and it draws no version of its own. */
+    yourNumber(scenarioFor(bet.player_id, bet.market)) +
+    scenarioBoardNote() +
     '<div class="overline">' + esc(LIVE_SUMMARY_HEAD) + '</div>' +
     statline(bet.statline || []) + '</div>';
 }
@@ -6734,6 +7042,27 @@ function readSayStep() {
     readNote();
 }
 
+/* WHAT THE SAVE CAME BACK WITH (R1d). `POST /read` banks the read and
+ * then recomputes it against the published generation, so its answer
+ * already carries either his number or the one honest sentence saying
+ * why there is none — and the sheet shows whichever it was, here,
+ * rather than closing on a promise and leaving him to find it.
+ *
+ * THE SENTENCE IS THE SERVICE'S AND IS PRINTED AS SENT. Three facts
+ * have three sentences over there; this page knows which one it was
+ * handed and none of them by heart. */
+function readYourNumber() {
+  const saved = nav.read.saved;
+  if (!saved) return "";
+  const rows = Array.isArray(saved.scenarios) ? saved.scenarios : [];
+  if (rows.length) {
+    return rows.map(function (row) {
+      return yourNumber(row);
+    }).join("");
+  }
+  return scenarioReasonNote(saved.scenario_reason);
+}
+
 /* STEP 2 — the chips, and they are HIS OWN WORDS (brief Addendum 2 as
  * sec 1 reconciles it). No node path, no category name, no
  * confidence: the service sends none of those and this step draws
@@ -6756,7 +7085,7 @@ function readConfirmStep() {
     (chips
       ? '<div class="cardbody">' + esc(READ_CHIPS_NOTE) + '</div>' +
         '<div class="readchips">' + chips + '</div>'
-      : "") + readNote() +
+      : "") + readNote() + readYourNumber() +
     /* NOTHING IS SENT UNSEEN. Taking a fragment out of the middle of
      * a sentence leaves a seam — a stray "and", a comma — and this
      * page does not tidy it, because tidying it would mean rewriting
