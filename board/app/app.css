@@ -1692,6 +1692,80 @@ body{
 }
 
 /* --------------------------------------------------------------------
+   A3 — THE ACCOUNT (ACCOUNTS_LITE_SPEC sec 7)
+
+   NO THIRD LOOK. Every block below is this app's existing furniture
+   given the two or three shapes the account screen needs and no
+   others: the card, the overline, the legend, the primary button and
+   the quiet one beside it are all unchanged and are simply used. The
+   fields are the slip box's own control (`.trackline`, 16px so iOS
+   does not zoom a focused input), with a label above them.
+
+   The toggle is the one genuinely new control, and it is a BUTTON
+   with `aria-pressed` — the pill beside its words is decoration, so
+   colour is never the only thing saying which way it is set (sec 9).
+   -------------------------------------------------------------------- */
+
+/* The "or" between the two front doors. It is a word, not a rule with
+   a gap in it, because a reader needs to see that these are two ways
+   in rather than a step and its alternative. */
+.connector{
+  padding:10px 0 2px;text-align:center;
+  font-size:var(--type-meta);color:var(--subtle);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+
+.acctfield{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+.acctlabel{
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  letter-spacing:.04em;text-transform:uppercase;color:var(--muted);
+}
+
+.acctlist{display:flex;flex-direction:column;padding-top:4px}
+.acctrow{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:10px;padding:10px 0;border-top:1px solid var(--rule);
+}
+.acctrow:first-of-type{border-top:none}
+.acctrow.wide{align-items:flex-start}
+.acctcol{display:flex;flex-direction:column;gap:2px;min-width:0;flex-grow:1}
+.acctname{font-size:15px;font-weight:var(--w-semibold)}
+.acctmeta{font-size:var(--type-meta);color:var(--muted);line-height:1.4}
+.acctstanding{
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  color:var(--text-2);white-space:nowrap;
+}
+.acctactions{display:flex;gap:6px;flex-shrink:0}
+.acctactions .ghost{padding:0 12px;font-size:var(--type-cell)}
+
+.togglebtn{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  min-height:48px;min-width:44px;width:100%;margin-top:10px;padding:0 14px;
+  border:1px solid var(--border-strong);border-radius:var(--r-button);
+  background:var(--surface);color:var(--ink);
+  font:inherit;font-weight:var(--w-semibold);cursor:pointer;
+}
+.togglebtn[disabled]{color:var(--disabled);cursor:default}
+.togglelabel{font-size:15px;text-align:left}
+.togglepill{
+  width:34px;height:20px;border-radius:10px;flex-shrink:0;
+  background:var(--track);
+}
+.togglepill.on{background:var(--positive)}
+
+/* THE CODE, WHILE IT IS ON SCREEN. It is the one string in this app a
+   reader is asked to copy by hand, so it is big, it is monospaced by
+   the browser's own default face, and its letters are spaced — a code
+   misread is a code that does not work. */
+.mintcard{border:1.5px solid var(--ink)}
+.mintcode{
+  padding:10px 0 4px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:var(--type-card);font-weight:var(--w-semibold);
+  letter-spacing:.06em;word-break:break-all;line-height:1.4;
+}
+
+/* --------------------------------------------------------------------
    AND THE KILL SWITCH. sec 2.5 and sec 9: every transition above is
    OFF when the reader has asked for reduced motion — not shortened,
    not softened, off. Nothing in this app depends on an animation to

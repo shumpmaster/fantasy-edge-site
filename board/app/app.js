@@ -459,8 +459,16 @@ const PICKS_REMOVE = "Remove";
  * says so and offers to take the token, exactly as the lab's reads
  * box does (R0's idiom). Nothing is kept locally as a stand-in. */
 const CONNECT_HEAD = "Your picks live on your own service.";
+/* A3: the caption introduces BOTH doors, because there are two of
+ * them now and a sentence that named only the owner's would leave
+ * every other reader looking at a button with no explanation. Every
+ * promise the single-door version made is still in it: the rows live
+ * on the service, they are not in this browser, and nothing is kept
+ * here as a stand-in — said once and then given the reason a reader
+ * actually cares about, which is that they follow him between
+ * devices. */
 const CONNECT_BODY =
-  "Paste the token and your picks appear. Your watchlist and slips are stored by the service, not in this browser, and nothing is kept here instead.";
+  "Two ways in: paste your key if you have one, or use an invite code to set up your own. Your watchlist and slips are stored by the service, not in this browser — nothing is kept here instead, so they follow you between devices.";
 const CONNECT_BUTTON = "Paste the token";
 const CONNECT_PROMPT =
   "Paste your token. It stays in this browser and goes only to your own service.";
@@ -468,6 +476,169 @@ const SERVICE_OFFLINE =
   "Your service is not answering right now, so nothing is shown. Nothing was lost — try again in a moment.";
 const SERVICE_DEMO =
   "Sample data — a fabricated slate does not write to the real service, so the watchlist and the slips are read-only here.";
+
+/* ------------------------------------------------------------------
+ * A3 — THE ACCOUNT (ACCOUNTS_LITE_SPEC sec 7, under D-130)
+ * ------------------------------------------------------------------
+ * THE FRONT DOOR NOW HAS TWO HONEST PATHS. The owner still pastes his
+ * own key and nothing about that changed. Everybody else arrives with
+ * a one-time code somebody handed them in person, fills in three
+ * fields, and the service hands back a token of their own — which is
+ * kept exactly where the owner's is kept, under the same one key,
+ * through the same two guarded touches.
+ *
+ * EVERY REFUSAL ON THIS SURFACE IS THE SERVICE'S OWN SENTENCE, drawn
+ * verbatim. A bad code, a missing field, an odd email address, an
+ * empty note, notifications that are not set up yet — the service has
+ * a sentence for each and this page has none. That is not tidiness:
+ * a second wording is a second promise to keep in step, and the one
+ * about the code in particular is deliberately vague (it never says
+ * WHICH way it failed, because that would answer questions about the
+ * members of this service for anybody holding a list of guesses). A
+ * page that invented its own would be the enumeration channel the
+ * service closed.
+ *
+ * THE ONE SENTENCE THIS FILE DOES CARRY is the privacy promise, and
+ * it is here because it has to be READ BEFORE the phone number is
+ * typed — the service can only say it in the receipt afterwards, and
+ * afterwards is too late to be a promise. It is pinned character for
+ * character against `invites.PRIVACY` by test, so the two cannot
+ * drift.
+ *
+ * HOW THIS PAGE KNOWS WHO THE OWNER IS: it asks. `GET
+ * /invite-requests` answers every signed-in person and carries
+ * `admin` — true for the owner, false for a member — because a member
+ * sees his own requests there and the owner sees the queue. So the
+ * admin view is drawn off a field the service already sends, and no
+ * endpoint is called to be refused as a way of finding out. */
+
+/* The two doors, on the connect state itself. */
+const CONNECT_OR = "or";
+const CONNECT_HAVE_KEY = "I have my key";
+const CONNECT_HAVE_CODE = "I have an invite code";
+
+/* The account screen — the signed-out door and the signed-in
+ * settings, one screen with the states it actually has. */
+const ACCOUNT_TITLE = "Your account";
+const ACCOUNT_OPEN = "Your account";
+const ACCOUNT_RETRY = "Try again";
+
+const CODE_HEAD = "Enter your invite code";
+const CODE_BODY =
+  "Someone already in gave you a code. Type it in and we'll set you up.";
+const CODE_LABEL = "Invite code";
+const CODE_PLACEHOLDER = "The code you were given";
+const CODE_GO = "Next";
+const CODE_NEEDED = "Type the code you were given first.";
+
+const SIGNUP_HEAD = "Set up your account";
+const SIGNUP_BODY =
+  "Three things and you're in. Your code is checked when you finish.";
+const SIGNUP_NAME = "Your name";
+const SIGNUP_NAME_HINT = "Whatever you'd like to be called";
+const SIGNUP_PHONE = "Phone number";
+const SIGNUP_EMAIL = "Email address";
+/* ACCOUNTS_LITE_SPEC sec 6, word for word, and pinned equal to the
+ * service's own constant by test. See the block note above for why
+ * this one sentence lives here instead of arriving in a receipt. */
+const SIGNUP_PRIVACY =
+  "Your name and contact info stay with us — they are never shown to other members or sent anywhere else.";
+const SIGNUP_GO = "Create my account";
+const SIGNUP_BUSY = "Setting you up…";
+const SIGNUP_DONE = "You're in. Your picks and reads are yours from here.";
+const SIGNUP_BACK = "Back to the code";
+
+/* WHEN THE BROWSER WOULD NOT KEEP THE KEY. Said plainly, with what it
+ * costs and what to do about it, and never as an error the person
+ * made: a private window and blocked site data are settings, not
+ * mistakes. */
+const RESCUE_HEAD = "Copy your key somewhere safe";
+const RESCUE_BODY =
+  "Your browser wouldn't save this, so it only lasts until you close this tab. Copy it somewhere safe — we can't show it to you again.";
+const RESCUE_COPY = "Copy my key";
+const RESCUE_COPIED = "Copied.";
+const RESCUE_DISMISS = "I've saved it";
+
+/* Who I am. First name only — the rest is in the service's database
+ * and stays there. */
+const WHOAMI_HEAD = "Who you are here";
+const WHOAMI_BODY =
+  "Only your first name is shown anywhere in the app.";
+const WHOAMI_SIGNED_IN = "Signed in";
+const WHOAMI_UNKNOWN = "Signed in on this browser";
+const SIGN_OUT = "Sign out";
+const SIGNED_OUT_TOAST =
+  "Signed out on this browser. Nothing of yours was deleted.";
+
+/* Invite a friend. */
+const INVITE_HEAD = "Invite a friend";
+const INVITE_BODY =
+  "Tell the owner who you'd like to bring in. If he says yes, he'll hand you a code to pass on.";
+const INVITE_LABEL = "Who is it for?";
+const INVITE_PLACEHOLDER = "A first name is enough";
+const INVITE_GO = "Ask the owner";
+const INVITE_BUSY = "Sending…";
+const INVITE_MINE = "What you've asked for";
+const INVITE_NONE = "You haven't asked for anyone yet.";
+const REQUEST_PENDING_WORD = "Waiting on the owner";
+const REQUEST_APPROVED_WORD = "Approved — ask the owner for the code";
+const REQUEST_DECLINED_WORD = "Not this time";
+
+/* Notifications. The toggle, and every arm it honestly has. */
+const NOTIFY_HEAD = "Notifications";
+const NOTIFY_ON = "Notifications are on";
+const NOTIFY_OFF = "Turn notifications on";
+const NOTIFY_BUSY = "One moment…";
+const NOTIFY_DENIED =
+  "Your browser is blocking notifications for this app. You can let them through in your browser's settings for this site.";
+const NOTIFY_UNSUPPORTED =
+  "Your browser doesn't support notifications here, so there is nothing to turn on.";
+const NOTIFY_HOME_SCREEN =
+  "Add this app to your home screen first — on iPhone that is the only way notifications can reach you.";
+/* WHEN THE DEVICE IS SET UP AND THIS ACCOUNT CANNOT CLAIM IT. Two
+ * people share a tab more often than anyone plans to: the browser
+ * says it has notifications, and nothing this page can ask settles
+ * whose they are. So it says exactly that and offers the one action
+ * that makes it true. */
+const NOTIFY_ANOTHER =
+  "This device already has notifications set up, and we can't tell which account they go to. Turn them on to point them here.";
+const NOTIFY_ON_TOAST = "Notifications are on for this device.";
+const NOTIFY_OFF_TOAST = "Notifications are off for this device.";
+
+/* The owner's own view. Nothing here is drawn for anybody else. */
+const ADMIN_HEAD = "The invite list";
+const ADMIN_BODY = "Yours to run. Nobody else sees this.";
+const ADMIN_QUEUE = "Waiting on you";
+const ADMIN_QUEUE_NONE = "Nobody is waiting.";
+const ADMIN_APPROVE = "Approve";
+const ADMIN_DECLINE = "Decline";
+const ADMIN_ASKED_BY = "Asked by ";
+const ADMIN_OPEN = "Codes you've handed out";
+const ADMIN_OPEN_NONE = "No codes are out right now.";
+const ADMIN_WITHDRAW = "Take it back";
+const ADMIN_EXPIRES = "Good until ";
+const ADMIN_FOR = "For ";
+const ADMIN_MEMBERS = "Who is in";
+const ADMIN_MEMBERS_NONE = "Nobody has joined yet.";
+const ADMIN_JOINED = "Joined ";
+const ADMIN_INVITED_BY = "Brought in by ";
+const ADMIN_OWNER_WORD = "You";
+const ADMIN_MEMBER_WORD = "Member";
+const ADMIN_REVOKED_WORD = "No longer a member";
+const ADMIN_MINTED = "The code";
+const ADMIN_COPY = "Copy the code";
+const ADMIN_COPIED = "Copied.";
+const ADMIN_DISMISS = "Done";
+
+/* The invite statuses, in words. `open` is the only one that is a
+ * live credential; the other three are history. */
+const INVITE_OPEN_WORD = "Open";
+const INVITE_USED_WORD = "Used";
+const INVITE_EXPIRED_WORD = "Expired";
+const INVITE_WITHDRAWN_WORD = "Taken back";
+
+const ACCOUNT_DEMO =
+  "Sample data — these requests, codes and members are made up, and nothing on this screen reaches the real service.";
 
 /* ------------------------------------------------------------------
  * U4 — BETS -> LIVE (UI_ALPHA_SPEC sec 6b, handoff sec 5.8 / 5.9)
@@ -1719,6 +1890,65 @@ const SAMPLE_SLIP_ROWS = [
 
 const SAMPLE_LINEUP_SLOTS = ["QB", "RB", "RB2", "WR", "WR2", "TE", "FLEX"];
 
+/* A3 — THE ACCOUNT SCREEN'S OWN FIXTURE, and it is the same kind of
+ * thing every fixture above it is: FABRICATED, held in this file, and
+ * never fetched. Demo mode does not call the service on this screen
+ * any more than it does on any other, which matters more here than
+ * anywhere else — the real version of this screen is the one place in
+ * the product that renders a person's name.
+ *
+ * THERE IS NO CONTACT DETAIL IN IT AND THERE IS NOWHERE FOR ONE TO
+ * GO. The service's own member list carries a name, a date, who
+ * brought them in and a status and nothing else (ACCOUNTS_LITE_SPEC
+ * sec 6), so this fixture has the same four fields — a demo phone
+ * number or a demo email address would be teaching the screen a shape
+ * it must never be able to draw. The names are invented and read as
+ * invented, the way every sample row on this surface does. */
+const DEMO_ACCOUNT = {
+  admin: true,
+  name: "Sample",
+  requests: [
+    { request_id: "demo-req-1", requested_by: "demo-member-1",
+      friend_note: "D. Hale",
+      status: "pending", created_at: "2026-09-20T17:00:00Z" },
+    { request_id: "demo-req-2", requested_by: "demo-member-2",
+      friend_note: "K. Ames",
+      status: "approved", created_at: "2026-09-14T17:00:00Z" },
+    { request_id: "demo-req-3", requested_by: "demo-member-1",
+      friend_note: "M. Okafor",
+      status: "declined", created_at: "2026-09-08T17:00:00Z" },
+    /* ONE OF THE OWNER'S OWN, so the demo exercises the thing PR
+     * #371's fourth finding was about: on the owner's screen "What
+     * you've asked for" is this row and not the other three, which
+     * are other members' and belong in the queue below. */
+    { request_id: "demo-req-4", requested_by: "demo-owner",
+      friend_note: "J. Ruiz",
+      status: "approved", created_at: "2026-09-17T17:00:00Z" }
+  ],
+  invites: [
+    { invite_id: "demo-inv-1", intended_for_note: "K. Ames",
+      status: "open", created_at: "2026-09-14T17:00:00Z",
+      expires_at: "2026-09-28T17:00:00Z" },
+    { invite_id: "demo-inv-2", intended_for_note: "T. Rourke",
+      status: "redeemed", created_at: "2026-09-01T17:00:00Z",
+      expires_at: "2026-09-15T17:00:00Z" },
+    { invite_id: "demo-inv-3", intended_for_note: "L. Pryor",
+      status: "expired", created_at: "2026-08-20T17:00:00Z",
+      expires_at: "2026-09-03T17:00:00Z" }
+  ],
+  members: [
+    { user_id: "demo-owner", name: "Sample", is_owner: true,
+      status: "active", invited_by_name: null,
+      joined_at: "2026-07-04T17:00:00Z" },
+    { user_id: "demo-member-1", name: "T. Rourke", is_owner: false,
+      status: "active", invited_by_name: "Sample",
+      joined_at: "2026-09-02T17:00:00Z" },
+    { user_id: "demo-member-2", name: "L. Pryor", is_owner: false,
+      status: "active", invited_by_name: "T. Rourke",
+      joined_at: "2026-09-10T17:00:00Z" }
+  ]
+};
+
 /* ------------------------------------------------------------------
  * THE ROUTE TABLE — board 16's map, one row per screen
  * ------------------------------------------------------------------
@@ -1746,7 +1976,13 @@ const ROUTES = {
   track: { tab: "bets", hash: "#/track", root: false },
   team: { tab: "fantasy", hash: "#/team", root: false },
   card: { tab: "bets", hash: "#/card", root: false },
-  report: { tab: "home", hash: "#/report", root: false }
+  report: { tab: "home", hash: "#/report", root: false },
+  /* A3's own detail, and it is on the BETS stack on purpose rather
+   * than in a tab of its own: the thing this screen manages is the
+   * service token, and My picks is where this app has always managed
+   * it. So the chevron pops back to the segment that sent the reader
+   * here, which is the nav model's answer and not a new one. */
+  account: { tab: "bets", hash: "#/bets/account", root: false }
 };
 
 const TAB_ORDER = ["home", "fantasy", "projections", "bets"];
@@ -1828,6 +2064,190 @@ const HERO_GLOW = 0.22;
  * the shell's state — held for the visit, written nowhere
  * ------------------------------------------------------------------ */
 
+/* EVERYTHING THAT BELONGS TO ONE PERSON, AND ITS ONE DEFINITION.
+ *
+ * This is the half of `nav` that is ABOUT THE SIGNED-IN READER: what
+ * the service handed back for him, the drafts he has typed, and the
+ * picture he chose. `nav` is built from it at boot and REBUILT from
+ * it the moment the token changes — a sign-out, a pasted key, a
+ * signup that lands a new one — so there is exactly one list of what
+ * belongs to a person and exactly one way to drop it.
+ *
+ * IT IS A FUNCTION AND NOT A CONSTANT because every caller needs its
+ * OWN objects: a shared `{ legs: [] }` handed to a second reader
+ * would be the first reader's array.
+ *
+ * WHY THIS EXISTS AT ALL (PR #371, finding 1). Signing out used to
+ * clear the four things the sign-out function happened to name, and
+ * the next person on that tab could still read the lineups, the
+ * opponents, the numbers on his reads and whatever the account screen
+ * had loaded. A list assembled by hand at the one place that clears
+ * it will always drift from the list of what there is; this is the
+ * list, and the test beside it requires every field of `nav` to be
+ * either in here or in a declared set of things that belong to
+ * nobody.
+ *
+ * WHAT IS NOT IN HERE, deliberately: the slate, the DFS sheet and the
+ * projections file (public documents, the same for everybody), the
+ * navigation stacks and the sort (where a reader is standing and how
+ * he likes his list), and `hasToken` (the fact OF a credential, which
+ * the sign-in and sign-out paths own between them). */
+function freshUserScoped() {
+  return {
+    /* U3's: the service's answers once they have arrived (null means
+     * "not asked or not answered", which is a drawn state, not an
+     * empty list), and the slip being built, which is a draft and not
+     * a stored thing until the service says it is. */
+    watch: null,
+    slips: null,
+    picksAsked: false,
+    picksOffline: false,
+    picksBusy: "",
+    track: { input: "paste", text: "", legs: [], unparsed: [],
+      payout: "", stake: "", saved: null },
+
+    /* U3c's, and it is HELD FOR THE VISIT — in memory, never in
+     * storage. A picture is a private thing; it goes to the service
+     * to be read, it is drawn back as a preview while the reader is
+     * looking at it, and it leaves with the tab.
+     *
+     * `shot` is the picture currently chosen (its data URL for the
+     * preview, its base64 and media type for the request); `capture`
+     * is what the last reading did — busy, a named failure, or
+     * nothing. `team` is the PROPOSAL being confirmed: the slots as
+     * the service resolved them, the kind the reader picked, and the
+     * saved receipt once the service has it. None of it is a stored
+     * thing until the service says so. */
+    shot: { slip: null, team: null },
+    capture: { busy: "", note: "" },
+    team: { slots: null, kind: "season_long", side: "mine",
+      surface: null, saved: null },
+    teams: null,
+
+    /* U5's. `opponents` is the second side of the same store — the
+     * newest confirmed lineup per kind for the team he is PLAYING —
+     * and null means "not asked or not answered", which is a drawn
+     * state and not an empty opponent.
+     *
+     * `flex` is the FLEX call, and it is A VIEW OF HIS OWN LINEUP,
+     * never a write: the captured team is untouched in the store, the
+     * table draws whoever this names in the FLEX slot, and putting it
+     * back is one tap.
+     *
+     * THE FLEX SWAP IS NOT A CONFIRMATION. Nothing about it reaches
+     * the service: a lineup in the store is a lineup somebody
+     * confirmed from a picture, and a swap he is trying out on screen
+     * is not that. He saves a new lineup by confirming a new picture,
+     * exactly as he did the first one. */
+    opponents: null,
+    flex: null,
+
+    /* U4's. `live` is the service's last answer (null means "not
+     * asked or not answered", which is a drawn state and not an empty
+     * board); `liveBet` is the bet the card is open on; `liveSwing`
+     * is the selected dot; `livePoll` is the interval handle, which
+     * exists ONLY while the segment is on screen and visible — and is
+     * the one field in here that must be STOPPED rather than merely
+     * dropped, which `resetUserScoped` does.
+     *
+     * `series` is the one thing this page accumulates: `{bet_id: [the
+     * points the service has handed it, in the order they arrived]}`.
+     * Every point in it came off an answer — none is interpolated,
+     * none is carried forward past the last update, and the whole of
+     * it is dropped when the tab is closed. */
+    live: null,
+    liveNote: null,
+    liveAsked: false,
+    liveOffline: false,
+    liveBet: null,
+    liveSwing: null,
+    livePoll: null,
+    livePollMs: null,
+    series: {},
+
+    /* U6's, and it is the DRAFT plus what the service said about it.
+     *
+     * `text` is what he has typed (kept across a re-render so nothing
+     * eats a sentence). `saved` is the service's answer once it has
+     * one, which is what makes the read a banked thing rather than a
+     * draft. `spans` are HIS OWN WORDS as the service handed them
+     * back, and `dropped` is which of them he has taken off — an
+     * index set on the chips, never a taxonomy.
+     *
+     * THERE IS NO `read_p` HERE AND NO PLACE FOR ONE. Step 3 is the
+     * effect library's and is not mocked; a field waiting for it
+     * would be the mock. */
+    read: { player: null, market: null, line: null, side: null,
+      step: 1, text: "", saved: null, spans: [], dropped: {},
+      busy: false, note: "" },
+
+    /* R1d's, and it is the service's answer held for the visit.
+     *
+     * `scenarios` is the rows `GET /scenarios` handed back — null
+     * means "not asked or not answered", which is a drawn state and
+     * not an empty board — and `scenarioReason` is the service's own
+     * sentence when there is nothing to show, kept VERBATIM because
+     * the page has no wording of its own for it.
+     *
+     * THERE IS NO SECOND COPY OF A PROBABILITY HERE. A row is held as
+     * the service sent it and every surface reads that row; nothing
+     * is recomputed, rescaled or complemented on the way to a
+     * screen. */
+    scenarios: null,
+    scenarioReason: null,
+    scenariosAsked: false,
+
+    /* A3's.
+     *
+     * `door` is which half of the front door is open — "" for the two
+     * choices, "code" for the code field, "signup" for the three
+     * fields. `code`, `name`, `phone` and `email` are what has been
+     * typed, kept out of the DOM's hands so a re-render cannot eat a
+     * half-typed phone number; they are dropped the moment the
+     * account exists and they are never written anywhere.
+     *
+     * `note` is THE SERVICE'S OWN SENTENCE about the last thing that
+     * was tried, kept verbatim, because this page has no wording of
+     * its own for a refusal.
+     *
+     * `requests`, `invites` and `members` are the service's answers
+     * (null means "not asked or not answered", a drawn state and not
+     * an empty list), and `admin` is the `admin` field `GET
+     * /invite-requests` sends — which is how the owner's view knows
+     * it is the owner's.
+     *
+     * `minted` is A CODE THE SERVICE HAS JUST SHOWN ONCE. It lives
+     * here for as long as the owner is looking at it and nowhere
+     * else: not in storage, not in a second copy, and not recoverable
+     * after this render — which is the fact the service's own
+     * sentence beside it states. `rescue` is the same shape of thing
+     * for a token a browser refused to keep (finding 3).
+     *
+     * `push` is what this session knows about notifications on this
+     * device FOR THE SIGNED-IN PERSON: whether the service has keys
+     * yet, what it said if it has not, whether THIS session bound a
+     * subscription to THIS account, and the arm the browser put us
+     * on. See `syncPush` for why the browser's own answer is not
+     * enough to fill it. */
+    account: {
+      door: "", code: "", name: "", phone: "", email: "",
+      friend: "", busy: "", note: "",
+      requests: null, invites: null, members: null,
+      admin: false, asked: false, offline: false,
+      minted: null, rescue: null,
+      push: { ready: null, note: "", on: false, device: false,
+        busy: false }
+    }
+  };
+}
+
+/* THE LIST ITSELF, derived from the one definition above rather than
+ * typed a second time. `resetUserScoped` walks it; the test walks it
+ * against every field `nav` has, so a cache added tomorrow that
+ * belongs to a person and is not in here fails a pin instead of
+ * outliving him. */
+const USER_SCOPED_KEYS = Object.keys(freshUserScoped());
+
 const nav = {
   tab: "home",
   /* sec 2.3: one stack per tab, each starting at its own root */
@@ -1884,119 +2304,22 @@ const nav = {
   search: false,
   query: "",
 
-  /* U3's own state, held for the visit like the rest of it. The
-   * Screen list's sort; which prop a pick card was opened on; the
-   * service's answers once they have arrived (null means "not asked
-   * or not answered", which is a drawn state, not an empty list); and
-   * the slip being built, which is a draft and not a stored thing
-   * until the service says it is. */
+  /* U3's own presentation state: the Screen list's sort, and which
+   * prop a pick card was opened on. Neither is anybody's data — they
+   * are where the reader is standing and how he likes his list — so
+   * neither is in the user-scoped block below. */
   sort: SORT_GAP,
   pickMarket: null,
-  watch: null,
-  slips: null,
-  picksAsked: false,
-  picksOffline: false,
-  picksBusy: "",
+  /* THE FACT OF A CREDENTIAL, which is not itself one of a person's
+   * objects: the sign-in and sign-out paths own it between them. */
   hasToken: false,
-  track: { input: "paste", text: "", legs: [], unparsed: [],
-    payout: "", stake: "", saved: null },
 
-  /* U3c's own state, and it is HELD FOR THE VISIT LIKE THE REST OF IT
-   * — in memory, never in storage. A picture is a private thing; it
-   * goes to the service to be read, it is drawn back as a preview
-   * while the reader is looking at it, and it leaves with the tab.
-   *
-   * `shot` is the picture currently chosen (its data URL for the
-   * preview, its base64 and media type for the request); `capture` is
-   * what the last reading did — busy, a named failure, or nothing.
-   * `team` is the PROPOSAL being confirmed: the slots as the service
-   * resolved them, the kind the reader picked, and the saved receipt
-   * once the service has it. None of it is a stored thing until the
-   * service says so. */
-  shot: { slip: null, team: null },
-  capture: { busy: "", note: "" },
-  team: { slots: null, kind: "season_long", side: "mine",
-    surface: null, saved: null },
-  teams: null,
-
-  /* U5's own state, and it is held for the visit like the rest.
-   *
-   * `opponents` is the second side of the same store — the newest
-   * confirmed lineup per kind for the team he is PLAYING — and null
-   * means "not asked or not answered", which is a drawn state and not
-   * an empty opponent.
-   *
-   * `flex` is the FLEX call, and it is A VIEW OF HIS OWN LINEUP,
-   * never a write: the captured team is untouched in the store, the
-   * table draws whoever this names in the FLEX slot, and putting it
-   * back is one tap. `dfs` is the weekly sheet's document.
-   *
-   * THE FLEX SWAP IS NOT A CONFIRMATION. Nothing about it reaches the
-   * service: a lineup in the store is a lineup somebody confirmed
-   * from a picture, and a swap he is trying out on screen is not
-   * that. He saves a new lineup by confirming a new picture, exactly
-   * as he did the first one. */
-  opponents: null,
-  flex: null,
+  /* U5's DFS sheet, and it is a PUBLIC DOCUMENT — the same weekly
+   * file for everybody, like the slate and the projections. It is not
+   * cleared when a reader signs out, because it was never his. */
   dfs: null,
   dfsNote: null,
   dfsAsked: false,
-
-  /* U4's own state, and it is held for the visit like the rest of it.
-   *
-   * `live` is the service's last answer (null means "not asked or not
-   * answered", which is a drawn state and not an empty board);
-   * `liveBet` is the bet the card is open on; `liveSwing` is the
-   * selected dot; `livePoll` is the interval handle, which exists
-   * ONLY while the segment is on screen and visible.
-   *
-   * `series` is the one thing this page accumulates: `{bet_id: [the
-   * points the service has handed it, in the order they arrived]}`.
-   * Every point in it came off an answer — none is interpolated,
-   * none is carried forward past the last update, and the whole of it
-   * is dropped when the tab is closed. */
-  live: null,
-  liveNote: null,
-  liveAsked: false,
-  liveOffline: false,
-  liveBet: null,
-  liveSwing: null,
-  livePoll: null,
-  livePollMs: null,
-  series: {},
-
-  /* U6's own state, and it is the DRAFT plus what the service said
-   * about it — held for the visit, written nowhere.
-   *
-   * `text` is what he has typed (kept across a re-render so nothing
-   * eats a sentence). `saved` is the service's answer once it has
-   * one, which is what makes the read a banked thing rather than a
-   * draft. `spans` are HIS OWN WORDS as the service handed them back,
-   * and `dropped` is which of them he has taken off — an index set on
-   * the chips, never a taxonomy.
-   *
-   * THERE IS NO `read_p` HERE AND NO PLACE FOR ONE. Step 3 is the
-   * effect library's and is not mocked; a field waiting for it would
-   * be the mock. */
-  read: { player: null, market: null, line: null, side: null,
-    step: 1, text: "", saved: null, spans: [], dropped: {},
-    busy: false, note: "" },
-
-  /* R1d's own state, and it is the service's answer held for the
-   * visit like everything else here.
-   *
-   * `scenarios` is the rows `GET /scenarios` handed back — null means
-   * "not asked or not answered", which is a drawn state and not an
-   * empty board — and `scenarioReason` is the service's own sentence
-   * when there is nothing to show, kept VERBATIM because the page has
-   * no wording of its own for it.
-   *
-   * THERE IS NO SECOND COPY OF A PROBABILITY HERE. A row is held as
-   * the service sent it and every surface reads that row; nothing is
-   * recomputed, rescaled or complemented on the way to a screen. */
-  scenarios: null,
-  scenarioReason: null,
-  scenariosAsked: false,
 
   /* THE PROJECTIONS STATE (U7, widened to the whole slate at sec 8b).
    * `projections` is the breakdown document once it has arrived (null
@@ -2009,8 +2332,37 @@ const nav = {
   projNote: null,
   projAsked: false,
   projGame: 0,
-  proj: { player: null, query: "" }
+  proj: { player: null, query: "" },
+
+  /* ...AND EVERYTHING THAT BELONGS TO THE SIGNED-IN READER, from its
+   * one definition above. This is the half that is dropped, whole,
+   * the moment the token changes. */
+  ...freshUserScoped()
 };
+
+/* THE ONE WAY A PERSON'S THINGS LEAVE THIS PAGE (finding 1).
+ *
+ * Called on a sign-out AND on any token change — a pasted key, a
+ * signup that lands a new one — because the next reader on this tab
+ * may be a different person, and everything the last one loaded is
+ * sitting in memory until something drops it. It walks
+ * `USER_SCOPED_KEYS`, so a cache added tomorrow is dropped by having
+ * joined the list rather than by somebody remembering it here.
+ *
+ * THE LIVE POLL IS STOPPED, NOT JUST FORGOTTEN. It is a timer, and a
+ * timer whose handle is dropped goes on firing against whatever token
+ * is in the browser now — which is the defect this function exists to
+ * prevent, arriving a minute later. */
+function resetUserScoped() {
+  if (nav.livePoll) {
+    window.clearInterval(nav.livePoll);
+    nav.livePoll = null;
+  }
+  const fresh = freshUserScoped();
+  USER_SCOPED_KEYS.forEach(function (key) {
+    nav[key] = fresh[key];
+  });
+}
 
 /* ------------------------------------------------------------------
  * small helpers — the lab's, spelled the same way
@@ -2366,7 +2718,30 @@ async function getJSON(url, options) {
   try {
     const response = await fetch(url, Object.assign({
       signal: controller.signal, cache: "no-store" }, options || {}));
-    if (!response.ok) throw new Error("HTTP " + response.status);
+    if (!response.ok) {
+      /* THE SERVICE'S OWN SENTENCE TRAVELS WITH THE FAILURE (A3).
+       * Every refusal this service makes carries `reason` — the bad
+       * code, the missing field, the cap that reset at midnight, the
+       * owner-only view — and each of them is a sentence written to
+       * be read by the person it happened to. Throwing away the body
+       * and reporting a number would make this page invent its own
+       * wording for facts the service already states, which is the
+       * one thing the account screens may not do. The throw itself is
+       * unchanged, so every caller that only cares that it failed
+       * still behaves exactly as it did. */
+      const failure = new Error("HTTP " + response.status);
+      failure.status = response.status;
+      try {
+        const said = await response.json();
+        if (said && typeof said.reason === "string") {
+          failure.reason = said.reason;
+        }
+      } catch (err) {
+        /* a body that is not JSON says nothing extra, and the status
+         * still says the request failed */
+      }
+      throw failure;
+    }
     return await response.json();
   } finally {
     window.clearTimeout(timer);
@@ -2379,21 +2754,66 @@ async function getJSON(url, options) {
 
 /* Both touches guarded, the lab's way: a browser that refuses storage
  * still lets him paste a token for the visit. */
+/* THE VISIT'S OWN COPY, for a browser that will not keep one
+ * (finding 3). A private window, or site data blocked, throws on both
+ * touches below — and before A3 that only meant the owner pasted his
+ * key again next visit, which costs him nothing. It costs a NEW
+ * MEMBER everything: the invite is spent, the token came back once,
+ * and a storage write that failed silently would throw away the only
+ * copy of a credential that cannot be minted again.
+ *
+ * So the token is held here as well, for as long as the tab is open,
+ * and the signup path SHOWS it to the person when the browser refused
+ * to keep it. This is the lab's in-memory fallback, applied to the
+ * one thing this app stores. */
+let heldToken = "";
+
 function readToken() {
   try {
-    return window.localStorage.getItem(PICKS_TOKEN_KEY) || "";
+    return window.localStorage.getItem(PICKS_TOKEN_KEY) || heldToken;
   } catch (err) {
-    return "";
+    return heldToken;
   }
 }
 
+/* Returns whether the BROWSER kept it. The visit's copy is set either
+ * way, so a false here means "this token lasts until the tab closes",
+ * not "this token is lost" — and the one caller that can do something
+ * about that does. */
 function writeToken(token) {
+  heldToken = token;
   try {
     window.localStorage.setItem(PICKS_TOKEN_KEY, token);
     return true;
   } catch (err) {
     return false;
   }
+}
+
+/* A DIFFERENT CREDENTIAL IS A DIFFERENT PERSON (finding 1). Every
+ * path that changes the token goes through here, so nothing the last
+ * reader loaded can still be on screen — or in memory — for the next
+ * one. There is no path that writes a token without it except
+ * `clearToken`, which resets on its own account. */
+function adoptToken(token) {
+  const kept = writeToken(token);
+  resetUserScoped();
+  nav.hasToken = !!token;
+  return kept;
+}
+
+/* SIGNING OUT IS A LOCAL ACT AND ONLY A LOCAL ACT (A3). The token
+ * stops being in this browser; the account, the reads, the slips and
+ * the watchlist are all still the person's, on the service, and
+ * signing back in with the same token brings every one of them back.
+ * Nothing is sent, because there is nothing on the service to tell:
+ * a credential this browser has forgotten is a credential this
+ * browser has forgotten.
+ *
+ * It goes through `writeToken`, which is the whole reason this file
+ * still touches storage in exactly two places. */
+function clearToken() {
+  return writeToken("");
 }
 
 /* Asked when he ASKS to connect, and on the first write that needs
@@ -2408,7 +2828,10 @@ function askToken() {
     typed = "";
   }
   typed = typed.trim();
-  if (typed) writeToken(typed);
+  /* A PASTED KEY IS A TOKEN CHANGE (finding 1): it may be a second
+   * person's, so it goes through the one door that drops what the
+   * last one loaded. */
+  if (typed) adoptToken(typed);
   nav.hasToken = !!typed;
   return typed;
 }
@@ -2418,7 +2841,13 @@ function askToken() {
  * fetch, because a second one would be a second timeout and a second
  * error shape to get wrong. */
 async function picksAsk(path, token, body, method) {
-  const headers = { Authorization: "Bearer " + token };
+  /* ONE DOOR TAKES NO TOKEN, and it is the only one: `POST /signup`,
+   * where a person holding an invite code has no credential yet —
+   * which is what the code is for. An empty token sends NO
+   * Authorization header at all rather than an empty bearer, because
+   * "I have no credential" and "here is my credential, it is blank"
+   * are different things to say to a service. */
+  const headers = token ? { Authorization: "Bearer " + token } : {};
   if (body) headers["Content-Type"] = "application/json";
   return getJSON(SERVICE_URL + path, {
     method: method || (body ? "POST" : "GET"),
@@ -2452,6 +2881,458 @@ async function loadPicks(force) {
     nav.picksOffline = true;
   }
   render();
+}
+
+/* ------------------------------------------------------------------
+ * A3 — THE ACCOUNT, through the same one fetch
+ * ------------------------------------------------------------------ */
+
+/* WHAT THE SERVICE SAID, OR THE HONEST FALLBACK. Every account call
+ * that fails goes through here, so there is one rule for it: if the
+ * service stated a reason, the reader gets that sentence and no other
+ * — and if the service could not be reached at all, he gets the same
+ * "not answering" line every other screen in this app gives him. */
+function serviceNote(err) {
+  return (err && typeof err.reason === "string" && err.reason)
+    ? err.reason
+    : SERVICE_OFFLINE;
+}
+
+function accountState() {
+  return nav.account;
+}
+
+/* THE ACCOUNT SCREEN'S ONE LOAD. A member is asked for his own
+ * requests; the owner is asked for the same thing and is TOLD he is
+ * the owner by the answer, which is when the other two lists are
+ * worth asking for at all.
+ *
+ * DEMO NEVER TOUCHES THE SERVICE, here least of all: this is the one
+ * screen in the product that renders people's names. */
+async function loadAccount(force) {
+  const account = accountState();
+  if (DEMO) {
+    account.admin = DEMO_ACCOUNT.admin;
+    account.requests = DEMO_ACCOUNT.requests;
+    account.invites = DEMO_ACCOUNT.invites;
+    account.members = DEMO_ACCOUNT.members;
+    account.asked = true;
+    render();
+    return;
+  }
+  if (account.asked && !force) return;
+  const token = readToken();
+  if (!token) {
+    account.asked = true;
+    render();
+    return;
+  }
+  account.asked = true;
+  try {
+    const mine = await picksAsk("/invite-requests", token, null);
+    account.requests = (mine && mine.requests) || [];
+    account.admin = !!(mine && mine.admin);
+    account.offline = false;
+    if (account.admin) {
+      const invites = await picksAsk("/invites", token, null);
+      const members = await picksAsk("/members", token, null);
+      account.invites = (invites && invites.invites) || [];
+      account.members = (members && members.members) || [];
+    }
+  } catch (err) {
+    account.offline = true;
+  }
+  render();
+}
+
+/* SIGNING UP. The code and the three fields go together in one
+ * request, because the service has one door for them: there is no way
+ * to ask "is this code good" without also asking it to be spent, and
+ * a page that pretended otherwise would be checking something it
+ * cannot check.
+ *
+ * WHAT COMES BACK IS A TOKEN, ONCE, and it is kept the way the
+ * owner's is kept — the same key, the same two guarded touches. The
+ * typed fields are dropped on the way out. */
+async function submitSignup() {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  const account = accountState();
+  if (account.busy) return;
+  account.busy = "signup";
+  account.note = "";
+  render();
+  try {
+    const made = await picksAsk("/signup", "", {
+      code: account.code, name: account.name,
+      phone: account.phone, email: account.email });
+    /* A NEW TOKEN IS A NEW PERSON (finding 1). Everything the last
+     * reader on this tab loaded goes before the first request is made
+     * with this credential — and it takes the typed name, phone and
+     * email with it, because they were on their way to the service's
+     * database and that is where they live. Nothing typed here
+     * survives the request that carried it. */
+    const kept = adoptToken(made.token);
+    const fresh = accountState();
+    if (!kept) {
+      /* THE BROWSER REFUSED TO KEEP IT (finding 3). The invite is
+       * spent and this token cannot be minted again, so it is shown
+       * once, here, with the plain fact about what that means — and
+       * the reader stays signed in for this visit on the copy held in
+       * memory. Losing it silently would leave somebody whose invite
+       * is gone and whose account they cannot reach. */
+      fresh.rescue = { token: made.token };
+    }
+    showToast(SIGNUP_DONE);
+    loadAccount(true);
+    loadPicks(true);
+  } catch (err) {
+    account.busy = "";
+    account.note = serviceNote(err);
+    render();
+  }
+}
+
+/* ASKING FOR A FRIEND. A pending row, and the service says so in its
+ * own words — which is what is shown, because "we've passed this on"
+ * is a promise about what happens next and the service is the one
+ * making it. */
+async function requestInvite() {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  const account = accountState();
+  if (account.busy) return;
+  const token = readToken();
+  if (!token) return;
+  account.busy = "invite";
+  account.note = "";
+  render();
+  try {
+    const asked = await picksAsk("/invite-requests", token,
+      { friend_note: account.friend });
+    account.busy = "";
+    account.friend = "";
+    account.asked = false;
+    loadAccount(true);
+    /* The service's own sentence about what it just did. */
+    showToast(asked.note || "");
+  } catch (err) {
+    account.busy = "";
+    account.note = serviceNote(err);
+    render();
+  }
+}
+
+/* THE OWNER'S WORD. An approval brings a code back and this is the
+ * only moment it exists anywhere: it is held in state while he is
+ * looking at it, with the service's own "pass it on" sentence beside
+ * it, and it is gone the moment he dismisses it. */
+async function decideRequest(requestId, approve) {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  const account = accountState();
+  if (account.busy) return;
+  const token = readToken();
+  if (!token) return;
+  account.busy = "decide:" + requestId;
+  account.note = "";
+  render();
+  try {
+    const said = await picksAsk("/invite-requests/decide", token,
+      { request_id: requestId,
+        decision: approve ? "approve" : "decline" });
+    account.busy = "";
+    account.minted = said.code
+      ? { code: said.code, note: said.note || "",
+          expires_at: said.expires_at || null }
+      : null;
+    account.asked = false;
+    loadAccount(true);
+  } catch (err) {
+    account.busy = "";
+    account.note = serviceNote(err);
+    render();
+  }
+}
+
+async function withdrawInvite(inviteId) {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  const account = accountState();
+  if (account.busy) return;
+  const token = readToken();
+  if (!token) return;
+  account.busy = "withdraw:" + inviteId;
+  account.note = "";
+  render();
+  try {
+    await picksAsk("/invites/withdraw", token, { invite_id: inviteId });
+    account.busy = "";
+    account.asked = false;
+    loadAccount(true);
+  } catch (err) {
+    account.busy = "";
+    account.note = serviceNote(err);
+    render();
+  }
+}
+
+/* ONE COPIER FOR THE TWO STRINGS THIS APP EVER ASKS A PERSON TO KEEP
+ * BY HAND — a minted invite code, and a key a browser refused to save
+ * — because both exist in exactly one place and a second copier is a
+ * second chance to get "it is gone after this" wrong. */
+function copyOnce(text, said) {
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text);
+    }
+  } catch (err) {
+    /* a browser that will not take it still has the string on screen,
+     * which is the only place it will ever be */
+  }
+  showToast(said);
+}
+
+/* SIGNING OUT. Local, and only local — see `clearToken`. */
+function signOut() {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  /* EVERYTHING OF HIS GOES, not the four things this function used to
+   * happen to name (finding 1). `resetUserScoped` walks the one list,
+   * so the lineups, the opponents, the numbers on his reads, the
+   * picture he chose and whatever the account screen loaded leave
+   * with the token — and the live poll is stopped rather than left
+   * firing against whoever signs in next. */
+  clearToken();
+  nav.hasToken = false;
+  resetUserScoped();
+  render();
+  showToast(SIGNED_OUT_TOAST);
+}
+
+/* ------------------------------------------------------------------
+ * A3 — NOTIFICATIONS (ACCOUNTS_LITE_SPEC sec 4, sec 7)
+ * ------------------------------------------------------------------
+ * THE TOGGLE IS HONEST ABOUT FOUR DIFFERENT THINGS, and they are four
+ * different facts rather than one failure:
+ *
+ *   1. THIS BROWSER CANNOT DO IT AT ALL. No service worker, no push
+ *      manager, no Notification — a desktop browser with the feature
+ *      off, or a private window. It says so and offers nothing.
+ *   2. THIS IS AN IPHONE AND THE APP IS NOT ON THE HOME SCREEN. iOS
+ *      gives a page no push at all until it has been added (16.4+),
+ *      so the honest instruction is the one that would actually fix
+ *      it, and it is named in the program doc as the constraint to
+ *      say up front.
+ *   3. THE SERVICE HAS NO KEYS YET. `GET /push/key` answers `ready:
+ *      false` with its own sentence about when this arrives, and that
+ *      sentence is what is drawn — the toggle goes quiet rather than
+ *      pretending to have turned something on.
+ *   4. THE READER SAID NO. A blocked permission is the reader's own
+ *      decision and is stated as a fact about his browser's settings,
+ *      not as an error he made.
+ *
+ * AND NOTHING SENDS. There is no send path in this increment by
+ * ruling (the notification catalog is its own owner decision), which
+ * is why `sw.js` displays what arrives and does nothing else. */
+
+function pushSupported() {
+  return !!(window.navigator && window.navigator.serviceWorker &&
+    window.PushManager && window.Notification);
+}
+
+/* iOS 16.4+ serves web push ONLY to an app the reader added to their
+ * home screen, and a Safari that is not in that mode reports no push
+ * manager at all. So the distinguishing question is not "which
+ * browser is this" — it is "does this look like an iPhone that could
+ * do this if it were installed". */
+function pushNeedsHomeScreen() {
+  const platform = String((window.navigator && window.navigator.platform)
+    || "");
+  const agent = String((window.navigator && window.navigator.userAgent)
+    || "");
+  const apple = /iPad|iPhone|iPod/.test(platform) ||
+    /iPad|iPhone|iPod/.test(agent);
+  const standalone = !!(window.navigator &&
+    window.navigator.standalone);
+  return apple && !standalone;
+}
+
+/* The VAPID public key travels as base64url text, because that is
+ * what a URL-safe key looks like on the wire; `pushManager.subscribe`
+ * wants the bytes. This is the standard conversion and it is the only
+ * arithmetic on this screen. */
+function keyBytes(key) {
+  const padded = String(key || "") + "=".repeat((4 - key.length % 4) % 4);
+  const plain = window.atob(padded.replace(/-/g, "+").replace(/_/g, "/"));
+  const bytes = new Uint8Array(plain.length);
+  for (let i = 0; i < plain.length; i += 1) {
+    bytes[i] = plain.charCodeAt(i);
+  }
+  return bytes;
+}
+
+/* `getRegistration`, never `ready`: a browser with no worker
+ * registered leaves `ready` pending for the life of the page, and a
+ * promise that never settles is a screen that never finishes asking
+ * its question. This one answers null, which is a real answer. */
+async function currentSubscription() {
+  const registration = await window.navigator.serviceWorker
+    .getRegistration("./sw.js");
+  if (!registration) return null;
+  return await registration.pushManager.getSubscription();
+}
+
+/* WHETHER THIS BROWSER IS ALREADY SUBSCRIBED, asked of the browser
+ * rather than remembered: a subscription is a fact about the device,
+ * and the device is the one that knows. */
+/* WHAT THE BROWSER KNOWS IS NOT WHAT THIS ACCOUNT KNOWS (finding 2).
+ *
+ * `getSubscription()` answers a question about the DEVICE — is there a
+ * push subscription here — and says nothing about WHOSE it is. Two
+ * people on one tab is exactly the case that matters: the first signs
+ * in and turns notifications on, the second signs in and the browser
+ * still reports a subscription, so a toggle filled in from that answer
+ * would read "on" to the second person while every notification it
+ * describes goes to the first.
+ *
+ * WHAT THE SERVICE CAN AND CANNOT SETTLE, read off A2 rather than
+ * assumed. There is no endpoint that lists a user's live
+ * subscriptions — `GET /push/key` is the only push read — so the
+ * client CANNOT ask "is this device bound to me". And migration
+ * 0027's unique index is on (user_id, endpoint) where the row is
+ * live, so one endpoint may legitimately be live under two users at
+ * once; binding this device to the second person does not, and cannot
+ * from here, take it off the first.
+ *
+ * SO THE TOGGLE STATES WHAT THIS SESSION DID. `on` is set by a
+ * subscribe that THIS session made with THIS token, and `device` is
+ * the separate fact that the browser has a subscription of some kind.
+ * Where the two disagree the card says so in words rather than
+ * guessing, and the reader's own tap is what resolves it — which is
+ * the only honest resolution available from this side. */
+async function syncPush() {
+  const push = accountState().push;
+  /* THE TOKEN IS READ, not taken off `nav.hasToken`: the boot's first
+   * render happens BEFORE that flag is set, so a reader who opens the
+   * app directly on this screen would otherwise never have his device
+   * asked. `loadAccount` reads it the same way, for the same reason. */
+  if (DEMO || !readToken() || !pushSupported()) return;
+  try {
+    const held = await currentSubscription();
+    /* A FACT ABOUT THE BROWSER, and it is filed as one. It is NOT
+     * assigned to `on`: this session has not bound anything. */
+    push.device = !!held;
+    render();
+  } catch (err) {
+    /* a browser that will not answer has told us nothing, and the
+     * toggle stays where it was rather than claiming either way */
+  }
+}
+
+async function togglePush() {
+  if (DEMO) {
+    showToast(ACCOUNT_DEMO);
+    return;
+  }
+  const push = accountState().push;
+  if (push.busy) return;
+  if (!pushSupported()) {
+    push.note = pushNeedsHomeScreen() ? NOTIFY_HOME_SCREEN
+      : NOTIFY_UNSUPPORTED;
+    render();
+    return;
+  }
+  const token = readToken();
+  if (!token) return;
+  push.busy = true;
+  push.note = "";
+  render();
+  try {
+    if (push.on) {
+      await turnPushOff(token);
+    } else {
+      await turnPushOn(token);
+    }
+  } catch (err) {
+    push.note = serviceNote(err);
+  }
+  push.busy = false;
+  render();
+}
+
+async function turnPushOn(token) {
+  const push = accountState().push;
+  /* THE SERVICE IS ASKED FIRST, before the reader is asked anything.
+   * A permission prompt is a real interruption, and asking for one to
+   * turn on something that cannot be turned on yet would spend the
+   * reader's only "yes" on nothing. */
+  const key = await picksAsk("/push/key", token, null);
+  push.ready = !!(key && key.ready);
+  if (!push.ready) {
+    /* The service's own sentence about when this arrives. */
+    push.note = (key && key.note) || "";
+    return;
+  }
+  const allowed = await window.Notification.requestPermission();
+  if (allowed !== "granted") {
+    push.note = NOTIFY_DENIED;
+    return;
+  }
+  const registration = await window.navigator.serviceWorker
+    .register("./sw.js");
+  /* A SUBSCRIPTION THIS DEVICE ALREADY HAS IS REUSED, not asked for
+   * twice (finding 2). Where somebody else signed in on this tab
+   * first, the browser is already subscribed and the thing that has
+   * to change is WHO IT IS FILED UNDER — so the existing endpoint is
+   * handed to the service under THIS token, and from here on the
+   * toggle is telling this account's truth. */
+  const subscription = (await registration.pushManager.getSubscription())
+    || await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: keyBytes(key.public_key) });
+  const shape = subscription.toJSON ? subscription.toJSON() : {};
+  await picksAsk("/push/subscribe", token, {
+    endpoint: subscription.endpoint, keys: shape.keys || {} });
+  /* ONLY NOW. `on` means "this session bound this device to this
+   * account and the service said so" — never "the browser has a
+   * subscription", which is a different fact and is held in
+   * `device`. */
+  push.on = true;
+  push.device = true;
+  push.note = "";
+  showToast(NOTIFY_ON_TOAST);
+}
+
+/* OFF HERE IS OFF FOR THIS BROWSER, and the request says which
+ * browser it means: the endpoint the subscription carries is the
+ * identity the service stored, and somebody turning notifications off
+ * on their laptop has said nothing whatever about their phone. The
+ * service refuses a request that does not name one, which is why this
+ * reads it off the live subscription before unsubscribing rather than
+ * after. */
+async function turnPushOff(token) {
+  const push = accountState().push;
+  const held = await currentSubscription();
+  if (held) {
+    await picksAsk("/push/unsubscribe", token,
+      { endpoint: held.endpoint });
+    await held.unsubscribe();
+  }
+  push.on = false;
+  push.device = false;
+  push.note = "";
+  showToast(NOTIFY_OFF_TOAST);
 }
 
 /* THE BOOKMARK. It is a state on the service, so the button waits for
@@ -5975,8 +6856,7 @@ function liveConnectCard() {
   return '<div class="card"><div class="cardhead">' +
     esc(LIVE_CONNECT_HEAD) + '</div>' +
     '<div class="cardbody">' + esc(LIVE_CONNECT_BODY) + '</div>' +
-    '<button class="primary" data-act="connect">' +
-    esc(CONNECT_BUTTON) + '</button></div>';
+    connectChoice() + '</div>';
 }
 
 function liveBets() {
@@ -6035,12 +6915,30 @@ function renderBetsLive() {
  * says exactly that: it does not keep a local copy, it does not show
  * yesterday's, and it does not pretend a bookmark was saved. */
 
+/* A3 — THE FRONT DOOR'S TWO PATHS, IN ONE COMPONENT. Every connect
+ * state in this app draws these same two buttons, because a reader
+ * who meets the app on the live board and a reader who meets it on My
+ * picks are the same reader with the same two ways in. A second copy
+ * of this pair is how one screen comes to offer a door the other one
+ * has forgotten about.
+ *
+ * THE OWNER'S PATH IS UNTOUCHED: "I have my key" is the prompt this
+ * app has always had, word for word and behaviour for behaviour. What
+ * is new is the honest admission beside it that most people arriving
+ * here will not have one. */
+function connectChoice() {
+  return '<button class="primary" data-act="connect">' +
+    esc(CONNECT_HAVE_KEY) + '</button>' +
+    '<div class="connector">' + esc(CONNECT_OR) + '</div>' +
+    '<button class="ghost wide" data-act="invite-open">' +
+    esc(CONNECT_HAVE_CODE) + '</button>';
+}
+
 function connectCard() {
   return '<div class="card"><div class="cardhead">' +
     esc(CONNECT_HEAD) + '</div>' +
     '<div class="cardbody">' + esc(CONNECT_BODY) + '</div>' +
-    '<button class="primary" data-act="connect">' +
-    esc(CONNECT_BUTTON) + '</button></div>';
+    connectChoice() + '</div>';
 }
 
 function watchRows() {
@@ -6162,7 +7060,400 @@ function renderBetsPicks() {
       esc(CONNECT_BUTTON) + '</button></div>';
   }
   return head + watchRows() + scenarioBoardNote() + slipRows() +
-    '</div>';
+    accountLink() + '</div>';
+}
+
+/* THE WAY IN (A3). The account lives where the token has always
+ * lived, so the door to it is on the segment that manages the token —
+ * the app's own information architecture, not a new tab. */
+function accountLink() {
+  if (DEMO || nav.hasToken) {
+    return '<button class="ghost wide" data-act="account-open">' +
+      esc(ACCOUNT_OPEN) + '</button>';
+  }
+  return "";
+}
+
+/* ------------------------------------------------------------------
+ * A3 — THE ACCOUNT SCREEN (ACCOUNTS_LITE_SPEC sec 7)
+ * ------------------------------------------------------------------
+ * ONE SCREEN, and the states it actually has: the invite code and the
+ * signup form for somebody who is not in yet, and the three settings
+ * blocks — plus the owner's own view of the invite list — for
+ * somebody who is. They are one screen because they are one subject,
+ * and because the moment a signup succeeds the reader is standing in
+ * the settings without a navigation having happened. */
+
+/* A DATE IN WORDS. No timezone to decode and no clock arithmetic for
+ * the reader to do: the month and the day, which is all any date on
+ * this screen is about. */
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function dayLabel(stamp) {
+  if (!stamp) return "";
+  const when = new Date(stamp);
+  if (isNaN(when.getTime())) return "";
+  return MONTHS[when.getMonth()] + " " + when.getDate();
+}
+
+/* The field ids and the state they belong to, written down once so
+ * the input listener maps them rather than knowing five names. */
+const ACCOUNT_FIELDS = {
+  code: "code", name: "name", phone: "phone", email: "email",
+  friend: "friend"
+};
+
+const REQUEST_WORDS = {
+  pending: REQUEST_PENDING_WORD,
+  approved: REQUEST_APPROVED_WORD,
+  declined: REQUEST_DECLINED_WORD
+};
+
+const INVITE_WORDS = {
+  open: INVITE_OPEN_WORD,
+  redeemed: INVITE_USED_WORD,
+  expired: INVITE_EXPIRED_WORD,
+  withdrawn: INVITE_WITHDRAWN_WORD
+};
+
+/* THE SERVICE'S LAST SENTENCE, drawn verbatim or not at all. A
+ * missing one draws no element — the page never invents a refusal and
+ * never leaves an empty box where one would have been. */
+function accountNote(note, tone) {
+  if (!note) return "";
+  return '<div class="legend' + (tone ? " " + tone : "") + '">' +
+    esc(note) + '</div>';
+}
+
+function accountField(id, label, value, placeholder, kind) {
+  return '<label class="acctfield" for="' + esc(id) + '">' +
+    '<span class="acctlabel">' + esc(label) + '</span>' +
+    '<input class="trackline" id="' + esc(id) + '" type="' +
+    esc(kind || "text") + '" value="' + esc(value || "") +
+    '" placeholder="' + esc(placeholder || "") + '"></label>';
+}
+
+function codeStep() {
+  const account = accountState();
+  return '<div class="card">' +
+    '<div class="cardhead">' + esc(CODE_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(CODE_BODY) + '</div>' +
+    accountField("accountcode", CODE_LABEL, account.code,
+      CODE_PLACEHOLDER) +
+    accountNote(account.note) +
+    '<button class="primary" data-act="code-next">' +
+    esc(CODE_GO) + '</button></div>';
+}
+
+/* THE SIGNUP FORM. Three fields in plain words, ONE button, and the
+ * privacy promise beside it — beside it, because the moment a person
+ * is about to hand over a phone number is the moment he is owed the
+ * promise about it, and a promise made in the receipt afterwards is
+ * not a promise he got to read. */
+function signupStep() {
+  const account = accountState();
+  const busy = account.busy === "signup";
+  return '<div class="card">' +
+    '<div class="cardhead">' + esc(SIGNUP_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(SIGNUP_BODY) + '</div>' +
+    accountField("accountname", SIGNUP_NAME, account.name,
+      SIGNUP_NAME_HINT) +
+    accountField("accountphone", SIGNUP_PHONE, account.phone, "", "tel") +
+    accountField("accountemail", SIGNUP_EMAIL, account.email, "",
+      "email") +
+    accountNote(account.note) +
+    '<div class="legend">' + esc(SIGNUP_PRIVACY) + '</div>' +
+    '<button class="primary" data-act="signup"' +
+    (busy ? " disabled" : "") + '>' +
+    esc(busy ? SIGNUP_BUSY : SIGNUP_GO) + '</button>' +
+    '<button class="ghost wide" data-act="code-back">' +
+    esc(SIGNUP_BACK) + '</button></div>';
+}
+
+/* THE KEY, SHOWN ONCE, WHEN THE BROWSER WOULD NOT KEEP IT (finding
+ * 3). The same shape as the minted-code card, for the same reason:
+ * this string exists in one place in the world and the person looking
+ * at it is the only one who can save it. It is not written anywhere —
+ * writing it is precisely what failed. */
+function rescueCard() {
+  const rescue = accountState().rescue;
+  if (!rescue) return "";
+  return '<div class="card mintcard">' +
+    '<div class="overline">' + esc(RESCUE_HEAD) + '</div>' +
+    '<div class="mintcode">' + esc(rescue.token) + '</div>' +
+    '<div class="legend">' + esc(RESCUE_BODY) + '</div>' +
+    '<button class="primary" data-act="copy-key" data-key="' +
+    esc(rescue.token) + '">' + esc(RESCUE_COPY) + '</button>' +
+    '<button class="ghost wide" data-act="rescue-done">' +
+    esc(RESCUE_DISMISS) + '</button></div>';
+}
+
+function whoAmICard() {
+  const account = accountState();
+  /* FIRST NAME ONLY, and it is the only piece of anybody's contact
+   * details this app can draw about itself: the members list is the
+   * owner's surface and this is not it. Where the service has not
+   * named him — a member has no members list to read his own row off
+   * — the card says what it honestly knows, which is that this
+   * browser is signed in. */
+  const mine = DEMO ? DEMO_ACCOUNT.name : myFirstName();
+  return '<div class="card">' +
+    '<div class="overline">' + esc(WHOAMI_HEAD) + '</div>' +
+    '<div class="cardhead">' + esc(mine || WHOAMI_UNKNOWN) + '</div>' +
+    '<div class="cardbody">' + esc(WHOAMI_BODY) + '</div>' +
+    '<button class="ghost wide" data-act="sign-out">' +
+    esc(SIGN_OUT) + '</button></div>';
+}
+
+/* WHOSE ACCOUNT THIS IS, where the service has said so. The owner's
+ * own members list carries his row; a member's does not exist, and a
+ * name this page could not read is not one it guesses at. */
+function myFirstName() {
+  const rows = accountState().members || [];
+  for (let i = 0; i < rows.length; i += 1) {
+    if (rows[i].is_owner) return String(rows[i].name || "").split(" ")[0];
+  }
+  return "";
+}
+
+/* THE OWNER'S OWN USER ID, off the one list that carries it. His row
+ * in the members list is the row that says `is_owner`, and that is
+ * the only place this client is told which id is his. A member has no
+ * members list and gets "" — which is correct, because a member's
+ * `GET /invite-requests` is already only his own asks. */
+function myUserId() {
+  const rows = accountState().members || [];
+  for (let i = 0; i < rows.length; i += 1) {
+    if (rows[i].is_owner) return String(rows[i].user_id || "");
+  }
+  return "";
+}
+
+/* WHAT *YOU* ASKED FOR — and for the owner that is not the whole
+ * queue (finding 4).
+ *
+ * `GET /invite-requests` is asymmetric by design: a member is sent
+ * his own asks, the owner is sent EVERYBODY'S. Rendering the answer
+ * as-is under "What you've asked for" told the owner that every
+ * member's request was his own. The rows carry `requested_by`, and
+ * the members list tells this client which id is the owner's, so the
+ * personal section is filtered to his and the queue below it — which
+ * is where other people's requests belong — is untouched.
+ *
+ * Where the owner's id is not known yet (the members list has not
+ * arrived), this section shows nothing rather than everything: an
+ * attribution that cannot be made is not one to guess at. */
+function myRequestRows() {
+  const account = accountState();
+  const mine = myUserId();
+  const rows = (account.requests || []).filter(function (row) {
+    if (!account.admin) return true;
+    return !!mine && String(row.requested_by || "") === mine;
+  });
+  if (!rows.length) {
+    return '<div class="cardbody muted">' + esc(INVITE_NONE) + '</div>';
+  }
+  return '<div class="acctlist">' + rows.map(function (row) {
+    return '<div class="acctrow">' +
+      '<span class="acctname">' + esc(row.friend_note || "") + '</span>' +
+      '<span class="acctmeta">' +
+      esc(REQUEST_WORDS[row.status] || "") + '</span></div>';
+  }).join("") + '</div>';
+}
+
+function inviteFriendCard() {
+  const account = accountState();
+  const busy = account.busy === "invite";
+  return '<div class="card">' +
+    '<div class="overline">' + esc(INVITE_HEAD) + '</div>' +
+    '<div class="cardbody">' + esc(INVITE_BODY) + '</div>' +
+    accountField("accountfriend", INVITE_LABEL, account.friend,
+      INVITE_PLACEHOLDER) +
+    accountNote(account.note) +
+    '<button class="primary" data-act="invite-ask"' +
+    (busy ? " disabled" : "") + '>' +
+    esc(busy ? INVITE_BUSY : INVITE_GO) + '</button>' +
+    '<div class="overline">' + esc(INVITE_MINE) + '</div>' +
+    myRequestRows() + '</div>';
+}
+
+/* THE NOTIFICATIONS BLOCK. The toggle says which way it will go, and
+ * every honest arm underneath it is the service's sentence or a fact
+ * about this browser — never a success this app did not get. */
+function notifyCard() {
+  const push = accountState().push;
+  const supported = DEMO || pushSupported();
+  const blocked = !supported || push.ready === false;
+  const label = push.busy ? NOTIFY_BUSY
+    : (push.on ? NOTIFY_ON : NOTIFY_OFF);
+  /* THE ONE LINE UNDER THE TOGGLE, and the order is the order the
+   * facts matter in: what the last action produced, then what this
+   * browser cannot do, then the device this account cannot claim. */
+  let standing = push.note;
+  if (!standing && !supported) {
+    standing = pushNeedsHomeScreen() ? NOTIFY_HOME_SCREEN
+      : NOTIFY_UNSUPPORTED;
+  }
+  if (!standing && supported && push.device && !push.on) {
+    standing = NOTIFY_ANOTHER;
+  }
+  return '<div class="card">' +
+    '<div class="overline">' + esc(NOTIFY_HEAD) + '</div>' +
+    '<button class="togglebtn" data-act="push-toggle" aria-pressed="' +
+    (push.on ? "true" : "false") + '"' +
+    (blocked || push.busy ? " disabled" : "") + '>' +
+    '<span class="togglelabel">' + esc(label) + '</span>' +
+    '<span class="togglepill' + (push.on ? " on" : "") + '"></span>' +
+    '</button>' +
+    accountNote(standing) + '</div>';
+}
+
+/* THE CODE, SHOWN ONCE. The sentence beside it is the service's own
+ * and it is the one that says this is the only time it can be shown —
+ * so the fact and the code arrive together, from the same place. */
+function mintedCard() {
+  const minted = accountState().minted;
+  if (!minted) return "";
+  return '<div class="card mintcard">' +
+    '<div class="overline">' + esc(ADMIN_MINTED) + '</div>' +
+    '<div class="mintcode">' + esc(minted.code) + '</div>' +
+    '<div class="legend">' + esc(minted.note) + '</div>' +
+    '<button class="primary" data-act="copy-code" data-code="' +
+    esc(minted.code) + '">' + esc(ADMIN_COPY) + '</button>' +
+    '<button class="ghost wide" data-act="mint-done">' +
+    esc(ADMIN_DISMISS) + '</button></div>';
+}
+
+function pendingRequestRows() {
+  const account = accountState();
+  const rows = (account.requests || []).filter(function (row) {
+    return row.status === "pending";
+  });
+  if (!rows.length) {
+    return '<div class="cardbody muted">' + esc(ADMIN_QUEUE_NONE) +
+      '</div>';
+  }
+  return '<div class="acctlist">' + rows.map(function (row) {
+    const busy = account.busy === "decide:" + row.request_id;
+    /* WHO ASKED, where the members list can say. A name this page
+     * could not look up draws no line at all — a label with nothing
+     * after it is worse than the fact being absent. */
+    const asked = memberName(row.requested_by);
+    return '<div class="acctrow wide">' +
+      '<div class="acctcol">' +
+      '<span class="acctname">' + esc(row.friend_note || "") + '</span>' +
+      (asked
+        ? '<span class="acctmeta">' + esc(ADMIN_ASKED_BY) + esc(asked) +
+          '</span>'
+        : "") + '</div>' +
+      '<div class="acctactions">' +
+      '<button class="ghost" data-act="request-approve" data-request="' +
+      esc(row.request_id) + '"' + (busy ? " disabled" : "") + '>' +
+      esc(ADMIN_APPROVE) + '</button>' +
+      '<button class="ghost" data-act="request-decline" data-request="' +
+      esc(row.request_id) + '"' + (busy ? " disabled" : "") + '>' +
+      esc(ADMIN_DECLINE) + '</button></div></div>';
+  }).join("") + '</div>';
+}
+
+function memberName(userId) {
+  const rows = accountState().members || [];
+  for (let i = 0; i < rows.length; i += 1) {
+    if (rows[i].user_id === userId) return String(rows[i].name || "");
+  }
+  return "";
+}
+
+function openInviteRows() {
+  const account = accountState();
+  const rows = (account.invites || []).filter(function (row) {
+    return row.status === "open";
+  });
+  if (!rows.length) {
+    return '<div class="cardbody muted">' + esc(ADMIN_OPEN_NONE) +
+      '</div>';
+  }
+  return '<div class="acctlist">' + rows.map(function (row) {
+    const busy = account.busy === "withdraw:" + row.invite_id;
+    return '<div class="acctrow wide">' +
+      '<div class="acctcol">' +
+      '<span class="acctname">' +
+      esc(row.intended_for_note
+        ? ADMIN_FOR + row.intended_for_note
+        : INVITE_WORDS.open) + '</span>' +
+      '<span class="acctmeta">' + esc(ADMIN_EXPIRES) +
+      esc(dayLabel(row.expires_at)) + '</span></div>' +
+      '<div class="acctactions">' +
+      '<button class="ghost" data-act="invite-withdraw" data-invite="' +
+      esc(row.invite_id) + '"' + (busy ? " disabled" : "") + '>' +
+      esc(ADMIN_WITHDRAW) + '</button></div></div>';
+  }).join("") + '</div>';
+}
+
+function memberRows() {
+  const rows = accountState().members || [];
+  if (!rows.length) {
+    return '<div class="cardbody muted">' + esc(ADMIN_MEMBERS_NONE) +
+      '</div>';
+  }
+  return '<div class="acctlist">' + rows.map(function (row) {
+    const standing = row.is_owner ? ADMIN_OWNER_WORD
+      : (row.status === "active" ? ADMIN_MEMBER_WORD
+        : ADMIN_REVOKED_WORD);
+    const brought = row.invited_by_name
+      ? " · " + ADMIN_INVITED_BY + row.invited_by_name
+      : "";
+    return '<div class="acctrow wide">' +
+      '<div class="acctcol">' +
+      '<span class="acctname">' + esc(row.name || "") + '</span>' +
+      '<span class="acctmeta">' + esc(ADMIN_JOINED) +
+      esc(dayLabel(row.joined_at)) + esc(brought) + '</span></div>' +
+      '<span class="acctstanding">' + esc(standing) + '</span></div>';
+  }).join("") + '</div>';
+}
+
+/* THE OWNER'S VIEW, and it is drawn ONLY when the service said this
+ * reader is the owner — `GET /invite-requests`'s `admin` field, which
+ * every signed-in person gets and which is false for a member. The
+ * gate that matters is the service's own: every endpoint behind this
+ * view refuses a member on its own account, so a page that drew it by
+ * mistake would render three empty cards and no data. */
+function adminView() {
+  if (!accountState().admin) return "";
+  return '<div class="overline">' + esc(ADMIN_HEAD) + '</div>' +
+    '<div class="cardbody muted">' + esc(ADMIN_BODY) + '</div>' +
+    mintedCard() +
+    '<div class="card"><div class="overline">' + esc(ADMIN_QUEUE) +
+    '</div>' + pendingRequestRows() + '</div>' +
+    '<div class="card"><div class="overline">' + esc(ADMIN_OPEN) +
+    '</div>' + openInviteRows() + '</div>' +
+    '<div class="card"><div class="overline">' + esc(ADMIN_MEMBERS) +
+    '</div>' + memberRows() + '</div>';
+}
+
+function renderAccount() {
+  const account = accountState();
+  const head = '<div class="page">' + detailHead(ACCOUNT_TITLE);
+  if (DEMO) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(ACCOUNT_DEMO) + '</div></div>' +
+      whoAmICard() + inviteFriendCard() + notifyCard() + adminView() +
+      '</div>';
+  }
+  if (!nav.hasToken) {
+    return head +
+      (account.door === "signup" ? signupStep() : codeStep()) + '</div>';
+  }
+  if (account.offline) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(SERVICE_OFFLINE) + '</div>' +
+      '<button class="primary" data-act="account-retry">' +
+      esc(ACCOUNT_RETRY) + '</button></div>' +
+      whoAmICard() + '</div>';
+  }
+  return head + rescueCard() + whoAmICard() + inviteFriendCard() +
+    notifyCard() + adminView() + '</div>';
 }
 
 function detailHead(title) {
@@ -6932,7 +8223,8 @@ const SCREENS = {
   track: renderTrack,
   team: renderTeam,
   card: renderLiveCard,
-  report: renderReport
+  report: renderReport,
+  account: renderAccount
 };
 
 /* ------------------------------------------------------------------
@@ -7004,8 +8296,7 @@ function readSheet() {
   const body = (!DEMO && !readToken())
     ? '<div class="cardhead">' + esc(CONNECT_HEAD) + '</div>' +
       '<div class="cardbody">' + esc(READ_CONNECT_BODY) + '</div>' +
-      '<button class="primary" data-act="connect">' +
-      esc(CONNECT_BUTTON) + '</button>'
+      connectChoice()
     : (nav.read.step === 2 ? readConfirmStep() : readSayStep());
   return '<div class="sheet readsheet" role="dialog" aria-modal="true" ' +
     'aria-label="' + esc(READ_TITLE) + '"><div class="handle"></div>' +
@@ -7180,6 +8471,21 @@ function render() {
   syncDfs();
   /* U7: and the breakdown document, on the same rule. */
   syncProjections();
+  /* A3: and the account, on the same rule again — asked for ONCE,
+   * the first time that screen is drawn, so a reader who never opens
+   * it never asks the service who he is. */
+  syncAccount();
+}
+
+/* `syncDfs`'s shape, on the account screen: the lists follow the
+ * screen, and the browser is asked about its own push subscription at
+ * the same moment — because that question is only worth asking where
+ * its answer is drawn. */
+function syncAccount() {
+  if (currentRoute() !== "account") return;
+  if (accountState().asked) return;
+  loadAccount(false);
+  syncPush();
 }
 
 /* The game switcher's own re-draw: the table slides 14px in the
@@ -7441,6 +8747,65 @@ function onClick(event) {
   } else if (act === "swing") {
     nav.liveSwing = Number(target.getAttribute("data-index"));
     render();
+  } else if (act === "invite-open") {
+    /* THE SECOND DOOR. It does not prompt for anything and it does
+     * not touch the service: it opens the screen where a code is
+     * typed, which is the one place this app takes one. */
+    accountState().door = "code";
+    accountState().note = "";
+    openDetail("account");
+  } else if (act === "account-open") {
+    openDetail("account");
+  } else if (act === "account-retry") {
+    accountState().offline = false;
+    loadAccount(true);
+  } else if (act === "code-next") {
+    /* A CODE IS NOT CHECKED HERE, and the button does not pretend it
+     * is: the service has one door for a code and it spends the code
+     * to open it. What this step does is take the code and move on to
+     * the fields it travels with. */
+    if (!accountState().code.trim()) {
+      accountState().note = CODE_NEEDED;
+    } else {
+      accountState().note = "";
+      accountState().door = "signup";
+    }
+    render();
+  } else if (act === "code-back") {
+    accountState().door = "code";
+    accountState().note = "";
+    render();
+  } else if (act === "signup") {
+    submitSignup();
+  } else if (act === "invite-ask") {
+    requestInvite();
+  } else if (act === "request-approve") {
+    decideRequest(target.getAttribute("data-request"), true);
+  } else if (act === "request-decline") {
+    decideRequest(target.getAttribute("data-request"), false);
+  } else if (act === "invite-withdraw") {
+    withdrawInvite(target.getAttribute("data-invite"));
+  } else if (act === "copy-code") {
+    copyOnce(target.getAttribute("data-code"), ADMIN_COPIED);
+  } else if (act === "copy-key") {
+    copyOnce(target.getAttribute("data-key"), RESCUE_COPIED);
+  } else if (act === "rescue-done") {
+    /* IT LEAVES THE SCREEN AND THERE IS NOWHERE ELSE TO READ IT. The
+     * session still holds the key — he is signed in on it — but no
+     * render will show it again, which is what the sentence beside it
+     * said. */
+    accountState().rescue = null;
+    render();
+  } else if (act === "mint-done") {
+    /* THE CODE LEAVES THE SCREEN AND THERE IS NOWHERE ELSE IT IS.
+     * Nothing can bring it back, which is what the sentence beside it
+     * said while it was there. */
+    accountState().minted = null;
+    render();
+  } else if (act === "push-toggle") {
+    togglePush();
+  } else if (act === "sign-out") {
+    signOut();
   } else if (act === "toast-go") {
     const route = target.getAttribute("data-route");
     closeToast();
@@ -7573,6 +8938,19 @@ function onInput(event) {
    * eat a sentence he is halfway through. */
   if (target.id === "readtext") {
     nav.read.text = target.value;
+    return;
+  }
+  /* A3's five fields, on the same rule as every other field in this
+   * app: what is typed is kept in the shell's state and the input is
+   * NOT re-rendered under the caret. It matters most here, where a
+   * person is halfway through a phone number. None of it is written
+   * anywhere — it goes to the service on the one request and is
+   * dropped from state the moment the account exists. */
+  if (target.id.indexOf("account") === 0) {
+    const field = target.id.slice("account".length);
+    if (Object.prototype.hasOwnProperty.call(ACCOUNT_FIELDS, field)) {
+      accountState()[ACCOUNT_FIELDS[field]] = target.value;
+    }
     return;
   }
   /* U7's roster filter. Only the LIST is redrawn, the same way the
