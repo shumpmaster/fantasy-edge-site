@@ -1,6 +1,6 @@
 {
   "sweat_schema": "sweatlab-2",
-  "generated_at": "2026-09-23T10:30:13.704642+00:00",
+  "generated_at": "2026-09-23T13:27:45.061030+00:00",
   "poll_interval_s": 1800,
   "run": {
     "season": 2026,
@@ -74,15 +74,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.4,
-            0.45
+            0.450983,
+            0.476142
           ],
-          "p_pregame": 0.425,
+          "p_pregame": 0.463636,
           "projection": 4.36,
-          "p_vs_projection": 0.432,
+          "p_vs_projection": 0.46715,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.450983,
+            0.476142
           ],
           "p_source": "model",
           "calibrated": false,
@@ -91,15 +91,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.425,
-              "lo": 0.4,
-              "hi": 0.45
+              "p": 0.463636,
+              "lo": 0.450983,
+              "hi": 0.476142
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.425,
+          "p_vs_projection_raw": 0.432,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038542-reception_yds-40_5",
@@ -118,15 +121,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.387807,
+            0.414113
           ],
-          "p_pregame": 0.285,
+          "p_pregame": 0.406467,
           "projection": 30.665,
-          "p_vs_projection": 0.433375,
+          "p_vs_projection": 0.476391,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
           "p_source": "model",
           "calibrated": false,
@@ -135,15 +138,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.285,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.406467,
+              "lo": 0.387807,
+              "hi": 0.414113
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.285,
+          "p_vs_projection_raw": 0.433375,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038542-rush_attempts-18_5",
@@ -162,15 +168,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.35,
-            0.4
+            0.481001,
+            0.485035
           ],
-          "p_pregame": 0.375,
+          "p_pregame": 0.483044,
           "projection": 16.785,
-          "p_vs_projection": 0.46075,
+          "p_vs_projection": 0.489724,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.488905,
+            0.492698
           ],
           "p_source": "model",
           "calibrated": false,
@@ -179,15 +185,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.375,
-              "lo": 0.35,
-              "hi": 0.4
+              "p": 0.483044,
+              "lo": 0.481001,
+              "hi": 0.485035
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.375,
+          "p_vs_projection_raw": 0.46075,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038542-rush_yds-79_5",
@@ -206,15 +215,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.3,
-            0.35
+            0.431758,
+            0.449433
           ],
-          "p_pregame": 0.305572,
+          "p_pregame": 0.433794,
           "projection": 68.7469251480347,
-          "p_vs_projection": 0.453781,
+          "p_vs_projection": 0.483328,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.48213,
+            0.497885
           ],
           "p_source": "model",
           "calibrated": false,
@@ -223,15 +232,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.305572,
-              "lo": 0.3,
-              "hi": 0.35
+              "p": 0.433794,
+              "lo": 0.431758,
+              "hi": 0.449433
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.305572,
+          "p_vs_projection_raw": 0.453781,
+          "calibration": "layer"
         }
       ]
     },
@@ -274,15 +286,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.6,
-            0.65
+            0.5297,
+            0.546378
           ],
-          "p_pregame": 0.631561,
+          "p_pregame": 0.540132,
           "projection": 30.03044295407587,
-          "p_vs_projection": 0.460875,
+          "p_vs_projection": 0.485571,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.48213,
+            0.497885
           ],
           "p_source": "model",
           "calibrated": false,
@@ -291,15 +303,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.631561,
-              "lo": 0.6,
-              "hi": 0.65
+              "p": 0.540132,
+              "lo": 0.5297,
+              "hi": 0.546378
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.631561,
+          "p_vs_projection_raw": 0.460875,
+          "calibration": "layer"
         }
       ]
     },
@@ -342,15 +357,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.3,
-            0.35
+            0.414113,
+            0.438442
           ],
-          "p_pregame": 0.325,
+          "p_pregame": 0.426476,
           "projection": 6.1875,
-          "p_vs_projection": 0.390625,
+          "p_vs_projection": 0.457234,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.438442,
+            0.46148
           ],
           "p_source": "model",
           "calibrated": false,
@@ -359,15 +374,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.325,
-              "lo": 0.3,
-              "hi": 0.35
+              "p": 0.426476,
+              "lo": 0.414113,
+              "hi": 0.438442
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.325,
+          "p_vs_projection_raw": 0.390625,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038685-rush_yds-15_5",
@@ -386,15 +404,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.6,
-            0.65
+            0.5297,
+            0.546378
           ],
-          "p_pregame": 0.645065,
+          "p_pregame": 0.544694,
           "projection": 22.717867622602913,
-          "p_vs_projection": 0.4315,
+          "p_vs_projection": 0.476244,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.466088,
+            0.48213
           ],
           "p_source": "model",
           "calibrated": false,
@@ -403,15 +421,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.645065,
-              "lo": 0.6,
-              "hi": 0.65
+              "p": 0.544694,
+              "lo": 0.5297,
+              "hi": 0.546378
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.645065,
+          "p_vs_projection_raw": 0.4315,
+          "calibration": "layer"
         }
       ]
     },
@@ -454,15 +475,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.4,
-            0.45
+            0.450983,
+            0.476142
           ],
-          "p_pregame": 0.425,
+          "p_pregame": 0.463636,
           "projection": 4.2575,
-          "p_vs_projection": 0.437125,
+          "p_vs_projection": 0.469716,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.450983,
+            0.476142
           ],
           "p_source": "model",
           "calibrated": false,
@@ -471,15 +492,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.425,
-              "lo": 0.4,
-              "hi": 0.45
+              "p": 0.463636,
+              "lo": 0.450983,
+              "hi": 0.476142
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.425,
+          "p_vs_projection_raw": 0.437125,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038124-reception_yds-65_5",
@@ -498,15 +522,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.3,
-            0.35
+            0.414113,
+            0.438442
           ],
-          "p_pregame": 0.325,
+          "p_pregame": 0.426476,
           "projection": 54.205,
-          "p_vs_projection": 0.447437,
+          "p_vs_projection": 0.482599,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
           "p_source": "model",
           "calibrated": false,
@@ -515,15 +539,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.325,
-              "lo": 0.3,
-              "hi": 0.35
+              "p": 0.426476,
+              "lo": 0.414113,
+              "hi": 0.438442
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.325,
+          "p_vs_projection_raw": 0.447437,
+          "calibration": "layer"
         }
       ]
     },
@@ -566,15 +593,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.368374,
+            0.397709
           ],
-          "p_pregame": 0.275,
+          "p_pregame": 0.38335,
           "projection": 4.2625,
-          "p_vs_projection": 0.436875,
+          "p_vs_projection": 0.469591,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.450983,
+            0.476142
           ],
           "p_source": "model",
           "calibrated": false,
@@ -583,15 +610,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.275,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.38335,
+              "lo": 0.368374,
+              "hi": 0.397709
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.275,
+          "p_vs_projection_raw": 0.436875,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0037238-reception_yds-63_5",
@@ -610,15 +640,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.1,
-            0.15
+            0.281823,
+            0.324367
           ],
-          "p_pregame": 0.128125,
+          "p_pregame": 0.307132,
           "projection": 37.765,
-          "p_vs_projection": 0.430875,
+          "p_vs_projection": 0.475283,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
           "p_source": "model",
           "calibrated": false,
@@ -627,15 +657,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.128125,
-              "lo": 0.1,
-              "hi": 0.15
+              "p": 0.307132,
+              "lo": 0.281823,
+              "hi": 0.324367
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.128125,
+          "p_vs_projection_raw": 0.430875,
+          "calibration": "layer"
         }
       ]
     },
@@ -678,15 +711,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.35,
-            0.4
+            0.425012,
+            0.450983
           ],
-          "p_pregame": 0.375,
+          "p_pregame": 0.438129,
           "projection": 1.2975,
-          "p_vs_projection": 0.385125,
+          "p_vs_projection": 0.443363,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.425012,
+            0.450983
           ],
           "p_source": "model",
           "calibrated": false,
@@ -695,15 +728,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.375,
-              "lo": 0.35,
-              "hi": 0.4
+              "p": 0.438129,
+              "lo": 0.425012,
+              "hi": 0.450983
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.375,
+          "p_vs_projection_raw": 0.385125,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0037741-reception_yds-19_5",
@@ -722,15 +758,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
-          "p_pregame": 0.40625,
+          "p_pregame": 0.464295,
           "projection": 22.045,
-          "p_vs_projection": 0.374437,
+          "p_vs_projection": 0.449829,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.438442,
+            0.46148
           ],
           "p_source": "model",
           "calibrated": false,
@@ -739,15 +775,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.40625,
-              "lo": 0.4,
-              "hi": 0.45
+              "p": 0.464295,
+              "lo": 0.46148,
+              "hi": 0.483727
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.40625,
+          "p_vs_projection_raw": 0.374437,
+          "calibration": "layer"
         }
       ]
     },
@@ -790,15 +829,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.412498,
+            0.431758
           ],
-          "p_pregame": 0.288686,
+          "p_pregame": 0.427563,
           "projection": 6.616922071729244,
-          "p_vs_projection": 0.371,
+          "p_vs_projection": 0.456526,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.449433,
+            0.466088
           ],
           "p_source": "model",
           "calibrated": false,
@@ -807,15 +846,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.288686,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.427563,
+              "lo": 0.412498,
+              "hi": 0.431758
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.288686,
+          "p_vs_projection_raw": 0.371,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0036264-pass_yds-229_5",
@@ -946,15 +988,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.412498,
+            0.431758
           ],
-          "p_pregame": 0.28319,
+          "p_pregame": 0.425495,
           "projection": 28.171394947065274,
-          "p_vs_projection": 0.435625,
+          "p_vs_projection": 0.477561,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.466088,
+            0.48213
           ],
           "p_source": "model",
           "calibrated": false,
@@ -963,15 +1005,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.28319,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.425495,
+              "lo": 0.412498,
+              "hi": 0.431758
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.28319,
+          "p_vs_projection_raw": 0.435625,
+          "calibration": "layer"
         }
       ]
     },
@@ -1014,15 +1059,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.1,
-            0.15
+            0.253118,
+            0.298708
           ],
-          "p_pregame": 0.125,
+          "p_pregame": 0.277305,
           "projection": 1.945,
-          "p_vs_projection": 0.55275,
+          "p_vs_projection": 0.527049,
           "band_vs_projection": [
-            0.55,
-            0.6
+            0.525679,
+            0.550824
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1031,15 +1076,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.125,
-              "lo": 0.1,
-              "hi": 0.15
+              "p": 0.277305,
+              "lo": 0.253118,
+              "hi": 0.298708
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.125,
+          "p_vs_projection_raw": 0.55275,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0036970-reception_yds-34_5",
@@ -1058,15 +1106,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.3,
-            0.35
+            0.414113,
+            0.438442
           ],
-          "p_pregame": 0.315,
+          "p_pregame": 0.421583,
           "projection": 27.0825,
-          "p_vs_projection": 0.389175,
+          "p_vs_projection": 0.456574,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.438442,
+            0.46148
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1075,15 +1123,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.315,
-              "lo": 0.3,
-              "hi": 0.35
+              "p": 0.421583,
+              "lo": 0.414113,
+              "hi": 0.438442
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.315,
+          "p_vs_projection_raw": 0.389175,
+          "calibration": "layer"
         }
       ]
     },
@@ -1126,15 +1177,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.368374,
+            0.397709
           ],
-          "p_pregame": 0.275,
+          "p_pregame": 0.38335,
           "projection": 0.93,
-          "p_vs_projection": 0.5535,
+          "p_vs_projection": 0.527422,
           "band_vs_projection": [
-            0.55,
-            0.6
+            0.525679,
+            0.550824
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1143,15 +1194,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.275,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.38335,
+              "lo": 0.368374,
+              "hi": 0.397709
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.275,
+          "p_vs_projection_raw": 0.5535,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0039811-reception_yds-5_5",
@@ -1170,15 +1224,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
-          "p_pregame": 0.4125,
+          "p_pregame": 0.467098,
           "projection": 10.01,
-          "p_vs_projection": 0.3165,
+          "p_vs_projection": 0.422321,
           "band_vs_projection": [
-            0.3,
-            0.35
+            0.414113,
+            0.438442
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1187,15 +1241,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.4125,
-              "lo": 0.4,
-              "hi": 0.45
+              "p": 0.467098,
+              "lo": 0.46148,
+              "hi": 0.483727
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.4125,
+          "p_vs_projection_raw": 0.3165,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0039811-rush_yds-29_5",
@@ -1214,15 +1271,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.7,
-            0.75
+            0.564087,
+            0.583396
           ],
-          "p_pregame": 0.728785,
+          "p_pregame": 0.574961,
           "projection": 43.1112646406078,
-          "p_vs_projection": 0.462583,
+          "p_vs_projection": 0.48611,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.48213,
+            0.497885
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1231,15 +1288,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.728785,
-              "lo": 0.7,
-              "hi": 0.75
+              "p": 0.574961,
+              "lo": 0.564087,
+              "hi": 0.583396
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.728785,
+          "p_vs_projection_raw": 0.462583,
+          "calibration": "layer"
         }
       ]
     },
@@ -1282,15 +1342,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.25,
-            0.3
+            0.368374,
+            0.397709
           ],
-          "p_pregame": 0.275,
+          "p_pregame": 0.38335,
           "projection": 3.5025,
-          "p_vs_projection": 0.474875,
+          "p_vs_projection": 0.488489,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.476142,
+            0.500913
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1299,15 +1359,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.275,
-              "lo": 0.25,
-              "hi": 0.3
+              "p": 0.38335,
+              "lo": 0.368374,
+              "hi": 0.397709
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.275,
+          "p_vs_projection_raw": 0.474875,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0040667-reception_yds-51_5",
@@ -1326,15 +1389,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.3,
-            0.35
+            0.414113,
+            0.438442
           ],
-          "p_pregame": 0.308333,
+          "p_pregame": 0.418283,
           "projection": 42.515,
-          "p_vs_projection": 0.458083,
+          "p_vs_projection": 0.487277,
           "band_vs_projection": [
-            0.45,
-            0.5
+            0.483727,
+            0.50559
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1343,15 +1406,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.308333,
-              "lo": 0.3,
-              "hi": 0.35
+              "p": 0.418283,
+              "lo": 0.414113,
+              "hi": 0.438442
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.308333,
+          "p_vs_projection_raw": 0.458083,
+          "calibration": "layer"
         }
       ]
     },
@@ -1394,15 +1460,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.35,
-            0.4
+            0.425012,
+            0.450983
           ],
-          "p_pregame": 0.375,
+          "p_pregame": 0.438129,
           "projection": 3.2375,
-          "p_vs_projection": 0.388125,
+          "p_vs_projection": 0.444906,
           "band_vs_projection": [
-            0.35,
-            0.4
+            0.425012,
+            0.450983
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1411,15 +1477,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.375,
-              "lo": 0.35,
-              "hi": 0.4
+              "p": 0.438129,
+              "lo": 0.425012,
+              "hi": 0.450983
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.375,
+          "p_vs_projection_raw": 0.388125,
+          "calibration": "layer"
         },
         {
           "bet_id": "2026w03-00-0038996-reception_yds-41_5",
@@ -1438,15 +1507,15 @@
           "state": "pregame",
           "p_now": null,
           "band": [
-            0.45,
-            0.5
+            0.483727,
+            0.50559
           ],
-          "p_pregame": 0.45625,
+          "p_pregame": 0.486473,
           "projection": 42.6475,
-          "p_vs_projection": 0.439208,
+          "p_vs_projection": 0.478971,
           "band_vs_projection": [
-            0.4,
-            0.45
+            0.46148,
+            0.483727
           ],
           "p_source": "model",
           "calibrated": false,
@@ -1455,15 +1524,18 @@
           "trace": [
             {
               "t": 0,
-              "p": 0.45625,
-              "lo": 0.45,
-              "hi": 0.5
+              "p": 0.486473,
+              "lo": 0.483727,
+              "hi": 0.50559
             }
           ],
           "events": [],
           "ladder": [],
           "ladder_note": "",
-          "exp_opps_left": null
+          "exp_opps_left": null,
+          "p_pregame_raw": 0.45625,
+          "p_vs_projection_raw": 0.439208,
+          "calibration": "layer"
         }
       ]
     }
