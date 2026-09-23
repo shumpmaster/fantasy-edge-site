@@ -1,6 +1,6 @@
 {
   "slate_schema": "slate-1",
-  "generated_at": "2026-09-22T23:38:17.370246+00:00",
+  "generated_at": "2026-09-23T03:11:01.499351+00:00",
   "poll_interval_s": 1800,
   "run": {
     "season": 2026,
@@ -787,7 +787,7 @@
         "market_p_novig": 0.5,
         "gap_pts": 19,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -813,7 +813,7 @@
           "market_p_novig": 0.513579,
           "gap_pts": 6,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 1.5,
@@ -1167,7 +1167,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 21,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 30.5,
@@ -1874,7 +1874,7 @@
           "market_p_novig": 0.510121,
           "gap_pts": 11,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 15.5,
@@ -2228,7 +2228,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 19,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 69.5,
@@ -3041,7 +3041,7 @@
         "market_p_novig": 0.5,
         "gap_pts": 13,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -3067,7 +3067,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 13,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 12.5,
@@ -3880,7 +3880,7 @@
         "market_p_novig": 0.567026,
         "gap_pts": 16,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -3906,7 +3906,7 @@
           "market_p_novig": 0.567026,
           "gap_pts": 16,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 2.5,
@@ -4260,7 +4260,7 @@
           "market_p_novig": 0.504212,
           "gap_pts": 37,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 53.5,
@@ -5134,7 +5134,7 @@
         "market_p_novig": 0.421466,
         "gap_pts": 20,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -5160,7 +5160,7 @@
           "market_p_novig": 0.421466,
           "gap_pts": 20,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.0,
@@ -5469,7 +5469,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 9,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 9.5,
@@ -6282,7 +6282,7 @@
         "market_p_novig": 0.5,
         "gap_pts": 19,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -6308,7 +6308,7 @@
           "market_p_novig": 0.461005,
           "gap_pts": 41,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.5,
@@ -6662,7 +6662,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 19,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 24.5,
@@ -7511,7 +7511,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 21,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.0,
@@ -9285,7 +9285,7 @@
         "market_p_novig": 0.5,
         "gap_pts": 23,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -9311,7 +9311,7 @@
           "market_p_novig": 0.541322,
           "gap_pts": 18,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.0,
@@ -9620,7 +9620,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 9,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.0,
@@ -10192,7 +10192,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 23,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 19.5,
@@ -11005,7 +11005,7 @@
         "market_p_novig": 0.494977,
         "gap_pts": 22,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -11031,7 +11031,7 @@
           "market_p_novig": 0.494977,
           "gap_pts": 22,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 25.5,
@@ -11828,7 +11828,7 @@
         "market_p_novig": 0.5,
         "gap_pts": 18,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -11854,7 +11854,7 @@
           "market_p_novig": 0.520598,
           "gap_pts": 5,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 1.5,
@@ -12208,7 +12208,7 @@
           "market_p_novig": 0.5,
           "gap_pts": 18,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 55.5,
@@ -13021,7 +13021,7 @@
         "market_p_novig": 0.503095,
         "gap_pts": 19,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -13047,7 +13047,7 @@
           "market_p_novig": 0.55853,
           "gap_pts": 17,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 1.5,
@@ -13395,7 +13395,7 @@
           "market_p_novig": 0.503095,
           "gap_pts": 19,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 41.5,
@@ -14263,7 +14263,7 @@
         "market_p_novig": 0.432974,
         "gap_pts": 19,
         "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-        "calibration": "layer"
+        "calibration": "lean"
       },
       "props": [
         {
@@ -14289,7 +14289,7 @@
           "market_p_novig": 0.432974,
           "gap_pts": 19,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 0.5,
@@ -14643,7 +14643,7 @@
           "market_p_novig": 0.502106,
           "gap_pts": 4,
           "basis": "per (player, market): each book's LATEST capture at each line is the row of record; the MAIN LINE is the line the most books quote (one book, one vote), ties breaking on the LOWER line; and the price carried on the row is the OVER price from the book whose capture at that line is the MOST RECENT, ties breaking on the book name. It is a price a named book actually posted \u2014 never a median, never a best-of, never a shopped number",
-          "calibration": "layer",
+          "calibration": "lean",
           "alt_ladder": [
             {
               "line": 31.5,
