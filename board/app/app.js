@@ -448,6 +448,10 @@ const STORED_BY_SERVICE =
   "These two numbers were computed and stored by the service when the slip was saved; this page is reading them back.";
 const NO_CAPTURED_ROWS =
   "No bookmaker line was saved for this slate, so there is nothing to screen. That means we saved none — not that the week is empty.";
+/* m4.4 S3: the block's own heading, and the ONE string this surface
+ * owns. Everything else in it is a sentence the service composed. */
+const RECORD_HEAD = "Our record";
+
 const PICKS_WATCH = "Watchlist";
 const PICKS_SLIPS = "Tracked slips";
 const PICKS_EMPTY_WATCH = "Your watchlist is empty. Tap the bookmark on any pick to save it here.";
@@ -671,6 +675,12 @@ const ACCOUNT_DEMO =
  * answer (the ruled upper bound on how often this page may ask)
  * and this is only the fallback before the first answer. */
 const LIVE_POLL_MS = 60000;
+
+/* m4.4 S3: how often the PUBLIC record re-asks while somebody is
+ * looking at it. Sixty seconds, which is the endpoint's own
+ * `Cache-Control` max-age — asking faster than the service is willing
+ * to be fresh would be a request that cannot learn anything. */
+const RECORD_POLL_MS = 60000;
 
 /* Said under the list, so the reader knows what the screen is doing
  * and what it stops doing when he leaves it. */
@@ -1904,6 +1914,56 @@ const SAMPLE_LINEUP_SLOTS = ["QB", "RB", "RB2", "WR", "WR2", "TE", "FLEX"];
  * number or a demo email address would be teaching the screen a shape
  * it must never be able to draw. The names are invented and read as
  * invented, the way every sample row on this surface does. */
+/* m4.4 S3 — OUR RECORD'S SAMPLE ANSWER.
+ *
+ * DEMO NEVER CALLS THE SERVICE. The sentences here are FABRICATED and
+ * read as fabricated — they are not copies of the service's, which are
+ * composed against real counts and the real gate. The fixture carries
+ * every state the block has to draw: a total, week rows, game rows, a
+ * thin sample that says so, a push in its own clause and picks still
+ * being settled.
+ *
+ * THE CALIBRATION NUMBERS ARE DELIBERATELY NOT THE REAL ONES. A
+ * sample screen quoting a measured gate would be a fabricated surface
+ * making the product's one evidenced claim, which is exactly
+ * backwards. */
+const DEMO_RECORD = {
+  calibration: {
+    lead: "Sample: when the board says 60%, calls like it land about 60% of the time.",
+    scope: "Sample numbers — a fabricated slate quotes no real measurement, so no gate result is shown here.",
+    markets: [], market_words: [], rows: 0, folds: 0
+  },
+  record: {
+    total: { landed: 9, lost: 7, pushed: 1, settled: 16,
+      small_sample: false,
+      sentence: "Sample picks: 9 of 16 landed. 1 came back as a push." },
+    weeks: [
+      { season: 2026, week: 4, landed: 4, lost: 3, pushed: 0,
+        settled: 7, small_sample: true, label: "Week 4",
+        sentence: "Sample week 4: 4 of 7 picks landed \u2014 still early." },
+      { season: 2026, week: 3, landed: 5, lost: 4, pushed: 1,
+        settled: 9, small_sample: true, label: "Week 3",
+        sentence: "Sample week 3: 5 of 9 picks landed \u2014 still early. 1 came back as a push." }
+    ],
+    games: [
+      { game_id: "demo-g1", label: "JAX at HOU", season: 2026,
+        week: 4, landed: 2, lost: 1, pushed: 0, settled: 3,
+        small_sample: true,
+        sentence: "Sample JAX at HOU: 2 of 3 picks landed \u2014 still early." },
+      { game_id: "demo-g2", label: "NO at TB", season: 2026, week: 4,
+        landed: 2, lost: 2, pushed: 0, settled: 4,
+        small_sample: true,
+        sentence: "Sample NO at TB: 2 of 4 picks landed \u2014 still early." }
+    ],
+    waiting: 3,
+    pending_sentence: "Sample: 3 more are still being settled.",
+    empty_note: null
+  },
+  settled_note: "Sample record \u2014 invented results, written down before kickoff and graded once after the game, the way real ones are.",
+  disclosure: "Sample surface. For information only, and nothing here is betting advice.",
+  as_of: "2026-10-05T12:00:00Z"
+};
+
 /* m4.4 S2 — THE SCORECARD'S SAMPLE ANSWER.
  *
  * DEMO NEVER CALLS THE SERVICE, here as everywhere: a sample page
@@ -2406,6 +2466,21 @@ const nav = {
   /* THE FACT OF A CREDENTIAL, which is not itself one of a person's
    * objects: the sign-in and sign-out paths own it between them. */
   hasToken: false,
+
+  /* m4.4 S3 — OUR RECORD, and it is PUBLIC in the strongest sense
+   * this app has: the endpoint behind it takes no token at all, and
+   * the answer is the same for the owner, a member and a stranger.
+   * A record you have to sign in to check is not evidence, and a
+   * record that read differently per reader would not be one either
+   * — so it is not in the user-scoped block and a sign-out does not
+   * drop it. `record` is the service's whole answer (null means "not
+   * asked or not answered", a drawn state and not an empty record). */
+  record: null,
+  recordAsked: false,
+  /* The interval handle, and it is the one field here that must be
+   * STOPPED rather than merely dropped — `syncRecord` is the only
+   * thing that arms or clears it. */
+  recordPoll: null,
 
   /* U5's DFS sheet, and it is a PUBLIC DOCUMENT — the same weekly
    * file for everybody, like the slate and the projections. It is not
@@ -5310,10 +5385,131 @@ function renderSearch() {
  * the screens
  * ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------
+ * m4.4 S3 — OUR RECORD (SCORECARD_SPEC sec 4, under D-145)
+ * ------------------------------------------------------------------
+ * The model's public evidence: the measured calibration claim with
+ * its scope, and the record strip week by week and game by game.
+ *
+ * IT LIVES ON HOME, under the match card, and adds NO TAB. It is the
+ * first thing about the product itself a reader meets, and it belongs
+ * above the fantasy and betting surfaces rather than inside one of
+ * them — a track record filed under "My picks" would be a claim you
+ * have to go looking for.
+ *
+ * EVERY SENTENCE IS THE SERVICE'S, DRAWN VERBATIM. This block
+ * composes nothing: no count, no rate, no percentage and no wording
+ * of its own, and the suite greps `app.js` to keep it that way.
+ *
+ * NO TOKEN. `GET /record` is public by design, so this is the one
+ * service call on this page that carries no credential at all — and
+ * the one whose answer is the same for everybody. */
+async function loadRecord(force) {
+  if (nav.recordAsked && !force) return;
+  nav.recordAsked = true;
+  if (DEMO) {
+    nav.record = DEMO_RECORD;
+    render();
+    return;
+  }
+  try {
+    /* THE ONE TOKENLESS CALL. An empty token sends no Authorization
+     * header at all — `picksAsk`'s own rule, and the reason this
+     * surface can be read by somebody who has never signed in. */
+    nav.record = await picksAsk("/record", "", null);
+  } catch (err) {
+    /* No answer, no block. The page never invents a record and never
+     * leaves an empty box where one would have been. */
+    nav.record = null;
+  }
+  render();
+}
+
+/* WHETHER THE RECORD IS ON SCREEN. It lives on Home and nowhere
+ * else, so that is the whole question. */
+function recordOnScreen() {
+  return currentRoute() === "home";
+}
+
+/* THE ONE PLACE THE RECORD'S POLL IS TURNED ON OR OFF —
+ * `syncLivePoll`'s shape exactly, and deliberately not a second
+ * pattern: `render()` calls it on every screen change and the same
+ * visibility listener calls it when the tab is hidden or shown, so
+ * there is no path that leaves an interval running behind a screen
+ * nobody is on.
+ *
+ * WHY IT POLLS AT ALL. The strip's whole promise is that it updates
+ * as results bank; boot-only meant a session that stayed open all
+ * Sunday showed the record as it stood before any game finished, and
+ * the endpoint's own cache can never help a page that never asks
+ * again.
+ *
+ * IT CARRIES NO TOKEN AND IT RUNS FOR EVERYBODY, which is the one
+ * place it differs from the live board: this surface is public.
+ * DEMO IS UNTOUCHED — the sample answer is fixed, so there is
+ * nothing for a poll to learn and nothing of the service to reach. */
+function syncRecord() {
+  const wanted = !DEMO && recordOnScreen() && !liveHidden();
+  if (!wanted) {
+    if (nav.recordPoll) {
+      window.clearInterval(nav.recordPoll);
+      nav.recordPoll = null;
+    }
+    return;
+  }
+  if (!nav.recordPoll) {
+    nav.recordPoll = window.setInterval(function () {
+      loadRecord(true);
+    }, RECORD_POLL_MS);
+  }
+  /* The first ask is immediate and every later one is the interval's.
+   * `recordAsked` is what keeps this from being a second poll: a
+   * render between two ticks asks nothing. */
+  loadRecord(false);
+}
+
+function ourRecordBlock() {
+  const held = nav.record;
+  if (!held) return "";
+  const record = held.record || {};
+  return '<div class="card"><div class="overline">' +
+    esc(RECORD_HEAD) + '</div>' +
+    /* THE CLAIM FIRST, then its scope under it — the scope is not a
+     * footnote, it is half the sentence's truth. */
+    '<div class="cardhead">' + esc((held.calibration || {}).lead) +
+    '</div>' +
+    '<div class="cardbody">' + esc((held.calibration || {}).scope) +
+    '</div>' +
+    '<div class="recordstrip">' +
+    (record.empty_note
+      ? '<div class="cardbody">' + esc(record.empty_note) + '</div>'
+      : '<div class="cardbody">' +
+        esc((record.total || {}).sentence) + '</div>' +
+        recordRows(record.weeks) + recordRows(record.games)) +
+    (record.pending_sentence
+      ? '<div class="cardbody muted">' +
+        esc(record.pending_sentence) + '</div>'
+      : "") +
+    '</div>' +
+    '<div class="legend">' + esc(held.settled_note) + '</div>' +
+    '<div class="legend">' + esc(held.disclosure) + '</div>' +
+    '</div>';
+}
+
+/* One line per week or per game, each a whole sentence the service
+ * wrote WITH ITS SAMPLE SIZE ALREADY IN IT. */
+function recordRows(rows) {
+  if (!rows || !rows.length) return "";
+  return '<div class="recordrows">' + rows.map(function (row) {
+    return '<div class="recordrow">' + esc(row.sentence) + '</div>';
+  }).join("") + '</div>';
+}
+
 function renderHome() {
   return '<div class="hero">' + heroArt() + heroTop() + heroRings() +
     '<div class="herofade"></div></div>' +
-    (nav.slate ? matchCard() : matchStub());
+    (nav.slate ? matchCard() : matchStub()) +
+    ourRecordBlock();
 }
 
 function lineupSkeleton() {
@@ -8731,6 +8927,9 @@ function render() {
    * leaving the Live segment stops the asking without any screen
    * having to remember to. */
   syncLivePoll();
+  /* m4.4 S3: and the public record, on the same rule — it lives on
+   * Home, so it asks while Home is up and stops when it is not. */
+  syncRecord();
   /* U5: the DFS document follows the screen too, and it is asked for
    * ONCE, the first time that sub-view is drawn. */
   syncDfs();
@@ -9306,7 +9505,13 @@ window.addEventListener("hashchange", onHashChange);
 /* U4's own listener, and the whole of the "pause when hidden" rule: a
  * backgrounded tab asks a service nothing, and a tab brought back
  * asks once immediately rather than waiting out a minute. */
-document.addEventListener("visibilitychange", syncLivePoll);
+/* ONE LISTENER, BOTH POLLS. A tab coming back to the front is the
+ * moment every open session re-asks, and a tab going away is the
+ * moment both stop. */
+document.addEventListener("visibilitychange", function () {
+  syncLivePoll();
+  syncRecord();
+});
 
 /* Boot order matters: the address is reconciled and normalised
  * BEFORE the first paint. Where `replaceState` is missing, normalising
@@ -9332,6 +9537,13 @@ nav.booted = true;
  * app rather than a blank page, and a network that never answers shows
  * the honest arm rather than a spinner that means nothing. */
 loadSlate();
+
+/* ...and the model's public record, which needs no token and is
+ * therefore reconciled on EVERY boot, signed in or not. It is the one
+ * thing on this page a stranger can check, so it is not behind the
+ * credential gate below — and `syncRecord` rather than a bare load,
+ * so the asking follows the screen from the first paint on. */
+syncRecord();
 
 /* ...and the reader's own objects, which live on the service. The
  * token is READ (never prompted) at boot so the segment knows which

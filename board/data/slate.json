@@ -1,15 +1,15 @@
 {
   "slate_schema": "slate-1",
-  "generated_at": "2026-09-23T15:57:23.454582+00:00",
+  "generated_at": "2026-09-23T19:28:14.914927+00:00",
   "poll_interval_s": 1800,
   "run": {
     "season": 2026,
     "week": 3,
     "source": "engine",
-    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + m1.2i top-cell raise x1.0434",
-    "generation_id": "2026w03-20260922T173711Z",
-    "generated_ts": "2026-09-22T17:37:11.575115+00:00",
-    "cutoff_ts": "2026-09-22T17:37:11.575115+00:00",
+    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + C2 pass rate (m1.2x) + YPA per attempt (m1.2z) + E-SP-2 prior + E-SP-3a K + E-SP-T tripwire + Layer A repaired (Nacua clause) + m1.2y roster rule + m1.2i top-cell raise x1.0434",
+    "generation_id": "2026w03-20260923T175053Z",
+    "generated_ts": "2026-09-23T17:50:53.105050+00:00",
+    "cutoff_ts": "2026-09-23T17:50:53.105050+00:00",
     "band": "EARLY",
     "snapshot_kind": "refresh",
     "p_method": "grid_interpolation_v1",
@@ -3102,6 +3102,12 @@
           "model_p": 0.566206,
           "book_p": null,
           "model_p_raw": 0.694428
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
+          "model_p": 0.566206,
+          "book_p": null,
+          "model_p_raw": 0.694428
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -3989,6 +3995,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.540132,
+          "book_p": null,
+          "model_p_raw": 0.631561
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.540132,
           "book_p": null,
           "model_p_raw": 0.631561
@@ -5235,6 +5247,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.692868,
+          "book_p": null,
+          "model_p_raw": 0.871875
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.692868,
           "book_p": null,
           "model_p_raw": 0.871875
@@ -6514,6 +6532,12 @@
           "model_p": 0.561871,
           "book_p": null,
           "model_p_raw": 0.625
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
+          "model_p": 0.561871,
+          "book_p": null,
+          "model_p_raw": 0.625
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -7781,6 +7805,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.578417,
+          "book_p": null,
+          "model_p_raw": 0.685
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.578417,
           "book_p": null,
           "model_p_raw": 0.685
@@ -9623,6 +9653,11 @@
           "t": "2026-09-22T17:37:11.575115+00:00",
           "model_p": 0.671154,
           "book_p": null
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
+          "model_p": 0.671154,
+          "book_p": null
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -11438,6 +11473,12 @@
           "model_p": 0.574961,
           "book_p": null,
           "model_p_raw": 0.728785
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
+          "model_p": 0.574961,
+          "book_p": null,
+          "model_p_raw": 0.728785
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -12307,6 +12348,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.574505,
+          "book_p": null,
+          "model_p_raw": 0.71681
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.574505,
           "book_p": null,
           "model_p_raw": 0.71681
@@ -13568,6 +13615,12 @@
           "model_p": 0.573524,
           "book_p": null,
           "model_p_raw": 0.675
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
+          "model_p": 0.573524,
+          "book_p": null,
+          "model_p_raw": 0.675
         }
       ],
       "market_series_basis": "the lean side's chance over time: one point per GENERATION of this week for the model (the archive holds them all) and one per captured odds SNAPSHOT for the book, de-vigged on the same side. It is as sparse as the captures are; fewer than two points is a line that has only just posted, and the client says so rather than drawing a sparkline through one dot",
@@ -14805,6 +14858,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.581717,
+          "book_p": null,
+          "model_p_raw": 0.691667
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.581717,
           "book_p": null,
           "model_p_raw": 0.691667
@@ -16153,6 +16212,12 @@
         },
         {
           "t": "2026-09-22T17:37:11.575115+00:00",
+          "model_p": 0.561871,
+          "book_p": null,
+          "model_p_raw": 0.625
+        },
+        {
+          "t": "2026-09-23T17:50:53.105050+00:00",
           "model_p": 0.561871,
           "book_p": null,
           "model_p_raw": 0.625
@@ -18045,7 +18110,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 16.75,
+        "proj": 16.51,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18081,12 +18146,12 @@
         },
         {
           "label": "Pass yards",
-          "value": 208.615,
+          "value": 210.75,
           "reason": null
         },
         {
           "label": "Pass TDs",
-          "value": 1.535,
+          "value": 1.438,
           "reason": null
         },
         {
@@ -18096,7 +18161,7 @@
         },
         {
           "label": "Rush yards",
-          "value": 14.822,
+          "value": 15.055,
           "reason": null
         }
       ],
@@ -18111,7 +18176,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 9.71,
+        "proj": 10.02,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18119,7 +18184,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.475998,
+        "share": 0.479428,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -18142,27 +18207,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 12.512,
+          "value": 12.665,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 41.654,
+          "value": 41.993,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 1.837,
+          "value": 1.823,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 12.232,
+          "value": 12.633,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.568,
+          "value": 0.608,
           "reason": null
         }
       ],
@@ -18177,7 +18242,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 10.07,
+        "proj": 9.71,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18185,7 +18250,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.385686,
+        "share": 0.388466,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -18208,27 +18273,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 10.305,
+          "value": 10.363,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 38.557,
+          "value": 38.514,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 2.3,
+          "value": 2.217,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 15.223,
+          "value": 15.377,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.59,
+          "value": 0.535,
           "reason": null
         }
       ],
@@ -18243,7 +18308,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 6.13,
+        "proj": 5.4,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18274,22 +18339,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.415,
+          "value": 5.178,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 2.717,
+          "value": 2.555,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 35.638,
+          "value": 32.45,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.195,
+          "value": 0.142,
           "reason": null
         },
         {
@@ -18309,7 +18374,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 5.68,
+        "proj": 6.21,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18340,22 +18405,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 3.578,
+          "value": 3.728,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 2.12,
+          "value": 2.225,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 35.447,
+          "value": 38.383,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.18,
+          "value": 0.21,
           "reason": null
         },
         {
@@ -18375,7 +18440,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 3.62,
+        "proj": 3.78,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18406,22 +18471,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 2.895,
+          "value": 2.99,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 1.51,
+          "value": 1.667,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 16.4,
+          "value": 18.332,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.165,
+          "value": 0.152,
           "reason": null
         },
         {
@@ -18441,7 +18506,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 10.56,
+        "proj": 10.69,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18472,22 +18537,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 8.205,
+          "value": 8.283,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 6.035,
+          "value": 5.952,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 59.775,
+          "value": 60.67,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.26,
+          "value": 0.275,
           "reason": null
         },
         {
@@ -18507,7 +18572,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 15.64,
+        "proj": 15.78,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18543,12 +18608,12 @@
         },
         {
           "label": "Pass yards",
-          "value": 201.28,
+          "value": 200.705,
           "reason": null
         },
         {
           "label": "Pass TDs",
-          "value": 1.34,
+          "value": 1.478,
           "reason": null
         },
         {
@@ -18558,7 +18623,7 @@
         },
         {
           "label": "Rush yards",
-          "value": 11.36,
+          "value": 9.859,
           "reason": null
         }
       ],
@@ -18573,7 +18638,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 16.09,
+        "proj": 15.4,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18604,12 +18669,12 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 21.39,
+          "value": 21.35,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 93.117,
+          "value": 91.198,
           "reason": null
         },
         {
@@ -18619,12 +18684,12 @@
         },
         {
           "label": "Rec yards",
-          "value": 17.703,
+          "value": 15.26,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.627,
+          "value": 0.585,
           "reason": null
         }
       ],
@@ -18639,7 +18704,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 3.25,
+        "proj": 3.6,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18670,27 +18735,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 2.18,
+          "value": 2.195,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 8.644,
+          "value": 9.059,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 0.89,
+          "value": 0.917,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 5.645,
+          "value": 6.425,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.23,
+          "value": 0.265,
           "reason": null
         }
       ],
@@ -18705,7 +18770,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 6.36,
+        "proj": 6.46,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18736,22 +18801,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.482,
+          "value": 5.562,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.715,
+          "value": 3.688,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 31.788,
+          "value": 30.848,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.22,
+          "value": 0.255,
           "reason": null
         },
         {
@@ -18771,7 +18836,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 7.0,
+        "proj": 6.71,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18802,17 +18867,17 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.253,
+          "value": 4.968,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.65,
+          "value": 3.44,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 39.44,
+          "value": 37.432,
           "reason": null
         },
         {
@@ -18837,7 +18902,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 6.99,
+        "proj": 7.14,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18868,17 +18933,17 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 3.913,
+          "value": 3.955,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 2.56,
+          "value": 2.547,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 46.417,
+          "value": 48.045,
           "reason": null
         },
         {
@@ -18903,7 +18968,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 6.12,
+        "proj": 6.92,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -18934,22 +18999,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.232,
+          "value": 5.46,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.885,
+          "value": 4.14,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 26.835,
+          "value": 30.468,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.223,
+          "value": 0.275,
           "reason": null
         },
         {
@@ -18969,7 +19034,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 20.19,
+        "proj": 20.36,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19005,12 +19070,12 @@
         },
         {
           "label": "Pass yards",
-          "value": 210.95,
+          "value": 214.218,
           "reason": null
         },
         {
           "label": "Pass TDs",
-          "value": 2.058,
+          "value": 2.078,
           "reason": null
         },
         {
@@ -19020,7 +19085,7 @@
         },
         {
           "label": "Rush yards",
-          "value": 17.345,
+          "value": 18.833,
           "reason": null
         }
       ],
@@ -19035,7 +19100,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 17.14,
+        "proj": 18.39,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19043,7 +19108,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.675181,
+        "share": 0.689627,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -19066,27 +19131,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 18.398,
+          "value": 18.42,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 99.184,
+          "value": 102.444,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 2.74,
+          "value": 2.947,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 18.913,
+          "value": 20.855,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.66,
+          "value": 0.765,
           "reason": null
         }
       ],
@@ -19101,7 +19166,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 5.56,
+        "proj": 6.23,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19109,7 +19174,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.160299,
+        "share": 0.163729,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -19132,27 +19197,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 4.595,
+          "value": 4.468,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 18.822,
+          "value": 18.748,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 1.137,
+          "value": 1.255,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 6.935,
+          "value": 8.512,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.403,
+          "value": 0.48,
           "reason": null
         }
       ],
@@ -19167,7 +19232,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 9.64,
+        "proj": 9.79,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19175,7 +19240,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.197799,
+        "share": 0.20255,
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
@@ -19198,22 +19263,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.865,
+          "value": 6.077,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 4.32,
+          "value": 4.49,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 44.943,
+          "value": 47.602,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.482,
+          "value": 0.453,
           "reason": null
         },
         {
@@ -19233,7 +19298,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 6.77,
+        "proj": 7.05,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19241,7 +19306,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.166184,
+        "share": 0.170175,
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
@@ -19264,22 +19329,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.16,
+          "value": 5.237,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.337,
+          "value": 3.41,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 33.667,
+          "value": 33.153,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.273,
+          "value": 0.318,
           "reason": null
         },
         {
@@ -19299,7 +19364,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 5.01,
+        "proj": 5.12,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19307,7 +19372,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.081392,
+        "share": 0.083347,
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
@@ -19330,22 +19395,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 2.587,
+          "value": 2.598,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 1.728,
+          "value": 1.81,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 28.97,
+          "value": 31.33,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.207,
+          "value": 0.18,
           "reason": null
         },
         {
@@ -19365,7 +19430,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 8.72,
+        "proj": 8.61,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19373,7 +19438,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.204156,
+        "share": 0.20906,
         "share_type": "target",
         "share_label": "target share",
         "share_reason": null,
@@ -19396,22 +19461,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 6.51,
+          "value": 6.633,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 4.853,
+          "value": 4.928,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 44.778,
+          "value": 45.193,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.302,
+          "value": 0.27,
           "reason": null
         },
         {
@@ -19431,7 +19496,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 17.24,
+        "proj": 17.06,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19467,12 +19532,12 @@
         },
         {
           "label": "Pass yards",
-          "value": 232.833,
+          "value": 228.035,
           "reason": null
         },
         {
           "label": "Pass TDs",
-          "value": 1.373,
+          "value": 1.325,
           "reason": null
         },
         {
@@ -19482,7 +19547,7 @@
         },
         {
           "label": "Rush yards",
-          "value": 16.288,
+          "value": 18.486,
           "reason": null
         }
       ],
@@ -19497,7 +19562,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 14.71,
+        "proj": 14.7,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19505,7 +19570,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.5424,
+        "share": 0.552564,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -19528,27 +19593,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 14.123,
+          "value": 14.94,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 54.535,
+          "value": 57.36,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 4.335,
+          "value": 4.295,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 39.843,
+          "value": 39.057,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.517,
+          "value": 0.485,
           "reason": null
         }
       ],
@@ -19563,7 +19628,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 2.6,
+        "proj": 2.99,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19571,7 +19636,7 @@
         "range_reason": "points quantiles are not persisted at generation yet: the archive holds a quantile grid PER STAT, and the quantiles of a sum are not the sum of the quantiles, so a 10th-90th range on fantasy points cannot be read off them. It would need the points distribution to be computed from the draws and archived, which nothing does today"
       },
       "role": {
-        "share": 0.115589,
+        "share": 0.117755,
         "share_type": "carry",
         "share_label": "carry share",
         "share_reason": null,
@@ -19594,27 +19659,27 @@
       "projected_line": [
         {
           "label": "Carries",
-          "value": 3.135,
+          "value": 3.163,
           "reason": null
         },
         {
           "label": "Rush yards",
-          "value": 11.861,
+          "value": 13.074,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 0.357,
+          "value": 0.41,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 2.462,
+          "value": 3.41,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.165,
+          "value": 0.19,
           "reason": null
         }
       ],
@@ -19629,7 +19694,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 7.66,
+        "proj": 7.17,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19660,22 +19725,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.827,
+          "value": 5.702,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.365,
+          "value": 3.115,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 49.205,
+          "value": 44.182,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.135,
+          "value": 0.155,
           "reason": null
         },
         {
@@ -19695,7 +19760,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 8.52,
+        "proj": 9.04,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19726,22 +19791,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 5.947,
+          "value": 5.965,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 4.003,
+          "value": 4.162,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 52.265,
+          "value": 54.718,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.215,
+          "value": 0.247,
           "reason": null
         },
         {
@@ -19761,7 +19826,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 3.74,
+        "proj": 3.58,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19792,22 +19857,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 2.447,
+          "value": 2.44,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 1.218,
+          "value": 1.16,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 24.262,
+          "value": 22.418,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.117,
+          "value": 0.125,
           "reason": null
         },
         {
@@ -19827,7 +19892,7 @@
       "key_prop": null,
       "props": [],
       "fantasy": {
-        "proj": 5.53,
+        "proj": 5.8,
         "p10": null,
         "p90": null,
         "scoring": "half_ppr_v1",
@@ -19858,22 +19923,22 @@
       "projected_line": [
         {
           "label": "Targets",
-          "value": 3.855,
+          "value": 3.868,
           "reason": null
         },
         {
           "label": "Receptions",
-          "value": 3.025,
+          "value": 2.97,
           "reason": null
         },
         {
           "label": "Rec yards",
-          "value": 22.468,
+          "value": 23.475,
           "reason": null
         },
         {
           "label": "TDs",
-          "value": 0.292,
+          "value": 0.328,
           "reason": null
         },
         {

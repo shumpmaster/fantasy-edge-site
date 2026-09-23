@@ -6,10 +6,10 @@
     "band": "EARLY",
     "snapshot_kind": "refresh",
     "source": "engine",
-    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + m1.2i top-cell raise x1.0434",
-    "generation_id": "2026w03-20260922T173711Z",
-    "generated_ts": "2026-09-22T17:37:11.575115+00:00",
-    "cutoff_ts": "2026-09-22T17:37:11.575115+00:00",
+    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + C2 pass rate (m1.2x) + YPA per attempt (m1.2z) + E-SP-2 prior + E-SP-3a K + E-SP-T tripwire + Layer A repaired (Nacua clause) + m1.2y roster rule + m1.2i top-cell raise x1.0434",
+    "generation_id": "2026w03-20260923T175053Z",
+    "generated_ts": "2026-09-23T17:50:53.105050+00:00",
+    "cutoff_ts": "2026-09-23T17:50:53.105050+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w03-20260922T173711Z",
     "week_open_generated_ts": "2026-09-22T17:37:11.575115+00:00"
@@ -90,7 +90,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w03-20260922T173711Z",
+    "generation_id": "2026w03-20260923T175053Z",
     "absent_reason": null
   },
   "players": [
@@ -1304,7 +1304,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1225
+      "p_ceiling": 0.135
     },
     {
       "player_id": "00-0037238",
@@ -1708,7 +1708,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.025
+      "p_ceiling": 0.0275
     },
     {
       "player_id": "00-0037746",
@@ -1815,12 +1815,12 @@
           "reason": null
         },
         "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "listed",
+          "reason": null
         },
         "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "fp_flat",
+          "reason": null
         },
         "line_label": {
           "value": "SAME-CUTOFF",
@@ -2112,7 +2112,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.55
+      "p_ceiling": 0.5325
     },
     {
       "player_id": "00-0041044",
@@ -2718,7 +2718,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.08
+      "p_ceiling": 0.085
     },
     {
       "player_id": "00-0037091",
@@ -2825,12 +2825,12 @@
           "reason": null
         },
         "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "listed",
+          "reason": null
         },
         "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "fp_flat",
+          "reason": null
         },
         "line_label": {
           "value": "SAME-CUTOFF",
@@ -2920,7 +2920,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.015
+      "p_ceiling": 0.0175
     },
     {
       "player_id": "00-0038090",
@@ -3324,7 +3324,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2625
+      "p_ceiling": 0.2575
     },
     {
       "player_id": "00-0038685",
@@ -3526,7 +3526,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.045
+      "p_ceiling": 0.0475
     },
     {
       "player_id": "00-0038996",
@@ -3728,7 +3728,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2725
+      "p_ceiling": 0.2625
     },
     {
       "player_id": "00-0039146",
@@ -3835,12 +3835,12 @@
           "reason": null
         },
         "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "listed",
+          "reason": null
         },
         "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "dnp_flat",
+          "reason": null
         },
         "line_label": {
           "value": "SAME-CUTOFF",
@@ -3930,7 +3930,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0725
+      "p_ceiling": 0.075
     },
     {
       "player_id": "00-0039811",
@@ -4132,7 +4132,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.11
+      "p_ceiling": 0.115
     },
     {
       "player_id": "00-0040142",
@@ -4334,7 +4334,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.01
+      "p_ceiling": 0.0075
     },
     {
       "player_id": "00-0040667",
@@ -4536,7 +4536,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.18
+      "p_ceiling": 0.165
     }
   ]
 }

@@ -1142,6 +1142,25 @@ body{
 
 .slipleglist{display:flex;flex-direction:column;gap:4px;padding-top:8px}
 /* --------------------------------------------------------------------
+   m4.4 S3 — OUR RECORD (the public block on Home)
+
+   A card of SENTENCES, like the member scorecard, so it needs nothing
+   but rhythm: the claim in card-heading type, its scope in body type
+   under it, and the strip's rows separated by the same rule every
+   list on this surface uses. There is no number treatment because
+   there is no bare number — every rate arrives with its sample size
+   inside the sentence. Nothing here is tappable, so the 44px floor
+   has nothing to apply to.
+   -------------------------------------------------------------------- */
+.recordstrip{padding-top:8px}
+.recordrows{padding-top:4px}
+.recordrow{
+  font-size:var(--type-body);color:var(--text-2);line-height:1.5;
+  padding:6px 0;border-top:1px solid var(--rule);
+}
+.recordrow:first-child{border-top:none}
+
+/* --------------------------------------------------------------------
    m4.4 — THE SCORECARD BLOCK AND THE RESULT MARKS
    (SCORECARD_SPEC sec 3)
 

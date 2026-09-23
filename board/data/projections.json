@@ -6,10 +6,10 @@
     "band": "EARLY",
     "snapshot_kind": "refresh",
     "source": "engine",
-    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + m1.2i top-cell raise x1.0434",
-    "generation_id": "2026w03-20260922T173711Z",
-    "generated_ts": "2026-09-22T17:37:11.575115+00:00",
-    "cutoff_ts": "2026-09-22T17:37:11.575115+00:00",
+    "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + C2 pass rate (m1.2x) + YPA per attempt (m1.2z) + E-SP-2 prior + E-SP-3a K + E-SP-T tripwire + Layer A repaired (Nacua clause) + m1.2y roster rule + m1.2i top-cell raise x1.0434",
+    "generation_id": "2026w03-20260923T175053Z",
+    "generated_ts": "2026-09-23T17:50:53.105050+00:00",
+    "cutoff_ts": "2026-09-23T17:50:53.105050+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w03-20260922T173711Z",
     "week_open_generated_ts": "2026-09-22T17:37:11.575115+00:00"
@@ -81,7 +81,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w03-20260922T173711Z",
+    "generation_id": "2026w03-20260923T175053Z",
     "absent_reason": null
   },
   "games": [
@@ -1306,7 +1306,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1225
+          "p_ceiling": 0.135
         },
         {
           "player_id": "00-0037238",
@@ -1710,7 +1710,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0037746",
@@ -1817,12 +1817,12 @@
               "reason": null
             },
             "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "listed",
+              "reason": null
             },
             "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "fp_flat",
+              "reason": null
             },
             "line_label": {
               "value": "SAME-CUTOFF",
@@ -2114,7 +2114,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.55
+          "p_ceiling": 0.5325
         },
         {
           "player_id": "00-0041044",
@@ -2720,7 +2720,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.08
+          "p_ceiling": 0.085
         },
         {
           "player_id": "00-0037091",
@@ -2827,12 +2827,12 @@
               "reason": null
             },
             "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "listed",
+              "reason": null
             },
             "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "fp_flat",
+              "reason": null
             },
             "line_label": {
               "value": "SAME-CUTOFF",
@@ -2922,7 +2922,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.015
+          "p_ceiling": 0.0175
         },
         {
           "player_id": "00-0038090",
@@ -3326,7 +3326,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2625
+          "p_ceiling": 0.2575
         },
         {
           "player_id": "00-0038685",
@@ -3528,7 +3528,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.045
+          "p_ceiling": 0.0475
         },
         {
           "player_id": "00-0038996",
@@ -3730,7 +3730,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2725
+          "p_ceiling": 0.2625
         },
         {
           "player_id": "00-0039146",
@@ -3837,12 +3837,12 @@
               "reason": null
             },
             "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "listed",
+              "reason": null
             },
             "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+              "value": "dnp_flat",
+              "reason": null
             },
             "line_label": {
               "value": "SAME-CUTOFF",
@@ -3932,7 +3932,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0725
+          "p_ceiling": 0.075
         },
         {
           "player_id": "00-0039811",
@@ -4134,7 +4134,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.11
+          "p_ceiling": 0.115
         },
         {
           "player_id": "00-0040142",
@@ -4336,7 +4336,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.01
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0040667",
@@ -4538,7 +4538,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.18
+          "p_ceiling": 0.165
         }
       ]
     },
@@ -4955,7 +4955,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0
+          "p_ceiling": 0.0025
         },
         {
           "player_id": "00-0036555",
@@ -5157,7 +5157,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2575
+          "p_ceiling": 0.25
         },
         {
           "player_id": "00-0037005",
@@ -5359,7 +5359,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0675
+          "p_ceiling": 0.0575
         },
         {
           "player_id": "00-0038102",
@@ -5965,7 +5965,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.04
+          "p_ceiling": 0.0375
         },
         {
           "player_id": "00-0039344",
@@ -6369,7 +6369,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.25
+          "p_ceiling": 0.2475
         },
         {
           "player_id": "00-0040124",
@@ -6571,7 +6571,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.34
+          "p_ceiling": 0.3475
         },
         {
           "player_id": "00-0040187",
@@ -6773,7 +6773,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0175
+          "p_ceiling": 0.025
         },
         {
           "player_id": "00-0033537",
@@ -6975,7 +6975,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0975
+          "p_ceiling": 0.11
         },
         {
           "player_id": "00-0036407",
@@ -7177,7 +7177,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0525
+          "p_ceiling": 0.0475
         },
         {
           "player_id": "00-0038710",
@@ -7379,7 +7379,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.01
         },
         {
           "player_id": "00-0038794",
@@ -7783,7 +7783,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.015
+          "p_ceiling": 0.0125
         },
         {
           "player_id": "00-0040663",
@@ -7985,7 +7985,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.23
+          "p_ceiling": 0.2475
         },
         {
           "player_id": "00-0040782",
@@ -8187,7 +8187,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0175
+          "p_ceiling": 0.015
         },
         {
           "player_id": "00-0040784",
@@ -8389,7 +8389,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.185
+          "p_ceiling": 0.1825
         },
         {
           "player_id": "00-0041037",
@@ -8591,7 +8591,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.275
+          "p_ceiling": 0.28
         },
         {
           "player_id": "00-0041547",
@@ -8793,7 +8793,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.185
+          "p_ceiling": 0.1925
         }
       ]
     },
@@ -9008,7 +9008,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0275
+          "p_ceiling": 0.0325
         },
         {
           "player_id": "00-0036410",
@@ -9210,7 +9210,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.145
+          "p_ceiling": 0.1525
         },
         {
           "player_id": "00-0036442",
@@ -9412,7 +9412,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.135
+          "p_ceiling": 0.13
         },
         {
           "player_id": "00-0036900",
@@ -9614,7 +9614,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4425
+          "p_ceiling": 0.44
         },
         {
           "player_id": "00-0038597",
@@ -9816,7 +9816,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.5025
+          "p_ceiling": 0.4975
         },
         {
           "player_id": "00-0038619",
@@ -10018,7 +10018,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.05
+          "p_ceiling": 0.055
         },
         {
           "player_id": "00-0039814",
@@ -10220,7 +10220,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.06
+          "p_ceiling": 0.05
         },
         {
           "player_id": "00-0040785",
@@ -10422,7 +10422,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.02
+          "p_ceiling": 0.0225
         },
         {
           "player_id": "00-0041069",
@@ -10624,7 +10624,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0023459",
@@ -11432,7 +11432,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.17
+          "p_ceiling": 0.175
         },
         {
           "player_id": "00-0036139",
@@ -11634,7 +11634,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.115
+          "p_ceiling": 0.1125
         },
         {
           "player_id": "00-0036862",
@@ -12038,7 +12038,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.185
+          "p_ceiling": 0.1825
         },
         {
           "player_id": "00-0037228",
@@ -12240,7 +12240,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.18
+          "p_ceiling": 0.185
         },
         {
           "player_id": "00-0038558",
@@ -12442,7 +12442,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.05
+          "p_ceiling": 0.045
         },
         {
           "player_id": "00-0039739",
@@ -12644,7 +12644,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0575
+          "p_ceiling": 0.06
         },
         {
           "player_id": "00-0041489",
@@ -12846,7 +12846,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.15
+          "p_ceiling": 0.155
         }
       ]
     },
@@ -12873,10 +12873,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 8.205,
-            "receptions": 6.035,
-            "rec_yds": 59.775,
-            "anytime_td": 0.26
+            "targets": 8.2825,
+            "receptions": 5.9525,
+            "rec_yds": 60.67,
+            "anytime_td": 0.275
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -12908,7 +12908,7 @@
               0.0
             ],
             "targets": [
-              4.0,
+              5.0,
               6.0,
               8.0,
               10.0,
@@ -12918,15 +12918,15 @@
               3.0,
               4.0,
               6.0,
-              8.0,
+              7.0,
               9.0
             ],
             "rec_yds": [
-              24.0,
+              25.0,
               37.0,
-              54.0,
-              76.0,
-              102.0
+              56.0,
+              78.0,
+              106.0
             ],
             "anytime_td": [
               0.0,
@@ -12951,10 +12951,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.07750000000000057,
+            "receptions": -0.08250000000000046,
+            "rec_yds": 0.8950000000000031,
+            "anytime_td": 0.015000000000000013
           },
           "context": {
             "opponent": {
@@ -13061,7 +13061,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.5475
+          "p_ceiling": 0.55
         },
         {
           "player_id": "00-0034981",
@@ -13075,10 +13075,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 1.6725,
-            "receptions": 1.3675,
-            "rec_yds": 13.48,
-            "anytime_td": 0.1575
+            "targets": 1.7025,
+            "receptions": 1.42,
+            "rec_yds": 12.6225,
+            "anytime_td": 0.15
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -13118,7 +13118,7 @@
             ],
             "receptions": [
               0.0,
-              0.0,
+              1.0,
               1.0,
               2.0,
               3.0
@@ -13126,9 +13126,9 @@
             "rec_yds": [
               0.0,
               0.0,
-              11.0,
+              10.0,
               20.0,
-              31.0
+              30.0
             ],
             "anytime_td": [
               0.0,
@@ -13153,10 +13153,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.029999999999999805,
+            "receptions": 0.05249999999999999,
+            "rec_yds": -0.8574999999999999,
+            "anytime_td": -0.007500000000000007
           },
           "context": {
             "opponent": {
@@ -13263,7 +13263,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.05
+          "p_ceiling": 0.0425
         },
         {
           "player_id": "00-0035685",
@@ -13275,12 +13275,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 12.5125,
-            "rush_yds": 41.654364519033486,
-            "targets": 2.1175,
-            "receptions": 1.8375,
-            "rec_yds": 12.2325,
-            "anytime_td": 0.5675
+            "rush_att": 12.665,
+            "rush_yds": 41.99313403106914,
+            "targets": 2.1575,
+            "receptions": 1.8225,
+            "rec_yds": 12.6325,
+            "anytime_td": 0.6075
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -13300,16 +13300,16 @@
             "rush_att": [
               8.0,
               10.0,
-              12.0,
+              13.0,
               15.0,
               17.0
             ],
             "rush_yds": [
-              19.591489852663827,
+              17.14255362108085,
               28.570922701801415,
-              39.182979705327654,
-              52.243972940436876,
-              68.57021448432339
+              40.815603859716305,
+              53.0602850176312,
+              66.93759032993474
             ],
             "targets": [
               0.0,
@@ -13330,7 +13330,7 @@
               2.0,
               9.0,
               19.0,
-              31.0
+              30.0
             ],
             "anytime_td": [
               0.0,
@@ -13353,12 +13353,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.15249999999999986,
+            "rush_yds": 0.338769512035654,
+            "targets": 0.040000000000000036,
+            "receptions": -0.014999999999999902,
+            "rec_yds": 0.40000000000000036,
+            "anytime_td": 0.040000000000000036
           },
           "context": {
             "opponent": {
@@ -13428,7 +13428,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.4759977303932913,
+              "value": 0.4794284568727916,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -13465,7 +13465,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.195
+          "p_ceiling": 0.18
         },
         {
           "player_id": "00-0038608",
@@ -13479,10 +13479,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 3.5775,
-            "receptions": 2.12,
-            "rec_yds": 35.4475,
-            "anytime_td": 0.18
+            "targets": 3.7275,
+            "receptions": 2.225,
+            "rec_yds": 38.3825,
+            "anytime_td": 0.21
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -13529,10 +13529,10 @@
             ],
             "rec_yds": [
               0.0,
-              13.0,
-              28.0,
-              51.0,
-              72.0
+              15.0,
+              31.0,
+              55.0,
+              76.0
             ],
             "anytime_td": [
               0.0,
@@ -13557,10 +13557,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.1499999999999999,
+            "receptions": 0.10499999999999998,
+            "rec_yds": 2.9350000000000023,
+            "anytime_td": 0.03
           },
           "context": {
             "opponent": {
@@ -13667,7 +13667,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0875
+          "p_ceiling": 0.1225
         },
         {
           "player_id": "00-0038618",
@@ -13679,12 +13679,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0825,
-            "rush_yds": 0.4008880582275395,
-            "targets": 5.415,
-            "receptions": 2.7175,
-            "rec_yds": 35.6375,
-            "anytime_td": 0.195
+            "rush_att": 0.055,
+            "rush_yds": 0.19670904720481758,
+            "targets": 5.1775,
+            "receptions": 2.555,
+            "rec_yds": 32.45,
+            "anytime_td": 0.1425
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -13716,25 +13716,25 @@
               0.0
             ],
             "targets": [
+              2.0,
               3.0,
-              4.0,
               5.0,
               7.0,
               8.0
             ],
             "receptions": [
               1.0,
-              2.0,
+              1.0,
               2.0,
               4.0,
               5.0
             ],
             "rec_yds": [
-              5.0,
-              15.0,
-              30.0,
-              52.0,
-              74.0
+              3.0,
+              12.0,
+              27.0,
+              46.0,
+              67.0
             ],
             "anytime_td": [
               0.0,
@@ -13757,12 +13757,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.027500000000000004,
+            "rush_yds": -0.2041790110227219,
+            "targets": -0.23749999999999982,
+            "receptions": -0.16249999999999964,
+            "rec_yds": -3.1875,
+            "anytime_td": -0.05250000000000002
           },
           "context": {
             "opponent": {
@@ -13832,7 +13832,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.0024314358286736952,
+              "value": 0.0024489602636615353,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -13869,7 +13869,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.095
+          "p_ceiling": 0.0825
         },
         {
           "player_id": "00-0038728",
@@ -13883,9 +13883,9 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 2.6575,
-            "receptions": 1.315,
-            "rec_yds": 20.42,
+            "targets": 2.7625,
+            "receptions": 1.355,
+            "rec_yds": 20.2825,
             "anytime_td": 0.08
           },
           "stat_quantiles": {
@@ -13919,14 +13919,14 @@
             ],
             "targets": [
               1.0,
-              1.0,
-              3.0,
+              2.0,
+              2.0,
               4.0,
               5.0
             ],
             "receptions": [
               0.0,
-              0.0,
+              1.0,
               1.0,
               2.0,
               3.0
@@ -13936,7 +13936,7 @@
               0.0,
               15.0,
               30.0,
-              51.0
+              47.0
             ],
             "anytime_td": [
               0.0,
@@ -13961,9 +13961,9 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
+            "targets": 0.10499999999999998,
+            "receptions": 0.040000000000000036,
+            "rec_yds": -0.13750000000000284,
             "anytime_td": 0.0
           },
           "context": {
@@ -14071,7 +14071,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0039163",
@@ -14081,22 +14081,22 @@
           "game_id": "2026_03_HOU_IND",
           "n_draws": 400,
           "proj": {
-            "pass_yds": 208.615,
-            "pass_tds": 1.535,
-            "rush_att": 2.91,
-            "rush_yds": 14.821990500587303,
+            "pass_yds": 210.75,
+            "pass_tds": 1.4375,
+            "rush_att": 2.9225,
+            "rush_yds": 15.054588327976251,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.13
+            "anytime_td": 0.1375
           },
           "stat_quantiles": {
             "pass_yds": [
-              134.0,
-              165.0,
-              201.0,
-              244.0,
-              295.0
+              129.0,
+              163.0,
+              206.0,
+              255.0,
+              297.0
             ],
             "pass_tds": [
               0.0,
@@ -14110,14 +14110,14 @@
               2.0,
               3.0,
               4.0,
-              5.0
+              6.0
             ],
             "rush_yds": [
               0.0,
               3.6725972745622055,
-              11.017791823686618,
-              22.035583647373237,
-              34.27757456258059
+              11.017791823686617,
+              20.8113845558525,
+              36.72597274562205
             ],
             "targets": [
               0.0,
@@ -14159,14 +14159,14 @@
             "anytime_td": 0.13
           },
           "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
+            "pass_yds": 2.134999999999991,
+            "pass_tds": -0.09749999999999992,
+            "rush_att": 0.012499999999999734,
+            "rush_yds": 0.23259782738894863,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "anytime_td": 0.007500000000000007
           },
           "context": {
             "opponent": {
@@ -14236,7 +14236,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.10992048116551639,
+              "value": 0.11071272676102034,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -14273,7 +14273,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.15
+          "p_ceiling": 0.1325
         },
         {
           "player_id": "00-0040138",
@@ -14285,12 +14285,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.4825,
-            "rush_yds": 2.3392368523659557,
-            "targets": 2.895,
-            "receptions": 1.51,
-            "rec_yds": 16.4,
-            "anytime_td": 0.165
+            "rush_att": 0.49,
+            "rush_yds": 1.9942802658419427,
+            "targets": 2.99,
+            "receptions": 1.6675,
+            "rec_yds": 18.3325,
+            "anytime_td": 0.1525
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -14312,7 +14312,7 @@
               0.0,
               0.0,
               1.0,
-              1.0
+              2.0
             ],
             "rush_yds": [
               0.0,
@@ -14337,10 +14337,10 @@
             ],
             "rec_yds": [
               0.0,
-              1.0,
-              11.0,
-              25.0,
-              40.0
+              3.0,
+              14.0,
+              26.0,
+              43.0
             ],
             "anytime_td": [
               0.0,
@@ -14363,12 +14363,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.007500000000000007,
+            "rush_yds": -0.34495658652401295,
+            "targets": 0.0950000000000002,
+            "receptions": 0.15749999999999997,
+            "rec_yds": 1.932500000000001,
+            "anytime_td": -0.012500000000000011
           },
           "context": {
             "opponent": {
@@ -14438,7 +14438,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.018808633885471545,
+              "value": 0.018944196040906195,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -14475,7 +14475,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.03
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0040583",
@@ -14487,12 +14487,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 10.305,
-            "rush_yds": 38.557391039296924,
-            "targets": 2.8275,
-            "receptions": 2.3,
-            "rec_yds": 15.2225,
-            "anytime_td": 0.59
+            "rush_att": 10.3625,
+            "rush_yds": 38.51353345977208,
+            "targets": 2.7925,
+            "receptions": 2.2175,
+            "rec_yds": 15.3775,
+            "anytime_td": 0.535
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -14517,15 +14517,15 @@
               15.0
             ],
             "rush_yds": [
-              14.911577038458697,
+              15.788728628956267,
               23.683092943434403,
-              36.84036680089795,
-              50.87479224885909,
-              63.15491451582507
+              35.963215210400385,
+              49.99764065836151,
+              64.03206610632265
             ],
             "targets": [
               1.0,
-              1.0,
+              2.0,
               3.0,
               4.0,
               5.0
@@ -14539,7 +14539,7 @@
             ],
             "rec_yds": [
               0.0,
-              5.0,
+              4.0,
               12.0,
               23.0,
               37.0
@@ -14549,7 +14549,7 @@
               0.0,
               0.0,
               1.0,
-              2.0
+              1.0
             ]
           },
           "week_open": {
@@ -14565,12 +14565,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.057500000000000995,
+            "rush_yds": -0.04385757952484681,
+            "targets": -0.03500000000000014,
+            "receptions": -0.08250000000000002,
+            "rec_yds": 0.15499999999999936,
+            "anytime_td": -0.05499999999999994
           },
           "context": {
             "opponent": {
@@ -14640,7 +14640,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.385685851297153,
+              "value": 0.38846566006162025,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -14677,209 +14677,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2025
-        },
-        {
-          "player_id": "00-0040654",
-          "name": "00-0040654",
-          "team": "HOU",
-          "pos": "P",
-          "game_id": "2026_03_HOU_IND",
-          "n_draws": 400,
-          "proj": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.19,
-            "rush_yds": 0.18125,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
-          },
-          "stat_quantiles": {
-            "pass_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "pass_tds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "rush_att": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              1.0
-            ],
-            "rush_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.5
-            ],
-            "targets": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "receptions": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "rec_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "anytime_td": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          "week_open": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.19,
-            "rush_yds": 0.18125,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
-          },
-          "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
-          },
-          "context": {
-            "opponent": {
-              "value": "IND",
-              "reason": null
-            },
-            "kickoff_ts": {
-              "value": "2026-09-27T17:00+00:00",
-              "reason": null
-            },
-            "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "line_label": {
-              "value": "SAME-CUTOFF",
-              "reason": null
-            }
-          },
-          "elements": {
-            "line_spread": {
-              "value": -2.5,
-              "reason": null
-            },
-            "line_total": {
-              "value": 43.5,
-              "reason": null
-            },
-            "line_implied_total": {
-              "value": 23.0,
-              "reason": null
-            },
-            "team_plays": {
-              "value": 59.855379404383285,
-              "reason": null
-            },
-            "team_p_dropback": {
-              "value": 0.5908717564743802,
-              "reason": null
-            },
-            "team_dropbacks": {
-              "value": 35.36685316310839,
-              "reason": null
-            },
-            "team_attempt_rate": {
-              "value": 0.8736933797909407,
-              "reason": null
-            },
-            "team_attempts": {
-              "value": 30.89978547264609,
-              "reason": null
-            },
-            "team_targets": {
-              "value": 29.359417303521163,
-              "reason": null
-            },
-            "team_carries": {
-              "value": 26.52207222883689,
-              "reason": null
-            },
-            "target_share": {
-              "value": 0.0,
-              "reason": null
-            },
-            "carry_share": {
-              "value": 0.007155867429894113,
-              "reason": null
-            },
-            "qb_attempt_weight": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "catch_rate": {
-              "value": 0.6883525708289612,
-              "reason": null
-            },
-            "yards_per_reception": {
-              "value": 11.08231707317073,
-              "reason": null
-            },
-            "yards_per_carry": {
-              "value": 1.0,
-              "reason": null
-            },
-            "yards_per_attempt": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "td_rates": {
-              "value": "{\"receiving\": {\"inside_10\": 0.46153846153846156, \"open_field\": 0.01570996978851964, \"red_zone_11_20\": 0.1836734693877551}, \"rushing\": {\"inside_10\": 0.30612244897959184, \"open_field\": 0.00558659217877095, \"red_zone_11_20\": 0.019867549668874173}}",
-              "reason": null
-            },
-            "td_rate_receiving": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            },
-            "td_rate_rushing": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            }
-          },
-          "td_rates_pooled": true,
-          "p_ceiling": null
+          "p_ceiling": 0.185
         },
         {
           "player_id": "00-0030279",
@@ -14893,10 +14691,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 5.4825,
-            "receptions": 3.715,
-            "rec_yds": 31.7875,
-            "anytime_td": 0.22
+            "targets": 5.5625,
+            "receptions": 3.6875,
+            "rec_yds": 30.8475,
+            "anytime_td": 0.255
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -14928,9 +14726,9 @@
               0.0
             ],
             "targets": [
-              3.0,
+              2.0,
               4.0,
-              5.0,
+              6.0,
               7.0,
               9.0
             ],
@@ -14942,11 +14740,11 @@
               6.0
             ],
             "rec_yds": [
-              7.0,
-              16.0,
+              8.0,
+              15.0,
               26.0,
-              44.0,
-              60.0
+              41.0,
+              58.0
             ],
             "anytime_td": [
               0.0,
@@ -14971,10 +14769,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.08000000000000007,
+            "receptions": -0.027499999999999858,
+            "rec_yds": -0.9400000000000013,
+            "anytime_td": 0.035
           },
           "context": {
             "opponent": {
@@ -15081,7 +14879,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.125
+          "p_ceiling": 0.105
         },
         {
           "player_id": "00-0032951",
@@ -15093,12 +14891,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0075,
-            "rush_yds": 0.022409891453713394,
-            "targets": 1.9875,
-            "receptions": 1.4225,
-            "rec_yds": 15.14,
-            "anytime_td": 0.1325
+            "rush_att": 0.015,
+            "rush_yds": 0.1045794934506625,
+            "targets": 1.9475,
+            "receptions": 1.3325,
+            "rec_yds": 13.7075,
+            "anytime_td": 0.125
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -15138,17 +14936,17 @@
             ],
             "receptions": [
               0.0,
-              1.0,
+              0.0,
               1.0,
               2.0,
               3.0
             ],
             "rec_yds": [
               0.0,
-              1.0,
-              9.0,
+              0.0,
+              8.0,
               21.0,
-              39.0
+              33.0
             ],
             "anytime_td": [
               0.0,
@@ -15171,12 +14969,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.0075,
+            "rush_yds": 0.08216960199694912,
+            "targets": -0.040000000000000036,
+            "receptions": -0.09000000000000008,
+            "rec_yds": -1.432500000000001,
+            "anytime_td": -0.007500000000000007
           },
           "context": {
             "opponent": {
@@ -15283,7 +15081,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.03
+          "p_ceiling": 0.01
         },
         {
           "player_id": "00-0035710",
@@ -15293,26 +15091,26 @@
           "game_id": "2026_03_HOU_IND",
           "n_draws": 400,
           "proj": {
-            "pass_yds": 201.28,
-            "pass_tds": 1.34,
-            "rush_att": 2.62,
-            "rush_yds": 11.359790286918745,
+            "pass_yds": 200.705,
+            "pass_tds": 1.4775,
+            "rush_att": 2.385,
+            "rush_yds": 9.859056684302965,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.1825
+            "anytime_td": 0.1425
           },
           "stat_quantiles": {
             "pass_yds": [
-              132.0,
-              159.0,
+              130.0,
+              161.0,
               195.0,
-              241.0,
-              280.0
+              236.0,
+              278.0
             ],
             "pass_tds": [
               0.0,
-              0.0,
+              1.0,
               1.0,
               2.0,
               3.0
@@ -15321,15 +15119,15 @@
               1.0,
               1.0,
               2.0,
-              4.0,
+              3.0,
               5.0
             ],
             "rush_yds": [
               0.0,
-              3.0523395307439527,
-              8.139572081983873,
-              16.279144163967747,
-              26.45360926644759
+              2.0348930204959683,
+              7.122125571735889,
+              15.26169765371976,
+              22.38382322545565
             ],
             "targets": [
               0.0,
@@ -15371,14 +15169,14 @@
             "anytime_td": 0.1825
           },
           "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
+            "pass_yds": -0.5749999999999886,
+            "pass_tds": 0.13749999999999996,
+            "rush_att": -0.23500000000000032,
+            "rush_yds": -1.5007336026157798,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "anytime_td": -0.04000000000000001
           },
           "context": {
             "opponent": {
@@ -15485,7 +15283,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0975
+          "p_ceiling": 0.075
         },
         {
           "player_id": "00-0036223",
@@ -15497,12 +15295,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 21.39,
-            "rush_yds": 93.11737987708997,
-            "targets": 3.035,
+            "rush_att": 21.35,
+            "rush_yds": 91.19826160126757,
+            "targets": 2.9775,
             "receptions": 2.4825,
-            "rec_yds": 17.7025,
-            "anytime_td": 0.6275
+            "rec_yds": 15.26,
+            "anytime_td": 0.585
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -15523,15 +15321,15 @@
               15.0,
               18.0,
               21.0,
-              25.0,
+              24.0,
               28.0
             ],
             "rush_yds": [
-              54.905947972250885,
+              51.79806412476499,
               68.37344464468978,
-              91.16459285958638,
-              111.88381850949237,
-              135.71092800688425
+              88.05670901210047,
+              109.81189594450176,
+              134.67496672438892
             ],
             "targets": [
               1.0,
@@ -15549,10 +15347,10 @@
             ],
             "rec_yds": [
               0.0,
-              6.0,
+              5.0,
               13.0,
-              26.0,
-              40.0
+              23.0,
+              32.0
             ],
             "anytime_td": [
               0.0,
@@ -15575,12 +15373,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
+            "rush_att": -0.03999999999999915,
+            "rush_yds": -1.9191182758223988,
+            "targets": -0.05750000000000011,
             "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rec_yds": -2.442500000000001,
+            "anytime_td": -0.04249999999999998
           },
           "context": {
             "opponent": {
@@ -15687,7 +15485,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.53
+          "p_ceiling": 0.475
         },
         {
           "player_id": "00-0037292",
@@ -15701,10 +15499,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 1.12,
-            "receptions": 0.635,
-            "rec_yds": 4.72,
-            "anytime_td": 0.085
+            "targets": 1.1275,
+            "receptions": 0.665,
+            "rec_yds": 4.575,
+            "anytime_td": 0.0725
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -15753,8 +15551,8 @@
               0.0,
               0.0,
               0.0,
-              8.0,
-              13.0
+              7.0,
+              15.0
             ],
             "anytime_td": [
               0.0,
@@ -15779,10 +15577,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.00749999999999984,
+            "receptions": 0.030000000000000027,
+            "rec_yds": -0.14499999999999957,
+            "anytime_td": -0.012500000000000011
           },
           "context": {
             "opponent": {
@@ -15889,7 +15687,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.0025
         },
         {
           "player_id": "00-0037664",
@@ -15903,9 +15701,9 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 3.9125,
-            "receptions": 2.56,
-            "rec_yds": 46.4175,
+            "targets": 3.955,
+            "receptions": 2.5475,
+            "rec_yds": 48.045,
             "anytime_td": 0.1775
           },
           "stat_quantiles": {
@@ -15938,8 +15736,8 @@
               0.0
             ],
             "targets": [
-              2.0,
-              2.0,
+              1.0,
+              3.0,
               4.0,
               5.0,
               7.0
@@ -15948,15 +15746,15 @@
               1.0,
               1.0,
               2.0,
-              4.0,
+              3.0,
               5.0
             ],
             "rec_yds": [
-              9.0,
-              23.0,
-              42.0,
-              65.0,
-              93.0
+              11.0,
+              22.0,
+              43.0,
+              67.0,
+              95.0
             ],
             "anytime_td": [
               0.0,
@@ -15981,9 +15779,9 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
+            "targets": 0.04249999999999998,
+            "receptions": -0.012500000000000178,
+            "rec_yds": 1.6275000000000048,
             "anytime_td": 0.0
           },
           "context": {
@@ -16091,7 +15889,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1475
+          "p_ceiling": 0.15
         },
         {
           "player_id": "00-0038997",
@@ -16103,11 +15901,11 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0275,
-            "rush_yds": 0.04481978290742679,
-            "targets": 5.2525,
-            "receptions": 3.65,
-            "rec_yds": 39.44,
+            "rush_att": 0.03,
+            "rush_yds": 0.13445934872228038,
+            "targets": 4.9675,
+            "receptions": 3.44,
+            "rec_yds": 37.4325,
             "anytime_td": 0.205
           },
           "stat_quantiles": {
@@ -16141,9 +15939,9 @@
             ],
             "targets": [
               2.0,
-              4.0,
+              3.0,
               5.0,
-              7.0,
+              6.0,
               8.0
             ],
             "receptions": [
@@ -16154,11 +15952,11 @@
               6.0
             ],
             "rec_yds": [
-              10.0,
-              19.0,
-              34.0,
-              52.0,
-              78.0
+              7.0,
+              17.0,
+              32.0,
+              51.0,
+              74.0
             ],
             "anytime_td": [
               0.0,
@@ -16181,11 +15979,11 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
+            "rush_att": 0.0024999999999999988,
+            "rush_yds": 0.08963956581485359,
+            "targets": -0.28500000000000014,
+            "receptions": -0.20999999999999996,
+            "rec_yds": -2.0075000000000003,
             "anytime_td": 0.0
           },
           "context": {
@@ -16293,7 +16091,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.15
+          "p_ceiling": 0.1325
         },
         {
           "player_id": "00-0040128",
@@ -16305,12 +16103,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.5025,
-            "rush_yds": 1.6050062404659542,
-            "targets": 5.2325,
-            "receptions": 3.885,
-            "rec_yds": 26.835,
-            "anytime_td": 0.2225
+            "rush_att": 0.5125,
+            "rush_yds": 1.5672202191096936,
+            "targets": 5.46,
+            "receptions": 4.14,
+            "rec_yds": 30.4675,
+            "anytime_td": 0.275
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -16332,7 +16130,7 @@
               0.0,
               0.0,
               1.0,
-              1.0
+              2.0
             ],
             "rush_yds": [
               0.0,
@@ -16342,25 +16140,25 @@
               5.757869920954098
             ],
             "targets": [
-              2.0,
+              3.0,
               4.0,
               5.0,
               7.0,
-              8.0
+              9.0
             ],
             "receptions": [
-              1.0,
               2.0,
+              3.0,
               4.0,
-              5.0,
-              6.0
+              6.0,
+              7.0
             ],
             "rec_yds": [
-              6.0,
-              13.0,
-              25.0,
-              38.0,
-              51.0
+              7.0,
+              16.0,
+              27.0,
+              41.0,
+              58.0
             ],
             "anytime_td": [
               0.0,
@@ -16383,12 +16181,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.010000000000000009,
+            "rush_yds": -0.037786021356260635,
+            "targets": 0.22750000000000004,
+            "receptions": 0.2549999999999999,
+            "rec_yds": 3.6325000000000003,
+            "anytime_td": 0.05250000000000002
           },
           "context": {
             "opponent": {
@@ -16495,7 +16293,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2
+          "p_ceiling": 0.2475
         },
         {
           "player_id": "00-0041125",
@@ -16507,12 +16305,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 2.18,
-            "rush_yds": 8.644420397094372,
-            "targets": 1.1,
-            "receptions": 0.89,
-            "rec_yds": 5.645,
-            "anytime_td": 0.23
+            "rush_att": 2.195,
+            "rush_yds": 9.05857947920164,
+            "targets": 1.1425,
+            "receptions": 0.9175,
+            "rec_yds": 6.425,
+            "anytime_td": 0.265
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -16538,7 +16336,7 @@
             ],
             "rush_yds": [
               0.0,
-              0.9203535157939199,
+              1.8407070315878398,
               6.442474610557439,
               12.884949221114878,
               21.168130863260156
@@ -16560,9 +16358,9 @@
             "rec_yds": [
               0.0,
               0.0,
-              1.0,
-              9.0,
-              18.0
+              3.0,
+              11.0,
+              19.0
             ],
             "anytime_td": [
               0.0,
@@ -16585,12 +16383,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.01499999999999968,
+            "rush_yds": 0.41415908210726826,
+            "targets": 0.04249999999999998,
+            "receptions": 0.02749999999999997,
+            "rec_yds": 0.7800000000000002,
+            "anytime_td": 0.035
           },
           "context": {
             "opponent": {
@@ -16697,7 +16495,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0041132",
@@ -16709,12 +16507,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 1.2,
-            "rush_yds": 5.194857860883912,
-            "targets": 1.5525,
-            "receptions": 1.0675,
-            "rec_yds": 13.5925,
-            "anytime_td": 0.08
+            "rush_att": 1.0975,
+            "rush_yds": 4.3966555195390296,
+            "targets": 1.6725,
+            "receptions": 1.0875,
+            "rec_yds": 13.945,
+            "anytime_td": 0.1125
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -16742,15 +16540,15 @@
               0.0,
               0.0,
               2.093645485494777,
-              7.327759199231719,
-              14.655518398463437
+              6.28093645648433,
+              13.60869565571605
             ],
             "targets": [
               0.0,
               1.0,
               1.0,
               2.0,
-              3.0
+              4.0
             ],
             "receptions": [
               0.0,
@@ -16762,7 +16560,7 @@
             "rec_yds": [
               0.0,
               0.0,
-              7.0,
+              8.0,
               20.0,
               38.0
             ],
@@ -16771,7 +16569,7 @@
               0.0,
               0.0,
               0.0,
-              0.0
+              1.0
             ]
           },
           "week_open": {
@@ -16787,12 +16585,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.10250000000000004,
+            "rush_yds": -0.7982023413448829,
+            "targets": 0.1200000000000001,
+            "receptions": 0.020000000000000018,
+            "rec_yds": 0.3525000000000009,
+            "anytime_td": 0.0325
           },
           "context": {
             "opponent": {
@@ -16899,7 +16697,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.015
         }
       ]
     },
@@ -16924,12 +16722,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.02,
-            "rush_yds": 0.0323880183053668,
-            "targets": 6.51,
-            "receptions": 4.8525,
-            "rec_yds": 44.7775,
-            "anytime_td": 0.3025
+            "rush_att": 0.0125,
+            "rush_yds": 0.03598668700596311,
+            "targets": 6.6325,
+            "receptions": 4.9275,
+            "rec_yds": 45.1925,
+            "anytime_td": 0.27
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -16965,7 +16763,7 @@
               5.0,
               6.0,
               8.0,
-              10.0
+              11.0
             ],
             "receptions": [
               2.0,
@@ -16975,17 +16773,17 @@
               8.0
             ],
             "rec_yds": [
-              15.0,
+              13.0,
               25.0,
               40.0,
               61.0,
-              82.0
+              80.0
             ],
             "anytime_td": [
               0.0,
               0.0,
               0.0,
-              1.0,
+              0.0,
               1.0
             ]
           },
@@ -17002,12 +16800,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.0075,
+            "rush_yds": 0.0035986687005963094,
+            "targets": 0.1225000000000005,
+            "receptions": 0.07500000000000018,
+            "rec_yds": 0.41499999999999915,
+            "anytime_td": -0.03249999999999997
           },
           "context": {
             "opponent": {
@@ -17073,11 +16871,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.20415627370483705,
+              "value": 0.20905978785524795,
               "reason": null
             },
             "carry_share": {
-              "value": 0.0007684627244531599,
+              "value": 0.0007849036438706693,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -17114,7 +16912,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.3875
+          "p_ceiling": 0.385
         },
         {
           "player_id": "00-0033873",
@@ -17124,21 +16922,21 @@
           "game_id": "2026_03_KC_MIA",
           "n_draws": 400,
           "proj": {
-            "pass_yds": 210.95,
-            "pass_tds": 2.0575,
-            "rush_att": 4.12,
-            "rush_yds": 17.345358009444404,
-            "targets": 0.0325,
-            "receptions": 0.025,
-            "rec_yds": 0.23,
-            "anytime_td": 0.2925
+            "pass_yds": 214.2175,
+            "pass_tds": 2.0775,
+            "rush_att": 4.1825,
+            "rush_yds": 18.833079275294626,
+            "targets": 0.0525,
+            "receptions": 0.0325,
+            "rec_yds": 0.2,
+            "anytime_td": 0.26
           },
           "stat_quantiles": {
             "pass_yds": [
-              129.0,
-              168.0,
-              206.0,
-              249.0,
+              140.0,
+              172.0,
+              208.0,
+              247.0,
               295.0
             ],
             "pass_tds": [
@@ -17152,15 +16950,15 @@
               2.0,
               3.0,
               4.0,
-              6.0,
+              5.0,
               7.0
             ],
             "rush_yds": [
-              2.1027862414843996,
-              7.359751845195398,
-              14.719503690390798,
-              24.182041777070594,
-              34.69597298449259
+              3.1541793622265994,
+              8.411144965937599,
+              15.770896811132996,
+              26.284828018554993,
+              38.9015454674614
             ],
             "targets": [
               0.0,
@@ -17202,14 +17000,14 @@
             "anytime_td": 0.2925
           },
           "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "pass_yds": 3.2675000000000125,
+            "pass_tds": 0.020000000000000018,
+            "rush_att": 0.0625,
+            "rush_yds": 1.4877212658502224,
+            "targets": 0.019999999999999997,
+            "receptions": 0.0075,
+            "rec_yds": -0.03,
+            "anytime_td": -0.03249999999999997
           },
           "context": {
             "opponent": {
@@ -17275,11 +17073,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.001065122054696234,
+              "value": 0.0010907046193284079,
               "reason": null
             },
             "carry_share": {
-              "value": 0.15303102415486927,
+              "value": 0.15630505509540646,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -17316,7 +17114,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.275
+          "p_ceiling": 0.2925
         },
         {
           "player_id": "00-0036637",
@@ -17330,10 +17128,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 1.725,
-            "receptions": 1.18,
-            "rec_yds": 12.675,
-            "anytime_td": 0.1975
+            "targets": 1.6825,
+            "receptions": 1.0425,
+            "rec_yds": 11.6325,
+            "anytime_td": 0.2025
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -17367,23 +17165,23 @@
             "targets": [
               0.0,
               1.0,
-              1.0,
-              3.0,
-              4.0
+              2.0,
+              2.0,
+              3.0
             ],
             "receptions": [
               0.0,
               0.0,
               1.0,
               2.0,
-              3.0
+              2.0
             ],
             "rec_yds": [
               0.0,
               0.0,
-              10.0,
-              19.0,
-              33.0
+              8.0,
+              16.0,
+              32.0
             ],
             "anytime_td": [
               0.0,
@@ -17408,10 +17206,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": -0.04249999999999998,
+            "receptions": -0.13749999999999996,
+            "rec_yds": -1.0425000000000004,
+            "anytime_td": 0.0050000000000000044
           },
           "context": {
             "opponent": {
@@ -17477,7 +17275,7 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.05725756256164552,
+              "value": 0.05863279959523767,
               "reason": null
             },
             "carry_share": {
@@ -17518,209 +17316,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.055
-        },
-        {
-          "player_id": "00-0036909",
-          "name": "Khyiris Tonga",
-          "team": "KC",
-          "pos": "DT",
-          "game_id": "2026_03_KC_MIA",
-          "n_draws": 400,
-          "proj": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.575,
-            "rush_yds": 1.7759430037442798,
-            "targets": 0.745,
-            "receptions": 0.495,
-            "rec_yds": 5.7,
-            "anytime_td": 0.0225
-          },
-          "stat_quantiles": {
-            "pass_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "pass_tds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "rush_att": [
-              0.0,
-              0.0,
-              0.0,
-              1.0,
-              2.0
-            ],
-            "rush_yds": [
-              0.0,
-              0.0,
-              0.0,
-              2.878934960477049,
-              6.47760366107336
-            ],
-            "targets": [
-              0.0,
-              0.0,
-              1.0,
-              1.0,
-              2.0
-            ],
-            "receptions": [
-              0.0,
-              0.0,
-              0.0,
-              1.0,
-              1.0
-            ],
-            "rec_yds": [
-              0.0,
-              0.0,
-              0.0,
-              7.0,
-              18.0
-            ],
-            "anytime_td": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          "week_open": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.575,
-            "rush_yds": 1.7759430037442798,
-            "targets": 0.745,
-            "receptions": 0.495,
-            "rec_yds": 5.7,
-            "anytime_td": 0.0225
-          },
-          "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
-          },
-          "context": {
-            "opponent": {
-              "value": "MIA",
-              "reason": null
-            },
-            "kickoff_ts": {
-              "value": "2026-09-27T17:00+00:00",
-              "reason": null
-            },
-            "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "line_label": {
-              "value": "SAME-CUTOFF",
-              "reason": null
-            }
-          },
-          "elements": {
-            "line_spread": {
-              "value": -11.5,
-              "reason": null
-            },
-            "line_total": {
-              "value": 46.0,
-              "reason": null
-            },
-            "line_implied_total": {
-              "value": 28.75,
-              "reason": null
-            },
-            "team_plays": {
-              "value": 61.6225028753087,
-              "reason": null
-            },
-            "team_p_dropback": {
-              "value": 0.599243827248656,
-              "reason": null
-            },
-            "team_dropbacks": {
-              "value": 36.92690446764129,
-              "reason": null
-            },
-            "team_attempt_rate": {
-              "value": 0.8736933797909407,
-              "reason": null
-            },
-            "team_attempts": {
-              "value": 32.26279196955071,
-              "reason": null
-            },
-            "team_targets": {
-              "value": 30.65447731503672,
-              "reason": null
-            },
-            "team_carries": {
-              "value": 26.820639020801973,
-              "reason": null
-            },
-            "target_share": {
-              "value": 0.02345508048542594,
-              "reason": null
-            },
-            "carry_share": {
-              "value": 0.020946417494551024,
-              "reason": null
-            },
-            "qb_attempt_weight": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "catch_rate": {
-              "value": 0.6883525708289612,
-              "reason": null
-            },
-            "yards_per_reception": {
-              "value": 11.08231707317073,
-              "reason": null
-            },
-            "yards_per_carry": {
-              "value": 3.0,
-              "reason": null
-            },
-            "yards_per_attempt": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "td_rates": {
-              "value": "{\"receiving\": {\"inside_10\": 0.46153846153846156, \"open_field\": 0.01570996978851964, \"red_zone_11_20\": 0.1836734693877551}, \"rushing\": {\"inside_10\": 0.30612244897959184, \"open_field\": 0.00558659217877095, \"red_zone_11_20\": 0.019867549668874173}}",
-              "reason": null
-            },
-            "td_rate_receiving": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            },
-            "td_rate_rushing": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            }
-          },
-          "td_rates_pooled": true,
-          "p_ceiling": null
+          "p_ceiling": 0.0625
         },
         {
           "player_id": "00-0038104",
@@ -17734,10 +17330,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 2.5875,
-            "receptions": 1.7275,
-            "rec_yds": 28.97,
-            "anytime_td": 0.2075
+            "targets": 2.5975,
+            "receptions": 1.81,
+            "rec_yds": 31.33,
+            "anytime_td": 0.18
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -17780,14 +17376,14 @@
               1.0,
               2.0,
               3.0,
-              3.0
+              4.0
             ],
             "rec_yds": [
               0.0,
-              7.0,
-              22.0,
-              44.0,
-              64.0
+              8.0,
+              25.0,
+              48.0,
+              73.0
             ],
             "anytime_td": [
               0.0,
@@ -17812,10 +17408,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.010000000000000231,
+            "receptions": 0.08250000000000002,
+            "rec_yds": 2.3599999999999994,
+            "anytime_td": -0.027499999999999997
           },
           "context": {
             "opponent": {
@@ -17881,7 +17477,7 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.08139229577284149,
+              "value": 0.08334721132265005,
               "reason": null
             },
             "carry_share": {
@@ -17922,7 +17518,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.095
+          "p_ceiling": 0.075
         },
         {
           "player_id": "00-0038134",
@@ -17934,12 +17530,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 18.3975,
-            "rush_yds": 99.18356437316852,
-            "targets": 4.365,
-            "receptions": 2.74,
-            "rec_yds": 18.9125,
-            "anytime_td": 0.66
+            "rush_att": 18.42,
+            "rush_yds": 102.44398050475552,
+            "targets": 4.61,
+            "receptions": 2.9475,
+            "rec_yds": 20.855,
+            "anytime_td": 0.765
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -17958,24 +17554,24 @@
             ],
             "rush_att": [
               13.0,
-              16.0,
+              15.0,
               18.0,
               21.0,
-              24.0
+              25.0
             ],
             "rush_yds": [
-              55.10562475921786,
+              56.41766344396114,
               74.78620503036709,
-              95.77882398625961,
-              120.70755899638199,
-              143.0122166370178
+              97.0908626710029,
+              127.26775242009839,
+              152.19648743022077
             ],
             "targets": [
               2.0,
               3.0,
               4.0,
               6.0,
-              7.0
+              8.0
             ],
             "receptions": [
               1.0,
@@ -17986,15 +17582,15 @@
             ],
             "rec_yds": [
               1.0,
-              6.0,
-              16.0,
-              27.0,
-              41.0
+              8.0,
+              17.0,
+              30.0,
+              44.0
             ],
             "anytime_td": [
               0.0,
               0.0,
-              0.0,
+              1.0,
               1.0,
               2.0
             ]
@@ -18012,12 +17608,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.022500000000000853,
+            "rush_yds": 3.260416131586993,
+            "targets": 0.2450000000000001,
+            "receptions": 0.20749999999999957,
+            "rec_yds": 1.942499999999999,
+            "anytime_td": 0.10499999999999998
           },
           "context": {
             "opponent": {
@@ -18083,11 +17679,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.14440781935880578,
+              "value": 0.1478762691536901,
               "reason": null
             },
             "carry_share": {
-              "value": 0.6751814572632526,
+              "value": 0.6896266653102154,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -18124,7 +17720,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.58
+          "p_ceiling": 0.6625
         },
         {
           "player_id": "00-0039067",
@@ -18136,12 +17732,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.2325,
-            "rush_yds": 0.8988856460878373,
-            "targets": 5.865,
-            "receptions": 4.32,
-            "rec_yds": 44.9425,
-            "anytime_td": 0.4825
+            "rush_att": 0.225,
+            "rush_yds": 0.7445063938511451,
+            "targets": 6.0775,
+            "receptions": 4.49,
+            "rec_yds": 47.6025,
+            "anytime_td": 0.4525
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -18170,12 +17766,12 @@
               0.0,
               0.0,
               0.0,
-              3.983980702882381
+              2.987985527161786
             ],
             "targets": [
               3.0,
               4.0,
-              5.0,
+              6.0,
               8.0,
               9.0
             ],
@@ -18187,11 +17783,11 @@
               7.0
             ],
             "rec_yds": [
-              13.0,
-              23.0,
-              39.0,
-              61.0,
-              83.0
+              15.0,
+              25.0,
+              43.0,
+              64.0,
+              87.0
             ],
             "anytime_td": [
               0.0,
@@ -18214,12 +17810,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.007500000000000007,
+            "rush_yds": -0.15437925223669213,
+            "targets": 0.21249999999999947,
+            "receptions": 0.16999999999999993,
+            "rec_yds": 2.6599999999999966,
+            "anytime_td": -0.02999999999999997
           },
           "context": {
             "opponent": {
@@ -18285,11 +17881,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.19779930524692574,
+              "value": 0.20255013496486043,
               "reason": null
             },
             "carry_share": {
-              "value": 0.007544268756047003,
+              "value": 0.00770567504256593,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -18326,7 +17922,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.305
+          "p_ceiling": 0.31
         },
         {
           "player_id": "00-0039894",
@@ -18338,12 +17934,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.2625,
-            "rush_yds": 0.9661153204489777,
-            "targets": 5.16,
-            "receptions": 3.3375,
-            "rec_yds": 33.6675,
-            "anytime_td": 0.2725
+            "rush_att": 0.2725,
+            "rush_yds": 1.2151141143791266,
+            "targets": 5.2375,
+            "receptions": 3.41,
+            "rec_yds": 33.1525,
+            "anytime_td": 0.3175
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -18376,30 +17972,30 @@
             ],
             "targets": [
               2.0,
-              3.0,
+              4.0,
               5.0,
               7.0,
-              9.0
+              8.0
             ],
             "receptions": [
               1.0,
               2.0,
               3.0,
-              5.0,
+              4.0,
               6.0
             ],
             "rec_yds": [
-              5.0,
-              13.0,
-              27.0,
+              6.0,
+              15.0,
+              29.0,
               47.0,
-              71.0
+              65.0
             ],
             "anytime_td": [
               0.0,
               0.0,
               0.0,
-              0.0,
+              1.0,
               1.0
             ]
           },
@@ -18416,12 +18012,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.010000000000000009,
+            "rush_yds": 0.2489987939301489,
+            "targets": 0.07749999999999968,
+            "receptions": 0.07250000000000023,
+            "rec_yds": -0.5149999999999935,
+            "anytime_td": 0.044999999999999984
           },
           "context": {
             "opponent": {
@@ -18487,11 +18083,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.16618358593000118,
+              "value": 0.17017505555464726,
               "reason": null
             },
             "carry_share": {
-              "value": 0.010296965118026758,
+              "value": 0.010517264123252877,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -18528,7 +18124,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.15
+          "p_ceiling": 0.16
         },
         {
           "player_id": "00-0040646",
@@ -18542,10 +18138,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 2.31,
-            "receptions": 1.84,
-            "rec_yds": 14.14,
-            "anytime_td": 0.2775
+            "targets": 2.5025,
+            "receptions": 2.0,
+            "rec_yds": 15.74,
+            "anytime_td": 0.335
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -18577,31 +18173,31 @@
               0.0
             ],
             "targets": [
-              0.0,
+              1.0,
               1.0,
               2.0,
               3.0,
-              4.0
+              5.0
             ],
             "receptions": [
               0.0,
               1.0,
               2.0,
               3.0,
-              3.0
+              4.0
             ],
             "rec_yds": [
               0.0,
               4.0,
               11.0,
-              20.0,
-              33.0
+              22.0,
+              38.0
             ],
             "anytime_td": [
               0.0,
               0.0,
               0.0,
-              0.0,
+              1.0,
               1.0
             ]
           },
@@ -18620,10 +18216,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": 0.1924999999999999,
+            "receptions": 0.15999999999999992,
+            "rec_yds": 1.5999999999999996,
+            "anytime_td": 0.057499999999999996
           },
           "context": {
             "opponent": {
@@ -18689,7 +18285,7 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.079873677884878,
+              "value": 0.08179211860994783,
               "reason": null
             },
             "carry_share": {
@@ -18730,7 +18326,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0425
+          "p_ceiling": 0.065
         },
         {
           "player_id": "00-0041013",
@@ -18742,12 +18338,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 4.595,
-            "rush_yds": 18.821681991330912,
-            "targets": 1.3425,
-            "receptions": 1.1375,
-            "rec_yds": 6.935,
-            "anytime_td": 0.4025
+            "rush_att": 4.4675,
+            "rush_yds": 18.74836980491962,
+            "targets": 1.4475,
+            "receptions": 1.255,
+            "rec_yds": 8.5125,
+            "anytime_td": 0.48
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -18767,20 +18363,20 @@
             "rush_att": [
               2.0,
               3.0,
-              5.0,
+              4.0,
               6.0,
-              8.0
+              7.0
             ],
             "rush_yds": [
-              3.909983275269991,
+              1.9549916376349956,
               7.8199665505399825,
-              15.639933101079967,
+              16.617428919897463,
               26.39238710807244,
-              37.144841115064914
+              38.122336933882416
             ],
             "targets": [
               0.0,
-              0.0,
+              1.0,
               1.0,
               2.0,
               3.0
@@ -18795,9 +18391,9 @@
             "rec_yds": [
               0.0,
               0.0,
-              4.0,
-              10.0,
-              20.0
+              6.0,
+              13.0,
+              24.0
             ],
             "anytime_td": [
               0.0,
@@ -18820,12 +18416,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.1274999999999995,
+            "rush_yds": -0.07331218641129311,
+            "targets": 0.10499999999999998,
+            "receptions": 0.11749999999999994,
+            "rec_yds": 1.5774999999999997,
+            "anytime_td": 0.07749999999999996
           },
           "context": {
             "opponent": {
@@ -18891,11 +18487,11 @@
               "reason": null
             },
             "target_share": {
-              "value": 0.04440927699994306,
+              "value": 0.04547591832439029,
               "reason": null
             },
             "carry_share": {
-              "value": 0.16029926419523013,
+              "value": 0.16372879591024628,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -18932,209 +18528,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.05
-        },
-        {
-          "player_id": "00-0032065",
-          "name": "00-0032065",
-          "team": "MIA",
-          "pos": "P",
-          "game_id": "2026_03_KC_MIA",
-          "n_draws": 400,
-          "proj": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.5725,
-            "rush_yds": 0.603125,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0025
-          },
-          "stat_quantiles": {
-            "pass_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "pass_tds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "rush_att": [
-              0.0,
-              0.0,
-              0.0,
-              1.0,
-              2.0
-            ],
-            "rush_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.75,
-              2.0
-            ],
-            "targets": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "receptions": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "rec_yds": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ],
-            "anytime_td": [
-              0.0,
-              0.0,
-              0.0,
-              0.0,
-              0.0
-            ]
-          },
-          "week_open": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.5725,
-            "rush_yds": 0.603125,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0025
-          },
-          "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
-          },
-          "context": {
-            "opponent": {
-              "value": "KC",
-              "reason": null
-            },
-            "kickoff_ts": {
-              "value": "2026-09-27T17:00+00:00",
-              "reason": null
-            },
-            "injury_designation": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "injury_trend": {
-              "value": null,
-              "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
-            },
-            "line_label": {
-              "value": "SAME-CUTOFF",
-              "reason": null
-            }
-          },
-          "elements": {
-            "line_spread": {
-              "value": 11.5,
-              "reason": null
-            },
-            "line_total": {
-              "value": 46.0,
-              "reason": null
-            },
-            "line_implied_total": {
-              "value": 17.25,
-              "reason": null
-            },
-            "team_plays": {
-              "value": 61.708092258216226,
-              "reason": null
-            },
-            "team_p_dropback": {
-              "value": 0.600399461797784,
-              "reason": null
-            },
-            "team_dropbacks": {
-              "value": 37.04950538040102,
-              "reason": null
-            },
-            "team_attempt_rate": {
-              "value": 0.8736933797909407,
-              "reason": null
-            },
-            "team_attempts": {
-              "value": 32.36990757538521,
-              "reason": null
-            },
-            "team_targets": {
-              "value": 30.75625315986252,
-              "reason": null
-            },
-            "team_carries": {
-              "value": 26.790927317876267,
-              "reason": null
-            },
-            "target_share": {
-              "value": 0.0,
-              "reason": null
-            },
-            "carry_share": {
-              "value": 0.018394623171453975,
-              "reason": null
-            },
-            "qb_attempt_weight": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "catch_rate": {
-              "value": 0.6883525708289612,
-              "reason": null
-            },
-            "yards_per_reception": {
-              "value": 11.08231707317073,
-              "reason": null
-            },
-            "yards_per_carry": {
-              "value": 1.0,
-              "reason": null
-            },
-            "yards_per_attempt": {
-              "value": null,
-              "reason": "this player is not one of the passers the chain split the team's attempts across, so no attempt weight and no per-attempt rate were applied to him"
-            },
-            "td_rates": {
-              "value": "{\"receiving\": {\"inside_10\": 0.46153846153846156, \"open_field\": 0.01570996978851964, \"red_zone_11_20\": 0.1836734693877551}, \"rushing\": {\"inside_10\": 0.30612244897959184, \"open_field\": 0.00558659217877095, \"red_zone_11_20\": 0.019867549668874173}}",
-              "reason": null
-            },
-            "td_rate_receiving": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            },
-            "td_rate_rushing": {
-              "value": null,
-              "reason": "the touchdown conversion the chain applies is a rate PER FIELD-POSITION BUCKET \u2014 ChainFit.td_rate[(bucket, profile)], three buckets per profile, mixed over the player's own bucket exposure inside chain.expected_touchdowns \u2014 so no single number is the rate it applied to him. The WHOLE mapping is stored in `td_rates` instead; collapsing it into one float here would be this layer's average rather than the pass's rate"
-            }
-          },
-          "td_rates_pooled": true,
-          "p_ceiling": null
+          "p_ceiling": 0.0625
         },
         {
           "player_id": "00-0037252",
@@ -19146,12 +18540,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.05,
-            "rush_yds": 0.13315074192206353,
-            "targets": 3.855,
-            "receptions": 3.025,
-            "rec_yds": 22.4675,
-            "anytime_td": 0.2925
+            "rush_att": 0.02,
+            "rush_yds": 0.017993343502981554,
+            "targets": 3.8675,
+            "receptions": 2.97,
+            "rec_yds": 23.475,
+            "anytime_td": 0.3275
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -19197,17 +18591,17 @@
               5.0
             ],
             "rec_yds": [
-              2.0,
-              10.0,
-              19.0,
-              33.0,
-              43.0
+              4.0,
+              11.0,
+              20.0,
+              34.0,
+              46.0
             ],
             "anytime_td": [
               0.0,
               0.0,
               0.0,
-              0.0,
+              1.0,
               1.0
             ]
           },
@@ -19224,12 +18618,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": -0.030000000000000002,
+            "rush_yds": -0.11515739841908197,
+            "targets": 0.012500000000000178,
+            "receptions": -0.054999999999999716,
+            "rec_yds": 1.0075000000000003,
+            "anytime_td": 0.03500000000000003
           },
           "context": {
             "opponent": {
@@ -19299,7 +18693,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.0011800815201110874,
+              "value": 0.0012021954524371037,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -19336,7 +18730,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.185
+          "p_ceiling": 0.19
         },
         {
           "player_id": "00-0038128",
@@ -19346,22 +18740,22 @@
           "game_id": "2026_03_KC_MIA",
           "n_draws": 400,
           "proj": {
-            "pass_yds": 232.8325,
-            "pass_tds": 1.3725,
-            "rush_att": 3.77,
-            "rush_yds": 16.287945826576166,
+            "pass_yds": 228.035,
+            "pass_tds": 1.325,
+            "rush_att": 3.9725,
+            "rush_yds": 18.48561469454835,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.135
+            "anytime_td": 0.1325
           },
           "stat_quantiles": {
             "pass_yds": [
-              145.0,
-              175.0,
-              227.0,
-              279.0,
-              334.0
+              141.0,
+              174.0,
+              222.0,
+              276.0,
+              329.0
             ],
             "pass_tds": [
               0.0,
@@ -19375,14 +18769,14 @@
               2.0,
               4.0,
               5.0,
-              6.0
+              7.0
             ],
             "rush_yds": [
-              1.1198312703043045,
-              6.718987621825827,
-              13.437975243651653,
-              23.516456676390394,
-              33.59493810912913
+              2.239662540608609,
+              7.838818892130131,
+              15.677637784260265,
+              25.756119216999004,
+              36.95443192004205
             ],
             "targets": [
               0.0,
@@ -19424,14 +18818,14 @@
             "anytime_td": 0.135
           },
           "movement": {
-            "pass_yds": 0.0,
-            "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
+            "pass_yds": -4.797500000000014,
+            "pass_tds": -0.0475000000000001,
+            "rush_att": 0.20250000000000012,
+            "rush_yds": 2.197668867972183,
             "targets": 0.0,
             "receptions": 0.0,
             "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "anytime_td": -0.0025000000000000022
           },
           "context": {
             "opponent": {
@@ -19501,7 +18895,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.1412858938343363,
+              "value": 0.14393349625978494,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -19538,7 +18932,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1525
+          "p_ceiling": 0.1475
         },
         {
           "player_id": "00-0038824",
@@ -19552,10 +18946,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.9375,
+            "targets": 0.955,
             "receptions": 0.585,
-            "rec_yds": 12.16,
-            "anytime_td": 0.0525
+            "rec_yds": 11.5975,
+            "anytime_td": 0.0475
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -19590,7 +18984,7 @@
               0.0,
               0.0,
               1.0,
-              1.0,
+              2.0,
               2.0
             ],
             "receptions": [
@@ -19604,8 +18998,8 @@
               0.0,
               0.0,
               0.0,
-              19.0,
-              41.0
+              22.0,
+              39.0
             ],
             "anytime_td": [
               0.0,
@@ -19630,10 +19024,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
+            "targets": 0.01749999999999996,
             "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rec_yds": -0.5625,
+            "anytime_td": -0.0049999999999999975
           },
           "context": {
             "opponent": {
@@ -19740,7 +19134,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.01
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0039040",
@@ -19752,12 +19146,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 14.1225,
-            "rush_yds": 54.53542864117799,
-            "targets": 6.4275,
-            "receptions": 4.335,
-            "rec_yds": 39.8425,
-            "anytime_td": 0.5175
+            "rush_att": 14.94,
+            "rush_yds": 57.36044665098692,
+            "targets": 6.3375,
+            "receptions": 4.295,
+            "rec_yds": 39.0575,
+            "anytime_td": 0.485
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -19775,22 +19169,22 @@
               0.0
             ],
             "rush_att": [
-              9.0,
+              10.0,
               12.0,
-              14.0,
-              16.0,
-              19.0
+              15.0,
+              17.0,
+              20.0
             ],
             "rush_yds": [
-              25.619596526202457,
-              36.599423608860654,
-              53.069164232847946,
-              67.7089336763922,
-              86.92363107104404
+              27.449567706645496,
+              41.17435155996823,
+              53.06916423284795,
+              71.36887603727828,
+              90.58357343193012
             ],
             "targets": [
               3.0,
-              5.0,
+              4.0,
               6.0,
               8.0,
               10.0
@@ -19799,22 +19193,22 @@
               2.0,
               3.0,
               4.0,
-              5.0,
+              6.0,
               7.0
             ],
             "rec_yds": [
               9.0,
-              17.0,
-              33.0,
-              56.0,
-              80.0
+              18.0,
+              35.0,
+              53.0,
+              75.0
             ],
             "anytime_td": [
               0.0,
               0.0,
               0.0,
               1.0,
-              2.0
+              1.0
             ]
           },
           "week_open": {
@@ -19830,12 +19224,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.817499999999999,
+            "rush_yds": 2.825018009808936,
+            "targets": -0.08999999999999986,
+            "receptions": -0.040000000000000036,
+            "rec_yds": -0.7850000000000037,
+            "anytime_td": -0.03249999999999997
           },
           "context": {
             "opponent": {
@@ -19905,7 +19299,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.542400103603002,
+              "value": 0.5525643159733236,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -19942,7 +19336,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.495
+          "p_ceiling": 0.4925
         },
         {
           "player_id": "00-0039874",
@@ -19954,12 +19348,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 2.9475,
-            "rush_yds": 12.393485927368033,
-            "targets": 0.7875,
-            "receptions": 0.625,
-            "rec_yds": 4.4675,
-            "anytime_td": 0.145
+            "rush_att": 3.0675,
+            "rush_yds": 12.78526900891255,
+            "targets": 0.805,
+            "receptions": 0.5925,
+            "rec_yds": 4.6025,
+            "anytime_td": 0.185
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -19984,11 +19378,11 @@
               5.0
             ],
             "rush_yds": [
-              0.973374115638564,
-              3.8934964625542565,
-              9.73374115638564,
-              17.520734081494155,
-              26.281101122241235
+              0.0,
+              3.893496462554256,
+              8.760367040747077,
+              19.46748231277128,
+              31.14797170043405
             ],
             "targets": [
               0.0,
@@ -20032,12 +19426,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.1200000000000001,
+            "rush_yds": 0.39178308154451713,
+            "targets": 0.01750000000000007,
+            "receptions": -0.03249999999999997,
+            "rec_yds": 0.1349999999999998,
+            "anytime_td": 0.04000000000000001
           },
           "context": {
             "opponent": {
@@ -20107,7 +19501,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.1107219131361686,
+              "value": 0.11279676716309192,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -20144,7 +19538,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0
+          "p_ceiling": 0.0125
         },
         {
           "player_id": "00-0039880",
@@ -20156,12 +19550,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.5825,
-            "rush_yds": 2.4392348350566113,
-            "targets": 5.8275,
-            "receptions": 3.365,
-            "rec_yds": 49.205,
-            "anytime_td": 0.135
+            "rush_att": 0.6775,
+            "rush_yds": 2.640639546208074,
+            "targets": 5.7025,
+            "receptions": 3.115,
+            "rec_yds": 44.1825,
+            "anytime_td": 0.155
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -20189,13 +19583,13 @@
               0.0,
               0.0,
               0.0,
-              2.983773498540197,
+              3.9783646647202624,
               8.95132049562059
             ],
             "targets": [
               3.0,
               4.0,
-              5.0,
+              6.0,
               7.0,
               9.0
             ],
@@ -20204,14 +19598,14 @@
               2.0,
               3.0,
               4.0,
-              6.0
+              5.0
             ],
             "rec_yds": [
-              8.0,
-              22.0,
-              43.0,
-              67.0,
-              101.0
+              6.0,
+              19.0,
+              40.0,
+              63.0,
+              85.0
             ],
             "anytime_td": [
               0.0,
@@ -20234,12 +19628,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.09499999999999997,
+            "rush_yds": 0.20140471115146275,
+            "targets": -0.125,
+            "receptions": -0.25,
+            "rec_yds": -5.022500000000001,
+            "anytime_td": 0.01999999999999999
           },
           "context": {
             "opponent": {
@@ -20309,7 +19703,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.02293481138018534,
+              "value": 0.023364594287660773,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -20346,7 +19740,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1625
+          "p_ceiling": 0.1575
         },
         {
           "player_id": "00-0040198",
@@ -20358,12 +19752,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 3.135,
-            "rush_yds": 11.861185062996013,
-            "targets": 0.425,
-            "receptions": 0.3575,
-            "rec_yds": 2.4625,
-            "anytime_td": 0.165
+            "rush_att": 3.1625,
+            "rush_yds": 13.074072371215282,
+            "targets": 0.5175,
+            "receptions": 0.41,
+            "rec_yds": 3.41,
+            "anytime_td": 0.19
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -20388,18 +19782,18 @@
               6.0
             ],
             "rush_yds": [
-              0.0,
-              2.842704628638948,
-              9.47568209546316,
-              17.056227771833687,
-              27.479478076843165
+              0.9475682095463159,
+              4.73784104773158,
+              10.423250305009475,
+              19.898932400472635,
+              26.531909867296847
             ],
             "targets": [
               0.0,
               0.0,
               0.0,
               1.0,
-              1.0
+              2.0
             ],
             "receptions": [
               0.0,
@@ -20412,8 +19806,8 @@
               0.0,
               0.0,
               0.0,
-              2.0,
-              9.0
+              4.0,
+              11.0
             ],
             "anytime_td": [
               0.0,
@@ -20436,12 +19830,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.027500000000000302,
+            "rush_yds": 1.212887308219269,
+            "targets": 0.09249999999999997,
+            "receptions": 0.05249999999999999,
+            "rec_yds": 0.9475000000000002,
+            "anytime_td": 0.024999999999999994
           },
           "context": {
             "opponent": {
@@ -20511,7 +19905,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.11558887893452453,
+              "value": 0.11775493662023216,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -20548,7 +19942,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0
+          "p_ceiling": 0.0025
         },
         {
           "player_id": "00-0041436",
@@ -20560,12 +19954,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 1.8575,
-            "rush_yds": 7.52689933501816,
-            "targets": 2.5075,
-            "receptions": 1.4325,
-            "rec_yds": 16.5375,
-            "anytime_td": 0.1775
+            "rush_att": 1.975,
+            "rush_yds": 7.872420803831733,
+            "targets": 2.355,
+            "receptions": 1.3475,
+            "rec_yds": 15.5425,
+            "anytime_td": 0.11
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -20592,12 +19986,12 @@
             "rush_yds": [
               0.0,
               0.9943063850750526,
-              4.971531925375263,
+              5.965838310450316,
               11.931676620900632,
               17.897514931350948
             ],
             "targets": [
-              1.0,
+              0.0,
               1.0,
               2.0,
               3.0,
@@ -20605,17 +19999,17 @@
             ],
             "receptions": [
               0.0,
-              1.0,
+              0.0,
               1.0,
               2.0,
               3.0
             ],
             "rec_yds": [
               0.0,
-              4.0,
-              11.0,
-              23.0,
-              40.0
+              0.0,
+              10.0,
+              24.0,
+              39.0
             ],
             "anytime_td": [
               0.0,
@@ -20638,12 +20032,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.11750000000000016,
+            "rush_yds": 0.3455214688135726,
+            "targets": -0.15249999999999986,
+            "receptions": -0.08500000000000019,
+            "rec_yds": -0.995000000000001,
+            "anytime_td": -0.06749999999999999
           },
           "context": {
             "opponent": {
@@ -20713,7 +20107,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.06960883724083217,
+              "value": 0.07091325993519954,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -20763,11 +20157,11 @@
             "pass_yds": 0.0,
             "pass_tds": 0.0,
             "rush_att": 0.0025,
-            "rush_yds": 0.05228974672533125,
-            "targets": 5.9475,
-            "receptions": 4.0025,
-            "rec_yds": 52.265,
-            "anytime_td": 0.215
+            "rush_yds": -0.002489987939301488,
+            "targets": 5.965,
+            "receptions": 4.1625,
+            "rec_yds": 54.7175,
+            "anytime_td": 0.2475
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -20802,7 +20196,7 @@
               3.0,
               4.0,
               6.0,
-              7.0,
+              8.0,
               9.0
             ],
             "receptions": [
@@ -20810,14 +20204,14 @@
               3.0,
               4.0,
               5.0,
-              6.0
+              7.0
             ],
             "rec_yds": [
-              13.0,
-              28.0,
-              48.0,
-              68.0,
-              98.0
+              14.0,
+              29.0,
+              50.0,
+              72.0,
+              103.0
             ],
             "anytime_td": [
               0.0,
@@ -20841,11 +20235,11 @@
             "pass_yds": 0.0,
             "pass_tds": 0.0,
             "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_yds": -0.05477973466463274,
+            "targets": 0.01750000000000007,
+            "receptions": 0.15999999999999925,
+            "rec_yds": 2.4525000000000006,
+            "anytime_td": 0.0325
           },
           "context": {
             "opponent": {
@@ -20915,7 +20309,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.00021644230031116806,
+              "value": 0.00022049828313947125,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -20952,7 +20346,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.235
+          "p_ceiling": 0.255
         },
         {
           "player_id": "00-0041524",
@@ -20966,10 +20360,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 1.75,
-            "receptions": 1.1775,
-            "rec_yds": 9.1625,
-            "anytime_td": 0.135
+            "targets": 1.69,
+            "receptions": 1.14,
+            "rec_yds": 9.0325,
+            "anytime_td": 0.115
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -21004,7 +20398,7 @@
               0.0,
               1.0,
               2.0,
-              3.0,
+              2.0,
               4.0
             ],
             "receptions": [
@@ -21017,9 +20411,9 @@
             "rec_yds": [
               0.0,
               0.0,
-              7.0,
+              6.0,
               14.0,
-              24.0
+              23.0
             ],
             "anytime_td": [
               0.0,
@@ -21044,10 +20438,10 @@
             "pass_tds": 0.0,
             "rush_att": 0.0,
             "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "targets": -0.06000000000000005,
+            "receptions": -0.03750000000000009,
+            "rec_yds": -0.129999999999999,
+            "anytime_td": -0.020000000000000004
           },
           "context": {
             "opponent": {
@@ -21154,7 +20548,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0325
+          "p_ceiling": 0.025
         },
         {
           "player_id": "00-0041525",
@@ -21166,12 +20560,12 @@
           "proj": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0025,
-            "rush_yds": -0.007469963817904465,
-            "targets": 2.4475,
-            "receptions": 1.2175,
-            "rec_yds": 24.2625,
-            "anytime_td": 0.1175
+            "rush_att": 0.01,
+            "rush_yds": 0.054779734664632734,
+            "targets": 2.44,
+            "receptions": 1.16,
+            "rec_yds": 22.4175,
+            "anytime_td": 0.125
           },
           "stat_quantiles": {
             "pass_yds": [
@@ -21203,7 +20597,7 @@
               0.0
             ],
             "targets": [
-              1.0,
+              0.0,
               1.0,
               2.0,
               3.0,
@@ -21219,9 +20613,9 @@
             "rec_yds": [
               0.0,
               0.0,
-              18.0,
-              40.0,
-              61.0
+              17.0,
+              34.0,
+              52.0
             ],
             "anytime_td": [
               0.0,
@@ -21244,12 +20638,12 @@
           "movement": {
             "pass_yds": 0.0,
             "pass_tds": 0.0,
-            "rush_att": 0.0,
-            "rush_yds": 0.0,
-            "targets": 0.0,
-            "receptions": 0.0,
-            "rec_yds": 0.0,
-            "anytime_td": 0.0
+            "rush_att": 0.0075,
+            "rush_yds": 0.0622496984825372,
+            "targets": -0.00749999999999984,
+            "receptions": -0.05750000000000011,
+            "rec_yds": -1.8449999999999989,
+            "anytime_td": 0.007500000000000007
           },
           "context": {
             "opponent": {
@@ -21319,7 +20713,7 @@
               "reason": null
             },
             "carry_share": {
-              "value": 0.00021644230031116806,
+              "value": 0.00022049828313947125,
               "reason": null
             },
             "qb_attempt_weight": {
@@ -21356,7 +20750,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.035
         }
       ]
     },
@@ -21571,7 +20965,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2325
+          "p_ceiling": 0.235
         },
         {
           "player_id": "00-0034857",
@@ -21773,7 +21167,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.5925
+          "p_ceiling": 0.6
         },
         {
           "player_id": "00-0035689",
@@ -21975,7 +21369,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.21
+          "p_ceiling": 0.2
         },
         {
           "player_id": "00-0036988",
@@ -22379,7 +21773,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.625
+          "p_ceiling": 0.62
         },
         {
           "player_id": "00-0037261",
@@ -22581,7 +21975,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.29
+          "p_ceiling": 0.285
         },
         {
           "player_id": "00-0038933",
@@ -22783,7 +22177,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.595
+          "p_ceiling": 0.5775
         },
         {
           "player_id": "00-0039901",
@@ -23187,7 +22581,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.16
+          "p_ceiling": 0.1675
         },
         {
           "player_id": "00-0036355",
@@ -23389,7 +22783,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.35
+          "p_ceiling": 0.3475
         },
         {
           "player_id": "00-0038046",
@@ -23591,7 +22985,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0475
+          "p_ceiling": 0.045
         },
         {
           "player_id": "00-0038454",
@@ -23793,7 +23187,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0038544",
@@ -23995,7 +23389,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.075
+          "p_ceiling": 0.0775
         },
         {
           "player_id": "00-0038573",
@@ -24399,7 +23793,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.3625
+          "p_ceiling": 0.36
         },
         {
           "player_id": "00-0040189",
@@ -24601,7 +23995,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.19
+          "p_ceiling": 0.18
         },
         {
           "player_id": "00-0040666",
@@ -24803,7 +24197,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.3525
+          "p_ceiling": 0.3425
         },
         {
           "player_id": "00-0040727",
@@ -25005,7 +24399,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.055
+          "p_ceiling": 0.0525
         },
         {
           "player_id": "00-0041550",
@@ -25207,7 +24601,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.13
+          "p_ceiling": 0.135
         }
       ]
     },
@@ -25422,7 +24816,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.03
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0034960",
@@ -25624,7 +25018,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.3225
+          "p_ceiling": 0.325
         },
         {
           "player_id": "00-0036590",
@@ -25826,7 +25220,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.03
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0036971",
@@ -26028,7 +25422,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2625
+          "p_ceiling": 0.28
         },
         {
           "player_id": "00-0038606",
@@ -26230,7 +25624,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.555
+          "p_ceiling": 0.5475
         },
         {
           "player_id": "00-0038611",
@@ -26634,7 +26028,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2675
+          "p_ceiling": 0.26
         },
         {
           "player_id": "00-0039893",
@@ -26836,7 +26230,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2375
+          "p_ceiling": 0.235
         },
         {
           "player_id": "00-0040238",
@@ -27240,7 +26634,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.115
+          "p_ceiling": 0.1125
         },
         {
           "player_id": "00-0033090",
@@ -27442,7 +26836,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.34
+          "p_ceiling": 0.325
         },
         {
           "player_id": "00-0033555",
@@ -28048,7 +27442,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1475
+          "p_ceiling": 0.1525
         },
         {
           "player_id": "00-0037816",
@@ -28250,7 +27644,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1275
+          "p_ceiling": 0.1225
         },
         {
           "player_id": "00-0038621",
@@ -28452,7 +27846,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0625
+          "p_ceiling": 0.0575
         },
         {
           "player_id": "00-0039851",
@@ -28654,7 +28048,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2125
+          "p_ceiling": 0.21
         },
         {
           "player_id": "00-0040131",
@@ -28856,7 +28250,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.005
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0040556",
@@ -29462,7 +28856,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1125
+          "p_ceiling": 0.12
         },
         {
           "player_id": "00-0041395",
@@ -29664,7 +29058,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0275
+          "p_ceiling": 0.03
         }
       ]
     },
@@ -29879,7 +29273,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1825
+          "p_ceiling": 0.185
         },
         {
           "player_id": "00-0036963",
@@ -30081,7 +29475,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.675
+          "p_ceiling": 0.6675
         },
         {
           "player_id": "00-0037240",
@@ -30283,7 +29677,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1925
+          "p_ceiling": 0.19
         },
         {
           "player_id": "00-0039065",
@@ -30485,7 +29879,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4175
+          "p_ceiling": 0.4325
         },
         {
           "player_id": "00-0039139",
@@ -30687,7 +30081,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.8225
+          "p_ceiling": 0.815
         },
         {
           "player_id": "00-0039364",
@@ -31091,7 +30485,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0225
+          "p_ceiling": 0.0175
         },
         {
           "player_id": "00-0030565",
@@ -31293,7 +30687,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.26
+          "p_ceiling": 0.27
         },
         {
           "player_id": "00-0037740",
@@ -31697,7 +31091,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.08
+          "p_ceiling": 0.085
         },
         {
           "player_id": "00-0038120",
@@ -31899,7 +31293,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4
+          "p_ceiling": 0.4125
         },
         {
           "player_id": "00-0039451",
@@ -32101,7 +31495,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1775
+          "p_ceiling": 0.175
         },
         {
           "player_id": "00-0039794",
@@ -32303,7 +31697,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0325
+          "p_ceiling": 0.03
         },
         {
           "player_id": "00-0039890",
@@ -32505,7 +31899,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.265
+          "p_ceiling": 0.26
         },
         {
           "player_id": "00-0041032",
@@ -32707,7 +32101,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.14
+          "p_ceiling": 0.15
         }
       ]
     },
@@ -32922,7 +32316,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.015
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0033908",
@@ -33124,7 +32518,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.08
+          "p_ceiling": 0.0775
         },
         {
           "player_id": "00-0035704",
@@ -33326,7 +32720,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0525
+          "p_ceiling": 0.055
         },
         {
           "player_id": "00-0037545",
@@ -33730,7 +33124,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.585
+          "p_ceiling": 0.58
         },
         {
           "player_id": "00-0038797",
@@ -33932,7 +33326,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.045
+          "p_ceiling": 0.0425
         },
         {
           "player_id": "00-0039299",
@@ -34134,7 +33528,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.01
+          "p_ceiling": 0.0125
         },
         {
           "player_id": "00-0039793",
@@ -34336,7 +33730,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1025
+          "p_ceiling": 0.0975
         },
         {
           "player_id": "00-0040739",
@@ -34740,7 +34134,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.115
+          "p_ceiling": 0.1125
         },
         {
           "player_id": "00-0031588",
@@ -34942,7 +34336,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1825
+          "p_ceiling": 0.1775
         },
         {
           "player_id": "00-0032268",
@@ -35346,7 +34740,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.065
+          "p_ceiling": 0.0725
         },
         {
           "player_id": "00-0036626",
@@ -35548,7 +34942,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0525
+          "p_ceiling": 0.0625
         },
         {
           "player_id": "00-0037256",
@@ -35750,7 +35144,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0775
+          "p_ceiling": 0.08
         },
         {
           "player_id": "00-0037742",
@@ -35952,7 +35346,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.04
+          "p_ceiling": 0.035
         },
         {
           "player_id": "00-0039686",
@@ -36154,7 +35548,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0025
+          "p_ceiling": 0.005
         },
         {
           "player_id": "00-0039910",
@@ -36356,7 +35750,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.03
+          "p_ceiling": 0.0375
         },
         {
           "player_id": "00-0039912",
@@ -36558,7 +35952,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0325
+          "p_ceiling": 0.0275
         },
         {
           "player_id": "00-0040242",
@@ -36760,7 +36154,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0225
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0041040",
@@ -36962,7 +36356,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1
+          "p_ceiling": 0.1025
         },
         {
           "player_id": "00-0041096",
@@ -37164,7 +36558,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0075
+          "p_ceiling": 0.01
         }
       ]
     },
@@ -37783,7 +37177,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0975
+          "p_ceiling": 0.1
         },
         {
           "player_id": "00-0036893",
@@ -37985,7 +37379,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0275
+          "p_ceiling": 0.03
         },
         {
           "player_id": "00-0037838",
@@ -38187,7 +37581,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.28
+          "p_ceiling": 0.2875
         },
         {
           "player_id": "00-0039337",
@@ -38591,7 +37985,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0675
+          "p_ceiling": 0.0725
         },
         {
           "player_id": "00-0040691",
@@ -38793,7 +38187,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0225
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0040715",
@@ -38995,7 +38389,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1925
+          "p_ceiling": 0.195
         },
         {
           "player_id": "00-0041042",
@@ -39197,7 +38591,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0925
+          "p_ceiling": 0.095
         },
         {
           "player_id": "00-0034837",
@@ -39399,7 +38793,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1525
+          "p_ceiling": 0.1425
         },
         {
           "player_id": "00-0035261",
@@ -39601,7 +38995,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.22
+          "p_ceiling": 0.2225
         },
         {
           "player_id": "00-0038115",
@@ -39803,7 +39197,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.0225
         },
         {
           "player_id": "00-0038117",
@@ -40005,7 +39399,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2225
+          "p_ceiling": 0.23
         },
         {
           "player_id": "00-0039032",
@@ -40207,7 +39601,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0675
+          "p_ceiling": 0.065
         },
         {
           "player_id": "00-0040170",
@@ -40409,7 +39803,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.13
+          "p_ceiling": 0.1275
         },
         {
           "player_id": "00-0040584",
@@ -40611,7 +40005,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0975
+          "p_ceiling": 0.1
         },
         {
           "player_id": "00-0040676",
@@ -40813,7 +40207,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1625
+          "p_ceiling": 0.1575
         },
         {
           "player_id": "00-0040886",
@@ -41015,7 +40409,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0025
+          "p_ceiling": 0.005
         },
         {
           "player_id": "00-0041438",
@@ -41217,7 +40611,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.165
+          "p_ceiling": 0.16
         }
       ]
     },
@@ -41432,7 +40826,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.13
+          "p_ceiling": 0.1325
         },
         {
           "player_id": "00-0033307",
@@ -41634,7 +41028,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1425
+          "p_ceiling": 0.1475
         },
         {
           "player_id": "00-0037157",
@@ -41836,7 +41230,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0975
+          "p_ceiling": 0.1
         },
         {
           "player_id": "00-0037263",
@@ -42038,7 +41432,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.04
+          "p_ceiling": 0.0375
         },
         {
           "player_id": "00-0037744",
@@ -42240,7 +41634,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.7325
+          "p_ceiling": 0.735
         },
         {
           "player_id": "00-0038559",
@@ -42442,7 +41836,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.195
+          "p_ceiling": 0.1925
         },
         {
           "player_id": "00-0039849",
@@ -42644,7 +42038,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1275
+          "p_ceiling": 0.1225
         },
         {
           "player_id": "00-0041027",
@@ -42846,7 +42240,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.105
+          "p_ceiling": 0.1025
         },
         {
           "player_id": "00-0029892",
@@ -43452,7 +42846,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.045
+          "p_ceiling": 0.0475
         },
         {
           "player_id": "00-0033280",
@@ -43654,7 +43048,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4925
+          "p_ceiling": 0.5025
         },
         {
           "player_id": "00-0033288",
@@ -44260,7 +43654,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.265
+          "p_ceiling": 0.2775
         },
         {
           "player_id": "00-0036972",
@@ -44664,7 +44058,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.31
+          "p_ceiling": 0.3075
         },
         {
           "player_id": "00-0040177",
@@ -45068,7 +44462,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0625
+          "p_ceiling": 0.07
         }
       ]
     },
@@ -45283,7 +44677,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1125
+          "p_ceiling": 0.105
         },
         {
           "player_id": "00-0033293",
@@ -45485,7 +44879,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.3275
+          "p_ceiling": 0.335
         },
         {
           "player_id": "00-0035229",
@@ -45687,7 +45081,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.26
+          "p_ceiling": 0.2525
         },
         {
           "player_id": "00-0035249",
@@ -45889,7 +45283,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0325
+          "p_ceiling": 0.03
         },
         {
           "player_id": "00-0036322",
@@ -46293,7 +45687,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0
+          "p_ceiling": 0.0025
         },
         {
           "player_id": "00-0038994",
@@ -46495,7 +45889,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.085
+          "p_ceiling": 0.0875
         },
         {
           "player_id": "00-0040506",
@@ -46899,7 +46293,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.005
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0033921",
@@ -47303,7 +46697,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2175
+          "p_ceiling": 0.2075
         },
         {
           "player_id": "00-0036919",
@@ -47505,7 +46899,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1625
+          "p_ceiling": 0.1575
         },
         {
           "player_id": "00-0038129",
@@ -47707,7 +47101,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.245
+          "p_ceiling": 0.2375
         },
         {
           "player_id": "00-0039361",
@@ -47909,7 +47303,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.49
+          "p_ceiling": 0.48
         },
         {
           "player_id": "00-0040129",
@@ -48313,7 +47707,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0375
+          "p_ceiling": 0.0325
         },
         {
           "player_id": "00-0041048",
@@ -48515,7 +47909,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1225
+          "p_ceiling": 0.12
         }
       ]
     },
@@ -48730,7 +48124,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1375
+          "p_ceiling": 0.14
         },
         {
           "player_id": "00-0032764",
@@ -48932,7 +48326,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.55
+          "p_ceiling": 0.5375
         },
         {
           "player_id": "00-0034753",
@@ -49134,7 +48528,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.63
+          "p_ceiling": 0.625
         },
         {
           "player_id": "00-0034796",
@@ -49336,7 +48730,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4475
+          "p_ceiling": 0.4325
         },
         {
           "player_id": "00-0034798",
@@ -49538,7 +48932,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.025
+          "p_ceiling": 0.0225
         },
         {
           "player_id": "00-0034975",
@@ -49740,7 +49134,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.215
+          "p_ceiling": 0.2225
         },
         {
           "player_id": "00-0036550",
@@ -49942,7 +49336,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.36
+          "p_ceiling": 0.3475
         },
         {
           "player_id": "00-0039792",
@@ -50144,7 +49538,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.065
+          "p_ceiling": 0.0675
         },
         {
           "player_id": "00-0040075",
@@ -50346,7 +49740,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.095
+          "p_ceiling": 0.0975
         },
         {
           "player_id": "00-0033077",
@@ -50548,7 +49942,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.385
+          "p_ceiling": 0.4
         },
         {
           "player_id": "00-0036358",
@@ -50750,7 +50144,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.655
+          "p_ceiling": 0.645
         },
         {
           "player_id": "00-0036997",
@@ -50952,7 +50346,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.46
+          "p_ceiling": 0.4625
         },
         {
           "player_id": "00-0037247",
@@ -51154,7 +50548,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4375
+          "p_ceiling": 0.425
         },
         {
           "player_id": "00-0037801",
@@ -51356,7 +50750,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0325
+          "p_ceiling": 0.025
         },
         {
           "player_id": "00-0038041",
@@ -51558,7 +50952,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.4425
+          "p_ceiling": 0.43
         },
         {
           "player_id": "00-0038705",
@@ -51760,7 +51154,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0175
+          "p_ceiling": 0.02
         },
         {
           "player_id": "00-0038738",
@@ -52164,7 +51558,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.11
+          "p_ceiling": 0.1175
         }
       ]
     },
@@ -52379,7 +51773,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1075
+          "p_ceiling": 0.11
         },
         {
           "player_id": "00-0034365",
@@ -52783,7 +52177,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.01
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0037093",
@@ -53187,7 +52581,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0575
+          "p_ceiling": 0.06
         },
         {
           "player_id": "00-0037304",
@@ -53591,7 +52985,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.26
+          "p_ceiling": 0.2625
         },
         {
           "player_id": "00-0039066",
@@ -53793,7 +53187,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2425
+          "p_ceiling": 0.245
         },
         {
           "player_id": "00-0040122",
@@ -53995,7 +53389,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.5
+          "p_ceiling": 0.495
         },
         {
           "player_id": "00-0040729",
@@ -54197,7 +53591,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0575
+          "p_ceiling": 0.06
         },
         {
           "player_id": "00-0040878",
@@ -54601,7 +53995,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.01
+          "p_ceiling": 0.0075
         },
         {
           "player_id": "00-0033906",
@@ -54803,7 +54197,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1325
+          "p_ceiling": 0.1275
         },
         {
           "player_id": "00-0036040",
@@ -55207,7 +54601,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1925
+          "p_ceiling": 0.18
         },
         {
           "player_id": "00-0037231",
@@ -55409,7 +54803,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.065
+          "p_ceiling": 0.0625
         },
         {
           "player_id": "00-0037239",
@@ -55611,7 +55005,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.5225
+          "p_ceiling": 0.5275
         },
         {
           "player_id": "00-0039424",
@@ -55813,7 +55207,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0875
+          "p_ceiling": 0.09
         },
         {
           "player_id": "00-0040743",
@@ -56015,7 +55409,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2375
+          "p_ceiling": 0.24
         },
         {
           "player_id": "00-0041041",
@@ -56217,7 +55611,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.045
+          "p_ceiling": 0.0475
         },
         {
           "player_id": "00-0041067",
@@ -56836,7 +56230,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.125
+          "p_ceiling": 0.1225
         },
         {
           "player_id": "00-0034348",
@@ -57240,7 +56634,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0475
+          "p_ceiling": 0.045
         },
         {
           "player_id": "00-0036158",
@@ -57442,7 +56836,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0625
+          "p_ceiling": 0.0575
         },
         {
           "player_id": "00-0036613",
@@ -57644,7 +57038,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2275
+          "p_ceiling": 0.2225
         },
         {
           "player_id": "00-0036727",
@@ -58452,7 +57846,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.19
+          "p_ceiling": 0.1825
         },
         {
           "player_id": "00-0039868",
@@ -58654,7 +58048,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.095
+          "p_ceiling": 0.0975
         },
         {
           "player_id": "00-0040134",
@@ -58856,7 +58250,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0275
+          "p_ceiling": 0.0325
         },
         {
           "player_id": "00-0041496",
@@ -59058,7 +58452,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1575
+          "p_ceiling": 0.155
         },
         {
           "player_id": "00-0026498",
@@ -59260,7 +58654,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.19
+          "p_ceiling": 0.18
         },
         {
           "player_id": "00-0031381",
@@ -59462,7 +58856,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.6475
+          "p_ceiling": 0.6625
         },
         {
           "player_id": "00-0036244",
@@ -59866,7 +59260,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0425
+          "p_ceiling": 0.04
         },
         {
           "player_id": "00-0037840",
@@ -60068,7 +59462,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.44
+          "p_ceiling": 0.4475
         },
         {
           "player_id": "00-0038359",
@@ -60472,7 +59866,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0525
+          "p_ceiling": 0.0575
         },
         {
           "player_id": "00-0039738",
@@ -60876,7 +60270,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0375
+          "p_ceiling": 0.04
         },
         {
           "player_id": "00-0040737",
@@ -61078,7 +60472,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1425
+          "p_ceiling": 0.16
         }
       ]
     },
@@ -61495,7 +60889,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.285
+          "p_ceiling": 0.29
         },
         {
           "player_id": "00-0036290",
@@ -61697,7 +61091,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.09
+          "p_ceiling": 0.0825
         },
         {
           "player_id": "00-0038416",
@@ -62101,7 +61495,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1275
+          "p_ceiling": 0.125
         },
         {
           "player_id": "00-0039919",
@@ -62303,7 +61697,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.2775
+          "p_ceiling": 0.2825
         },
         {
           "player_id": "00-0040126",
@@ -62707,7 +62101,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1075
+          "p_ceiling": 0.11
         },
         {
           "player_id": "00-0040735",
@@ -62909,7 +62303,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.1675
+          "p_ceiling": 0.165
         },
         {
           "player_id": "00-0041558",
@@ -63111,7 +62505,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0575
+          "p_ceiling": 0.0525
         },
         {
           "player_id": "00-0033246",
@@ -63313,7 +62707,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0125
+          "p_ceiling": 0.0175
         },
         {
           "player_id": "00-0034351",
@@ -63717,7 +63111,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.19
+          "p_ceiling": 0.1775
         },
         {
           "player_id": "00-0035662",
@@ -63919,7 +63313,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.045
+          "p_ceiling": 0.0425
         },
         {
           "player_id": "00-0036389",
@@ -64121,7 +63515,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.205
+          "p_ceiling": 0.2175
         },
         {
           "player_id": "00-0036912",
@@ -64323,7 +63717,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.425
+          "p_ceiling": 0.4275
         },
         {
           "player_id": "00-0038393",
@@ -64525,7 +63919,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.13
+          "p_ceiling": 0.1275
         },
         {
           "player_id": "00-0038555",
@@ -64929,7 +64323,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.0225
+          "p_ceiling": 0.025
         },
         {
           "player_id": "00-0040024",
@@ -65131,7 +64525,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.02
+          "p_ceiling": 0.0175
         },
         {
           "player_id": "00-0040867",
@@ -65333,7 +64727,7 @@
             }
           },
           "td_rates_pooled": true,
-          "p_ceiling": 0.02
+          "p_ceiling": 0.0225
         }
       ]
     }
