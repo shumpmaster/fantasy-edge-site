@@ -1904,6 +1904,83 @@ const SAMPLE_LINEUP_SLOTS = ["QB", "RB", "RB2", "WR", "WR2", "TE", "FLEX"];
  * number or a demo email address would be teaching the screen a shape
  * it must never be able to draw. The names are invented and read as
  * invented, the way every sample row on this surface does. */
+/* m4.4 S2 — THE SCORECARD'S SAMPLE ANSWER.
+ *
+ * DEMO NEVER CALLS THE SERVICE, here as everywhere: a sample page
+ * that loaded somebody's real graded record would be a fabricated
+ * slate showing real bets. So this is the service's own answer SHAPE
+ * with invented numbers in it, and it deliberately carries EVERY
+ * state the real block has to draw — a graded hit, a graded miss, a
+ * bet still running, one the banked data could not settle, and a rate
+ * thin enough to say so — because a demo that only ever shows the
+ * happy arm is a screenshot, not a rehearsal.
+ *
+ * THE SENTENCES IN HERE ARE FABRICATED AND READ AS FABRICATED. They
+ * are not copies of the service's: the real ones are composed against
+ * real counts and this page never retypes one (the grep below the
+ * account pin covers them). */
+const DEMO_SCORECARD = {
+  head: "Your record",
+  this_week: {
+    label: "This week",
+    slips: { won: 1, lost: 1, returned: 0, pending: 1,
+      sentence: "This week: 1 of 2 slips hit \u2014 still early. 1 is still running." },
+    markets: [
+      { market: "player_receptions", word: "receptions", hit: 3,
+        settled: 5, small_sample: true,
+        sentence: "Receptions: 3 of 5 legs hit \u2014 still early." },
+      { market: "player_pass_yds", word: "passing yards", hit: 1,
+        settled: 2, small_sample: true,
+        sentence: "Passing yards: 1 of 2 legs hit \u2014 still early." }
+    ],
+    markets_sentence: null,
+    reads: { hit: 1, missed: 1, returned: 0, pending: 1, unsettled: 1,
+      sentence: "This week: 1 of 2 graded reads hit \u2014 still early. 1 is waiting on a game." }
+  },
+  season_to_date: {
+    label: "Season so far",
+    slips: { won: 4, lost: 6, returned: 1, pending: 1,
+      sentence: "Season so far: 4 of 11 slips hit. 1 came back as a push. 1 is still running." },
+    markets: [
+      { market: "player_receptions", word: "receptions", hit: 9,
+        settled: 16, small_sample: false,
+        sentence: "Receptions: 9 of 16 legs hit." }
+    ],
+    markets_sentence: null,
+    reads: { hit: 5, missed: 4, returned: 0, pending: 1, unsettled: 1,
+      sentence: "Season so far: 5 of 9 graded reads hit. 1 is waiting on a game." }
+  },
+  read_notes: [
+    { read_id: "demo-read-1", player_id: "demo-player-1",
+      market: "player_receptions", outcome: "hit",
+      sentence: "Your read said 61%, the model said 55%, and it hit." },
+    { read_id: "demo-read-2", player_id: "demo-player-2",
+      market: "player_pass_yds", outcome: "missed",
+      sentence: "Your read said 58%, the model said 62%, and it missed." }
+  ],
+  /* THE READS' OWN MARKS, which is the half of `marks` no other
+   * answer carries — and all three states the block has to draw:
+   * a read that hit, one that missed, and one the banked data could
+   * not settle, carrying the service's own sentence for why. The
+   * `read_id`s are the bundled scenarios file's own, so the marks
+   * land under the sample numbers they belong to. */
+  marks: [
+    { subject_kind: "read", subject_id: "sample-read-001",
+      outcome: "hit", word: "Hit",
+      sentence: "You needed over 5.5 receptions and he finished on 7." },
+    { subject_kind: "read", subject_id: "sample-read-002",
+      outcome: "missed", word: "Missed",
+      sentence: "You needed under 3.5 receptions and he finished on 5." },
+    { subject_kind: "read", subject_id: "sample-read-003",
+      outcome: "unsettled", word: "Not graded",
+      sentence: "The sample box score carries no line for this player, so this one is not graded." }
+  ],
+  source_note: "Sample record \u2014 invented results, graded the way real ones are: off the final box score once the game is over.",
+  scope_note: "Whether the bet landed, and not whether the thinking behind it was right.",
+  empty_note: null,
+  settle_source: "demo"
+};
+
 const DEMO_ACCOUNT = {
   admin: true,
   name: "Sample",
@@ -2196,6 +2273,22 @@ function freshUserScoped() {
     scenarios: null,
     scenarioReason: null,
     scenariosAsked: false,
+
+    /* m4.4's, and it is the service's answer held for the visit.
+     *
+     * `scorecard` is the whole of `GET /scorecard` — null means "not
+     * asked or not answered", which is a drawn state and not an empty
+     * record — and every sentence in it was composed by the service.
+     * THERE IS NO COUNT OR RATE COMPUTED HERE AND NO PLACE FOR ONE:
+     * this page renders what it was handed, which is the same rule
+     * every probability on this surface already keeps.
+     *
+     * `me` is `GET /me` — who this browser is signed in as, which is
+     * a fact about the person holding the token and therefore drops
+     * with him. */
+    scorecard: null,
+    scorecardAsked: false,
+    me: null,
 
     /* A3's.
      *
@@ -2873,6 +2966,9 @@ async function loadPicks(force) {
   nav.picksAsked = true;
   try {
     const watch = await picksAsk("/watchlist", token, null);
+    /* m4.4 S1: THE SERVICE GRADES ON THIS GET. The legs come back
+     * already carrying their marks, so a graded bet gains its result
+     * in place and this page asks no second question about it. */
     const slips = await picksAsk("/slips", token, null);
     nav.watch = (watch && watch.watchlist) || [];
     nav.slips = (slips && slips.slips) || [];
@@ -2880,7 +2976,43 @@ async function loadPicks(force) {
   } catch (err) {
     nav.picksOffline = true;
   }
+  /* THE RECORD AND THE NAME GET THEIR OWN ATTEMPTS, and that is the
+   * point of them being separate: a scorecard that did not answer
+   * must not take a person's watchlist and slips off the screen with
+   * it. Each one that fails simply draws nothing — the app's own
+   * "no answer, no element" rule. */
+  await loadMe(token);
+  await loadScorecard(token);
   render();
+}
+
+/* WHO THIS BROWSER IS SIGNED IN AS (the m4.3 review round's ruled
+ * name field, landed in m4.4). Until the service served this, only
+ * the owner could be named on the account screen: his own members
+ * list carries his row and a member has no members list at all. */
+async function loadMe(token) {
+  try {
+    nav.me = await picksAsk("/me", token, null);
+  } catch (err) {
+    nav.me = null;
+  }
+}
+
+/* HIS OWN GRADED RECORD, for the slate the app is showing. The season
+ * and the week are the page's — the same two numbers every other
+ * service call on this surface carries — and where the slate has not
+ * arrived yet there is nothing to ask about, so nothing is asked. */
+async function loadScorecard(token) {
+  const when = slateWeekNumbers();
+  if (!when) return;
+  try {
+    nav.scorecard = await picksAsk(
+      "/scorecard?season=" + when.season + "&week=" + when.week,
+      token, null);
+  } catch (err) {
+    nav.scorecard = null;
+  }
+  nav.scorecardAsked = true;
 }
 
 /* ------------------------------------------------------------------
@@ -3661,7 +3793,13 @@ function yourNumber(row, compact) {
         '</div>'
       : "") +
     '<div class="yournumlabel">' + esc(YOUR_NUMBER_LABEL) +
-    '</div></div>';
+    '</div>' +
+    /* m4.4: AND WHAT BECAME OF IT. The read's result rides the one
+     * component every surface already draws his number with, so a
+     * graded read gains its mark in place on all of them rather than
+     * on a screen he would have to go and find. */
+    readMark(row.read_id) +
+    '</div>';
 }
 
 /* The slate-wide marker. A row a game-level read reached says so, and
@@ -6978,6 +7116,122 @@ function watchRows() {
     }).join("") + '</div>';
 }
 
+/* ------------------------------------------------------------------
+ * m4.4 S2 — THE SCORECARD BLOCK (SCORECARD_SPEC sec 3)
+ * ------------------------------------------------------------------
+ * It lives on My picks — the app's existing information architecture,
+ * and NO new tab — because what it is about is the bets and reads
+ * that segment already holds.
+ *
+ * EVERY SENTENCE IN IT IS THE SERVICE'S, DRAWN VERBATIM. This
+ * function composes nothing: it has no count, no rate, no percentage
+ * and no wording of its own, and the suite greps `app.js` to keep it
+ * that way. A page that turned "3 of 5" into "60%" would be the
+ * client doing statistics with the sample size thrown away.
+ *
+ * NO ANSWER, NO ELEMENT — `scenarioBoardNote`'s rule. A record that
+ * has not arrived draws nothing at all rather than an empty box where
+ * a number would have been. */
+function scorecardBlock() {
+  const card = DEMO ? DEMO_SCORECARD : nav.scorecard;
+  if (!card) return "";
+  return '<div class="card">' +
+    '<div class="overline">' + esc(card.head) + '</div>' +
+    (card.empty_note
+      ? '<div class="cardbody">' + esc(card.empty_note) + '</div>'
+      : scorecardPeriod(card.this_week) +
+        scorecardPeriod(card.season_to_date) +
+        scorecardNotes(card.read_notes)) +
+    '<div class="legend">' + esc(card.source_note) + '</div>' +
+    '<div class="legend">' + esc(card.scope_note) + '</div>' +
+    '</div>';
+}
+
+/* ONE PERIOD — this week, or the season so far. The label, the slip
+ * line, one line per market and the reads line, each of them a whole
+ * sentence the service wrote WITH ITS SAMPLE SIZE ALREADY IN IT. */
+function scorecardPeriod(period) {
+  if (!period) return "";
+  return '<div class="scoreperiod">' +
+    '<div class="cardhead">' + esc(period.label) + '</div>' +
+    '<div class="cardbody">' + esc(period.slips.sentence) + '</div>' +
+    (period.markets || []).map(function (row) {
+      return '<div class="cardbody">' + esc(row.sentence) + '</div>';
+    }).join("") +
+    (period.markets_sentence
+      ? '<div class="cardbody muted">' +
+        esc(period.markets_sentence) + '</div>'
+      : "") +
+    '<div class="cardbody">' + esc(period.reads.sentence) + '</div>' +
+    '</div>';
+}
+
+/* THE MODEL-AGREEMENT NOTES — "your read said 61%, the model said
+ * 55%, and it hit". The service says it only where both numbers exist
+ * and the bet has settled, so an empty list draws nothing. */
+function scorecardNotes(notes) {
+  if (!notes || !notes.length) return "";
+  return '<div class="scorenotes">' + notes.map(function (note) {
+    return '<div class="legend">' + esc(note.sentence) + '</div>';
+  }).join("") + '</div>';
+}
+
+/* THE MARKS, BY WHAT THEY ARE A MARK OF. `GET /scorecard` carries one
+ * entry per gradeable thing the person owns — legs, slips and READS —
+ * and the reads are the half no other answer carries: a slip's legs
+ * come back marked on `GET /slips`, and a saved read's result exists
+ * nowhere else on this client.
+ *
+ * So the record's `marks` are indexed here and the shared "your
+ * number" component reads them, which is what makes the promise the
+ * read sheet closes with ("we'll grade it after the game") visible on
+ * the surface the read already lives on. */
+function scorecardMarks() {
+  const card = DEMO ? DEMO_SCORECARD : nav.scorecard;
+  return (card && card.marks) || [];
+}
+
+function markFor(kind, subjectId) {
+  const wanted = String(subjectId || "");
+  if (!wanted) return null;
+  const rows = scorecardMarks();
+  for (let i = 0; i < rows.length; i += 1) {
+    if (String(rows[i].subject_kind || "") === kind
+      && String(rows[i].subject_id || "") === wanted) {
+      return rows[i];
+    }
+  }
+  return null;
+}
+
+/* A SAVED READ'S OWN MARK. Nothing is drawn for a read still waiting
+ * on its game — the sheet has already promised the grading, and a
+ * "still to come" chip on every unplayed read would be that promise
+ * repeated on every row. What IS drawn is a settled result, and an
+ * unsettleable one with the service's own sentence saying why, which
+ * is the fact a reader would otherwise wait for forever. */
+function readMark(readId) {
+  const mark = markFor("read", readId);
+  if (!mark || mark.outcome === "pending") return "";
+  return gradeMark(mark) + gradeSentence(mark);
+}
+
+/* THE RESULT MARK A GRADED BET WEARS, IN PLACE. The word is the
+ * service's and so is the line under it; the outcome rides the class
+ * so the colour is a property of what happened rather than a second
+ * reading of it. A bet with no mark draws none. */
+function gradeMark(grade) {
+  if (!grade || !grade.word) return "";
+  return '<span class="grademark ' +
+    esc(String(grade.outcome || "")) + '">' + esc(grade.word) +
+    '</span>';
+}
+
+function gradeSentence(grade) {
+  if (!grade || !grade.sentence) return "";
+  return '<div class="legend">' + esc(grade.sentence) + '</div>';
+}
+
 function slipRows() {
   const rows = nav.slips || [];
   if (!rows.length) {
@@ -6992,7 +7246,8 @@ function slipRows() {
       : "absent";
     return '<div class="card' + growClass() + '" style="--i:' +
       Math.min(index, 8) + '">' +
-      '<div class="overline">' + esc(PICKS_SLIPS) + '</div>' +
+      '<div class="overline">' + esc(PICKS_SLIPS) +
+      gradeMark(slip.grade) + '</div>' +
       '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
       '</span><span class="verdictvalue">' + esc(pct(slip.p_all_hit)) +
       '</span></div>' +
@@ -7019,7 +7274,10 @@ function slipRows() {
             '<span class="legp' + (leg.p_at_placed === null
               ? " absent" : "") + '">' +
             esc(leg.p_at_placed === null || leg.p_at_placed === undefined
-              ? DASH : pct(leg.p_at_placed)) + '</span></div>' +
+              ? DASH : pct(leg.p_at_placed)) + '</span>' +
+            /* m4.4: the result, beside the bet it belongs to. */
+            gradeMark(leg.grade) + '</div>' +
+            gradeSentence(leg.grade) +
             /* R1d: a leg he has written a read on carries his own
              * number too — the same component, nothing restated. */
             yourNumber(scenarioFor(leg.player_id, leg.market), true);
@@ -7047,8 +7305,8 @@ function renderBetsPicks() {
      * it off the bundled file, so "your number" on a saved bet can be
      * looked at without a token and without anybody's real rows. */
     return head + '<div class="card"><div class="cardbody">' +
-      esc(SERVICE_DEMO) + '</div></div>' + watchRows() +
-      scenarioBoardNote() + '</div>';
+      esc(SERVICE_DEMO) + '</div></div>' + scorecardBlock() +
+      watchRows() + scenarioBoardNote() + '</div>';
   }
   if (!nav.hasToken) {
     return head + connectCard() + '</div>';
@@ -7059,8 +7317,8 @@ function renderBetsPicks() {
       '<button class="primary" data-act="picks-retry">' +
       esc(CONNECT_BUTTON) + '</button></div>';
   }
-  return head + watchRows() + scenarioBoardNote() + slipRows() +
-    accountLink() + '</div>';
+  return head + scorecardBlock() + watchRows() +
+    scenarioBoardNote() + slipRows() + accountLink() + '</div>';
 }
 
 /* THE WAY IN (A3). The account lives where the token has always
@@ -7210,6 +7468,13 @@ function whoAmICard() {
  * own members list carries his row; a member's does not exist, and a
  * name this page could not read is not one it guesses at. */
 function myFirstName() {
+  /* m4.4: THE SERVICE NAMES HIM NOW, on `GET /me`, and that answer is
+   * about the person holding this token rather than about a list only
+   * the owner can read. The members list stays as the fallback for a
+   * tab that has the list and not yet the answer; a name neither of
+   * them carries is still not one this page guesses at. */
+  const mine = nav.me && nav.me.first_name;
+  if (mine) return String(mine).split(" ")[0];
   const rows = accountState().members || [];
   for (let i = 0; i < rows.length; i += 1) {
     if (rows[i].is_owner) return String(rows[i].name || "").split(" ")[0];

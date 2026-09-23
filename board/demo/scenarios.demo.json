@@ -23,7 +23,7 @@
     },
     {
       "scenario_id": "sample-scn-002",
-      "read_id": "sample-read-001",
+      "read_id": "sample-read-002",
       "player_id": "demo-004",
       "market": "player_receptions",
       "market_word": "receptions",
@@ -38,7 +38,7 @@
     },
     {
       "scenario_id": "sample-scn-003",
-      "read_id": "sample-read-001",
+      "read_id": "sample-read-003",
       "player_id": "demo-012",
       "market": "player_receptions",
       "market_word": "receptions",

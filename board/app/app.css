@@ -1141,6 +1141,44 @@ body{
 .watchp{font-size:var(--type-cell);font-weight:var(--w-semibold)}
 
 .slipleglist{display:flex;flex-direction:column;gap:4px;padding-top:8px}
+/* --------------------------------------------------------------------
+   m4.4 — THE SCORECARD BLOCK AND THE RESULT MARKS
+   (SCORECARD_SPEC sec 3)
+
+   The block is a card of SENTENCES, so it needs nothing but rhythm:
+   the two periods are separated by the same rule every list on this
+   surface uses, and every line in them is drawn with the card body's
+   own type. There is no number treatment because there is no bare
+   number — the sample size is inside the sentence beside the rate.
+
+   The mark is a small pill on the bet it belongs to, in the app's own
+   three families: the positive tint for a bet that hit, the negative
+   for one that did not, and the quiet panel for a push, one still
+   running and one the banked data could not settle. It is NOT a
+   control — nothing here is tappable — so the 44px floor has nothing
+   to apply to, and adding a button to a record a person only reads
+   would be a target nobody asked for.
+   -------------------------------------------------------------------- */
+.scoreperiod{padding:10px 0;border-top:1px solid var(--rule)}
+.scoreperiod:first-of-type{border-top:none}
+.scoreperiod .cardbody{padding-top:4px}
+.scorenotes{padding-top:6px;border-top:1px solid var(--rule)}
+
+.grademark{
+  display:inline-block;margin-left:8px;padding:2px 8px;
+  border-radius:var(--r-full);
+  font-size:var(--type-meta);font-weight:var(--w-semibold);
+  background:var(--panel);color:var(--muted);
+  white-space:nowrap;
+}
+.grademark.hit{background:var(--positive-tint);color:var(--positive-text)}
+.grademark.missed{background:var(--negative-tint);color:var(--negative-text)}
+.grademark.void{background:var(--panel);color:var(--text-2)}
+.grademark.pending,.grademark.unsettled{
+  background:var(--panel);color:var(--muted);
+  font-weight:var(--w-regular);
+}
+
 .slipleg{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:var(--type-cell)}
 .sliplegtext{display:flex;flex-direction:column;gap:2px;min-width:0}
 .slipleg .legp{font-size:var(--type-cell)}
