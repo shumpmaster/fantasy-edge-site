@@ -38,3 +38,17 @@
 .ar-team-slot{display:grid;grid-template-columns:60px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid #d7dece}.ar-team-slot p{grid-column:2}
 .ar-dfs-section{margin:16px 0}.ar-table-scroll{overflow:auto;max-width:100%}.ar-table-scroll table{border-collapse:collapse;font-size:13px;width:100%}.ar-table-scroll th,.ar-table-scroll td{padding:10px;text-align:left;border-bottom:1px solid #d7dece;min-width:85px}.ar-table-scroll small{display:block;font-weight:400;margin-top:5px}.ar-dfs-footer{font-size:12px;border-top:2px solid #244f3d;padding-top:12px}
 @media(max-width:540px){.ar-records{grid-template-columns:1fr}.ar-home .ar-record-card{padding:10px}.ar-history-controls .ghost{width:100%}}
+/* m4.7 B1 — the Bets page's two sections. Upcoming carries the full
+   card; Already played is a quieter, collapsed list with no control
+   on any card in it. */
+.consumer-app .ac-section-heading,.consumer-app .ac-played-heading{font-size:14px;font-weight:600;letter-spacing:.01em;margin:0 0 8px;color:var(--ink)}
+.consumer-app .ac-played{margin-top:22px;border-top:1px solid var(--rule);padding-top:14px}
+.consumer-app .ac-played-heading{margin:0}
+.consumer-app .ac-played-toggle{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;text-align:left;font:inherit;font-size:14px;font-weight:600;color:var(--muted);padding:0}
+.consumer-app .ac-played-toggle::after{content:"›";margin-left:auto;font-size:18px;line-height:1;transform:rotate(90deg);color:var(--muted)}
+.consumer-app .ac-played-toggle[aria-expanded=true]::after{transform:rotate(-90deg)}
+.consumer-app .ac-played-list{margin-top:10px}
+.consumer-app .ac-played-list[hidden]{display:none}
+.consumer-app .ef-page .ac-played-card{background:none;border:1px solid var(--rule);opacity:.82}
+.consumer-app .ef-page .ac-played-card :is(.ef-card-name,.ef-card-line,.ef-card-chance strong){color:var(--muted)}
+.consumer-app .ac-played-result{margin:0;padding:0 12px 11px;font-size:13px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}

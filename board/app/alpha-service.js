@@ -100,8 +100,15 @@
         throw new TypeError("Each leg needs an Over or Under side.");
       }
       const row = pick(leg, ["player_id", "player_text", "market",
-        "side", "line_placed", "line_screened", "blind_spot",
+        "game_id", "side", "line_placed", "line_screened", "blind_spot",
         "odds_american", "book", "odds_source"]);
+      // m4.7 B2 — the slate's own game id, when the screen this leg
+      // came from knew it. A leg that does not know its game says
+      // nothing about one rather than saying null.
+      if (row.game_id == null || row.game_id === "") delete row.game_id;
+      else if (typeof row.game_id !== "string") {
+        throw new TypeError("Invalid game id.");
+      }
       row.market = marketKey(row.market);
       if (!row.market) throw new TypeError("This statistic cannot be recorded yet. Choose a supported player line.");
       ["line_placed", "line_screened"].forEach(function (field) {

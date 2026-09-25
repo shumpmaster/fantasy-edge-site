@@ -2,9 +2,11 @@
 (function (root) {
   "use strict";
   let h;
+  let lastSync = null;
   const providers = new Map();
   const fresh = () => ({selected: null, form: null, error: "", errors: {},
-    busy: false, receipt: null, conflict: false, legacyDraft: null, query: "", capabilities: null});
+    busy: false, receipt: null, conflict: false, legacyDraft: null, query: "", capabilities: null,
+    playedOpen: false, playedAsked: false, playedFailed: false, played: null});
   const state = fresh();
   const copy = value => JSON.parse(JSON.stringify(value));
   const esc = value => h.esc(value);
@@ -27,6 +29,7 @@
   function configure(host) { h = host; return api; }
   function register(route, provider) { providers.set(route, provider); }
   function resetMember() {
+    lastSync = null;
     const capabilities = state.capabilities;
     Object.assign(state, fresh(), {capabilities});
     new Set(providers.values()).forEach(p => { if (p.resetMember) p.resetMember(); });
@@ -46,11 +49,129 @@
     h.render();
   }
   function props() { return h.props().filter(row => row && row.id && row.prop && row.person); }
+
+  /* m4.7 B1 — UPCOMING AND ALREADY PLAYED.
+   *
+   * The slate is exported once a week and holds the whole week, so a
+   * Thursday game stays on it until the next export. The split is
+   * therefore decided HERE, on every render, from the game's own
+   * `kickoff` against the clock — a game moves from one section to the
+   * other at kickoff without a reload and without a new export.
+   *
+   * A kickoff that is missing or does not parse counts as UPCOMING:
+   * nothing in the file says that game has started, and the service's
+   * own check is the backstop for a page that has it wrong.
+   *
+   * NOTHING IS CUT. Every prop the list yields is rendered; a played
+   * one is rendered in the second section, quieter and with no way to
+   * select it. */
+  function kickoffOf(row) {
+    const stamp = row && row.game && row.game.kickoff;
+    if (!stamp) return null;
+    const when = Date.parse(stamp);
+    return Number.isFinite(when) ? when : null;
+  }
+  /* THE CLOCK IS A SEAM, not a global. The host supplies it and the
+   * default is the real one; a test that pinned a date against
+   * `Date.now` would pass until that date and then start lying about
+   * what the code does. */
+  function clock() { return h.now ? h.now() : Date.now(); }
+  function started(row) {
+    const when = kickoffOf(row);
+    return when !== null && when <= clock();
+  }
+
+  /* m4.7 B3 — HOW A PLAYED LINE LANDED.
+   *
+   * The actuals are the ones the product already publishes: `GET
+   * /history` joins the archived pre-kickoff generation with the same
+   * banked final box score the grader settles against, so a number
+   * here and a settled bet can never disagree. It is read ONCE per
+   * page load, through the page's one door, and never polled.
+   *
+   * The side is the grader's own rule (`grades.outcome_of`): above the
+   * line went Over, below it went Under, exactly on it is a push. That
+   * is a comparison of two published numbers, not probability
+   * arithmetic. */
+  const PLAYED_PENDING = 'In progress';
+  const PLAYED_NONE = 'No result recorded';
+  /* A READ THAT HAS NOT ANSWERED IS NOT A GAME THAT IS STILL RUNNING.
+   * Until the results read comes back — and if it fails — the page
+   * cannot tell a finished line from a live one, so it says the one
+   * thing that is true instead of guessing at "In progress". */
+  const PLAYED_UNAVAILABLE = "Results aren't available right now.";
+  function marketOf(row) {
+    const raw = row && row.prop && row.prop.market;
+    const key = root.AlphaService && root.AlphaService.marketKey(raw);
+    return key || String(raw || '');
+  }
+  function playedIndex(answer) {
+    const out = {};
+    ((answer && answer.rows) || []).forEach(row => {
+      const who = String((row && row.player_id) || '');
+      if (!who) return;
+      const held = out[who] || (out[who] = {stats: {}, awaiting: false});
+      held.stats[String(row.stat)] = row;
+      if (row.status === 'awaiting') held.awaiting = true;
+    });
+    return out;
+  }
+  function playedResult(row) {
+    const index = state.played;
+    if (!index) return {state: 'unknown'};
+    const person = index[String(row.id)];
+    if (!person) return {state: 'pending'};
+    const mine = person.stats[marketOf(row)];
+    const actual = mine ? Number(mine.actual) : null;
+    if (mine && mine.status === 'final' && mine.actual !== null && Number.isFinite(actual))
+      return {state: 'result', actual: actual};
+    if (person.awaiting) return {state: 'pending'};
+    return {state: 'none'};
+  }
+  const plainNumber = value => String(Math.round(Number(value) * 100) / 100);
+  function playedWords(row) {
+    const found = playedResult(row), p = row.prop;
+    if (found.state === 'unknown') return PLAYED_UNAVAILABLE;
+    if (found.state === 'pending') return PLAYED_PENDING;
+    if (found.state === 'none') return PLAYED_NONE;
+    const line = Number(p.line);
+    // No line to compare against is no result, never a guessed push.
+    if (!Number.isFinite(line)) return PLAYED_NONE;
+    const said = marketWord(p.market_label || p.market);
+    // The result stands on its own line, so it opens like a sentence.
+    const word = said.charAt(0).toUpperCase() + said.slice(1);
+    const landed = found.actual > line ? 'went Over'
+      : found.actual < line ? 'went Under' : 'landed on the line · push';
+    return word + ' ' + p.line + ' → ' + plainNumber(found.actual) + ' · ' + landed;
+  }
+  async function loadPlayed() {
+    if (h.isDemo() || state.playedAsked || !h.request || !h.week) return;
+    const week = h.week();
+    if (!week) return;
+    state.playedAsked = true;
+    try {
+      state.played = playedIndex(await h.request('/history?season=' +
+        encodeURIComponent(week.season) + '&week=' + encodeURIComponent(week.week),
+        h.readToken() || '', null));
+    } catch (err) {
+      /* THE FAILURE IS REMEMBERED, so the page neither pretends the
+       * read is still coming nor asks again on every render. The next
+       * expand, or the next visit to this page, asks once more. */
+      state.played = null; state.playedFailed = true;
+    }
+    h.render();
+  }
+
   function select(index) {
     const row = props()[Number(index)];
-    if (!row) return;
+    /* A played line is not a bet you can still take, whatever the
+     * page was showing when it was tapped. */
+    if (!row || started(row)) return;
     state.selected = {id: row.id, market: row.prop.market};
     state.form = {player_id: row.id, player_text: row.person.name,
+      /* m4.7 B2 — the leg carries the game it was offered on, so the
+       * service never has to infer it from a team and a clock. */
+      game_id: (row.game && row.game.game_id) || null,
       market: row.prop.market, line_screened: row.prop.line,
       side: row.prop.lean === 'less' ? 'less' : 'more',
       line: String(row.prop.line == null ? '' : row.prop.line), odds: '', book: '', stake: ''};
@@ -99,7 +220,8 @@
     const f = state.form;
     return {source: f.book.trim(), input: 'manual', stake: String(f.stake).trim() ? Number(f.stake) : null,
       legs: [{player_id: f.player_id, player_text: f.player_text, market: f.market,
-        side: f.side, line_placed: Number(f.line), line_screened: f.line_screened,
+        game_id: f.game_id, side: f.side,
+        line_placed: Number(f.line), line_screened: f.line_screened,
         odds_american: Number(f.odds), book: f.book.trim(), odds_source: 'personal'}]};
   }
   function pending() { return !h.isDemo() && h.service() ? h.service().pendingSlip() : null; }
@@ -203,6 +325,35 @@
       '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></button>' +
       '<div class="ef-card-body" id="ac-body-' + index + '"' + (open ? '' : ' hidden') + '>' + (open ? form() : '') + '</div></article>';
   }
+  /* The played card is the same face with no control on it: no
+   * toggle, no select, no body to open. */
+  function playedCard(row) {
+    const p = row.prop;
+    return '<article class="ef-card ac-played-card" data-played="true" data-player-id="' + esc(row.id) + '" data-market="' + esc(p.market) + '">' +
+      '<div class="ef-card-toggle ac-played-face">' +
+      '<span class="ef-card-name">' + esc(row.person.name) + '</span><span class="ef-card-line">' + esc(sideWord(p.lean) + ' ' + p.line + ' ' + marketWord(p.market_label || p.market)) + '</span>' +
+      '<span class="ef-card-rating"><span class="ef-assessment">Published estimate</span><span class="ef-card-chance"><strong>' + chance(p.model_p) + '</strong><small>Estimated chance</small></span></span>' +
+      '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></div>' +
+      '<p class="ac-played-result">' + esc(playedWords(row)) + '</p></article>';
+  }
+  function playedSection(played) {
+    if (!played.length) return '';
+    const open = state.playedOpen;
+    return '<section class="ac-played" data-played-count="' + played.length + '">' +
+      '<h2 class="ac-played-heading">' + button('played-toggle', '<span>Already played · ' + played.length + '</span>',
+        null, ' class="ac-played-toggle" aria-expanded="' + open + '" aria-controls="ac-played-list"') + '</h2>' +
+      '<div class="ac-played-list" id="ac-played-list"' + (open ? '' : ' hidden') + '>' +
+      played.map(({row}) => playedCard(row)).join('') + '</div></section>';
+  }
+  /* The empty Upcoming list says WHICH emptiness it is: a week that
+   * has finished naming when the next one arrives, or a search that
+   * matched nothing. */
+  function upcomingEmpty(all) {
+    if (!all.length) return h.nav.slateNote || 'No published lines match this view.';
+    if (!all.some(entry => !started(entry.row)))
+      return 'This week’s games have all kicked off. Next week’s lines post on Sunday.';
+    return 'No published lines match this view.';
+  }
   function receipt(slip) {
     return '<article class="ef-owned-card ac-receipt" data-slip-id="' + esc(slip.slip_id) + '"><h2>' + (slip.replayed ? 'Original bet recovered' : 'Recorded bet') + '</h2><p>Saved here · placement elsewhere</p>' +
       (slip.legs || []).map(leg => '<section class="ac-saved-leg" data-leg-id="' + esc(leg.leg_id) + '"><h3>' + esc(leg.player_text || leg.player_id) + '</h3><p>' +
@@ -234,10 +385,14 @@
       (state.receipt ? receipt(state.receipt) : '') + '</div>';
     if (route === 'screen' || route === 'betbuilder' || route === 'betssingle') {
       const query = state.query.trim().toLowerCase();
-      const rows = props().map((row,index) => ({row,index})).filter(({row}) => !query || [row.person.name,row.person.team,row.prop.market].join(' ').toLowerCase().includes(query));
+      const all = props().map((row,index) => ({row,index}));
+      const rows = all.filter(({row}) => !query || [row.person.name,row.person.team,row.prop.market].join(' ').toLowerCase().includes(query));
+      const upcoming = rows.filter(({row}) => !started(row)), played = rows.filter(({row}) => started(row));
       return '<div class="page ef-page"><header class="cx-heading"><h1>Bets</h1><p>Published player lines</p></header><p class="ef-caption">' + esc(reason('discover.singles')) +
         '</p><div class="ac-search" role="search"><label for="ac-query">Search players or teams</label><input id="ac-query" type="search" data-ac-field="query" value="' + esc(state.query) + '">' + button('search', 'Search') + '</div>' +
-        (!state.form ? recovery() : '') + (rows.length ? rows.map(({row,index}) => card(row,index)).join('') : '<p class="ef-empty">' + esc(h.nav.slateNote || 'No published lines match this view.') + '</p>') + '</div>';
+        (!state.form ? recovery() : '') + '<section class="ac-upcoming"><h2 class="ac-section-heading">Upcoming</h2>' +
+        (upcoming.length ? upcoming.map(({row,index}) => card(row,index)).join('') : '<p class="ef-empty">' + esc(upcomingEmpty(all)) + '</p>') +
+        '</section>' + playedSection(played) + '</div>';
     }
     if (route === 'mybets' || route === 'mypicks' || route === 'bethistory') return '<div class="page ef-page">' + h.head('My bets') + recovery() +
       (!h.readToken() ? '<p>Connect to see your recorded bets.</p>' + button('connect', 'Connect your account') :
@@ -263,16 +418,35 @@
     else if (act === 'read' && state.form) h.openRead(state.form.player_id, state.form.market, {line:Number(state.form.line),side:state.form.side});
     else if (act === 'refresh') return h.loadPicks(true);
     else if (act === 'search') h.render();
+    else if (act === 'played-toggle') {
+      state.playedOpen = !state.playedOpen;
+      /* OPENING THE SECTION IS THE RETRY, and it is the whole of it:
+       * one ask per expand, no timer, no loop. */
+      if (state.playedOpen && state.playedFailed) retryPlayed();
+      h.render();
+    }
     else {
       const provider = providers.get(h.route());
       if (provider && provider.action) return provider.action(act, value, h);
     }
   }
+  function retryPlayed() { state.playedAsked = false; state.playedFailed = false; }
   function sync(route) {
+    if (h.isDemo()) return;
+    const bets = route === 'screen' || route === 'betbuilder' || route === 'betssingle';
+    /* ARRIVING ON THE PAGE IS THE OTHER RETRY. `sync` runs after every
+     * render, so the trigger is the route CHANGING onto this page —
+     * never the render itself, which is how a retry becomes a poll. */
+    if (bets && lastSync !== route && state.playedFailed) retryPlayed();
+    lastSync = route;
+    /* The results read is asked for ONCE, and only when there is a
+     * played line on the page to say something about. */
+    if (bets && props().some(started)) loadPlayed();
     const provider = providers.get(route);
-    if (!h.isDemo() && provider && provider.sync) provider.sync(h);
+    if (provider && provider.sync) provider.sync(h);
   }
   const api = {configure,register,resetMember,state,capability,reason,loadCapabilities,select,input,
-    selectedChance,pending,save,retry,receipt,render,action,sync,marketWord,reviewDraft,unavailable};
+    selectedChance,pending,save,retry,receipt,render,action,sync,marketWord,reviewDraft,unavailable,
+    started,playedWords};
   root.AlphaCompact = api;
 })(typeof window !== 'undefined' ? window : globalThis);

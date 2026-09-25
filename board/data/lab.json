@@ -7,9 +7,9 @@
     "snapshot_kind": "refresh",
     "source": "engine",
     "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + C2 pass rate (m1.2x) + YPA per attempt (m1.2z) + E-SP-2 prior + E-SP-3a K + E-SP-T tripwire + Layer A repaired (Nacua clause) + m1.2y roster rule + m1.2i top-cell raise x1.0434",
-    "generation_id": "2026w03-20260924T175108Z",
-    "generated_ts": "2026-09-24T17:51:08.565949+00:00",
-    "cutoff_ts": "2026-09-24T17:51:08.565949+00:00",
+    "generation_id": "2026w03-20260925T175628Z",
+    "generated_ts": "2026-09-25T17:56:28.708032+00:00",
+    "cutoff_ts": "2026-09-25T17:56:28.708032+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w03-20260922T173711Z",
     "week_open_generated_ts": "2026-09-22T17:37:11.575115+00:00"
@@ -90,7 +90,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w03-20260924T175108Z",
+    "generation_id": "2026w03-20260925T175628Z",
     "absent_reason": null
   },
   "players": [
@@ -105,11 +105,11 @@
         "pass_yds": 0.0,
         "pass_tds": 0.0,
         "rush_att": 0.05,
-        "rush_yds": 0.2716994868950215,
-        "targets": 3.53,
-        "receptions": 3.05,
-        "rec_yds": 28.79,
-        "anytime_td": 0.245
+        "rush_yds": 0.14574608237415063,
+        "targets": 3.6925,
+        "receptions": 3.1625,
+        "rec_yds": 28.9675,
+        "anytime_td": 0.3125
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -145,27 +145,27 @@
           2.0,
           3.0,
           5.0,
-          6.0
+          7.0
         ],
         "receptions": [
           1.0,
           2.0,
           3.0,
           4.0,
-          5.0
+          6.0
         ],
         "rec_yds": [
-          6.0,
-          14.0,
-          25.0,
-          39.0,
-          56.0
+          4.0,
+          13.0,
+          26.0,
+          41.0,
+          60.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
-          0.0,
+          1.0,
           1.0
         ]
       },
@@ -183,11 +183,11 @@
         "pass_yds": 0.0,
         "pass_tds": 0.0,
         "rush_att": 0.0075,
-        "rush_yds": 0.14394674802385243,
-        "targets": -0.11250000000000027,
-        "receptions": -0.07500000000000018,
-        "rec_yds": -1.1475000000000009,
-        "anytime_td": -0.05499999999999999
+        "rush_yds": 0.017993343502981568,
+        "targets": 0.04999999999999982,
+        "receptions": 0.03750000000000009,
+        "rec_yds": -0.9699999999999989,
+        "anytime_td": 0.012500000000000011
       },
       "context": {
         "opponent": {
@@ -203,7 +203,7 @@
           "reason": null
         },
         "injury_trend": {
-          "value": "dnp_flat",
+          "value": "fp_up",
           "reason": null
         },
         "line_label": {
@@ -213,11 +213,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -225,15 +225,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -241,15 +241,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -294,7 +294,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1825
+      "p_ceiling": 0.225
     },
     {
       "player_id": "00-0036265",
@@ -306,12 +306,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 3.985,
-        "rush_yds": 15.134663672879118,
-        "targets": 0.3225,
-        "receptions": 0.2675,
-        "rec_yds": 1.8875,
-        "anytime_td": 0.1675
+        "rush_att": 3.94,
+        "rush_yds": 15.482882463376177,
+        "targets": 0.25,
+        "receptions": 0.1875,
+        "rec_yds": 1.5575,
+        "anytime_td": 0.1525
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -336,17 +336,17 @@
           7.0
         ],
         "rush_yds": [
-          2.804446634875685,
-          6.54370881470993,
-          13.087417629419862,
-          21.500757534046922,
-          32.71854407354966
+          1.8696310899171233,
+          6.543708814709931,
+          13.087417629419864,
+          21.50075753404692,
+          29.914097438673977
         ],
         "targets": [
           0.0,
           0.0,
           0.0,
-          1.0,
+          0.0,
           1.0
         ],
         "receptions": [
@@ -361,7 +361,7 @@
           0.0,
           0.0,
           0.0,
-          8.0
+          6.0
         ],
         "anytime_td": [
           0.0,
@@ -384,12 +384,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.06000000000000005,
-        "rush_yds": -0.3271854407354926,
-        "targets": 0.05249999999999999,
-        "receptions": 0.06250000000000003,
-        "rec_yds": 0.7549999999999999,
-        "anytime_td": 0.007500000000000007
+        "rush_att": 0.015000000000000124,
+        "rush_yds": 0.021033349761566456,
+        "targets": -0.020000000000000018,
+        "receptions": -0.017499999999999988,
+        "rec_yds": 0.42500000000000004,
+        "anytime_td": -0.007500000000000007
       },
       "context": {
         "opponent": {
@@ -415,11 +415,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -427,15 +427,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -443,15 +443,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -496,7 +496,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0025
+      "p_ceiling": 0.0
     },
     {
       "player_id": "00-0036555",
@@ -508,12 +508,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 12.3575,
-        "rush_yds": 53.9716174660558,
-        "targets": 2.45,
-        "receptions": 2.0775,
-        "rec_yds": 13.7025,
-        "anytime_td": 0.405
+        "rush_att": 12.205,
+        "rush_yds": 52.908822451043825,
+        "targets": 2.4825,
+        "receptions": 2.17,
+        "rec_yds": 14.375,
+        "anytime_td": 0.4825
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -534,22 +534,22 @@
           8.0,
           10.0,
           12.0,
-          15.0,
+          14.0,
           17.0
         ],
         "rush_yds": [
-          22.043155866916365,
+          23.092829955817148,
           35.6889190226265,
           51.434030356138194,
-          70.32816395635221,
-          86.0732752898639
+          66.12946760074911,
+          86.07327528986391
         ],
         "targets": [
           1.0,
           1.0,
           2.0,
-          3.0,
-          5.0
+          4.0,
+          4.0
         ],
         "receptions": [
           0.0,
@@ -560,17 +560,17 @@
         ],
         "rec_yds": [
           0.0,
-          2.0,
+          3.0,
           10.0,
-          20.0,
-          35.0
+          22.0,
+          34.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
           1.0,
-          1.0
+          2.0
         ]
       },
       "week_open": {
@@ -586,12 +586,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.23499999999999943,
-        "rush_yds": -0.1600752985574374,
-        "targets": -0.14249999999999963,
-        "receptions": -0.16749999999999998,
-        "rec_yds": -0.4450000000000003,
-        "anytime_td": -0.135
+        "rush_att": 0.08249999999999957,
+        "rush_yds": -1.222870313569409,
+        "targets": -0.10999999999999988,
+        "receptions": -0.07500000000000018,
+        "rec_yds": 0.22749999999999915,
+        "anytime_td": -0.05750000000000005
       },
       "context": {
         "opponent": {
@@ -617,11 +617,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -629,15 +629,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -645,15 +645,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -698,7 +698,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.215
+      "p_ceiling": 0.2175
     },
     {
       "player_id": "00-0037005",
@@ -712,10 +712,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 2.8525,
-        "receptions": 1.8125,
-        "rec_yds": 18.2775,
-        "anytime_td": 0.1125
+        "targets": 2.92,
+        "receptions": 1.84,
+        "rec_yds": 17.7825,
+        "anytime_td": 0.1425
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -748,7 +748,7 @@
         ],
         "targets": [
           1.0,
-          1.0,
+          2.0,
           3.0,
           4.0,
           5.0
@@ -762,10 +762,10 @@
         ],
         "rec_yds": [
           0.0,
-          4.0,
+          5.0,
           13.0,
-          27.0,
-          44.0
+          25.0,
+          39.0
         ],
         "anytime_td": [
           0.0,
@@ -790,10 +790,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": -0.022499999999999964,
-        "receptions": -0.10250000000000004,
-        "rec_yds": -1.3275000000000006,
-        "anytime_td": -0.029999999999999985
+        "targets": 0.04499999999999993,
+        "receptions": -0.07499999999999996,
+        "rec_yds": -1.8225000000000016,
+        "anytime_td": 0.0
       },
       "context": {
         "opponent": {
@@ -819,11 +819,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -831,15 +831,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -847,15 +847,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -900,7 +900,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.07
+      "p_ceiling": 0.0525
     },
     {
       "player_id": "00-0038102",
@@ -910,22 +910,22 @@
       "game_id": "2026_03_CAR_CLE",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 3.128006756756759,
-        "pass_tds": 0.01,
-        "rush_att": 1.2225,
-        "rush_yds": 5.598526526608742,
+        "pass_yds": 3.166250000000001,
+        "pass_tds": 0.0275,
+        "rush_att": 1.2375,
+        "rush_yds": 6.002721222078187,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.0675
+        "anytime_td": 0.06
       },
       "stat_quantiles": {
         "pass_yds": [
-          2.0135135135135136,
-          2.4324324324324325,
-          3.1081081081081083,
-          3.702702702702703,
-          4.324324324324325
+          1.9864864864864866,
+          2.5,
+          3.0945945945945947,
+          3.72972972972973,
+          4.581081081081082
         ],
         "pass_tds": [
           0.0,
@@ -944,7 +944,7 @@
         "rush_yds": [
           0.0,
           0.0,
-          2.29330323670609,
+          3.4399548550591352,
           9.17321294682436,
           16.05312265694263
         ],
@@ -988,14 +988,14 @@
         "anytime_td": 0.0775
       },
       "movement": {
-        "pass_yds": -0.00932432432432062,
-        "pass_tds": -0.012499999999999999,
-        "rush_att": -0.040000000000000036,
-        "rush_yds": -0.4185278406988564,
+        "pass_yds": 0.0289189189189214,
+        "pass_tds": 0.005000000000000001,
+        "rush_att": -0.02499999999999991,
+        "rush_yds": -0.014333145229411315,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": -0.009999999999999995
+        "anytime_td": -0.0175
       },
       "context": {
         "opponent": {
@@ -1021,11 +1021,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -1033,15 +1033,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -1049,15 +1049,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -1112,26 +1112,26 @@
       "game_id": "2026_03_CAR_CLE",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 228.34449324324322,
-        "pass_tds": 1.2725,
-        "rush_att": 2.5675,
-        "rush_yds": 11.70745947170439,
+        "pass_yds": 231.1362500000001,
+        "pass_tds": 1.6025,
+        "rush_att": 2.4325,
+        "rush_yds": 10.494403858556618,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": 0.07
+        "anytime_td": 0.095
       },
       "stat_quantiles": {
         "pass_yds": [
-          146.98648648648648,
-          177.56756756756758,
-          226.8918918918919,
-          270.2972972972973,
-          315.6756756756757
+          145.01351351351352,
+          182.5,
+          225.90540540540542,
+          272.27027027027026,
+          334.4189189189189
         ],
         "pass_tds": [
           0.0,
-          0.0,
+          1.0,
           1.0,
           2.0,
           3.0
@@ -1141,14 +1141,14 @@
           1.0,
           2.0,
           3.0,
-          5.0
+          4.0
         ],
         "rush_yds": [
           0.0,
           3.213392352709349,
-          9.640177058128048,
-          16.066961763546747,
-          25.707138821674793
+          7.497915489655148,
+          16.066961763546743,
+          23.564877253201892
         ],
         "targets": [
           0.0,
@@ -1190,14 +1190,14 @@
         "anytime_td": 0.075
       },
       "movement": {
-        "pass_yds": -0.6806756756758148,
-        "pass_tds": -0.22750000000000004,
-        "rush_att": 0.01499999999999968,
-        "rush_yds": -0.1017574245024555,
+        "pass_yds": 2.1110810810810676,
+        "pass_tds": 0.10250000000000004,
+        "rush_att": -0.1200000000000001,
+        "rush_yds": -1.314813037650227,
         "targets": 0.0,
         "receptions": 0.0,
         "rec_yds": 0.0,
-        "anytime_td": -0.0049999999999999906
+        "anytime_td": 0.020000000000000004
       },
       "context": {
         "opponent": {
@@ -1223,11 +1223,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -1235,15 +1235,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -1251,15 +1251,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -1304,7 +1304,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1
+      "p_ceiling": 0.1525
     },
     {
       "player_id": "00-0039342",
@@ -1316,12 +1316,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.0525,
-        "rush_yds": 0.2614487336266562,
-        "targets": 3.5075,
-        "receptions": 1.7375,
-        "rec_yds": 23.175,
-        "anytime_td": 0.0975
+        "rush_att": 0.0225,
+        "rush_yds": 0.042329794968125306,
+        "targets": 3.625,
+        "receptions": 1.815,
+        "rec_yds": 26.0775,
+        "anytime_td": 0.1525
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1355,7 +1355,7 @@
         "targets": [
           1.0,
           2.0,
-          3.0,
+          4.0,
           5.0,
           6.0
         ],
@@ -1363,22 +1363,22 @@
           0.0,
           1.0,
           2.0,
-          2.0,
+          3.0,
           4.0
         ],
         "rec_yds": [
           0.0,
-          3.0,
-          17.0,
-          34.0,
-          59.0
+          6.0,
+          19.0,
+          38.0,
+          60.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
           0.0,
-          0.0
+          1.0
         ]
       },
       "week_open": {
@@ -1394,12 +1394,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.027499999999999997,
-        "rush_yds": 0.1344593487222803,
-        "targets": 0.03249999999999975,
-        "receptions": 0.0475000000000001,
-        "rec_yds": -1.120000000000001,
-        "anytime_td": -0.0625
+        "rush_att": -0.0025000000000000022,
+        "rush_yds": -0.08465958993625061,
+        "targets": 0.1499999999999999,
+        "receptions": 0.125,
+        "rec_yds": 1.7824999999999989,
+        "anytime_td": -0.007500000000000007
       },
       "context": {
         "opponent": {
@@ -1411,12 +1411,12 @@
           "reason": null
         },
         "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "listed",
+          "reason": null
         },
         "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "dnp_flat",
+          "reason": null
         },
         "line_label": {
           "value": "SAME-CUTOFF",
@@ -1425,11 +1425,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -1437,15 +1437,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -1453,15 +1453,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -1506,7 +1506,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0325
+      "p_ceiling": 0.06
     },
     {
       "player_id": "00-0039344",
@@ -1518,12 +1518,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 6.6075,
-        "rush_yds": 25.971737208013543,
-        "targets": 1.595,
-        "receptions": 1.1125,
-        "rec_yds": 13.415,
-        "anytime_td": 0.295
+        "rush_att": 6.7075,
+        "rush_yds": 25.34489008911944,
+        "targets": 1.585,
+        "receptions": 1.0975,
+        "rec_yds": 13.455,
+        "anytime_td": 0.325
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1543,16 +1543,16 @@
         "rush_att": [
           4.0,
           5.0,
-          7.0,
+          6.0,
           8.0,
           10.0
         ],
         "rush_yds": [
           7.541017971658045,
-          15.082035943316088,
-          23.56568116143139,
-          35.81983536537571,
-          46.188735076405536
+          15.08203594331609,
+          22.623053914974136,
+          33.934580872461204,
+          44.303480583491016
         ],
         "targets": [
           0.0,
@@ -1596,12 +1596,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.08750000000000036,
-        "rush_yds": 0.46424391888021077,
-        "targets": -0.14250000000000007,
-        "receptions": -0.10999999999999988,
-        "rec_yds": -0.09250000000000114,
-        "anytime_td": -0.027500000000000024
+        "rush_att": 0.01249999999999929,
+        "rush_yds": -0.16260320001389417,
+        "targets": -0.15250000000000008,
+        "receptions": -0.125,
+        "rec_yds": -0.05250000000000021,
+        "anytime_td": 0.0025000000000000022
       },
       "context": {
         "opponent": {
@@ -1627,11 +1627,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -1639,15 +1639,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -1655,15 +1655,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -1708,7 +1708,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0725
+      "p_ceiling": 0.0625
     },
     {
       "player_id": "00-0039491",
@@ -1722,10 +1722,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 6.065,
-        "receptions": 5.13,
-        "rec_yds": 56.7325,
-        "anytime_td": 0.225
+        "targets": 6.15,
+        "receptions": 5.165,
+        "rec_yds": 55.2325,
+        "anytime_td": 0.2825
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1761,21 +1761,21 @@
           4.0,
           6.0,
           8.0,
-          9.0
+          10.0
         ],
         "receptions": [
           2.0,
-          4.0,
+          3.0,
           5.0,
-          7.0,
-          8.0
+          6.0,
+          9.0
         ],
         "rec_yds": [
           15.0,
-          31.0,
-          52.0,
-          75.0,
-          108.0
+          30.0,
+          51.0,
+          76.0,
+          100.0
         ],
         "anytime_td": [
           0.0,
@@ -1800,10 +1800,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 0.1825000000000001,
-        "receptions": 0.24249999999999972,
-        "rec_yds": 5.387500000000003,
-        "anytime_td": 0.020000000000000018
+        "targets": 0.26750000000000007,
+        "receptions": 0.27749999999999986,
+        "rec_yds": 3.887500000000003,
+        "anytime_td": 0.07749999999999999
       },
       "context": {
         "opponent": {
@@ -1819,7 +1819,7 @@
           "reason": null
         },
         "injury_trend": {
-          "value": "lp_flat",
+          "value": "dnp_down",
           "reason": null
         },
         "line_label": {
@@ -1829,11 +1829,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -1841,15 +1841,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -1857,15 +1857,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -1910,7 +1910,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.3425
+      "p_ceiling": 0.34
     },
     {
       "player_id": "00-0040124",
@@ -1924,10 +1924,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 7.57,
-        "receptions": 4.32,
-        "rec_yds": 66.9375,
-        "anytime_td": 0.2175
+        "targets": 7.725,
+        "receptions": 4.425,
+        "rec_yds": 67.61,
+        "anytime_td": 0.25
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -1960,10 +1960,10 @@
         ],
         "targets": [
           4.0,
-          5.0,
-          8.0,
-          9.0,
-          11.0
+          6.0,
+          7.0,
+          10.0,
+          12.0
         ],
         "receptions": [
           2.0,
@@ -1973,11 +1973,11 @@
           7.0
         ],
         "rec_yds": [
-          18.0,
-          37.0,
-          61.0,
-          91.0,
-          124.0
+          21.0,
+          38.0,
+          63.0,
+          89.0,
+          120.0
         ],
         "anytime_td": [
           0.0,
@@ -2002,10 +2002,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": -0.1999999999999993,
-        "receptions": -0.1899999999999995,
-        "rec_yds": -1.9325000000000045,
-        "anytime_td": 0.017499999999999988
+        "targets": -0.04499999999999993,
+        "receptions": -0.08499999999999996,
+        "rec_yds": -1.2600000000000051,
+        "anytime_td": 0.04999999999999999
       },
       "context": {
         "opponent": {
@@ -2031,11 +2031,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -2043,15 +2043,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -2059,15 +2059,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -2112,7 +2112,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.325
+      "p_ceiling": 0.3375
     },
     {
       "player_id": "00-0040187",
@@ -2124,12 +2124,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.055,
-        "rush_yds": 0.23391346553876022,
-        "targets": 1.595,
-        "receptions": 1.155,
-        "rec_yds": 8.555,
-        "anytime_td": 0.1225
+        "rush_att": 0.0375,
+        "rush_yds": 0.09536472056580225,
+        "targets": 1.6325,
+        "receptions": 1.1925,
+        "rec_yds": 9.245,
+        "anytime_td": 0.125
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2178,8 +2178,8 @@
           0.0,
           0.0,
           6.0,
-          14.0,
-          21.0
+          13.0,
+          24.0
         ],
         "anytime_td": [
           0.0,
@@ -2202,12 +2202,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.012499999999999997,
-        "rush_yds": -0.035986687005963164,
-        "targets": -0.07000000000000006,
-        "receptions": -0.057499999999999885,
-        "rec_yds": -0.7675000000000001,
-        "anytime_td": -0.0025000000000000022
+        "rush_att": -0.0050000000000000044,
+        "rush_yds": -0.17453543197892113,
+        "targets": -0.03249999999999997,
+        "receptions": -0.020000000000000018,
+        "rec_yds": -0.07750000000000057,
+        "anytime_td": 0.0
       },
       "context": {
         "opponent": {
@@ -2233,11 +2233,11 @@
       },
       "elements": {
         "line_spread": {
-          "value": -3.0,
+          "value": -2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
@@ -2245,15 +2245,15 @@
           "reason": null
         },
         "team_plays": {
-          "value": 60.30251660352989,
+          "value": 60.581711266861895,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5925750658431067,
+          "value": 0.5954302018034263,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 35.73376774684176,
+          "value": 36.072180565224485,
           "reason": null
         },
         "team_attempt_rate": {
@@ -2261,15 +2261,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 31.220356315402682,
+          "value": 31.51602535446007,
           "reason": null
         },
         "team_targets": {
-          "value": 29.664007545940933,
+          "value": 29.9449373507482,
           "reason": null
         },
         "team_carries": {
-          "value": 26.623749066952495,
+          "value": 26.58459225040493,
           "reason": null
         },
         "target_share": {
@@ -2314,7 +2314,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0225
+      "p_ceiling": 0.0125
     },
     {
       "player_id": "00-0033537",
@@ -2324,22 +2324,22 @@
       "game_id": "2026_03_CAR_CLE",
       "n_draws": 400,
       "proj": {
-        "pass_yds": 203.8025,
-        "pass_tds": 1.2725,
-        "rush_att": 5.24,
-        "rush_yds": 23.68549616761243,
-        "targets": 0.0075,
-        "receptions": 0.005,
-        "rec_yds": 0.03,
-        "anytime_td": 0.1075
+        "pass_yds": 207.3775,
+        "pass_tds": 1.3625,
+        "rush_att": 5.3775,
+        "rush_yds": 23.24267689023621,
+        "targets": 0.035,
+        "receptions": 0.03,
+        "rec_yds": 0.35,
+        "anytime_td": 0.1125
       },
       "stat_quantiles": {
         "pass_yds": [
-          130.0,
-          161.0,
-          204.0,
-          240.0,
-          278.0
+          128.0,
+          162.0,
+          200.0,
+          246.0,
+          294.0
         ],
         "pass_tds": [
           0.0,
@@ -2349,18 +2349,18 @@
           3.0
         ],
         "rush_att": [
-          2.0,
           3.0,
+          4.0,
           5.0,
           7.0,
           8.0
         ],
         "rush_yds": [
-          5.335172016581249,
+          6.4022064198974995,
           11.73737843647875,
-          21.340688066324997,
+          21.340688066325,
           32.0110320994875,
-          45.88247934259874
+          41.614341729333745
         ],
         "targets": [
           0.0,
@@ -2388,7 +2388,7 @@
           0.0,
           0.0,
           0.0,
-          0.0
+          1.0
         ]
       },
       "week_open": {
@@ -2402,14 +2402,14 @@
         "anytime_td": 0.12
       },
       "movement": {
-        "pass_yds": -8.554999999999978,
-        "pass_tds": 0.04249999999999998,
-        "rush_att": 0.012500000000000178,
-        "rush_yds": 0.4161434172933056,
-        "targets": -0.02,
-        "receptions": -0.0125,
-        "rec_yds": -0.135,
-        "anytime_td": -0.012499999999999997
+        "pass_yds": -4.97999999999999,
+        "pass_tds": 0.13250000000000006,
+        "rush_att": 0.15000000000000036,
+        "rush_yds": -0.026675860082914227,
+        "targets": 0.007500000000000003,
+        "receptions": 0.012499999999999997,
+        "rec_yds": 0.18499999999999997,
+        "anytime_td": -0.007499999999999993
       },
       "context": {
         "opponent": {
@@ -2435,27 +2435,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -2463,15 +2463,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -2516,7 +2516,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1275
+      "p_ceiling": 0.12
     },
     {
       "player_id": "00-0036407",
@@ -2528,12 +2528,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.015,
-        "rush_yds": 0.03983980702882381,
-        "targets": 4.0975,
-        "receptions": 2.3575,
-        "rec_yds": 29.715,
-        "anytime_td": 0.1925
+        "rush_att": 0.005,
+        "rush_yds": 0.07718962611834612,
+        "targets": 4.2975,
+        "receptions": 2.415,
+        "rec_yds": 29.7675,
+        "anytime_td": 0.16
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2568,22 +2568,22 @@
           2.0,
           3.0,
           4.0,
-          5.0,
+          6.0,
           7.0
         ],
         "receptions": [
-          0.0,
+          1.0,
           1.0,
           2.0,
           3.0,
           4.0
         ],
         "rec_yds": [
-          0.0,
-          12.0,
+          7.0,
+          14.0,
           26.0,
-          45.0,
-          62.0
+          41.0,
+          57.0
         ],
         "anytime_td": [
           0.0,
@@ -2606,12 +2606,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.0025000000000000022,
-        "rush_yds": -0.024899879393014884,
-        "targets": 0.01750000000000007,
-        "receptions": 0.03249999999999975,
-        "rec_yds": 0.33999999999999986,
-        "anytime_td": 0.05499999999999999
+        "rush_att": -0.0125,
+        "rush_yds": 0.012449939696507428,
+        "targets": 0.21750000000000025,
+        "receptions": 0.08999999999999986,
+        "rec_yds": 0.3924999999999983,
+        "anytime_td": 0.022499999999999992
       },
       "context": {
         "opponent": {
@@ -2637,27 +2637,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -2665,15 +2665,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -2718,7 +2718,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.08
+      "p_ceiling": 0.0425
     },
     {
       "player_id": "00-0038710",
@@ -2732,10 +2732,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": 1.095,
-        "receptions": 0.7975,
-        "rec_yds": 6.4675,
-        "anytime_td": 0.0825
+        "targets": 1.1775,
+        "receptions": 0.845,
+        "rec_yds": 6.59,
+        "anytime_td": 0.0725
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2771,7 +2771,7 @@
           0.0,
           1.0,
           2.0,
-          2.0
+          3.0
         ],
         "receptions": [
           0.0,
@@ -2810,10 +2810,10 @@
         "pass_tds": 0.0,
         "rush_att": 0.0,
         "rush_yds": 0.0,
-        "targets": -0.015000000000000124,
-        "receptions": 0.0,
-        "rec_yds": 0.3600000000000003,
-        "anytime_td": 0.0025000000000000022
+        "targets": 0.0674999999999999,
+        "receptions": 0.04749999999999999,
+        "rec_yds": 0.48249999999999993,
+        "anytime_td": -0.007500000000000007
       },
       "context": {
         "opponent": {
@@ -2839,27 +2839,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -2867,15 +2867,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -2932,12 +2932,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 2.715,
-        "rush_yds": 11.238785539796693,
-        "targets": 0.6375,
-        "receptions": 0.4175,
-        "rec_yds": 2.885,
-        "anytime_td": 0.165
+        "rush_att": 2.66,
+        "rush_yds": 9.923085263255945,
+        "targets": 0.67,
+        "receptions": 0.4825,
+        "rec_yds": 3.67,
+        "anytime_td": 0.1775
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -2963,10 +2963,10 @@
         ],
         "rush_yds": [
           0.0,
-          2.951103424016642,
-          8.853310272049926,
-          15.73921826142209,
-          26.55993081614978
+          1.9674022826777613,
+          7.869609130711045,
+          14.755517120083208,
+          23.608827392133133
         ],
         "targets": [
           0.0,
@@ -2986,8 +2986,8 @@
           0.0,
           0.0,
           0.0,
-          3.0,
-          10.0
+          5.0,
+          12.0
         ],
         "anytime_td": [
           0.0,
@@ -3010,12 +3010,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.03249999999999975,
-        "rush_yds": 0.2090364925345014,
-        "targets": -0.022500000000000075,
-        "receptions": -0.02250000000000002,
-        "rec_yds": -0.27,
-        "anytime_td": -0.017499999999999988
+        "rush_att": -0.022499999999999964,
+        "rush_yds": -1.1066637840062459,
+        "targets": 0.010000000000000009,
+        "receptions": 0.04249999999999998,
+        "rec_yds": 0.5150000000000001,
+        "anytime_td": -0.0050000000000000044
       },
       "context": {
         "opponent": {
@@ -3041,27 +3041,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -3069,15 +3069,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -3122,7 +3122,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.01
+      "p_ceiling": 0.005
     },
     {
       "player_id": "00-0040466",
@@ -3134,12 +3134,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 3.1,
-        "rush_yds": 12.573873138127313,
-        "targets": 1.44,
+        "rush_att": 3.205,
+        "rush_yds": 11.957506807826947,
+        "targets": 1.49,
         "receptions": 1.2475,
-        "rec_yds": 8.3625,
-        "anytime_td": 0.22
+        "rec_yds": 8.0075,
+        "anytime_td": 0.23
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3165,14 +3165,14 @@
         ],
         "rush_yds": [
           0.9303642721514838,
-          3.721457088605935,
+          4.651821360757419,
           10.234006993666322,
-          18.607285443029678,
-          26.98056389239303
+          16.74655689872671,
+          25.119835348090064
         ],
         "targets": [
           0.0,
-          0.0,
+          1.0,
           1.0,
           2.0,
           3.0
@@ -3187,9 +3187,9 @@
         "rec_yds": [
           0.0,
           0.0,
-          4.0,
+          5.0,
           12.0,
-          23.0
+          21.0
         ],
         "anytime_td": [
           0.0,
@@ -3212,12 +3212,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.05750000000000011,
-        "rush_yds": 0.05582185632910175,
-        "targets": 0.014999999999999902,
+        "rush_att": 0.047499999999999876,
+        "rush_yds": -0.5605444739712642,
+        "targets": 0.06499999999999995,
         "receptions": 0.050000000000000044,
-        "rec_yds": 0.6100000000000003,
-        "anytime_td": -0.017499999999999988
+        "rec_yds": 0.2549999999999999,
+        "anytime_td": -0.007499999999999979
       },
       "context": {
         "opponent": {
@@ -3243,27 +3243,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -3271,15 +3271,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -3324,7 +3324,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.015
+      "p_ceiling": 0.0175
     },
     {
       "player_id": "00-0040663",
@@ -3336,12 +3336,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.155,
-        "rush_yds": 0.3562682013590348,
-        "targets": 5.135,
-        "receptions": 3.86,
-        "rec_yds": 30.7975,
-        "anytime_td": 0.2275
+        "rush_att": 0.1425,
+        "rush_yds": 0.29509083344889747,
+        "targets": 5.43,
+        "receptions": 4.07,
+        "rec_yds": 33.9675,
+        "anytime_td": 0.2175
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3370,28 +3370,28 @@
           0.0,
           0.0,
           0.0,
-          0.7197337401192623
+          0.0
         ],
         "targets": [
           2.0,
           4.0,
           5.0,
           7.0,
-          8.0
+          9.0
         ],
         "receptions": [
-          1.0,
+          2.0,
           2.0,
           4.0,
           5.0,
           7.0
         ],
         "rec_yds": [
-          6.0,
-          14.0,
-          26.0,
-          42.0,
-          64.0
+          8.0,
+          15.0,
+          29.0,
+          45.0,
+          67.0
         ],
         "anytime_td": [
           0.0,
@@ -3414,12 +3414,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.007500000000000007,
-        "rush_yds": -0.06297670226043556,
-        "targets": -0.2400000000000002,
-        "receptions": -0.16749999999999998,
-        "rec_yds": -2.467500000000001,
-        "anytime_td": 0.0
+        "rush_att": -0.0050000000000000044,
+        "rush_yds": -0.1241540701705729,
+        "targets": 0.054999999999999716,
+        "receptions": 0.042500000000000426,
+        "rec_yds": 0.7025000000000006,
+        "anytime_td": -0.010000000000000009
       },
       "context": {
         "opponent": {
@@ -3445,27 +3445,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -3473,15 +3473,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -3526,7 +3526,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.215
+      "p_ceiling": 0.2425
     },
     {
       "player_id": "00-0040782",
@@ -3538,12 +3538,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 0.2,
-        "rush_yds": 0.7270764782760344,
-        "targets": 2.115,
-        "receptions": 1.6325,
-        "rec_yds": 16.815,
-        "anytime_td": 0.1575
+        "rush_att": 0.17,
+        "rush_yds": 0.694706635065115,
+        "targets": 2.1475,
+        "receptions": 1.5775,
+        "rec_yds": 16.9825,
+        "anytime_td": 0.1525
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3590,10 +3590,10 @@
         ],
         "rec_yds": [
           0.0,
-          5.0,
+          6.0,
           13.0,
           24.0,
-          39.0
+          40.0
         ],
         "anytime_td": [
           0.0,
@@ -3616,12 +3616,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.004999999999999977,
-        "rush_yds": -0.12698938490437628,
-        "targets": -0.04999999999999982,
-        "receptions": 0.050000000000000044,
-        "rec_yds": 0.6675000000000004,
-        "anytime_td": 0.0025000000000000022
+        "rush_att": -0.034999999999999976,
+        "rush_yds": -0.15935922811529568,
+        "targets": -0.01750000000000007,
+        "receptions": -0.0050000000000001155,
+        "rec_yds": 0.8350000000000009,
+        "anytime_td": -0.0025000000000000022
       },
       "context": {
         "opponent": {
@@ -3647,27 +3647,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -3675,15 +3675,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -3728,7 +3728,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.04
+      "p_ceiling": 0.02
     },
     {
       "player_id": "00-0040784",
@@ -3740,12 +3740,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 13.5925,
-        "rush_yds": 42.77992218446628,
-        "targets": 2.9375,
-        "receptions": 2.6025,
-        "rec_yds": 17.2575,
-        "anytime_td": 0.3975
+        "rush_att": 14.26,
+        "rush_yds": 47.065819116102126,
+        "targets": 2.9325,
+        "receptions": 2.5775,
+        "rec_yds": 16.38,
+        "anytime_td": 0.4325
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3764,17 +3764,17 @@
         ],
         "rush_att": [
           9.0,
-          11.0,
+          12.0,
           14.0,
-          16.0,
-          18.0
+          17.0,
+          19.0
         ],
         "rush_yds": [
-          19.279788266468188,
-          29.30527816503164,
-          40.10195959425383,
-          53.212215615452195,
-          68.63604622862674
+          21.59336285844437,
+          31.618852757007826,
+          44.72910877820619,
+          59.38174786072201,
+          75.57677000455529
         ],
         "targets": [
           1.0,
@@ -3792,10 +3792,10 @@
         ],
         "rec_yds": [
           0.0,
-          6.0,
-          15.0,
-          26.0,
-          37.0
+          5.0,
+          13.0,
+          25.0,
+          35.0
         ],
         "anytime_td": [
           0.0,
@@ -3818,12 +3818,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.3500000000000014,
-        "rush_yds": -0.8714464296443154,
-        "targets": 0.07249999999999979,
-        "receptions": 0.11249999999999982,
-        "rec_yds": 0.6374999999999993,
-        "anytime_td": -0.03999999999999998
+        "rush_att": 0.317499999999999,
+        "rush_yds": 3.4144505019915314,
+        "targets": 0.0674999999999999,
+        "receptions": 0.08749999999999991,
+        "rec_yds": -0.240000000000002,
+        "anytime_td": -0.0050000000000000044
       },
       "context": {
         "opponent": {
@@ -3835,12 +3835,12 @@
           "reason": null
         },
         "injury_designation": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "listed",
+          "reason": null
         },
         "injury_trend": {
-          "value": null,
-          "reason": "this generation carried no T-90 designation for the player (no injury snapshot reached the population provider, or he had none)"
+          "value": "lp_flat",
+          "reason": null
         },
         "line_label": {
           "value": "SAME-CUTOFF",
@@ -3849,27 +3849,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -3877,15 +3877,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -3930,7 +3930,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.17
+      "p_ceiling": 0.2225
     },
     {
       "player_id": "00-0041037",
@@ -3943,11 +3943,11 @@
         "pass_yds": 0.0,
         "pass_tds": 0.0,
         "rush_att": 0.005,
-        "rush_yds": 0.01742991557511042,
-        "targets": 6.375,
-        "receptions": 4.1025,
-        "rec_yds": 52.365,
-        "anytime_td": 0.225
+        "rush_yds": 0.05228974672533125,
+        "targets": 6.415,
+        "receptions": 4.0975,
+        "rec_yds": 53.5675,
+        "anytime_td": 0.2675
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -3980,7 +3980,7 @@
         ],
         "targets": [
           3.0,
-          5.0,
+          4.0,
           6.0,
           8.0,
           10.0
@@ -3993,17 +3993,17 @@
           7.0
         ],
         "rec_yds": [
-          16.0,
-          29.0,
-          50.0,
-          70.0,
-          92.0
+          14.0,
+          26.0,
+          47.0,
+          75.0,
+          101.0
         ],
         "anytime_td": [
           0.0,
           0.0,
           0.0,
-          0.0,
+          1.0,
           1.0
         ]
       },
@@ -4021,11 +4021,11 @@
         "pass_yds": 0.0,
         "pass_tds": 0.0,
         "rush_att": -0.007500000000000001,
-        "rush_yds": 0.007469963817904464,
-        "targets": -0.15500000000000025,
-        "receptions": -0.15749999999999975,
-        "rec_yds": -5.714999999999996,
-        "anytime_td": 0.03
+        "rush_yds": 0.0423297949681253,
+        "targets": -0.11500000000000021,
+        "receptions": -0.16249999999999964,
+        "rec_yds": -4.512499999999996,
+        "anytime_td": 0.07250000000000001
       },
       "context": {
         "opponent": {
@@ -4051,27 +4051,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -4079,15 +4079,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -4132,7 +4132,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.225
+      "p_ceiling": 0.29
     },
     {
       "player_id": "00-0041547",
@@ -4144,12 +4144,12 @@
       "proj": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": 1.4275,
-        "rush_yds": 5.324142955538049,
-        "targets": 5.0875,
-        "receptions": 4.15,
-        "rec_yds": 39.1075,
-        "anytime_td": 0.1875
+        "rush_att": 1.3425,
+        "rush_yds": 5.335803364989514,
+        "targets": 5.0775,
+        "receptions": 4.25,
+        "rec_yds": 38.095,
+        "anytime_td": 0.27
       },
       "stat_quantiles": {
         "pass_yds": [
@@ -4168,7 +4168,7 @@
         ],
         "rush_att": [
           0.0,
-          1.0,
+          0.0,
           1.0,
           2.0,
           3.0
@@ -4176,7 +4176,7 @@
         "rush_yds": [
           0.0,
           0.0,
-          2.798498268351146,
+          3.731331024468195,
           8.395494805053438,
           13.99249134175573
         ],
@@ -4184,7 +4184,7 @@
           2.0,
           3.0,
           5.0,
-          7.0,
+          6.0,
           8.0
         ],
         "receptions": [
@@ -4198,8 +4198,8 @@
           9.0,
           18.0,
           33.0,
-          55.0,
-          78.0
+          52.0,
+          74.0
         ],
         "anytime_td": [
           0.0,
@@ -4222,12 +4222,12 @@
       "movement": {
         "pass_yds": 0.0,
         "pass_tds": 0.0,
-        "rush_att": -0.1200000000000001,
-        "rush_yds": -0.6786358300751543,
-        "targets": 0.020000000000000462,
-        "receptions": -0.034999999999999254,
-        "rec_yds": -2.582499999999996,
-        "anytime_td": -0.04000000000000001
+        "rush_att": -0.20500000000000007,
+        "rush_yds": -0.6669754206236895,
+        "targets": 0.009999999999999787,
+        "receptions": 0.06500000000000039,
+        "rec_yds": -3.594999999999999,
+        "anytime_td": 0.04250000000000001
       },
       "context": {
         "opponent": {
@@ -4253,27 +4253,27 @@
       },
       "elements": {
         "line_spread": {
-          "value": 3.0,
+          "value": 2.5,
           "reason": null
         },
         "line_total": {
-          "value": 42.0,
+          "value": 42.5,
           "reason": null
         },
         "line_implied_total": {
-          "value": 19.5,
+          "value": 20.0,
           "reason": null
         },
         "team_plays": {
-          "value": 59.400279771664444,
+          "value": 59.666168366164456,
           "reason": null
         },
         "team_p_dropback": {
-          "value": 0.5868110903935474,
+          "value": 0.5884730284361648,
           "reason": null
         },
         "team_dropbacks": {
-          "value": 34.85674294249219,
+          "value": 35.11193079361889,
           "reason": null
         },
         "team_attempt_rate": {
@@ -4281,15 +4281,15 @@
           "reason": null
         },
         "team_attempts": {
-          "value": 30.454105549930023,
+          "value": 30.677061486062495,
           "reason": null
         },
         "team_targets": {
-          "value": 28.935954724908587,
+          "value": 29.147796207594773,
           "reason": null
         },
         "team_carries": {
-          "value": 26.54691351112232,
+          "value": 26.572628236429832,
           "reason": null
         },
         "target_share": {
@@ -4334,7 +4334,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.205
+      "p_ceiling": 0.2125
     }
   ]
 }

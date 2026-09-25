@@ -4821,7 +4821,12 @@ async function saveSlip() {
     legs: legs.map(function (leg) {
       return {
         player_id: leg.player_id, player_text: leg.text,
-        market: leg.market, side: leg.side,
+        market: leg.market,
+        /* m4.7 B2 — WHICH GAME, and it is looked up rather than
+         * guessed: a pasted leg was matched to a player on THIS
+         * slate, so the slate is where its game comes from. */
+        game_id: leg.game_id || slateGameIdOf(leg.player_id),
+        side: leg.side,
         line_placed: leg.line_placed,
         line_screened: leg.line_screened,
         blind_spot: leg.blind_spot,
@@ -5089,6 +5094,14 @@ function allProps() {
 
 function opponentOf(game, side) {
   return side === "away" ? game.home : game.away;
+}
+
+/* The slate's own id for the game a player is in, or null. One
+ * lookup, in one place, so every door that saves a bet names the
+ * game the same way. */
+function slateGameIdOf(playerId) {
+  const found = gameOfPlayer(playerId);
+  return found && found.game && found.game.game_id || null;
 }
 
 function gameOfPlayer(playerId) {
@@ -10712,6 +10725,13 @@ const SCREENS = {
 function consumerEnabled(){return !!(HOME_TIMELINE && window.ConsumerExperience);}
 function consumerModule(){return window.ConsumerExperience.configure({demo:DEMO,landingProvider:function(route){return alphaCompact().render(route);},esc,icon,nav,currentRoute,rootOf,openIn,selectTab,openSheet,render,scorecard:scorecardModule,events:timelineEvents,player:playerOf,tracked:function(){const rows=[];if(edgeEnabled())edgeModule().state.decisions.forEach(d=>rows.push({id:d.id,kind:'bet',title:d.legs.map(l=>l.player).join(' + '),value:d.legs.length===1?d.legs[0].side+' '+d.legs[0].line+' '+d.legs[0].market:d.legs.length+' legs',note:'Recorded · placement unconfirmed · live score not connected'}));const dfs=dfsScoreboardModule();if(dfs)dfs.state.saved.forEach((l,i)=>{const r=dfs.receipt(l);rows.push({id:l.id,kind:'dfs',title:'DFS lineup '+(i+1),value:r?r.actual_points+' points':'Score unavailable',note:r?'Sample '+r.status+' · '+(r.rank==null?'Not ranked':'#'+r.rank+' of '+r.field_size):'Sample score receipt unavailable'});});return rows;},snapshot:function(event){const d=HOME_PLAYER_MOCKS[event.player];const bet=event.tags.includes('bets');return{headline:bet?(nav.timeline.added?'5':'4')+' catches':d.actual+' points',outlook:bet?(nav.timeline.added?'Line crossed · Not settled':'Needs 1 more · Over 4.5 catches'):'Projected final '+d.ours[3]+' points',status:'HOU 17 · IND 14 · Q3 '+(nav.timeline.added?'6:20':'6:42')};},go:function(route){const owner=ROUTES[route].tab;if(ROUTES[route].root){nav.tab=owner;if(TAB_SUBS[owner])nav.subs[owner]=route;nav.stacks[owner]=[route];navigate(route,"tab");}else openIn(owner,route);},selectEvent:function(id){nav.homeContext.point=3;nav.homeContext.event=id;const event=timelineEvents().find(e=>e.id===id);nav.homeContext.view=id.indexOf("week-")===0?"comparison":"live";nav.homeContext.mode=event&&event.tags.includes("bets")?"betting":"fantasy";nav.homeSheet.expanded=false;nav.homeSheet.initial=false;selectTab("home");}});}
 
+/* THE PAGE'S CLOCK. One function, so "now" is asked for in one place
+ * and a test can stand the page at a moment of its choosing without
+ * reaching into Date. Nothing in the shipped app overrides it. */
+let NOW_OVERRIDE = null;
+function appNow() { return NOW_OVERRIDE == null ? Date.now() : NOW_OVERRIDE; }
+function setAppNow(value) { NOW_OVERRIDE = value == null ? null : Number(value); }
+
 function alphaCompact() {
   if (!window.AlphaCompact) return null;
   return window.AlphaCompact.configure({
@@ -10721,6 +10741,11 @@ function alphaCompact() {
     identityReady:function(){const token=readToken();return !!(token&&nav.meToken===token&&nav.me&&nav.me.user_id);},
     loadMe:loadMe,loadPicks:loadPicks,snapshot:memberSnapshot,current:memberCurrent,note:serviceNote,
     request:picksAsk,week:slateWeekNumbers,labelTitle:labelTitle,loadLive:loadLive,
+    /* m4.7 B1 — THE CLOCK, supplied rather than reached for, so a
+     * harness can stand the page at a chosen moment. `appNow` is the
+     * real one unless something has set it, and nothing in the shipped
+     * app does. */
+    now:appNow,
     liveChart:liveChart,liveSwings:liveSwings,liveState:stateWord,statline:statline,
     yourNumber:yourNumber,plainNote:plainNote,dfsBucket:bucketWords,
     loadRecord:loadRecord,loadTeams:loadTeams,
