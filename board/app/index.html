@@ -74,6 +74,14 @@
   <nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
   <div class="timeline-status" id="timeline-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- m4.6's floating feedback button, above the tab bar and clear of
+       the safe-area inset. It is chrome like the tab bar is: written
+       by app.js on every render, empty and hidden until there is
+       somebody signed in to send a note. It sits BEFORE the toast and
+       the sheet in this document on purpose, so both of those draw
+       over it rather than under it. -->
+  <div class="feedbackdock" id="feedbackdock" hidden></div>
+
   <!-- The sec 2.5 toast, above the tab bar, and the sec 2.4 sheet
        over its scrim. Both are empty and hidden until something asks
        for them. -->

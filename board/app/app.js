@@ -2098,6 +2098,160 @@ const DEMO_ACCOUNT = {
 };
 
 /* ------------------------------------------------------------------
+ * m4.6 — IN-APP FEEDBACK (FEEDBACK_M46_SPEC, under D-172)
+ * ------------------------------------------------------------------
+ * A button that is always there, and one screen for the owner that
+ * lists what it captured.
+ *
+ * WHAT A NOTE IS WORTH DEPENDS ON KNOWING WHERE IT WAS WRITTEN, so a
+ * note carries the screen it was sent from — and the screen is named
+ * in the WORDS THE READER SAW AT THE TOP OF IT (AGENTS.md sec 9). The
+ * map below is those words, one row per route, and a reader is never
+ * shown the route name itself: that is the app's own key for a screen
+ * and it is a code, whatever it happens to spell.
+ *
+ * ONLY A SIGNED-IN MEMBER CAN SEND (owner's ruling) and ONLY THE OWNER
+ * CAN READ THE LIST (his other ruling). Both of those are the
+ * service's to enforce; the page simply does not draw what it has no
+ * business drawing. */
+
+const FEEDBACK_TITLE = "Send feedback";
+const FEEDBACK_ACTION = "Feedback";
+const FEEDBACK_ON = "You're on: ";
+const FEEDBACK_PLACEHOLDER =
+  "What worked, what didn't, what you'd change";
+/* D-173 — THE FOUR KINDS, in one tap, before anything can be sent.
+ * The KEY is what the service stores and the LABEL is what a person
+ * reads; the two are paired here, once, so a reworded label cannot
+ * become a second vocabulary. The order is the order they are drawn
+ * in, and it runs from the thing we most need to hear about to the
+ * thing that is nicest to. Each carries its own placeholder, so the
+ * box under the chips asks for the kind of thing that chip promised.
+ */
+const FEEDBACK_ASK = "What's this about?";
+const FEEDBACK_CATEGORIES = [
+  { key: "broken", label: "Something's broken",
+    hint: "What were you doing, and what happened instead?" },
+  { key: "confusing", label: "Confusing",
+    hint: "What did you expect it to say, or to do?" },
+  { key: "idea", label: "Idea",
+    hint: "What would you add, and what would it be for?" },
+  { key: "like", label: "I like this",
+    hint: "What works well here — it helps to know what to keep." }
+];
+const FEEDBACK_ALL = "All";
+const FEEDBACK_NEEDS_KIND = "Pick what this is about first.";
+const FEEDBACK_SEND = "Send";
+const FEEDBACK_SENDING = "Sending…";
+const FEEDBACK_CANCEL = "Cancel";
+const FEEDBACK_SENT_TOAST = "Thanks — sent.";
+const FEEDBACK_MAX_CHARS = 2000;
+/* THE ONE SENTENCE THIS PAGE SAYS FOR ITSELF, and it is about an
+ * empty box rather than about a refusal: the service's own words are
+ * what a refused note is answered with. */
+const FEEDBACK_NEEDS_WORDS =
+  "Say a little about what you'd change, then send it.";
+
+/* The owner's own screen. */
+const FEEDBACK_PAGE_TITLE = "Feedback";
+const FEEDBACK_LOADING = "Loading what people have sent.";
+const FEEDBACK_EMPTY = "No feedback yet.";
+const FEEDBACK_ONE = " note";
+const FEEDBACK_MANY = " notes";
+const FEEDBACK_SENT_FROM = "Sent from ";
+/* The separator this app already puts between facts on one line. */
+const FEEDBACK_DOT = " \u00b7 ";
+/* The way in from the owner's own area of the account screen. */
+const FEEDBACK_ADMIN_LINK = "Read the feedback people have sent";
+
+/* WHAT EVERY SCREEN IS CALLED, in the words its own heading uses. A
+ * route with no row here falls back to a readable version of its own
+ * name, which is a safety net rather than a plan: the test walks the
+ * route table and fails if a row is missing. */
+const PAGE_LABELS = {
+  home: "Home",
+  discover: "Discover",
+  livehub: TITLE_LIVE_CARD,
+  you: "Your activity",
+  matchups: "Browse matchups",
+  myteam: "My lineup",
+  "your-record": "Your performance",
+  "our-record": "Model performance",
+  mybets: "My bets",
+  edgebet: "One of my bets",
+  mypicks: "My picks",
+  contextnews: "What's changed",
+  bethistory: "Bet history",
+  fantasybrowse: "Find a player",
+  season: "Fantasy — season long",
+  dfs: "Fantasy — DFS",
+  projections: TITLE_PROJECTIONS,
+  projection: "One player's projection",
+  projectionrow: "Stat comparison",
+  betbuilder: "Build a bet",
+  betsparlay: "Parlay",
+  betsleg: "Edit a parlay leg",
+  betssim: "Parlay simulation",
+  betsrecommended: "Suggested parlays",
+  betssingle: "Single bet preview",
+  betspick: "Sample pick",
+  screen: "Screen bets",
+  live: TITLE_LIVE_CARD,
+  picks: "My picks",
+  pick: TITLE_PICK,
+  track: TITLE_TRACK,
+  team: TITLE_TEAM,
+  card: "Live bet card",
+  report: TITLE_REPORT,
+  account: ACCOUNT_TITLE,
+  feedback: FEEDBACK_PAGE_TITLE,
+  "fh-rankings": "Fantasy rankings",
+  "fh-league": "My league",
+  "fh-team-value": "Team value",
+  "fh-gut": "Gut check",
+  "fh-read": "Fantasy read",
+  "fh-luck": "Luck",
+  "fh-roles": "Player roles",
+  "fh-value": "Player value",
+  "fh-player": "One fantasy player",
+  "fh-trade": "Trades",
+  "fh-lineup": "Build a lineup",
+  "fh-lineup-confirm": "Confirm a lineup",
+  "fh-legacy-team": "My fantasy team",
+  "fh-dfs-scoreboard": "DFS entries",
+  "fh-dfs-stories": "DFS build",
+  "fh-dfs-story-read": "DFS story",
+  "fh-dfs-beliefs": "DFS beliefs",
+  "fh-dfs-close-calls": "DFS close calls",
+  "fh-dfs-lineups": "DFS lineups"
+};
+
+/* The one or two short words this app spells in capitals. A fallback
+ * label must still read like something a person would say. */
+const LABEL_WORDS = { dfs: "DFS" };
+
+/* THREE MADE-UP NOTES for sample mode, fabricated like every other
+ * fixture in this file and isolated to it: sample mode never asks the
+ * service for the list and never sends one. */
+const DEMO_FEEDBACK = [
+  { id: "demo-note-1", created_at: "2026-09-25T14:05:00Z",
+    who: "Sample member", category: "idea",
+    page: { route: "live", hash: "#/bets/live", label: "Live" },
+    text: "The live screen is the one I keep open. Could the line I need sit next to the score?" },
+  /* The sample reader IS the owner, so his own note says what the
+   * service says on this screen: "You". */
+  { id: "demo-note-2", created_at: "2026-09-24T21:10:00Z",
+    who: "You", category: "like",
+    page: { route: "projections", hash: "#/projections",
+      label: "Projections" },
+    text: "Checking that a note I send myself shows up in this list." },
+  { id: "demo-note-3", created_at: "2026-09-23T16:40:00Z",
+    who: "Sample member", category: "confusing",
+    page: { route: "home", hash: "#/home", label: "Home" },
+    text: "I could not tell which week the home screen was showing me." }
+];
+
+/* ------------------------------------------------------------------
  * THE ROUTE TABLE — board 16's map, one row per screen
  * ------------------------------------------------------------------
  * `tab` is the tab a route BELONGS to. For a root that is simply its
@@ -2172,7 +2326,14 @@ const ROUTES = {
    * service token, and My picks is where this app has always managed
    * it. So the chevron pops back to the segment that sent the reader
    * here, which is the nav model's answer and not a new one. */
-  account: { tab: "bets", hash: "#/bets/account", root: false }
+  account: { tab: "bets", hash: "#/bets/account", root: false },
+  /* m4.6's own screen, and it is a DETAIL for the reason the account
+   * screen is one: the tab bar's slots are the five the handoff gave
+   * it, and this is the owner's own view rather than a sixth section
+   * of the product. The owner reaches it from the nav item consumer
+   * mode draws for him and from the link on his account screen; the
+   * chevron pops back to wherever he came from. */
+  feedback: { tab: "bets", hash: "#/feedback", root: false }
 };
 
 const TAB_ORDER = ["home", "fantasy", "projections", "bets"];
@@ -2401,6 +2562,12 @@ function freshUserScoped() {
     scorecardAsked: false,
     me: null,
     meToken: "",
+    /* WHETHER THE SERVICE HAS BEEN ASKED WHO THIS IS YET, either way
+     * it answered. It is not the same fact as `me`: a person the
+     * service could not tell us about and a person we have not asked
+     * about are different states, and m4.6's owner-only screen has to
+     * tell them apart — one of them waits, the other is sent home. */
+    meAsked: false,
 
     /* A3's.
      *
@@ -2442,7 +2609,23 @@ function freshUserScoped() {
       minted: null, rescue: null,
       push: { ready: null, note: "", on: false, device: false,
         busy: false }
-    }
+    },
+
+    /* m4.6's, and both halves belong to the signed-in reader.
+     *
+     * `feedback` is THE DRAFT: the words typed into the sheet, the
+     * page they were typed on (captured when the button was tapped,
+     * not when Send was), whether a send is in flight, and the
+     * service's own sentence if one came back. A draft is somebody's
+     * unsent words, so it leaves with them.
+     *
+     * `notes` is the owner's own list — OTHER PEOPLE'S WORDS — which
+     * is the strongest reason a field belongs in here: null means
+     * "not asked or not answered", a drawn state and not an empty
+     * list. */
+    feedback: { text: "", category: "", page: null, busy: false,
+      note: "" },
+    notes: { list: null, asked: false, note: "", filter: "" }
   };
 }
 
@@ -3234,10 +3417,12 @@ async function loadMe(token, refreshCurrent) {
     if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
     nav.me = answer;
     nav.meToken = answer && answer.user_id ? token : "";
+    nav.meAsked = true;
   } catch (err) {
     if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
     nav.me = null;
     nav.meToken = "";
+    nav.meAsked = true;
   }
 }
 
@@ -9166,7 +9351,12 @@ function adminView() {
     '<div class="card"><div class="overline">' + esc(ADMIN_OPEN) +
     '</div>' + openInviteRows() + '</div>' +
     '<div class="card"><div class="overline">' + esc(ADMIN_MEMBERS) +
-    '</div>' + memberRows() + '</div>';
+    '</div>' + memberRows() + '</div>' +
+    /* m4.6 — THE WAY IN FROM HERE, and it is the ONLY way in when the
+     * classic tab bar is up: that bar's five slots are the handoff's
+     * five and this screen is where the owner's own views live. */
+    '<button class="ghost wide" data-act="open" data-route="feedback">' +
+    esc(FEEDBACK_ADMIN_LINK) + '</button>';
 }
 
 function renderAccount() {
@@ -10021,6 +10211,440 @@ function hubToggle(){return '<div class="fh-subnav">'+['season','dfs'].map(p=>'<
 function renderHubRoot(page){const content=page==='dfs'?(fantasyDfsModule()?'<div class="page fh-page">'+fantasyDfsModule().render('dfs')+'</div>':''):fantasyHubModule().render('home');return '<header class="fh-root-head"><h1>Fantasy</h1></header>'+hubToggle()+content;}
 function renderHubRoute(){const route=currentRoute();if(route==='fh-legacy-team')return heldTeam('season_long')?renderLegacyFantasySeason(true):fantasyHubModule().render('matchup');return route.indexOf('fh-dfs-')===0?'<div class="page fh-page">'+fantasyDfsModule().render(route.slice(7))+'</div>':fantasyHubModule().render(route.slice(3));}
 
+/* ------------------------------------------------------------------
+ * m4.6 — THE FEEDBACK BUTTON, ITS SHEET, AND THE OWNER'S LIST
+ * ------------------------------------------------------------------
+ * FEEDBACK_M46_SPEC §F2 and §F3, under D-172.
+ *
+ * THE BUTTON IS SHOWN TO A SIGNED-IN MEMBER AND IN SAMPLE MODE, and to
+ * nobody else: without a token there is nowhere for a note to go, and
+ * a button that opened a sheet with no destination would be the
+ * promise §F2 says not to make. It hides while its own sheet is up,
+ * because the sheet is already the button's answer.
+ *
+ * THE PAGE IS CAPTURED WHEN THE BUTTON IS TAPPED, not when Send is:
+ * the screen a person was looking at when they decided to say
+ * something is the screen the note is about, and a sheet is not a
+ * screen.
+ *
+ * THE LIST IS THE OWNER'S. A member who types the address is sent
+ * Home and NOTHING IS ASKED FOR — the page does not knock on a door
+ * it knows is not its own, and the service refuses it anyway. */
+
+function feedbackDraft() { return nav.feedback; }
+
+/* THE LABEL FOR A STORED KEY. A key the app does not know is drawn as
+ * nothing at all rather than as itself: a reader never meets one of
+ * these keys (AGENTS.md §9). */
+function categoryLabel(key) {
+  const found = FEEDBACK_CATEGORIES.filter(function (kind) {
+    return kind.key === String(key || "");
+  })[0];
+  return found ? found.label : "";
+}
+
+function categoryHint(key) {
+  const found = FEEDBACK_CATEGORIES.filter(function (kind) {
+    return kind.key === String(key || "");
+  })[0];
+  return found ? found.hint : FEEDBACK_PLACEHOLDER;
+}
+function notesState() { return nav.notes; }
+
+/* WHO MAY SEND. Sample mode is included so the design can be checked
+ * without a credential, and it writes nothing (`picksAsk` refuses). */
+function feedbackSendable() { return DEMO || !!readToken(); }
+
+/* WHO MAY READ THE LIST. It is the owner, and the app learns that it
+ * IS the owner the same way the account screen does — from the answer
+ * `GET /invite-requests` gives (`account.admin`). In sample mode the
+ * made-up account is the owner's, which is what lets this screen be
+ * looked at offline. */
+function feedbackOwner() {
+  if (DEMO) return !!DEMO_ACCOUNT.admin;
+  const token = readToken();
+  if (!token) return false;
+  /* TWO WAYS TO KNOW, and both are answers the app already had: the
+   * account screen's own list says `admin`, and `GET /me` — asked at
+   * boot for anybody signed in — says `is_owner`. No request is added
+   * for this screen's sake. */
+  return !!accountState().admin
+    || !!(nav.meToken === token && nav.me && nav.me.is_owner);
+}
+
+/* WHETHER WE KNOW YET. A reader with no token is certainly not the
+ * owner; otherwise the answer is known once the service has been asked
+ * who this is, either way it replied. Until then this screen WAITS
+ * rather than sending somebody home who may well own it — which is
+ * what a typed address or a bookmark reaches it with. */
+function feedbackOwnerKnown() {
+  return DEMO || !readToken() || accountState().asked || nav.meAsked;
+}
+
+/* WHAT THIS SCREEN IS CALLED, in the words the reader saw. Never the
+ * route: that is the app's key for a screen and a reader would have to
+ * decode it (AGENTS.md §9). */
+function pageLabel(route) {
+  const known = PAGE_LABELS[route];
+  if (known) return known;
+  const words = String(route || "").replace(/^fh-/, "")
+    .replace(/[-_]+/g, " ").trim();
+  if (!words) return "This screen";
+  const said = words.split(" ").map(function (word) {
+    return LABEL_WORDS[word] || word;
+  }).join(" ");
+  return (said.charAt(0).toUpperCase() + said.slice(1)).slice(0, 80);
+}
+
+/* The address the reader is standing at, as the browser has it. A
+ * hash this page cannot read falls back to the route table's own,
+ * because the note still needs somewhere to point. */
+function pageHash(route) {
+  let where = "";
+  try {
+    where = String(window.location.hash || "");
+  } catch (err) {
+    where = "";
+  }
+  if (where.charAt(0) !== "#") {
+    where = ROUTES[route] ? ROUTES[route].hash : "#/home";
+  }
+  return where.slice(0, 200);
+}
+
+function renderFeedbackButton() {
+  const dock = el("feedbackdock");
+  if (!dock) return;
+  if (!feedbackSendable() || nav.sheet === "feedback") {
+    dock.hidden = true;
+    dock.innerHTML = "";
+    feedbackClearance(false);
+    return;
+  }
+  dock.innerHTML = '<button class="feedbackbtn" ' +
+    'data-act="feedback-open" aria-label="' + esc(FEEDBACK_TITLE) +
+    '">' + icon("alerts", 18) + '<span>' + esc(FEEDBACK_ACTION) +
+    '</span></button>';
+  dock.hidden = false;
+  feedbackClearance(true);
+}
+
+/* ROOM UNDER THE BUTTON, and only while it is there. A floating
+ * control that covers the last row of a list is a control that eats
+ * it — on Home that row's own add control sits exactly where this
+ * button does. So every scrolling surface gains the button's height
+ * plus a gap at its foot, which the reader can scroll into, and gives
+ * it straight back when the button is not drawn. */
+function feedbackClearance(on) {
+  const app = el("app");
+  if (!app || !app.classList) return;
+  if (on) app.classList.add("has-feedback");
+  else app.classList.remove("has-feedback");
+}
+
+function openFeedback() {
+  if (!feedbackSendable()) return;
+  const route = currentRoute();
+  nav.feedback = { text: "", category: "", busy: false, note: "",
+    page: { route: route, hash: pageHash(route),
+      label: pageLabel(route) } };
+  openSheet("feedback");
+  renderFeedbackButton();
+}
+
+/* ONE TAP CHOOSES, AND TAPPING THE SAME ONE AGAIN DOES NOT UNCHOOSE:
+ * a chip that could be turned back off would leave Send disabled with
+ * nothing on screen saying why. The sheet is redrawn so the chip, the
+ * placeholder under it and the Send button all follow the choice. */
+function feedbackKind(key) {
+  const draft = feedbackDraft();
+  if (!categoryLabel(key) || draft.busy) return;
+  draft.category = key;
+  draft.note = "";
+  renderSheet();
+}
+
+/* THE OWNER'S FILTER, and it is a view of the notes ALREADY LOADED:
+ * no second request, and the counts are counts of what is in his
+ * hands rather than a number the service worked out. */
+function feedbackFilter(key) {
+  const notes = notesState();
+  notes.filter = categoryLabel(key) ? key : "";
+  nav.motion = null;
+  render();
+}
+
+function shownNotes() {
+  const notes = notesState();
+  const held = notes.list || [];
+  if (!notes.filter) return held;
+  return held.filter(function (note) {
+    return note.category === notes.filter;
+  });
+}
+
+function categoryCount(list, key) {
+  return list.filter(function (note) {
+    return note.category === key;
+  }).length;
+}
+
+/* "All" and the four, each with how many of the loaded notes it holds.
+ * A kind nothing has been sent about still shows, with its zero, so
+ * the row does not change shape as notes arrive. */
+function feedbackFilters(list) {
+  const chosen = notesState().filter;
+  const rows = [{ key: "", label: FEEDBACK_ALL, count: list.length }]
+    .concat(FEEDBACK_CATEGORIES.map(function (kind) {
+      return { key: kind.key, label: kind.label,
+        count: categoryCount(list, kind.key) };
+    }));
+  return '<div class="fbfilters" role="group" aria-label="' +
+    esc(FEEDBACK_ASK) + '">' + rows.map(function (row) {
+      const on = chosen === row.key;
+      return '<button class="fbfilter" data-act="feedback-filter" ' +
+        'data-value="' + esc(row.key) + '" aria-pressed="' +
+        (on ? "true" : "false") + '">' + esc(row.label) +
+        '<span class="fbcount">' + esc(String(row.count)) +
+        '</span></button>';
+    }).join("") + '</div>';
+}
+
+function feedbackSheet() {
+  const draft = feedbackDraft();
+  const page = draft.page || {};
+  return '<div class="sheet feedbacksheet" role="dialog" ' +
+    'aria-modal="true" aria-label="' + esc(FEEDBACK_TITLE) + '">' +
+    '<div class="handle"></div>' +
+    '<div class="sheettitle">' + esc(FEEDBACK_TITLE) + '</div>' +
+    '<div class="cardbody">' +
+    esc(FEEDBACK_ON + (page.label || pageLabel(currentRoute()))) +
+    '</div>' +
+    /* ONE TAP, AND NOTHING IS CHOSEN FOR HIM (D-173). A preselected
+     * chip would be this app answering its own question and calling
+     * the answer his. */
+    '<div class="cardbody fbask" id="fbask">' + esc(FEEDBACK_ASK) +
+    '</div>' +
+    '<div class="fbchips" role="radiogroup" aria-labelledby="fbask">' +
+    FEEDBACK_CATEGORIES.map(function (kind) {
+      const on = draft.category === kind.key;
+      return '<button class="fbchip" role="radio" ' +
+        'data-act="feedback-kind" data-value="' + esc(kind.key) +
+        '" aria-checked="' + (on ? "true" : "false") + '"' +
+        (on ? ' data-on="1"' : "") + '>' + esc(kind.label) +
+        '</button>';
+    }).join("") + '</div>' +
+    '<textarea class="trackbox" id="feedbacktext" rows="4" ' +
+    'maxlength="' + FEEDBACK_MAX_CHARS + '" aria-label="' +
+    esc(FEEDBACK_TITLE) + '" placeholder="' +
+    esc(categoryHint(draft.category)) + '">' + esc(draft.text) +
+    '</textarea>' +
+    /* SEND IS SHUT UNTIL A CHIP IS CHOSEN, which is the owner's
+     * ruling written as a state rather than as a refusal after the
+     * fact. */
+    '<button class="primary" data-act="feedback-send"' +
+    (draft.busy || !draft.category ? " disabled" : "") + '>' +
+    esc(draft.busy ? FEEDBACK_SENDING : FEEDBACK_SEND) + '</button>' +
+    '<button class="ghost wide" data-act="sheet-close">' +
+    esc(FEEDBACK_CANCEL) + '</button>' +
+    (draft.note ? '<div class="legend">' + esc(draft.note) +
+      '</div>' : "");
+}
+
+/* THE SEND. It goes through the page's one transport, like every other
+ * call, and the draft is kept until the service says it has it: a note
+ * a person typed twice is a note this page lost once. */
+async function postFeedback() {
+  const draft = nav.feedback;
+  if (draft.busy) return;
+  if (DEMO) {
+    /* SAMPLE MODE WRITES NOTHING, and says so in the same sentence
+     * every other sample action says it in. */
+    closeSheet();
+    showToast(SERVICE_DEMO);
+    renderFeedbackButton();
+    return;
+  }
+  const token = readToken();
+  if (!token) {
+    closeSheet();
+    renderFeedbackButton();
+    return;
+  }
+  const text = String(draft.text || "").trim();
+  const kind = String(draft.category || "");
+  if (!kind) {
+    draft.note = FEEDBACK_NEEDS_KIND;
+    renderSheet();
+    return;
+  }
+  if (!text) {
+    draft.note = FEEDBACK_NEEDS_WORDS;
+    renderSheet();
+    return;
+  }
+  const started = memberSnapshot(token);
+  const page = draft.page || { route: currentRoute(),
+    hash: pageHash(currentRoute()),
+    label: pageLabel(currentRoute()) };
+  draft.busy = true;
+  draft.note = "";
+  renderSheet();
+  try {
+    await picksAsk("/feedback", token,
+      { text: text, category: kind, page: page });
+    if (!memberCurrent(started) || nav.feedback !== draft) return;
+    draft.busy = false;
+    draft.text = "";
+    draft.category = "";
+    draft.page = null;
+    draft.note = "";
+    closeSheet();
+    showToast(FEEDBACK_SENT_TOAST);
+    /* The owner's own list is one note out of date now. */
+    notesState().asked = false;
+    renderFeedbackButton();
+  } catch (err) {
+    if (!memberCurrent(started) || nav.feedback !== draft) return;
+    /* THE SHEET STAYS OPEN AND THE DRAFT STAYS IN IT, and what the
+     * reader is told is THE SERVICE'S OWN SENTENCE — this page has no
+     * wording of its own for a refusal. It is said in the sheet as
+     * well as in the toast, because the sheet's scrim is drawn over
+     * the toast and a sentence nobody can see is not an answer. */
+    draft.busy = false;
+    draft.note = serviceNote(err);
+    renderSheet();
+    showToast(serviceNote(err));
+  }
+}
+
+/* THE OWNER'S LIST, asked for ONCE the first time the screen is drawn
+ * — `syncAccount`'s rule, for the same reason. */
+async function loadFeedback(force) {
+  const notes = notesState();
+  /* ASKED ONCE COMES FIRST, BEFORE SAMPLE MODE AND BEFORE THE DRAW.
+   * `render()` calls `syncFeedback()`, which calls this — so a branch
+   * that draws before it checks whether it has already been asked
+   * calls `render` from inside `render` and never stops. Sample mode
+   * installs the fixture once and draws once, like every other arm. */
+  if (notes.asked && !force) return;
+  if (DEMO) {
+    notes.list = DEMO_FEEDBACK;
+    notes.asked = true;
+    notes.note = "";
+    render();
+    return;
+  }
+  const token = readToken();
+  if (!token || !feedbackOwner()) return;
+  const started = memberSnapshot(token);
+  notes.asked = true;
+  try {
+    const answer = await picksAsk("/feedback", token, null);
+    if (!memberCurrent(started)) return;
+    notes.list = (answer && answer.feedback) || [];
+    notes.note = "";
+  } catch (err) {
+    if (!memberCurrent(started)) return;
+    notes.list = null;
+    notes.note = serviceNote(err);
+  }
+  if (!memberCurrent(started)) return;
+  render();
+}
+
+function syncFeedback() {
+  if (currentRoute() !== "feedback") return;
+  loadFeedback(false);
+}
+
+/* WHEN a note was sent, in local time and in ordinary words. No clock
+ * arithmetic for the reader to do and no timezone to decode. */
+function noteWhen(stamp) {
+  const moment = new Date(String(stamp || "").replace(" ", "T"));
+  if (isNaN(moment.getTime())) return "";
+  const clock = moment.toLocaleTimeString(undefined,
+    { hour: "numeric", minute: "2-digit" });
+  const now = new Date();
+  const sameDay = moment.toDateString() === now.toDateString();
+  if (sameDay) return "Today " + clock;
+  const yesterday = new Date(now.getTime() - 86400000);
+  if (moment.toDateString() === yesterday.toDateString()) {
+    return "Yesterday " + clock;
+  }
+  const day = moment.toLocaleDateString(undefined,
+    { month: "short", day: "numeric" });
+  return day + ", " + clock;
+}
+
+function feedbackCount(notes) {
+  return notes.length + (notes.length === 1 ? FEEDBACK_ONE
+    : FEEDBACK_MANY);
+}
+
+/* THE THREE FACTS UNDER A NOTE, ON ONE LINE: where it was sent from,
+ * who sent it, and when. They are separated by the middle dot this app
+ * already separates facts on a line with, so the eye reads one
+ * sentence rather than three columns of uneven gaps — and the line
+ * wraps as a whole rather than leaving a separator stranded. */
+function noteFacts(note) {
+  const page = note.page || {};
+  const label = String(page.label || "");
+  const where = String(page.hash || "");
+  const facts = [];
+  if (label) {
+    facts.push(where
+      ? '<a class="fblink" href="' + esc(where) + '">' +
+        esc(FEEDBACK_SENT_FROM + label) + '</a>'
+      : '<span>' + esc(FEEDBACK_SENT_FROM + label) + '</span>');
+  }
+  if (note.who) {
+    facts.push('<span class="fbwho">' + esc(String(note.who)) +
+      '</span>');
+  }
+  const when = noteWhen(note.created_at);
+  if (when) facts.push('<span class="fbwhen">' + esc(when) + '</span>');
+  return facts.join('<span class="fbdot" aria-hidden="true">' +
+    FEEDBACK_DOT + '</span>');
+}
+
+function noteCard(note) {
+  const label = categoryLabel(note.category);
+  return '<div class="card fbnote">' +
+    (label ? '<span class="fbtag" data-kind="' +
+      esc(String(note.category)) + '">' + esc(label) + '</span>' : "") +
+    '<p class="fbtext">' + esc(String(note.text || "")) + '</p>' +
+    '<div class="fbmeta">' + noteFacts(note) + '</div></div>';
+}
+
+function renderFeedback() {
+  const notes = notesState();
+  const head = '<div class="page">' +
+    detailHead(FEEDBACK_PAGE_TITLE) +
+    (DEMO ? '<div class="card"><div class="cardbody">' +
+      esc(SERVICE_DEMO) + '</div></div>' : "");
+  if (notes.note) {
+    return head + '<div class="card"><div class="cardbody">' +
+      esc(notes.note) + '</div>' +
+      '<button class="primary" data-act="feedback-retry">' +
+      esc(ACCOUNT_RETRY) + '</button></div></div>';
+  }
+  if (notes.list === null) {
+    return head + '<p class="legend">' + esc(FEEDBACK_LOADING) +
+      '</p></div>';
+  }
+  if (!notes.list.length) {
+    return head + '<p class="legend">' + esc(FEEDBACK_EMPTY) +
+      '</p></div>';
+  }
+  const shown = shownNotes();
+  return head + feedbackFilters(notes.list) +
+    '<div class="overline">' + esc(feedbackCount(shown)) + '</div>' +
+    (shown.length ? shown.map(noteCard).join("")
+      : '<p class="legend">' + esc(FEEDBACK_EMPTY) + '</p>') +
+    '</div>';
+}
+
 const SCREENS = {
   "your-record":function(){return scorecardModule().member();},
   "our-record":function(){return scorecardModule().publicRecord();},
@@ -10077,7 +10701,8 @@ const SCREENS = {
   team: renderTeam,
   card: renderLiveCard,
   report: renderReport,
-  account: renderAccount
+  account: renderAccount,
+  feedback: renderFeedback
 };
 
 /* ------------------------------------------------------------------
@@ -10117,10 +10742,40 @@ function realCompactScreen(route) {
   return null;
 }
 
+/* m4.6 — THE OWNER'S SIXTH NAV ITEM. It is APPENDED to the consumer
+ * navigation rather than written into it, because the five items that
+ * navigation draws are the product's five sections and this is the
+ * owner's own view: the least invasive shape is the honest one here.
+ * It is drawn for nobody else, and the classic tab bar's five slots
+ * are untouched — in classic mode the owner reaches the screen from
+ * the link on his account screen. */
+function feedbackNavItem() {
+  if (!feedbackOwner()) return "";
+  const here = currentRoute() === "feedback";
+  return '<button class="tab" data-act="open" data-route="feedback" ' +
+    'aria-label="' + esc(FEEDBACK_PAGE_TITLE) + '"' +
+    (here ? ' aria-current="page"' : "") + '>' + icon("alerts") +
+    '<span class="tablabel">' + esc(FEEDBACK_PAGE_TITLE) +
+    '</span></button>';
+}
+
 function renderTabBar() {
   const bar = el("tabbar");
   if (!bar) return;
-  if(consumerEnabled()){bar.innerHTML=consumerModule().navigation();return;}
+  if(consumerEnabled()){
+    const item = feedbackNavItem();
+    let items = consumerModule().navigation();
+    /* Standing on this screen, it is the item that is current and the
+     * section the router files it under is not. */
+    if (item && currentRoute() === "feedback") {
+      items = items.split(' aria-current="page"').join("");
+    }
+    const note = '<span class="cx-nav-note">';
+    bar.innerHTML = !item ? items
+      : items.indexOf(note) >= 0 ? items.replace(note, item + note)
+        : items + item;
+    return;
+  }
   bar.innerHTML = TAB_SLOTS.map(function (slot) {
     if (!slot.tab) {
       return '<div class="tabadd"><button class="addbtn" ' +
@@ -10167,7 +10822,8 @@ function renderSheet() {
     node.innerHTML = "";
     return;
   }
-  const body = nav.sheet === "read" ? readSheet() : addSheet();
+  const body = nav.sheet === "read" ? readSheet()
+    : nav.sheet === "feedback" ? feedbackSheet() : addSheet();
   node.innerHTML = '<button class="scrim" data-act="sheet-close" ' +
     'aria-label="Close"></button>' + body;
   node.hidden = false;
@@ -10330,6 +10986,15 @@ function render() {
   if (betsDemoEnabled()) window.BetsBuilder.captureLadderScroll();
   applyPreviewTheme();
   const route = currentRoute();
+  /* m4.6 — THE LIST IS THE OWNER'S AND NOBODY ELSE IS SHOWN IT. A
+   * reader who types the address is sent Home, and NOTHING IS ASKED
+   * FOR on the way: this page does not knock on a door it already
+   * knows is not its own. */
+  if (route === "feedback" && feedbackOwnerKnown()
+      && !feedbackOwner()) {
+    selectTab("home");
+    return;
+  }
   const screen = el("screen");
   if (!screen) return;
   cleanupHomeSheet();
@@ -10365,6 +11030,7 @@ function render() {
   if(scorecardEnabled())scorecardModule().sync(currentRoute());
   renderToast();
   renderSheet();
+  renderFeedbackButton();
   renderSearch();
   /* U4: the poll follows the screen. Every render reconciles it, so
    * leaving the Live segment stops the asking without any screen
@@ -10382,6 +11048,9 @@ function render() {
    * the first time that screen is drawn, so a reader who never opens
    * it never asks the service who he is. */
   syncAccount();
+  /* m4.6: and the feedback list, on the same rule — and only for the
+   * owner, which `loadFeedback` checks before it asks anything. */
+  syncFeedback();
 }
 
 /* `syncDfs`'s shape, on the account screen: the lists follow the
@@ -10560,6 +11229,18 @@ function onClick(event) {
   } else if (act === "read-open") {
     readOpen(target.getAttribute("data-player"),
       target.getAttribute("data-market"));
+  } else if (act === "feedback-open") {
+    openFeedback();
+  } else if (act === "feedback-kind") {
+    feedbackKind(target.getAttribute("data-value"));
+  } else if (act === "feedback-filter") {
+    feedbackFilter(target.getAttribute("data-value"));
+  } else if (act === "feedback-send") {
+    postFeedback();
+  } else if (act === "feedback-retry") {
+    notesState().note = "";
+    notesState().list = null;
+    loadFeedback(true);
   } else if (act === "read-go") {
     postRead();
   } else if (act === "read-edit") {
@@ -10894,6 +11575,12 @@ function onInput(event) {
    * eat a sentence he is halfway through. */
   if (target.id === "readtext") {
     nav.read.text = target.value;
+    return;
+  }
+  /* m4.6's one field, on exactly the same rule: re-rendering the sheet
+   * under his caret would take the caret with it. */
+  if (target.id === "feedbacktext") {
+    nav.feedback.text = target.value;
     return;
   }
   /* A3's five fields, on the same rule as every other field in this
