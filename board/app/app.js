@@ -262,7 +262,7 @@ const ADD_READ_BUTTON = "+ Add your read";
  * what the toast says. */
 const READ_TITLE = "Your read";
 const READ_STEP_SAY = "Say it";
-const READ_STEP_CONFIRM = "Confirm";
+const READ_STEP_CONFIRM = "Review";
 const READ_HINT = "Say it your way. We'll work out how much it matters.";
 const READ_PLACEHOLDER = "What do you know about this player?";
 const READ_GO = "Review before saving";
@@ -288,47 +288,84 @@ const READ_NO_PICK =
 const READ_CONNECT_BODY =
   "Your reads are stored by the service, not in this browser. Paste the token and this sheet can save one; without it there is nowhere for a read to go and nothing is kept here instead.";
 
+/* A1 sec 4.1 — THE REVIEW STEP. Nothing is saved until the person has
+ * seen the assumption we would apply, its size, and the published
+ * numbers beside the adjusted ones. Every sentence under these
+ * headings is the preview's own; the headings are the only words this
+ * page contributes to the step. */
+const READ_PREVIEW_HEAD = "Here's what we'd apply";
+const READ_PREVIEW_APPLIED = "Applied";
+const READ_PREVIEW_NOTE = "Note only";
+const READ_PREVIEW_CHANGES = "What changes";
+const READ_PREVIEW_NOTES = "Worth knowing";
+const READ_PREVIEW_OTHERS_ONE =
+  "Also changes 1 other line in this game";
+const READ_PREVIEW_OTHERS = "Also changes {n} other lines in this game";
+const READ_EDIT_WORDS = "Edit words";
+const READ_SAVE_ANGLE = "Save angle";
+const READ_SAVE_NOTE = "Save as a note";
+const READ_SAMPLE_TRY = "Try the sample angle";
+const READ_SAMPLE_NOTE =
+  "Sample angle — these numbers were worked out by the real code on a fabricated game, and nothing here is saved.";
+
 /* ------------------------------------------------------------------
- * sec 6 — YOUR NUMBER (READS_R1_SPEC sec 6)
+ * sec 4 — THE OUTLOOK IF YOUR ANGLE HOLDS (ANGLES_A1_SPEC sec 4)
  * ------------------------------------------------------------------
- * THE STEP THE READ SHEET WOULD NOT MOCK IS BUILT. The effect library
- * exists, the service recomputes the published generation through it
- * and STORES the answer, and what is drawn below is that stored
- * answer — his probability beside the model's, on the side he took,
- * with the band the recompute ran at its own endpoints.
+ * ONE COMPONENT, EVERYWHERE, AND IT IS `angleOutlook`. R1d drew two
+ * percentages under the heading "Your number"; A1 draws the pair of
+ * outlooks the service now computes — the published mean and chance
+ * beside the adjusted ones, the band, the person's own words, the
+ * assumption we applied, and what changed on the team — and it draws
+ * them identically on the Bets card, in My bets, on the live card and
+ * in the read sheet.
  *
- * THE FOUR RULES THIS SURFACE KEEPS, and every one of them is the
+ * THE FIVE RULES THIS SURFACE KEEPS, and every one of them is the
  * reason it is one component rather than four renderers:
  *
- *   IT IS ALWAYS LABELLED HIS. "Your read applied — this is your
- *   number, not the model's" rides every appearance, fixed, because
- *   the one way this feature could do harm is by a reader coming away
- *   believing the engine said what his own read said.
+ *   IT IS NEVER THE MODEL'S. "This is the outlook if your angle holds
+ *   — not a more accurate forecast, and not the model's number" rides
+ *   every appearance, fixed, because the one way this feature could
+ *   do harm is by a reader coming away believing the engine said what
+ *   his own angle said.
  *
- *   IT COMPUTES NOTHING. The service stores the probability on the
- *   side the read was taken on — the complement is taken there, where
- *   the exporter's own clamp lives — so this page formats a stored
- *   number and never works one out. That is UI_ALPHA_SPEC sec 4's
- *   hard rule and it is why there is no arithmetic anywhere below.
+ *   THE PUBLISHED NUMBERS NEVER LEAVE THE SCREEN. Both columns are
+ *   always drawn: removing an angle returns the view to the left-hand
+ *   one, and while the angle is on, the left-hand one is still there.
  *
- *   THE SENTENCE FOR AN EMPTY ANSWER IS THE SERVICE'S, VERBATIM.
- *   There are three different facts — we cannot size this kind of
- *   read, this week's projection is not ready yet, nothing this read
- *   touches has a line posted — and the service knows which one is
- *   true. The page prints what it was handed. A fourth wording
- *   invented here would be this screen making a claim about our own
- *   capability that nothing behind it checked.
+ *   IT COMPUTES NOTHING. The service stores the mean and the
+ *   probability on the side the angle was taken on — the complement is
+ *   taken there, where the exporter's own clamp lives — so this page
+ *   FORMATS a stored number (a percent, a one-decimal mean) and never
+ *   works one out. That is UI_ALPHA_SPEC sec 4's hard rule and it is
+ *   why there is no probability arithmetic anywhere below.
  *
- *   A GAME-LEVEL READ IS SLATE-WIDE. One read about a game moves
+ *   EVERY SENTENCE IS THE SERVICE'S, VERBATIM. The assumption, the
+ *   team-level changes, the notes and the three empty answers are all
+ *   built over there, where what is true is known. The page prints
+ *   what it was handed; a wording invented here would be this screen
+ *   making a claim nothing behind it checked.
+ *
+ *   A GAME-LEVEL ANGLE IS SLATE-WIDE. One angle about a game moves
  *   every player in it whose opportunity it touches, so a row it
  *   reaches says so and opens onto the same component. */
-const YOUR_NUMBER_HEAD = "Your number";
-const YOUR_NUMBER_WITH = "With your read: ";
-const YOUR_NUMBER_MODEL = "the model says ";
-const YOUR_NUMBER_LABEL =
-  "your read applied — this is your number, not the model's";
-const YOUR_NUMBER_BAND = "could land ";
-const YOUR_NUMBER_TOUCH = "your read touches this game";
+const ANGLE_HEAD = "Your angle";
+const ANGLE_PUBLISHED = "Published";
+const ANGLE_MINE = "If your angle holds";
+const ANGLE_CHANCE = " chance";
+const ANGLE_LABEL =
+  "This is the outlook if your angle holds — not a more accurate forecast, and not the model's number.";
+const ANGLE_BAND = "could land ";
+const ANGLE_TOUCH = "your angle touches this game";
+const ANGLE_WORDS = "Your angle: ";
+const ANGLE_CHANGED = "What changed";
+const ANGLE_EDIT = "Edit angle";
+const ANGLE_REMOVE = "Remove angle";
+const ANGLE_REMOVED_TOAST =
+  "Angle removed. Showing the published outlook.";
+const ANGLE_REMOVE_BUSY = "Removing…";
+/* The compact Bets card's marker, for a line an angle reached that
+ * the card is not standing on (sec 4.3). It expands to the block. */
+const ANGLE_MARKER = "Your angle on this game changes this line";
 
 /* The deferrals, each named where it would have been. */
 const DEFER_MATCHUP =
@@ -1070,14 +1107,21 @@ const PROJ_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
 const SERVICE_URL = "https://fantasy-edge-production-ab88.up.railway.app";
 const PICKS_TOKEN_KEY = "fe.reads.token.v1";
 
-/* THE FABRICATED ANSWER, on the one switch the other three documents
- * use. `GET /scenarios` is a service answer rather than an exported
- * document, so demo mode cannot simply point at a different file on
- * the same path — it stands one in for the answer, which is what lets
- * the whole of "your number" be looked at offline without a token and
- * without a row of anybody's real reads on screen. Demo never asks
- * the service and the service never fills a demo screen. */
-const DEMO_SCENARIOS_URL = "../demo/scenarios.demo.json";
+/* THE SAMPLE ANGLE, on the one switch the other three documents use.
+ * `POST /read/preview` and `GET /scenarios` are service answers
+ * rather than exported documents, so demo mode cannot simply point at
+ * a different file on the same path — it stands one in for both, which
+ * is what lets the whole angle flow be looked at offline without a
+ * token and without a row of anybody's real angles on screen. Demo
+ * never asks the service and the service never fills a demo screen.
+ *
+ * AND THE FILE IS NOT HAND-WRITTEN (A1 sec 4.6). It is produced by
+ * `tests/generate_angle_demo_fixture.py`, which runs the REAL effect
+ * library, recompute and scenario builder over a synthetic pick'em
+ * game of fictional players; a test re-runs the generator and asserts
+ * the committed bytes. The sample screens therefore show what the
+ * mechanism actually does rather than a picture of it. */
+const DEMO_SCENARIOS_URL = "../demo/angle-preview.demo.json";
 
 /* THE ONE DISPLAY RULE THIS FILE OWNS (handoff sec 7.3): a gap under
  * three points is not an edge and is never drawn as one. It lives
@@ -2021,14 +2065,17 @@ const DEMO_SCORECARD = {
     reads: { hit: 5, missed: 4, returned: 0, pending: 1, unsettled: 1,
       sentence: "Season so far: 5 of 9 graded reads hit. 1 is waiting on a game." }
   },
-  read_notes: [
-    { read_id: "demo-read-1", player_id: "demo-player-1",
-      market: "player_receptions", outcome: "hit",
-      sentence: "Your read said 61%, the model said 55%, and it hit." },
-    { read_id: "demo-read-2", player_id: "demo-player-2",
-      market: "player_pass_yds", outcome: "missed",
-      sentence: "Your read said 58%, the model said 62%, and it missed." }
-  ],
+  /* THE MODEL-AGREEMENT NOTES AND THE REVIEW BESIDE THEM ARE NOT
+   * TYPED HERE. They used to be, and they described sample rows that
+   * had since been retired: the lines quoted percentages and a result
+   * that belonged to no angle on the sample board, which is the
+   * defect the generated fixture exists to make impossible. They are
+   * now produced by the service's own builders over the sample's own
+   * numbers — `agreement_sentence` and the §3.7 review — written into
+   * `angle-preview.demo.json` by the generator and filled in below
+   * when that file loads. Until it does, the block simply draws no
+   * notes, which is the same thing an empty list has always meant. */
+  read_notes: [],
   /* THE READS' OWN MARKS, which is the half of `marks` no other
    * answer carries — and all three states the block has to draw:
    * a read that hit, one that missed, and one the banked data could
@@ -2036,13 +2083,13 @@ const DEMO_SCORECARD = {
    * `read_id`s are the bundled scenarios file's own, so the marks
    * land under the sample numbers they belong to. */
   marks: [
-    { subject_kind: "read", subject_id: "sample-read-001",
+    { subject_kind: "read", subject_id: "sample-read-angle-001",
       outcome: "hit", word: "Hit",
-      sentence: "You needed over 5.5 receptions and he finished on 7." },
-    { subject_kind: "read", subject_id: "sample-read-002",
+      sentence: "You needed over 80.5 rushing yards and he finished on 96." },
+    { subject_kind: "read", subject_id: "sample-read-angle-002",
       outcome: "missed", word: "Missed",
-      sentence: "You needed under 3.5 receptions and he finished on 5." },
-    { subject_kind: "read", subject_id: "sample-read-003",
+      sentence: "You needed under 2.5 receptions and he finished on 4." },
+    { subject_kind: "read", subject_id: "sample-read-angle-003",
       outcome: "unsettled", word: "Not graded",
       sentence: "The sample box score carries no line for this player, so this one is not graded." }
   ],
@@ -2545,6 +2592,11 @@ function freshUserScoped() {
     scenarios: null,
     scenarioReason: null,
     scenariosAsked: false,
+    /* A1: the bundled sample preview, held only in demo, and the id
+     * of an angle a withdrawal is in flight for — so the button that
+     * was pressed says so and cannot be pressed twice. */
+    anglePreview: null,
+    angleBusy: "",
 
     /* m4.4's, and it is the service's answer held for the visit.
      *
@@ -3996,8 +4048,14 @@ async function toggleWatch(playerId, market, line, side) {
  * so a read opened from a pick card arrives attached to that bet
  * without the service learning a new field for it.
  *
- * Review is local. Only Confirm sends the text; that single service
- * transaction banks it and creates generation-bound scenarios. */
+ * A1 sec 4.1 MOVES THE REVIEW ONTO THE SERVICE. Reviewing the raw
+ * words was reviewing the wrong thing: interpretation happened inside
+ * the save, so what a person confirmed was his sentence rather than
+ * the assumption we would apply or its size. "Continue" now asks
+ * `POST /read/preview`, WHICH WRITES NOTHING, and the step draws the
+ * assumption, the outlook beside the published numbers, what changes
+ * on the team and the notes. Saving sends `POST /read` with that
+ * preview's id, so exactly what was on screen is what is banked. */
 
 function readOpen(playerId, market, terms) {
   const person = playerOf(playerId);
@@ -4012,25 +4070,41 @@ function readOpen(playerId, market, terms) {
     market: market ? (canonical || market) : prop ? (serviceMarket(prop.market) || prop.market) : null,
     line: terms ? numberOrNull(terms.line) : prop ? numberOrNull(prop.line) : null,
     side: terms ? terms.side : prop ? prop.lean : null,
-    step: 1, text: "", saved: null, spans: [], pending: null,
+    step: 1, text: (terms && terms.text) || "", saved: null,
+    spans: [], pending: null, preview: null,
+    /* SEC 4.5 — EDIT IS A REPLACEMENT, NOT A SECOND ANGLE. The old
+     * read's id travels with the new save, so the service banks the
+     * new one and the withdrawal of the old one in ONE transaction and
+     * the conflict check ignores the angle being replaced. */
+    replaces: (terms && terms.replaces) || null,
     reviewMember: null, submitted: false, busy: false, note: ""
   };
   openSheet("read");
 }
 
-/* Review first; one POST after explicit confirmation. A lost reply can
- * still mean a banked read, so this draft never silently retries it. */
+/* THE REVIEW ASKS THE SERVICE AND WRITES NOTHING; the save sends that
+ * preview's id. A lost reply can still mean a banked read, so this
+ * draft never silently retries one. */
 async function postRead(confirmed) {
   if (fantasyHubActive()) return;
   const token = readToken();
   const draft = nav.read;
   if (draft.busy || draft.saved || draft.submitted) return;
+  const text = String(draft.text || "").trim();
   if (DEMO) {
-    draft.note = READ_DEMO;
+    /* THE SAMPLE ANGLE, AND ONLY THE SAMPLE ANGLE. A fabricated slate
+     * has no service to preview against, so the demo sheet shows the
+     * bundled preview — real code's output over a fabricated game —
+     * and says so. Nothing is sent and nothing is saved. */
+    const sample = anglePreview();
+    if (!sample) { draft.note = READ_DEMO; renderSheet(); return; }
+    draft.text = text || String(sample.text || "");
+    draft.preview = sample;
+    draft.step = 2;
+    draft.note = READ_SAMPLE_NOTE;
     renderSheet();
     return;
   }
-  const text = String(draft.text || "").trim();
   if (!text || !draft.player) {
     draft.note = !text ? READ_EMPTY : READ_NO_PICK;
     renderSheet();
@@ -4048,16 +4122,49 @@ async function postRead(confirmed) {
     }
     if (draft.line !== null && draft.line !== undefined) body.line = draft.line;
     if (draft.side) body.side = draft.side;
+    /* THE REVIEW OF AN EDIT SAYS SO TOO. The service leaves the angle
+     * being replaced out of the conflict check only when it is told
+     * which one that is, so `replaces` rides the preview as well as
+     * the save — without it every edit of a live angle was reviewed as
+     * a conflict with itself and then banked as a replacement anyway. */
+    if (draft.replaces) body.replaces = draft.replaces;
     draft.pending = body;
     draft.reviewMember = memberSnapshot(token);
-    draft.step = 2;
+    draft.busy = true;
     draft.note = "";
+    renderSheet();
+    const opened = memberSnapshot(token);
+    try {
+      /* IT WRITES NOTHING. The preview is the whole point of the step:
+       * the interpreter, the effect library, the overlap rule and the
+       * recompute all run, and no row exists until he says so. */
+      const preview = await picksAsk("/read/preview", token, body);
+      if (!memberCurrent(opened) || nav.read !== draft) return;
+      draft.preview = preview;
+      draft.step = 2;
+      draft.note = "";
+    } catch (err) {
+      if (!memberCurrent(opened) || nav.read !== draft) return;
+      /* THE SERVICE'S OWN SENTENCE, printed as sent. A cap, an expired
+       * preview and a conflicting angle are three different facts and
+       * the service is the one that knows which. */
+      draft.note = serviceNote(err);
+    }
+    if (!memberCurrent(opened) || nav.read !== draft) return;
+    draft.busy = false;
     renderSheet();
     return;
   }
-  if (draft.step !== 2 || !draft.pending || !memberCurrent(draft.reviewMember)) return;
+  if (draft.step !== 2 || !draft.pending || !draft.preview ||
+      !memberCurrent(draft.reviewMember)) return;
   const started = memberSnapshot(token);
-  const body = draft.pending;
+  /* EXACTLY WHAT WAS PREVIEWED. The body is the previewed body and the
+   * preview's id rides with it, so the service banks the claims it
+   * already showed him rather than interpreting his words a second
+   * time and banking whatever came back. */
+  const body = Object.assign({}, draft.pending,
+    { preview_id: draft.preview.preview_id });
+  if (draft.replaces) body.replaces = draft.replaces;
   draft.busy = true;
   draft.submitted = true;
   draft.note = "";
@@ -4090,6 +4197,72 @@ function confirmRead() {
 }
 
 /* ------------------------------------------------------------------
+ * sec 4.4 / 4.5 — REMOVE AND EDIT
+ * ------------------------------------------------------------------
+ * REMOVE RETURNS EVERY VIEW TO THE PUBLISHED NUMBERS. The withdrawal
+ * is the service's — the reads ledger is append-only, so "back to
+ * baseline" is a row in its own table rather than a delete — and this
+ * page reloads the board afterwards rather than editing its own copy,
+ * because what the board now holds is the service's answer to a
+ * question it has just been asked again.
+ *
+ * DEMO NEVER WRITES, here as everywhere: the sample rows are dropped
+ * from this visit's memory and the same toast is shown. */
+async function removeAngle(readId) {
+  if (!readId || nav.angleBusy) return;
+  if (DEMO) {
+    nav.scenarios = (nav.scenarios || []).filter(function (row) {
+      return row.read_id !== readId;
+    });
+    render();
+    showToast(ANGLE_REMOVED_TOAST);
+    return;
+  }
+  const token = readToken();
+  if (!token) { askToken(); return; }
+  const started = memberSnapshot(token);
+  nav.angleBusy = readId;
+  render();
+  try {
+    await picksAsk("/read/withdraw", token, { read_id: readId });
+    if (!memberCurrent(started)) return;
+    nav.angleBusy = "";
+    await loadScenarios(true);
+    if (!memberCurrent(started)) return;
+    showToast(ANGLE_REMOVED_TOAST);
+  } catch (err) {
+    if (!memberCurrent(started)) return;
+    nav.angleBusy = "";
+    /* NEVER A SILENT DROP AND NEVER A ROW REMOVED ANYWAY: the outlook
+     * stays exactly where it is and the service's sentence says why —
+     * an angle on a game that has kicked off keeps its place on the
+     * record, and that is the sentence it sends. */
+    render();
+    showToast(serviceNote(err));
+  }
+}
+
+/* EDIT REOPENS THE SHEET ON HIS OWN WORDS. The row carries them
+ * (`read_text`), so nothing is re-typed and nothing is guessed, and
+ * the save that follows names the angle it replaces. */
+function editAngle(readId) {
+  const row = (nav.scenarios || []).find(function (found) {
+    return found && found.read_id === readId;
+  });
+  if (!row) return;
+  /* ...AND ON THE LINE THE ANGLE WAS WRITTEN ABOUT. A game-level angle
+   * puts a row on every player it reaches, all of them under one
+   * read_id, so the row this happens to find may be a team-mate's or
+   * an opponent's. The read's OWN subject travels on every row
+   * (`read_subject`), and reopening on it is the only way an edit
+   * replaces the angle the person actually wrote. */
+  const subject = row.read_subject || row;
+  readOpen(subject.player_id, subject.market,
+    { line: numberOrNull(subject.line), side: subject.side,
+      text: String(row.read_text || ""), replaces: readId });
+}
+
+/* ------------------------------------------------------------------
  * R1d — YOUR NUMBER (READS_R1_SPEC sec 6)
  * ------------------------------------------------------------------
  * The load, the lookup and the ONE component every surface draws it
@@ -4119,8 +4292,20 @@ async function loadScenarios(force) {
        * and the demo card above them still says the segment is
        * sample data. */
       nav.watch = (sample && sample.watchlist) || [];
+      /* AND THE SAMPLE PREVIEW, which is the same file's other half:
+       * the answer `POST /read/preview` would have given, so the demo
+       * read sheet can walk the whole review step without a service. */
+      nav.anglePreview = (sample && sample.preview) || null;
+      /* AND THE SAMPLE RECORD'S OWN SENTENCES, which the generator
+       * built with the service's builders over these very rows — so
+       * the demo record's "your read said …" and its review speak
+       * about the angles on this board rather than about numbers
+       * typed beside them once. */
+      DEMO_SCORECARD.read_notes =
+        (sample && sample.record && sample.record.read_notes) || [];
     } catch (err) {
       nav.scenarios = [];
+      nav.anglePreview = null;
     }
     render();
     return;
@@ -4164,17 +4349,55 @@ function scenariosOf(playerId) {
   });
 }
 
-/* The row for one bet. The service sends the reader's own word for
- * the market beside the number, so the match is made on the word the
- * Screen, the watchlist and the live board all use — this page keeps
- * no second mapping of its own to get wrong. A row whose market word
- * we cannot match is simply not drawn here; the player-level surfaces
- * still find it. */
-function scenarioFor(playerId, market) {
-  const wanted = String(market || "").toLowerCase();
-  const found = scenariosOf(playerId).filter(function (row) {
-    return String(row.market_word || row.market || "").toLowerCase()
-      === wanted;
+/* ONE SIDE WORD FOR TWO VOCABULARIES. The service stores `more` and
+ * `less`; the books, the Screen and the live board say Over and
+ * Under. Both spellings mean one side, and a match that knew only one
+ * of them is the strict match A1 replaces. */
+function sideKey(side) {
+  const word = String(side || "").toLowerCase();
+  if (word === "less" || word === "under") return "less";
+  if (word === "more" || word === "over") return "more";
+  return "";
+}
+
+/* THE ONE MATCH (ANGLES_A1_SPEC sec 4.3). Every surface that asks
+ * "is there an angle on THIS bet" asks through here, because four
+ * surfaces with four matches is how one angle comes to be drawn on
+ * three of them. The rule, exactly:
+ *
+ *   the player is the same id;
+ *   the market is the same after `serviceMarket` canonicalisation, so
+ *     the watchlist's "receptions" and the row's "player_receptions"
+ *     are one market and this page keeps no second mapping of its own;
+ *   the line is compared as a NUMBER, so 4.5 and "4.5" are one line;
+ *   the side is compared through `sideKey`, so more/over and
+ *     less/under are one side.
+ *
+ * A term the caller does not supply is not compared — the Bets card
+ * asks about a player and a market, the live card asks about a whole
+ * bet — and nothing here reads a probability. */
+function scenarioMatches(row, terms) {
+  if (!row || !terms) return false;
+  if (row.player_id !== terms.player_id) return false;
+  const mine = serviceMarket(row.market) ||
+    serviceMarket(row.market_word) || row.market || row.market_word;
+  const theirs = serviceMarket(terms.market) || terms.market;
+  if (String(mine || "").toLowerCase() !==
+      String(theirs || "").toLowerCase()) return false;
+  const wanted = numberOrNull(terms.line);
+  if (wanted !== null && numberOrNull(row.line) !== wanted) return false;
+  const side = sideKey(terms.side);
+  if (side && sideKey(row.side) !== side) return false;
+  return true;
+}
+
+/* The row for one bet, through the one match. A row we cannot match is
+ * simply not drawn here; the player-level surfaces still find it. */
+function scenarioFor(playerId, market, line, side) {
+  const terms = { player_id: playerId, market: market,
+    line: line, side: side };
+  const found = (nav.scenarios || []).filter(function (row) {
+    return scenarioMatches(row, terms);
   });
   return found.length ? found[0] : null;
 }
@@ -4204,52 +4427,124 @@ function scenarioBand(row) {
   const lo = numberOrNull(row.band_lo);
   const hi = numberOrNull(row.band_hi);
   if (lo === null || hi === null) return "";
-  return YOUR_NUMBER_BAND + pct(lo) + "–" + pct(hi);
+  return ANGLE_BAND + pct(lo) + "–" + pct(hi);
 }
 
-/* THE ONE SHARED COMPONENT (READS_R1_SPEC sec 6). The pick card, My
- * picks, the live card and an expanded home row all call THIS, and a
- * second copy is how four surfaces come to say four different things
- * about whose number it is.
+/* A MEAN, IN THE STAT'S OWN WORD. "15.0 carries" — the number to one
+ * decimal, the word the service sent with it (UI_ALPHA_SPEC sec 8a:
+ * never a unit code, always a word a casual fan owns). The decimal is
+ * a DISPLAY RULE and the only thing done to the number; a row without
+ * a stored mean simply has no mean drawn, and never a zero in its
+ * place. */
+function angleMean(value, word) {
+  const mean = numberOrNull(value);
+  if (mean === null) return "";
+  return mean.toFixed(1) + (word ? " " + word : "");
+}
+
+/* WHETHER THE ANGLE CAN STILL BE CHANGED. `editable_until` is the
+ * kickoff of the game the angle is on, and the service refuses a
+ * withdrawal after it — so the buttons come off at the same moment
+ * rather than staying on screen to be refused. A row that carries no
+ * such stamp draws no buttons: this page does not decide on its own
+ * that something is still editable. */
+function angleEditable(row) {
+  const until = Date.parse(String((row && row.editable_until) || ""));
+  return !isNaN(until) && until > Date.now();
+}
+
+/* WHAT MOVED, COLLAPSED BEHIND A TAP (sec 8a's one shared disclosure
+ * rule). Every sentence inside is the service's — the team-level
+ * changes and the notes — and none of them stands in the reader's
+ * way. */
+function angleChanged(row) {
+  const lines = (Array.isArray(row.changes) ? row.changes : [])
+    .concat(Array.isArray(row.notes) ? row.notes : []);
+  if (!lines.length) return "";
+  return '<details class="anglechanged"><summary>' +
+    esc(ANGLE_CHANGED) + '</summary>' +
+    lines.map(function (line) {
+      return '<div class="legend">' + esc(line) + '</div>';
+    }).join("") + '</details>';
+}
+
+/* THE EDIT AND REMOVE PAIR, before kickoff and not after. */
+function angleActions(row) {
+  if (!row.read_id || !angleEditable(row)) return "";
+  const busy = nav.angleBusy === row.read_id;
+  return '<div class="angleactions">' +
+    '<button class="ghost" data-act="angle-edit" data-read="' +
+    esc(row.read_id) + '"' + (busy ? " disabled" : "") + '>' +
+    esc(ANGLE_EDIT) + '</button>' +
+    '<button class="ghost" data-act="angle-remove" data-read="' +
+    esc(row.read_id) + '"' + (busy ? " disabled" : "") + '>' +
+    esc(busy ? ANGLE_REMOVE_BUSY : ANGLE_REMOVE) + '</button></div>';
+}
+
+/* THE ONE SHARED COMPONENT (ANGLES_A1_SPEC sec 4.2). The Bets card,
+ * My bets, the live card, the read sheet and an expanded home row all
+ * call THIS, and a second copy is how five surfaces come to say five
+ * different things about whose number it is.
  *
- * Every value drawn is a stored field of the row: `scenario_p` is his
- * number ON HIS SIDE, `model_p` is the model's on the same side, and
- * the band is the two endpoints the recompute ran at. The band goes
- * through `bandText`, which is the live card's own band renderer, so
- * there is one way a range is written on this app. */
-function yourNumber(row, compact) {
+ * TWO COLUMNS, ALWAYS BOTH. The published mean and chance stay on
+ * screen beside the adjusted ones for as long as the angle is on, so
+ * "the original model projection remains visible" is a property of
+ * the component rather than of the screen that drew it.
+ *
+ * Every value is a stored field of the row: `baseline_mean` and
+ * `model_p` are the published pair, `scenario_mean` and `scenario_p`
+ * the pair if the angle holds, both ON THE SIDE THE ANGLE WAS TAKEN,
+ * and the band is the two endpoints the recompute ran at. This
+ * function formats — a percent, a one-decimal mean — and works
+ * nothing out. */
+function angleOutlook(row, compact) {
   if (!row) return "";
-  return '<div class="yournum' + (compact ? " compact" : "") + '">' +
-    '<div class="overline">' + esc(YOUR_NUMBER_HEAD) + '</div>' +
-    '<div class="yournumbet">' + esc(scenarioBetLine(row)) + '</div>' +
-    '<div class="yournumline">' +
-    '<span class="yournummine">' + esc(YOUR_NUMBER_WITH) +
-    esc(pct(row.scenario_p)) + '</span>' +
-    /* THE SEPARATOR TRAVELS WITH THE MODEL'S HALF, so a narrow phone
-     * wraps the line into two readable halves rather than leaving a
-     * middle dot stranded at the end of the first one. */
-    '<span class="yournummodel"><span class="yournumdot">·</span> ' +
-    esc(YOUR_NUMBER_MODEL) + esc(pct(row.model_p)) +
-    '</span></div>' +
+  const word = String(row.stat_word || "");
+  const published = angleMean(row.baseline_mean, word);
+  const mine = angleMean(row.scenario_mean, word);
+  return '<div class="angleoutlook' + (compact ? " compact" : "") +
+    '">' +
+    '<div class="overline">' + esc(ANGLE_HEAD) + '</div>' +
+    '<div class="anglebet">' + esc(scenarioBetLine(row)) + '</div>' +
+    '<div class="anglecols">' +
+    '<div class="anglecol"><div class="anglecolhead">' +
+    esc(ANGLE_PUBLISHED) + '</div>' +
+    (published ? '<div class="anglemean">' + esc(published) +
+      '</div>' : "") +
+    '<div class="anglechance">' + esc(pct(row.model_p)) +
+    esc(ANGLE_CHANCE) + '</div></div>' +
+    '<div class="anglecol mine"><div class="anglecolhead">' +
+    esc(ANGLE_MINE) + '</div>' +
+    (mine ? '<div class="anglemean">' + esc(mine) + '</div>' : "") +
+    '<div class="anglechance">' + esc(pct(row.scenario_p)) +
+    esc(ANGLE_CHANCE) + '</div>' +
     (scenarioBand(row)
-      ? '<div class="yournumband">' + esc(scenarioBand(row)) +
-        '</div>'
+      ? '<div class="angleband">' + esc(scenarioBand(row)) + '</div>'
       : "") +
-    '<div class="yournumlabel">' + esc(YOUR_NUMBER_LABEL) +
-    '</div>' +
-    /* m4.4: AND WHAT BECAME OF IT. The read's result rides the one
-     * component every surface already draws his number with, so a
-     * graded read gains its mark in place on all of them rather than
-     * on a screen he would have to go and find. */
+    '</div></div>' +
+    (row.read_text
+      ? '<div class="anglewords">' + esc(ANGLE_WORDS) + '“' +
+        esc(row.read_text) + '”</div>'
+      : "") +
+    (row.assumption
+      ? '<div class="angleassume">' + esc(row.assumption) + '</div>'
+      : "") +
+    angleChanged(row) +
+    '<div class="anglelabel">' + esc(ANGLE_LABEL) + '</div>' +
+    /* m4.4: AND WHAT BECAME OF IT. The angle's result rides the one
+     * component every surface already draws it with, so a graded
+     * angle gains its mark in place on all of them rather than on a
+     * screen he would have to go and find. */
     readMark(row.read_id) +
+    angleActions(row) +
     '</div>';
 }
 
-/* The slate-wide marker. A row a game-level read reached says so, and
+/* The slate-wide marker. A row a game-level angle reached says so, and
  * opening it shows the same component — never a different one and
  * never a number without the label on it. */
 function touchedChip() {
-  return '<span class="readtouch">' + esc(YOUR_NUMBER_TOUCH) +
+  return '<span class="readtouch">' + esc(ANGLE_TOUCH) +
     '</span>';
 }
 
@@ -5490,7 +5785,7 @@ function expandedCard(id) {
     esc(person.name) + '</span><span class="expteam">' +
     esc(person.team + " " + person.pos) + '</span></div>' +
     (touched.length ? touchedChip() : "") +
-    touched.map(function (row) { return yourNumber(row, true); })
+    touched.map(function (row) { return angleOutlook(row, true); })
       .join("") +
     scenarioBoardNote() +
     '<div class="overline" title="' +
@@ -8397,7 +8692,7 @@ function screenRow(entry, index) {
     /* ...and the marker is SPOKEN as well as shown, the blind-spot
      * note's own rule: a reader on a screen reader meets the same
      * fact on the same row. */
-    (scenariosOf(entry.id).length ? ". " + YOUR_NUMBER_TOUCH : "");
+    (scenariosOf(entry.id).length ? ". " + ANGLE_TOUCH : "");
   return '<button class="screenrow' + (blind ? " blind" : "") +
     growClass() + '" style="--i:' +
     Math.min(index, 8) + '" data-act="prop" data-player="' +
@@ -8440,6 +8735,9 @@ function edgeModule() {
       detail:function(){if(currentRoute()!=="mybets")edgeOpenPersonal("mybets");openDetail("edgebet");},history:function(){openDetail("bethistory");},
       recommended:function(){openIn("bets","betsrecommended");},reduced:function(){return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);},
       customize:function(legs){betsDemoModule().prefill(legs);},recordEntry:function(){return scorecardEnabled()?scorecardModule().entry():'';},browse:function(){swapSub('bets','screen');},
+      /* A1 §4.6: the local note is a note, and the thing that DOES
+       * change the numbers is one tap away rather than unmentioned. */
+      sample:function(){readOpen(edgeRoster()[0]&&edgeRoster()[0].player_id||null,null);},
       singleDetail:function(d){return betsDemoModule().renderSavedSingle({leg:d.legs[0],totals:d.totals},d.id);}});
     edgeConfigured=true;
     if(window.BetsBuilder)window.BetsBuilder.state.picks.forEach(function(item){window.EdgeFinder.external('builder-single:'+JSON.stringify(item),{source:'Single builder',kind:'single',legs:[item.leg],stake:item.totals.stake,totals:item.totals});});
@@ -8780,7 +9078,7 @@ function watchRows() {
         esc(row.player_id) + '" data-market="' + esc(row.market) +
         '" aria-label="' + esc(PICK_WATCH_REMOVE) + '">' +
         esc(PICKS_REMOVE) + '</button></div>' +
-        (mine ? yourNumber(mine, true) + '</div>' : "");
+        (mine ? angleOutlook(mine, true) + '</div>' : "");
     }).join("") + '</div>';
 }
 
@@ -8836,11 +9134,20 @@ function scorecardPeriod(period) {
 
 /* THE MODEL-AGREEMENT NOTES — "your read said 61%, the model said
  * 55%, and it hit". The service says it only where both numbers exist
- * and the bet has settled, so an empty list draws nothing. */
+ * and the bet has settled, so an empty list draws nothing.
+ *
+ * AND THE REVIEW BESIDE IT (A1 sec 3.7), where the note carries one:
+ * whose outlook landed nearer the box score, said in the service's
+ * own sentence. It is a SECOND, SEPARATE fact from what the bet did —
+ * an angle's outlook can be the closer one on a bet that missed — so
+ * it is drawn as its own line and never merged into the first. */
 function scorecardNotes(notes) {
   if (!notes || !notes.length) return "";
   return '<div class="scorenotes">' + notes.map(function (note) {
-    return '<div class="legend">' + esc(note.sentence) + '</div>';
+    const review = note.review && note.review.sentence
+      ? '<div class="legend">' + esc(note.review.sentence) + '</div>'
+      : "";
+    return '<div class="legend">' + esc(note.sentence) + '</div>' + review;
   }).join("") + '</div>';
 }
 
@@ -8948,7 +9255,8 @@ function slipRows() {
             gradeSentence(leg.grade) +
             /* R1d: a leg he has written a read on carries his own
              * number too — the same component, nothing restated. */
-            yourNumber(scenarioFor(leg.player_id, leg.market), true);
+            angleOutlook(scenarioFor(leg.player_id, leg.market,
+              leg.line_placed, leg.side), true);
         }).join("") + '</div>' +
       '<div class="verdict ' + worth + '">' +
       esc(worth === "absent" ? TRACK_NO_VERDICT
@@ -9642,7 +9950,7 @@ function renderPick() {
     impliesBanner(prop) +
     /* R1d: HIS NUMBER BESIDE THE MODEL'S, on the bet this card is
      * about. The same component My picks and the live card draw. */
-    yourNumber(scenarioFor(person.player_id, prop.market)) +
+    angleOutlook(scenarioFor(person.player_id, prop.market)) +
     /* ...or, when there is no number to put here, the service's own
      * sentence saying why — never a silent gap. */
     scenarioBoardNote() +
@@ -10176,7 +10484,8 @@ function liveSummary(bet) {
     /* R1d: his number beside the model's, on this bet, in the one
      * shared component — the live card is the third surface sec 6
      * names and it draws no version of its own. */
-    yourNumber(scenarioFor(bet.player_id, bet.market)) +
+    angleOutlook(scenarioFor(bet.player_id, bet.market,
+      bet.line, bet.side)) +
     scenarioBoardNote() +
     '<div class="overline">' + esc(LIVE_SUMMARY_HEAD) + '</div>' +
     statline(bet.statline || []) + '</div>';
@@ -10747,7 +11056,8 @@ function alphaCompact() {
      * app does. */
     now:appNow,
     liveChart:liveChart,liveSwings:liveSwings,liveState:stateWord,statline:statline,
-    yourNumber:yourNumber,plainNote:plainNote,dfsBucket:bucketWords,
+    angleOutlook:angleOutlook,scenarioMatches:scenarioMatches,
+    scenariosOf:scenariosOf,angleMarker:ANGLE_MARKER,plainNote:plainNote,dfsBucket:bucketWords,
     loadRecord:loadRecord,loadTeams:loadTeams,
     currentProjections:renderProjections,currentProjection:renderProjection,
     teamConfirmation:renderTeam,
@@ -10898,6 +11208,13 @@ function readSayStep() {
     '<button class="primary" data-act="read-go"' +
     (nav.read.busy ? " disabled" : "") + '>' +
     esc(nav.read.busy ? READ_BUSY : READ_GO) + '</button>' +
+    /* THE SAMPLE ANGLE (sec 4.6), on the demo and nowhere else. It
+     * fills the box with the sample's own words and walks the same
+     * review step the real one walks. */
+    (DEMO && anglePreview()
+      ? '<button class="ghost" data-act="read-sample">' +
+        esc(READ_SAMPLE_TRY) + '</button>'
+      : "") +
     readNote();
 }
 
@@ -10916,14 +11233,113 @@ function readYourNumber() {
   const rows = Array.isArray(saved.scenarios) ? saved.scenarios : [];
   if (rows.length) {
     return rows.map(function (row) {
-      return yourNumber(row) + (row.generation_id ? '<p class="legend">Published version: ' + esc(row.generation_id) + '</p>' : "");
+      return angleOutlook(row) + (row.generation_id ? '<p class="legend">Published version: ' + esc(row.generation_id) + '</p>' : "");
     }).join("");
   }
   return scenarioReasonNote(saved.scenario_reason);
 }
 
-/* Review displays the exact outgoing words. Returned spans are read-only:
- * another POST would create another banked read, not edit this one. */
+/* THE BUNDLED SAMPLE, and only ever the bundled one. Demo never asks
+ * the service, so this is where the demo review step gets its preview
+ * from; outside demo there is none and this answers with nothing. */
+function anglePreview() {
+  return DEMO ? nav.anglePreview : null;
+}
+
+/* ONE ASSUMPTION, AS THE PREVIEW SENT IT (sec 4.1). His own words, the
+ * plain sentence we would apply, and a small word for whether it was
+ * applied or kept as a note. The DETAIL — why it was not applied — is
+ * printed underneath, verbatim: silence there was the defect (gap map
+ * §4 item 5) where one sized claim and one unsized claim came back
+ * with nothing said about the second. */
+function readAssumption(row) {
+  const applied = row.status === "applied";
+  return '<div class="readassume">' +
+    '<div class="readassumehead">' +
+    '<span class="readspan">“' + esc(String(row.span || "")) +
+    '”</span>' +
+    '<span class="readstatus' + (applied ? " on" : "") + '">' +
+    esc(applied ? READ_PREVIEW_APPLIED : READ_PREVIEW_NOTE) +
+    '</span></div>' +
+    '<div class="readassumesay">' + esc(String(row.sentence || "")) +
+    '</div>' +
+    (row.detail ? '<div class="legend">' + esc(row.detail) + '</div>'
+      : "") + '</div>';
+}
+
+/* THE REVIEW STEP (sec 4.1). What is on screen is the preview and
+ * nothing else: its assumptions, the subject's outlook block, the
+ * team-level changes, the count of other lines in the game the angle
+ * reaches, and its notes. Every sentence is the service's.
+ *
+ * WHAT IS SAVED IS WHAT WAS SHOWN. The button sends the preview's id
+ * back, so there is no second interpretation between this screen and
+ * the row in the table. */
+function readPreviewStep() {
+  const preview = nav.read.preview;
+  if (!preview) return "";
+  const assumptions = Array.isArray(preview.assumptions)
+    ? preview.assumptions : [];
+  const rows = Array.isArray(preview.outlook) ? preview.outlook : [];
+  const subject = rows.filter(function (row) { return row.is_subject; });
+  const others = rows.filter(function (row) { return !row.is_subject; });
+  const changes = Array.isArray(preview.changes) ? preview.changes : [];
+  const notes = Array.isArray(preview.notes) ? preview.notes : [];
+  const applied = assumptions.some(function (row) {
+    return row.status === "applied";
+  });
+  const words = String(preview.text || nav.read.text || "");
+  return '<div class="cardhead">' + esc(READ_PREVIEW_HEAD) + '</div>' +
+    assumptions.map(readAssumption).join("") +
+    /* THE SUBJECT'S BLOCK IS THE SAME COMPONENT EVERY OTHER SURFACE
+     * DRAWS. His own words and the applied sentence ride the row so
+     * the block reads the same here as it will on the Bets card. */
+    subject.map(function (row) {
+      return angleOutlook(Object.assign({}, row, {
+        read_text: words,
+        assumption: (assumptions.find(function (found) {
+          return found.status === "applied";
+        }) || {}).sentence || null,
+        changes: changes, notes: notes }));
+    }).join("") +
+    (changes.length
+      ? '<div class="cardhead">' + esc(READ_PREVIEW_CHANGES) +
+        '</div>' + changes.map(function (line) {
+          return '<div class="legend">' + esc(line) + '</div>';
+        }).join("")
+      : "") +
+    (others.length
+      ? '<details class="angleothers"><summary>' +
+        esc(others.length === 1 ? READ_PREVIEW_OTHERS_ONE
+          : READ_PREVIEW_OTHERS.replace("{n}", String(others.length))) +
+        '</summary>' + others.map(function (row) {
+          return '<div class="angleotherrow"><span>' +
+            esc(String(row.player_name || row.player_id) + " · " +
+              scenarioBetLine(row)) + '</span><span>' +
+            esc(pct(row.model_p) + " → " + pct(row.scenario_p)) +
+            '</span></div>';
+        }).join("") + '</details>'
+      : "") +
+    (notes.length
+      ? '<div class="cardhead">' + esc(READ_PREVIEW_NOTES) + '</div>' +
+        notes.map(function (line) {
+          return '<div class="legend">' + esc(line) + '</div>';
+        }).join("")
+      : "") +
+    scenarioReasonNote(preview.reason) +
+    readNote() +
+    (nav.read.submitted ? (nav.read.busy ? '<p>' + esc(READ_BUSY) + '</p>' : '') :
+      '<div class="readactions"><button class="ghost" data-act="read-edit">' +
+      esc(READ_EDIT_WORDS) + '</button>' +
+      '<button class="primary" data-act="read-confirm"' +
+      (DEMO ? " disabled" : "") + '>' +
+      esc(applied ? READ_SAVE_ANGLE : READ_SAVE_NOTE) +
+      '</button></div>');
+}
+
+/* Review displays the preview the service just built. Returned spans
+ * are read-only: another POST would create another banked read, not
+ * edit this one. */
 function readConfirmStep() {
   if (nav.read.saved) {
     return '<div class="cardhead">Saved read</div><p>' + esc(nav.read.text) + '</p>' +
@@ -10933,14 +11349,21 @@ function readConfirmStep() {
       }).join("") + '</div>' + readNote() + readYourNumber() +
       '<button class="primary" data-act="read-confirm">Done</button>';
   }
-  return '<div class="cardhead">Review your angle</div><p>' +
+  const head = '<div class="cardhead">Review your angle</div><p>' +
     esc(nav.read.pending ? nav.read.pending.text : nav.read.text) + '</p>' +
-    '<p>' + esc((nav.read.side === "less" ? "Under " : "Over ") + nav.read.line + " " +
-      (window.AlphaCompact ? alphaCompact().marketWord(nav.read.market) : nav.read.market)) + '</p>' +
-    '<p>Confirming saves this read and asks the service for its effect.</p>' + readNote() +
-    (nav.read.submitted ? (nav.read.busy ? '<p>' + esc(READ_BUSY) + '</p>' : '') :
-      '<div class="readactions"><button class="ghost" data-act="read-edit">' + esc(READ_EDIT) +
-      '</button><button class="primary" data-act="read-confirm">' + esc(READ_LOOKS_RIGHT) + '</button></div>');
+    (nav.read.line === null || nav.read.line === undefined ? "" :
+      '<p>' + esc((nav.read.side === "less" ? "Under " : "Over ") + nav.read.line + " " +
+        (window.AlphaCompact ? alphaCompact().marketWord(nav.read.market) : nav.read.market)) + '</p>');
+  /* A REVIEW WITH NOTHING TO REVIEW IS NOT A DEAD END. The preview
+   * failed or was refused, the service's own sentence is on screen,
+   * and the way back to his words is still here. */
+  if (!nav.read.preview) {
+    return head + readNote() +
+      '<div class="readactions"><button class="ghost" ' +
+      'data-act="read-edit">' + esc(READ_EDIT_WORDS) +
+      '</button></div>';
+  }
+  return head + readPreviewStep();
 }
 
 function addSheet() {
@@ -11272,10 +11695,23 @@ function onClick(event) {
     if (nav.read.submitted || nav.read.saved || nav.read.busy) return;
     nav.read.step = 1;
     nav.read.pending = null;
+    /* THE PREVIEW GOES WITH THE WORDS IT WAS BUILT FROM. Editing and
+     * saving without a fresh preview would bank an assumption he was
+     * never shown. */
+    nav.read.preview = null;
     nav.read.note = "";
     renderSheet();
   } else if (act === "read-confirm") {
     confirmRead();
+  } else if (act === "read-sample") {
+    const sample = anglePreview();
+    if (!sample) return;
+    nav.read.text = String(sample.text || "");
+    postRead();
+  } else if (act === "angle-edit") {
+    editAngle(target.getAttribute("data-read"));
+  } else if (act === "angle-remove") {
+    removeAngle(target.getAttribute("data-read"));
   } else if (act === "projection") {
     openProjection(target.getAttribute("data-player"));
   } else if (act === "sheet-track") {

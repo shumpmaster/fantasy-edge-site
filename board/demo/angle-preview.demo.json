@@ -1,0 +1,1441 @@
+{
+  "generation_id": "sample-gen",
+  "preview": {
+    "assumptions": [
+      {
+        "detail": null,
+        "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+        "span": "Houston plays with a lead",
+        "status": "applied"
+      }
+    ],
+    "changes": [
+      "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+      "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+    ],
+    "expires_at": "2026-09-20T15:30:00+00:00",
+    "generation_id": "sample-gen",
+    "notes": [],
+    "outlook": [
+      {
+        "band_hi": 0.598705,
+        "band_lo": 0.588813,
+        "baseline_mean": 77.5,
+        "is_subject": true,
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "market_word": "rushing yards",
+        "model_p": 0.539971,
+        "player_id": "demo-002",
+        "player_name": "Z. Wren",
+        "scenario_mean": 87.947473,
+        "scenario_p": 0.594619,
+        "side": "more",
+        "stat_word": "yards",
+        "team": "HOU"
+      },
+      {
+        "band_hi": 0.474124,
+        "band_lo": 0.464452,
+        "baseline_mean": 57.3,
+        "is_subject": false,
+        "line": 55.5,
+        "market": "player_rush_yds",
+        "market_word": "rushing yards",
+        "model_p": 0.525546,
+        "player_id": "demo-009",
+        "player_name": "B. Vance",
+        "scenario_mean": 51.466284,
+        "scenario_p": 0.469392,
+        "side": "more",
+        "stat_word": "yards",
+        "team": "IND"
+      },
+      {
+        "band_hi": 0.307686,
+        "band_lo": 0.234204,
+        "baseline_mean": 4.78,
+        "is_subject": false,
+        "line": 5.5,
+        "market": "player_receptions",
+        "market_word": "receptions",
+        "model_p": 0.550921,
+        "player_id": "demo-007",
+        "player_name": "H. Ulrich",
+        "scenario_mean": 4.011776,
+        "scenario_p": 0.268156,
+        "side": "more",
+        "stat_word": "catches",
+        "team": "HOU"
+      },
+      {
+        "band_hi": 0.516291,
+        "band_lo": 0.504367,
+        "baseline_mean": 20.3,
+        "is_subject": false,
+        "line": 20.5,
+        "market": "player_rush_yds",
+        "market_word": "rushing yards",
+        "model_p": 0.445494,
+        "player_id": "demo-003",
+        "player_name": "O. Hale",
+        "scenario_mean": 23.036564,
+        "scenario_p": 0.511365,
+        "side": "more",
+        "stat_word": "yards",
+        "team": "HOU"
+      },
+      {
+        "band_hi": 0.414952,
+        "band_lo": 0.389504,
+        "baseline_mean": 243.4,
+        "is_subject": false,
+        "line": 245.5,
+        "market": "player_pass_yds",
+        "market_word": "passing yards",
+        "model_p": 0.498587,
+        "player_id": "demo-001",
+        "player_name": "R. Shaw",
+        "scenario_mean": 204.281658,
+        "scenario_p": 0.401262,
+        "side": "more",
+        "stat_word": "yards",
+        "team": "HOU"
+      },
+      {
+        "band_hi": 0.739699,
+        "band_lo": 0.729337,
+        "baseline_mean": 272.3,
+        "is_subject": false,
+        "line": 270.5,
+        "market": "player_pass_yds",
+        "market_word": "passing yards",
+        "model_p": 0.691349,
+        "player_id": "demo-008",
+        "player_name": "T. Vestal",
+        "scenario_mean": 316.678735,
+        "scenario_p": 0.734603,
+        "side": "more",
+        "stat_word": "yards",
+        "team": "IND"
+      },
+      {
+        "band_hi": 0.366896,
+        "band_lo": 0.354184,
+        "baseline_mean": 3.67,
+        "is_subject": false,
+        "line": 3.5,
+        "market": "player_receptions",
+        "market_word": "receptions",
+        "model_p": 0.421018,
+        "player_id": "demo-004",
+        "player_name": "X. Renner",
+        "scenario_mean": 3.080171,
+        "scenario_p": 0.360058,
+        "side": "more",
+        "stat_word": "catches",
+        "team": "HOU"
+      },
+      {
+        "band_hi": 0.636952,
+        "band_lo": 0.622501,
+        "baseline_mean": 4.45,
+        "is_subject": false,
+        "line": 4.5,
+        "market": "player_receptions",
+        "market_word": "receptions",
+        "model_p": 0.569518,
+        "player_id": "demo-012",
+        "player_name": "Y. Marsh",
+        "scenario_mean": 5.175249,
+        "scenario_p": 0.629845,
+        "side": "more",
+        "stat_word": "catches",
+        "team": "IND"
+      }
+    ],
+    "preview_id": "sample-preview-0001",
+    "reason": null,
+    "reason_code": null,
+    "text": "Houston plays with a lead all afternoon",
+    "versions": {
+      "effect": "e-r1-effects-v1",
+      "interpreter": "reads-interpret-v0",
+      "registry": "v1"
+    }
+  },
+  "previews": [
+    {
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "expires_at": "2026-09-20T15:30:00+00:00",
+      "generation_id": "sample-gen",
+      "notes": [],
+      "outlook": [
+        {
+          "band_hi": 0.598705,
+          "band_lo": 0.588813,
+          "baseline_mean": 77.5,
+          "is_subject": true,
+          "line": 80.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.539971,
+          "player_id": "demo-002",
+          "player_name": "Z. Wren",
+          "scenario_mean": 87.947473,
+          "scenario_p": 0.594619,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "HOU"
+        },
+        {
+          "band_hi": 0.474124,
+          "band_lo": 0.464452,
+          "baseline_mean": 57.3,
+          "is_subject": false,
+          "line": 55.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.525546,
+          "player_id": "demo-009",
+          "player_name": "B. Vance",
+          "scenario_mean": 51.466284,
+          "scenario_p": 0.469392,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "IND"
+        },
+        {
+          "band_hi": 0.307686,
+          "band_lo": 0.234204,
+          "baseline_mean": 4.78,
+          "is_subject": false,
+          "line": 5.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.550921,
+          "player_id": "demo-007",
+          "player_name": "H. Ulrich",
+          "scenario_mean": 4.011776,
+          "scenario_p": 0.268156,
+          "side": "more",
+          "stat_word": "catches",
+          "team": "HOU"
+        },
+        {
+          "band_hi": 0.516291,
+          "band_lo": 0.504367,
+          "baseline_mean": 20.3,
+          "is_subject": false,
+          "line": 20.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.445494,
+          "player_id": "demo-003",
+          "player_name": "O. Hale",
+          "scenario_mean": 23.036564,
+          "scenario_p": 0.511365,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "HOU"
+        },
+        {
+          "band_hi": 0.414952,
+          "band_lo": 0.389504,
+          "baseline_mean": 243.4,
+          "is_subject": false,
+          "line": 245.5,
+          "market": "player_pass_yds",
+          "market_word": "passing yards",
+          "model_p": 0.498587,
+          "player_id": "demo-001",
+          "player_name": "R. Shaw",
+          "scenario_mean": 204.281658,
+          "scenario_p": 0.401262,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "HOU"
+        },
+        {
+          "band_hi": 0.739699,
+          "band_lo": 0.729337,
+          "baseline_mean": 272.3,
+          "is_subject": false,
+          "line": 270.5,
+          "market": "player_pass_yds",
+          "market_word": "passing yards",
+          "model_p": 0.691349,
+          "player_id": "demo-008",
+          "player_name": "T. Vestal",
+          "scenario_mean": 316.678735,
+          "scenario_p": 0.734603,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "IND"
+        },
+        {
+          "band_hi": 0.366896,
+          "band_lo": 0.354184,
+          "baseline_mean": 3.67,
+          "is_subject": false,
+          "line": 3.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.421018,
+          "player_id": "demo-004",
+          "player_name": "X. Renner",
+          "scenario_mean": 3.080171,
+          "scenario_p": 0.360058,
+          "side": "more",
+          "stat_word": "catches",
+          "team": "HOU"
+        },
+        {
+          "band_hi": 0.636952,
+          "band_lo": 0.622501,
+          "baseline_mean": 4.45,
+          "is_subject": false,
+          "line": 4.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.569518,
+          "player_id": "demo-012",
+          "player_name": "Y. Marsh",
+          "scenario_mean": 5.175249,
+          "scenario_p": 0.629845,
+          "side": "more",
+          "stat_word": "catches",
+          "team": "IND"
+        }
+      ],
+      "preview_id": "sample-preview-0001",
+      "reason": null,
+      "reason_code": null,
+      "text": "Houston plays with a lead all afternoon",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "expires_at": "2026-09-20T15:30:00+00:00",
+      "generation_id": "sample-gen",
+      "notes": [],
+      "outlook": [
+        {
+          "band_hi": 0.443019,
+          "band_lo": 0.426059,
+          "baseline_mean": 2.04,
+          "is_subject": true,
+          "line": 2.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.505198,
+          "player_id": "demo-027",
+          "player_name": "T. Rourke",
+          "scenario_mean": 2.372474,
+          "scenario_p": 0.4344,
+          "side": "less",
+          "stat_word": "catches",
+          "team": "CAR"
+        },
+        {
+          "band_hi": 0.758164,
+          "band_lo": 0.674246,
+          "baseline_mean": 4.04,
+          "is_subject": false,
+          "line": 4.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.3986,
+          "player_id": "demo-019",
+          "player_name": "A. Dorsey",
+          "scenario_mean": 3.390706,
+          "scenario_p": 0.71939,
+          "side": "less",
+          "stat_word": "catches",
+          "team": "ATL"
+        },
+        {
+          "band_hi": 0.468195,
+          "band_lo": 0.453518,
+          "baseline_mean": 26.8,
+          "is_subject": false,
+          "line": 25.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.393688,
+          "player_id": "demo-024",
+          "player_name": "I. Pike",
+          "scenario_mean": 24.39405,
+          "scenario_p": 0.460709,
+          "side": "less",
+          "stat_word": "yards",
+          "team": "CAR"
+        },
+        {
+          "band_hi": 0.480167,
+          "band_lo": 0.461786,
+          "baseline_mean": 219.8,
+          "is_subject": false,
+          "line": 220.5,
+          "market": "player_pass_yds",
+          "market_word": "passing yards",
+          "model_p": 0.54756,
+          "player_id": "demo-022",
+          "player_name": "L. Renner",
+          "scenario_mean": 255.622423,
+          "scenario_p": 0.470826,
+          "side": "less",
+          "stat_word": "yards",
+          "team": "CAR"
+        },
+        {
+          "band_hi": 0.420368,
+          "band_lo": 0.410507,
+          "baseline_mean": 55.9,
+          "is_subject": false,
+          "line": 55.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.476355,
+          "player_id": "demo-016",
+          "player_name": "W. Okafor",
+          "scenario_mean": 64.2415,
+          "scenario_p": 0.414502,
+          "side": "less",
+          "stat_word": "yards",
+          "team": "ATL"
+        },
+        {
+          "band_hi": 0.601543,
+          "band_lo": 0.572868,
+          "baseline_mean": 273.5,
+          "is_subject": false,
+          "line": 275.5,
+          "market": "player_pass_yds",
+          "market_word": "passing yards",
+          "model_p": 0.48104,
+          "player_id": "demo-015",
+          "player_name": "Y. Vance",
+          "scenario_mean": 229.544098,
+          "scenario_p": 0.588294,
+          "side": "less",
+          "stat_word": "yards",
+          "team": "ATL"
+        }
+      ],
+      "preview_id": "sample-preview-0002",
+      "reason": null,
+      "reason_code": null,
+      "text": "Carolina is chasing this one from the second quarter",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "This game runs faster than expected, so both teams run more plays.",
+          "span": "play this one fast",
+          "status": "applied"
+        }
+      ],
+      "changes": [
+        "DET: passing on 60% of plays \u2192 60%; 65.0 plays \u2192 69.1; 26.0 carries \u2192 27.6; 32.5 targets \u2192 34.5",
+        "GB: passing on 61% of plays \u2192 61%; 66.0 plays \u2192 70.2; 25.7 carries \u2192 27.3; 33.5 targets \u2192 35.6"
+      ],
+      "expires_at": "2026-09-20T15:30:00+00:00",
+      "generation_id": "sample-gen",
+      "notes": [
+        "Sized from how much game pace typically swings."
+      ],
+      "outlook": [
+        {
+          "band_hi": 0.595107,
+          "band_lo": 0.593844,
+          "baseline_mean": 71.5,
+          "is_subject": true,
+          "line": 70.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.568902,
+          "player_id": "demo-030",
+          "player_name": "R. Ames",
+          "scenario_mean": 76.005775,
+          "scenario_p": 0.594458,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "DET"
+        },
+        {
+          "band_hi": 0.534012,
+          "band_lo": 0.532557,
+          "baseline_mean": 53.2,
+          "is_subject": false,
+          "line": 55.5,
+          "market": "player_rush_yds",
+          "market_word": "rushing yards",
+          "model_p": 0.503852,
+          "player_id": "demo-037",
+          "player_name": "B. Boone",
+          "scenario_mean": 56.552549,
+          "scenario_p": 0.533265,
+          "side": "more",
+          "stat_word": "yards",
+          "team": "GB"
+        },
+        {
+          "band_hi": 0.572299,
+          "band_lo": 0.570964,
+          "baseline_mean": 4.54,
+          "is_subject": false,
+          "line": 4.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.544617,
+          "player_id": "demo-032",
+          "player_name": "E. Quill",
+          "scenario_mean": 4.826101,
+          "scenario_p": 0.571613,
+          "side": "more",
+          "stat_word": "catches",
+          "team": "DET"
+        },
+        {
+          "band_hi": 0.651457,
+          "band_lo": 0.650369,
+          "baseline_mean": 6.0,
+          "is_subject": false,
+          "line": 6.5,
+          "market": "player_receptions",
+          "market_word": "receptions",
+          "model_p": 0.628899,
+          "player_id": "demo-039",
+          "player_name": "R. Beck",
+          "scenario_mean": 6.378107,
+          "scenario_p": 0.650899,
+          "side": "more",
+          "stat_word": "catches",
+          "team": "GB"
+        }
+      ],
+      "preview_id": "sample-preview-0003",
+      "reason": null,
+      "reason_code": null,
+      "text": "Detroit and Green Bay play this one fast",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    }
+  ],
+  "reason": null,
+  "reason_sample": "FABRICATED. These are not anybody's angle and not a real slate: this file is the reads service's own preview and scenario shape, computed by the real effect library and recompute over a synthetic pick'em game of fictional players, so the whole of the angle flow can be looked at offline. It is reachable only at ?demo=1 and nothing here is written to or read from the real service.",
+  "record": {
+    "read_notes": [
+      {
+        "market": "player_rush_yds",
+        "outcome": "hit",
+        "player_id": "demo-002",
+        "read_id": "sample-read-angle-001",
+        "review": {
+          "baseline_mean": 77.5,
+          "bet": "landed",
+          "closer": "yours",
+          "realized": 96.0,
+          "scenario_mean": 87.947473,
+          "sentence": "Your angle's outlook (87.9 yards) was closer than the published one (77.5). He had 96."
+        },
+        "sentence": "Your read said 59%, the model said 54%, and it hit."
+      },
+      {
+        "market": "player_receptions",
+        "outcome": "missed",
+        "player_id": "demo-027",
+        "read_id": "sample-read-angle-002",
+        "review": {
+          "baseline_mean": 2.04,
+          "bet": "missed",
+          "closer": "yours",
+          "realized": 4.0,
+          "scenario_mean": 2.372474,
+          "sentence": "Your angle's outlook (2.4 catches) was closer than the published one (2.0). He had 4."
+        },
+        "sentence": "Your read said 43%, the model said 51%, and it missed."
+      }
+    ]
+  },
+  "sample": true,
+  "sample_text": "Houston plays with a lead all afternoon",
+  "scenarios": [
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.598705,
+      "band_lo": 0.588813,
+      "baseline_mean": 77.5,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 80.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.539971,
+      "notes": [],
+      "player_id": "demo-002",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-001",
+      "scenario_mean": 87.947473,
+      "scenario_p": 0.594619,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.474124,
+      "band_lo": 0.464452,
+      "baseline_mean": 57.3,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 55.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.525546,
+      "notes": [],
+      "player_id": "demo-009",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-002",
+      "scenario_mean": 51.466284,
+      "scenario_p": 0.469392,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.307686,
+      "band_lo": 0.234204,
+      "baseline_mean": 4.78,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 5.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.550921,
+      "notes": [],
+      "player_id": "demo-007",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-003",
+      "scenario_mean": 4.011776,
+      "scenario_p": 0.268156,
+      "side": "more",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.516291,
+      "band_lo": 0.504367,
+      "baseline_mean": 20.3,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 20.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.445494,
+      "notes": [],
+      "player_id": "demo-003",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-004",
+      "scenario_mean": 23.036564,
+      "scenario_p": 0.511365,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.414952,
+      "band_lo": 0.389504,
+      "baseline_mean": 243.4,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 245.5,
+      "market": "player_pass_yds",
+      "market_word": "passing yards",
+      "model_p": 0.498587,
+      "notes": [],
+      "player_id": "demo-001",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-005",
+      "scenario_mean": 204.281658,
+      "scenario_p": 0.401262,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.739699,
+      "band_lo": 0.729337,
+      "baseline_mean": 272.3,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 270.5,
+      "market": "player_pass_yds",
+      "market_word": "passing yards",
+      "model_p": 0.691349,
+      "notes": [],
+      "player_id": "demo-008",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-006",
+      "scenario_mean": 316.678735,
+      "scenario_p": 0.734603,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.366896,
+      "band_lo": 0.354184,
+      "baseline_mean": 3.67,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 3.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.421018,
+      "notes": [],
+      "player_id": "demo-004",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-007",
+      "scenario_mean": 3.080171,
+      "scenario_p": 0.360058,
+      "side": "more",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "HOU plays with a lead, so they run the ball more and throw less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "HOU plays with a lead, so they run the ball more and throw less.",
+          "span": "Houston plays with a lead",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.636952,
+      "band_lo": 0.622501,
+      "baseline_mean": 4.45,
+      "changes": [
+        "HOU: passing on 57% of plays \u2192 50%; 64.0 plays \u2192 61.8; 27.5 carries \u2192 31.2; 30.4 targets \u2192 25.5",
+        "IND: passing on 58% of plays \u2192 64%; 63.0 plays \u2192 66.3; 26.5 carries \u2192 23.8; 30.5 targets \u2192 35.5"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 4.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.569518,
+      "notes": [],
+      "player_id": "demo-012",
+      "read_id": "sample-read-angle-001",
+      "read_subject": {
+        "line": 80.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-002",
+        "side": "more"
+      },
+      "read_text": "Houston plays with a lead all afternoon",
+      "scenario_id": "sample-scn-angle-001-008",
+      "scenario_mean": 5.175249,
+      "scenario_p": 0.629845,
+      "side": "more",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.443019,
+      "band_lo": 0.426059,
+      "baseline_mean": 2.04,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 2.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.505198,
+      "notes": [],
+      "player_id": "demo-027",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-001",
+      "scenario_mean": 2.372474,
+      "scenario_p": 0.4344,
+      "side": "less",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.758164,
+      "band_lo": 0.674246,
+      "baseline_mean": 4.04,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 4.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.3986,
+      "notes": [],
+      "player_id": "demo-019",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-002",
+      "scenario_mean": 3.390706,
+      "scenario_p": 0.71939,
+      "side": "less",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.468195,
+      "band_lo": 0.453518,
+      "baseline_mean": 26.8,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 25.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.393688,
+      "notes": [],
+      "player_id": "demo-024",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-003",
+      "scenario_mean": 24.39405,
+      "scenario_p": 0.460709,
+      "side": "less",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.480167,
+      "band_lo": 0.461786,
+      "baseline_mean": 219.8,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 220.5,
+      "market": "player_pass_yds",
+      "market_word": "passing yards",
+      "model_p": 0.54756,
+      "notes": [],
+      "player_id": "demo-022",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-004",
+      "scenario_mean": 255.622423,
+      "scenario_p": 0.470826,
+      "side": "less",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.420368,
+      "band_lo": 0.410507,
+      "baseline_mean": 55.9,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 55.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.476355,
+      "notes": [],
+      "player_id": "demo-016",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-005",
+      "scenario_mean": 64.2415,
+      "scenario_p": 0.414502,
+      "side": "less",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "CAR plays from behind, so they throw more and run less.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "CAR plays from behind, so they throw more and run less.",
+          "span": "Carolina is chasing this one",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.601543,
+      "band_lo": 0.572868,
+      "baseline_mean": 273.5,
+      "changes": [
+        "ATL: passing on 59% of plays \u2192 51%; 62.0 plays \u2192 59.9; 25.4 carries \u2192 29.2; 30.6 targets \u2192 25.7",
+        "CAR: passing on 56% of plays \u2192 62%; 61.0 plays \u2192 64.2; 26.8 carries \u2192 24.4; 28.5 targets \u2192 33.1"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 275.5,
+      "market": "player_pass_yds",
+      "market_word": "passing yards",
+      "model_p": 0.48104,
+      "notes": [],
+      "player_id": "demo-015",
+      "read_id": "sample-read-angle-002",
+      "read_subject": {
+        "line": 2.5,
+        "market": "player_receptions",
+        "player_id": "demo-027",
+        "side": "less"
+      },
+      "read_text": "Carolina is chasing this one from the second quarter",
+      "scenario_id": "sample-scn-angle-002-006",
+      "scenario_mean": 229.544098,
+      "scenario_p": 0.588294,
+      "side": "less",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "This game runs faster than expected, so both teams run more plays.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "This game runs faster than expected, so both teams run more plays.",
+          "span": "play this one fast",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.595107,
+      "band_lo": 0.593844,
+      "baseline_mean": 71.5,
+      "changes": [
+        "DET: passing on 60% of plays \u2192 60%; 65.0 plays \u2192 69.1; 26.0 carries \u2192 27.6; 32.5 targets \u2192 34.5",
+        "GB: passing on 61% of plays \u2192 61%; 66.0 plays \u2192 70.2; 25.7 carries \u2192 27.3; 33.5 targets \u2192 35.6"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 70.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.568902,
+      "notes": [
+        "Sized from how much game pace typically swings."
+      ],
+      "player_id": "demo-030",
+      "read_id": "sample-read-angle-003",
+      "read_subject": {
+        "line": 70.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-030",
+        "side": "more"
+      },
+      "read_text": "Detroit and Green Bay play this one fast",
+      "scenario_id": "sample-scn-angle-003-001",
+      "scenario_mean": 76.005775,
+      "scenario_p": 0.594458,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "This game runs faster than expected, so both teams run more plays.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "This game runs faster than expected, so both teams run more plays.",
+          "span": "play this one fast",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.534012,
+      "band_lo": 0.532557,
+      "baseline_mean": 53.2,
+      "changes": [
+        "DET: passing on 60% of plays \u2192 60%; 65.0 plays \u2192 69.1; 26.0 carries \u2192 27.6; 32.5 targets \u2192 34.5",
+        "GB: passing on 61% of plays \u2192 61%; 66.0 plays \u2192 70.2; 25.7 carries \u2192 27.3; 33.5 targets \u2192 35.6"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 55.5,
+      "market": "player_rush_yds",
+      "market_word": "rushing yards",
+      "model_p": 0.503852,
+      "notes": [
+        "Sized from how much game pace typically swings."
+      ],
+      "player_id": "demo-037",
+      "read_id": "sample-read-angle-003",
+      "read_subject": {
+        "line": 70.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-030",
+        "side": "more"
+      },
+      "read_text": "Detroit and Green Bay play this one fast",
+      "scenario_id": "sample-scn-angle-003-002",
+      "scenario_mean": 56.552549,
+      "scenario_p": 0.533265,
+      "side": "more",
+      "stat_word": "yards",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "This game runs faster than expected, so both teams run more plays.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "This game runs faster than expected, so both teams run more plays.",
+          "span": "play this one fast",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.572299,
+      "band_lo": 0.570964,
+      "baseline_mean": 4.54,
+      "changes": [
+        "DET: passing on 60% of plays \u2192 60%; 65.0 plays \u2192 69.1; 26.0 carries \u2192 27.6; 32.5 targets \u2192 34.5",
+        "GB: passing on 61% of plays \u2192 61%; 66.0 plays \u2192 70.2; 25.7 carries \u2192 27.3; 33.5 targets \u2192 35.6"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 4.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.544617,
+      "notes": [
+        "Sized from how much game pace typically swings."
+      ],
+      "player_id": "demo-032",
+      "read_id": "sample-read-angle-003",
+      "read_subject": {
+        "line": 70.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-030",
+        "side": "more"
+      },
+      "read_text": "Detroit and Green Bay play this one fast",
+      "scenario_id": "sample-scn-angle-003-003",
+      "scenario_mean": 4.826101,
+      "scenario_p": 0.571613,
+      "side": "more",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    },
+    {
+      "assumption": "This game runs faster than expected, so both teams run more plays.",
+      "assumptions": [
+        {
+          "detail": null,
+          "sentence": "This game runs faster than expected, so both teams run more plays.",
+          "span": "play this one fast",
+          "status": "applied"
+        }
+      ],
+      "band_hi": 0.651457,
+      "band_lo": 0.650369,
+      "baseline_mean": 6.0,
+      "changes": [
+        "DET: passing on 60% of plays \u2192 60%; 65.0 plays \u2192 69.1; 26.0 carries \u2192 27.6; 32.5 targets \u2192 34.5",
+        "GB: passing on 61% of plays \u2192 61%; 66.0 plays \u2192 70.2; 25.7 carries \u2192 27.3; 33.5 targets \u2192 35.6"
+      ],
+      "created_at": "2026-09-20T15:05:00Z",
+      "editable_until": "2026-09-20T17:00:00+00:00",
+      "generation_id": "sample-gen",
+      "line": 6.5,
+      "market": "player_receptions",
+      "market_word": "receptions",
+      "model_p": 0.628899,
+      "notes": [
+        "Sized from how much game pace typically swings."
+      ],
+      "player_id": "demo-039",
+      "read_id": "sample-read-angle-003",
+      "read_subject": {
+        "line": 70.5,
+        "market": "player_rush_yds",
+        "player_id": "demo-030",
+        "side": "more"
+      },
+      "read_text": "Detroit and Green Bay play this one fast",
+      "scenario_id": "sample-scn-angle-003-004",
+      "scenario_mean": 6.378107,
+      "scenario_p": 0.650899,
+      "side": "more",
+      "stat_word": "catches",
+      "versions": {
+        "effect": "e-r1-effects-v1",
+        "interpreter": "reads-interpret-v0",
+        "registry": "v1"
+      }
+    }
+  ],
+  "season": 2026,
+  "watchlist": [
+    {
+      "line": 80.5,
+      "market": "rushing yards",
+      "player_id": "demo-002",
+      "side": "more"
+    },
+    {
+      "line": 2.5,
+      "market": "receptions",
+      "player_id": "demo-027",
+      "side": "less"
+    },
+    {
+      "line": 70.5,
+      "market": "rushing yards",
+      "player_id": "demo-030",
+      "side": "more"
+    }
+  ],
+  "week": 5
+}

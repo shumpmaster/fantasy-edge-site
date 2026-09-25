@@ -65,10 +65,15 @@
         '<p>No member grade received for this leg.</p>') +
       (slip && slip.grade ? '<p>' + h.esc(slip.grade.word || '') + ' · ' + h.esc(slip.grade.sentence || '') + '</p>' : '') + '</section>';
   }
+  // ANGLES_A1_SPEC §4.3: the ONE shared match, never a second spelling
+  // of it. The strict comparison this replaced missed an angle whose
+  // market word or side was written the other way round.
   function scenario(h, bet) {
-    const rows = (h.nav.scenarios || []).filter(row => row.player_id === bet.player_id &&
-      row.market === bet.market_key && row.line === bet.line && row.side === bet.side && row.generation_id);
-    return rows.map(row => h.yourNumber(row) + '<p class="legend">Published version: ' + h.esc(row.generation_id) + '</p>').join('');
+    const rows = (h.nav.scenarios || []).filter(row => row.generation_id &&
+      h.scenarioMatches(row, {player_id: bet.player_id, market: bet.market_key,
+        line: bet.line, side: bet.side}));
+    return rows.map(row => h.angleOutlook(row) +
+      '<p class="legend">Published version: ' + h.esc(row.generation_id) + '</p>').join('');
   }
   function detail(h, bet) {
     const absent = missingFinal(bet);

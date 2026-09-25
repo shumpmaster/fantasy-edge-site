@@ -317,12 +317,27 @@
         button('save', state.busy ? 'Recording…' : 'Record bet', null, ' class="ef-primary"' + (state.busy ? ' disabled' : ''))) +
       button('read', 'Add an optional angle', null, ' class="ghost"') + '</section>';
   }
+  /* ANGLES_A1_SPEC §4.3 — THE OUTLOOK, WHERE THE BET IS.
+   * The block the read sheet draws on save is the block this card
+   * draws afterwards: one component, `h.angleOutlook`, and one match,
+   * `h.scenarioMatches`. A line the angle moved that this card is not
+   * standing on gets the marker instead, which expands to the same
+   * block rather than to a different rendering of it. */
+  function outlook(terms) {
+    const exact = (h.nav.scenarios || []).filter(row => h.scenarioMatches(row, terms));
+    if (exact.length) return exact.map(row => h.angleOutlook(row, true)).join('');
+    const touched = (h.scenariosOf(terms.player_id) || []);
+    if (!touched.length) return '';
+    return '<details class="anglemarker"><summary>' + esc(h.angleMarker) + '</summary>' +
+      touched.map(row => h.angleOutlook(row, true)).join('') + '</details>';
+  }
   function card(row, index) {
     const p = row.prop, open = state.selected && state.selected.id === row.id && state.selected.market === p.market;
     return '<article class="ef-card" data-player-id="' + esc(row.id) + '"><button class="ef-card-toggle" data-act="ac-select" data-value="' + index + '" aria-expanded="' + !!open + '" aria-controls="ac-body-' + index + '">' +
       '<span class="ef-card-name">' + esc(row.person.name) + '</span><span class="ef-card-line">' + esc(sideWord(p.lean) + ' ' + p.line + ' ' + marketWord(p.market_label || p.market)) + '</span>' +
       '<span class="ef-card-rating"><span class="ef-assessment">Published estimate</span><span class="ef-card-chance"><strong>' + chance(p.model_p) + '</strong><small>Estimated chance</small></span></span>' +
       '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></button>' +
+      outlook({player_id: row.id, market: p.market}) +
       '<div class="ef-card-body" id="ac-body-' + index + '"' + (open ? '' : ' hidden') + '>' + (open ? form() : '') + '</div></article>';
   }
   /* The played card is the same face with no control on it: no
@@ -360,7 +375,10 @@
         esc(sideWord(leg.side) + ' ' + leg.line_placed + ' ' + marketWord(leg.market)) + '</p><dl><dt>Your terms</dt><dd>' + esc(price(leg.odds_american)) + ' · ' + esc(leg.book || 'Book not supplied') +
         '</dd><dt>App quote of record</dt><dd>' + esc(price(leg.quote && leg.quote.odds_american)) + ' · ' + esc(leg.quote && leg.quote.book || 'Book not supplied') +
         '</dd><dt>Saved chance</dt><dd>' + chance(leg.p_at_placed) + '</dd></dl>' + (leg.p_reason ? '<p>' + esc(leg.p_reason) + '</p>' : '') +
-        (leg.grade ? '<p class="grademark">' + esc(leg.grade.word || leg.grade.outcome) + '</p>' + (leg.grade.sentence ? '<p>' + esc(leg.grade.sentence) + '</p>' : '') : '') + '</section>').join('') +
+        (leg.grade ? '<p class="grademark">' + esc(leg.grade.word || leg.grade.outcome) + '</p>' + (leg.grade.sentence ? '<p>' + esc(leg.grade.sentence) + '</p>' : '') : '') +
+        // §4.3: a leg an angle reached carries the same block, per leg.
+        outlook({player_id: leg.player_id, market: leg.market, line: leg.line_placed, side: leg.side}) +
+        '</section>').join('') +
       (slip.grade ? '<p>' + esc(slip.grade.word || '') + '</p><p>' + esc(slip.grade.sentence || '') + '</p>' : '') +
       (slip.stake == null ? '' : '<p>Your stake: ' + esc(slip.stake) + '</p>') +
       (slip.payout_multiple == null ? '' : '<p>Your return multiple: ' + esc(slip.payout_multiple) + '</p>') +
