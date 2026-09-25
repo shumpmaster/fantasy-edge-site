@@ -8,7 +8,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="./app.css" rel="stylesheet">
+<link href="./app.css?v=compact-cards" rel="stylesheet">
+<link rel="stylesheet" href="./fantasy-dfs.css?v=compact-cards">
+<link rel="stylesheet" href="./fantasy-dfs-tournament.css?v=compact-cards">
+<link rel="stylesheet" href="./dfs-scoreboard.css?v=compact-cards">
+<link rel="stylesheet" href="./alpha-polish.css?v=compact-cards">
+<link rel="stylesheet" href="./betting-experience.css?v=compact-cards">
+<link rel="stylesheet" href="./analytical-experience.css?v=compact-cards">
+<link rel="stylesheet" href="./consumer-experience.css?v=compact-cards">
+<link rel="stylesheet" href="./alpha-compact.css">
 </head>
 
 <!-- U1 — THE APP SHELL (UI_ALPHA_SPEC sec 3, realising
@@ -54,7 +62,7 @@
      The ledger code that used to close the sentence is off the screen;
      the ruling still governs the wording. It may be reworded only
      where that section is rewritten, never softened here. -->
-<div class="app">
+<div class="app" id="app">
 
   <div class="viewport" id="viewport">
     <main class="screen" id="screen" tabindex="-1"></main>
@@ -64,6 +72,7 @@
   <!-- The tab bar is chrome, not a screen: it is rendered once per
        navigation and it never scrolls away. -->
   <nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+  <div class="timeline-status" id="timeline-status" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <!-- The sec 2.5 toast, above the tab bar, and the sec 2.4 sheet
        over its scrim. Both are empty and hidden until something asks
@@ -76,9 +85,32 @@
        and sharing one node would make closing either of them a guess
        about which was up. -->
   <div class="overlay" id="searchoverlay" hidden></div>
+  <div id="ef-offer-overlay" hidden></div>
 
 </div>
 
-<script src="./app.js"></script>
+<script src="./alpha-service.js"></script>
+<script src="./alpha-compact.js"></script>
+<script src="./alpha-live.js"></script>
+<script src="./alpha-ready.js"></script>
+<script src="./bets-builder-fixtures.js?v=compact-cards"></script>
+<script src="./bets-builder.js?v=compact-cards"></script>
+<script src="./edge-finder-fixtures.js?v=compact-cards"></script>
+<script src="./edge-finder-strings.js?v=compact-cards"></script>
+<script src="./edge-finder-pricing.js?v=compact-cards"></script>
+<script src="./outlook-history-fixtures.js?v=compact-cards"></script>
+<script src="./outlook-history.js?v=compact-cards"></script>
+<script src="./edge-finder.js?v=compact-cards"></script>
+<script src="./projection-comparison-fixtures.js?v=compact-cards"></script>
+<script src="./projection-comparison.js?v=compact-cards"></script>
+<script src="./fantasy-hub-fixtures.js?v=compact-cards"></script>
+<script src="./fantasy-hub.js?v=compact-cards"></script>
+<script src="./dfs-scoreboard.js?v=compact-cards"></script>
+<script src="./fantasy-dfs-tournament.js?v=compact-cards"></script>
+<script src="./fantasy-dfs.js?v=compact-cards"></script>
+<script src="./scorecard-fixtures.js?v=compact-cards"></script>
+<script src="./scorecard.js?v=compact-cards"></script>
+<script src="./consumer-experience.js?v=compact-cards"></script>
+<script src="./app.js?v=compact-cards"></script>
 </body>
 </html>

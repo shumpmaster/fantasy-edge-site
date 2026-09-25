@@ -265,28 +265,17 @@ const READ_STEP_SAY = "Say it";
 const READ_STEP_CONFIRM = "Confirm";
 const READ_HINT = "Say it your way. We'll work out how much it matters.";
 const READ_PLACEHOLDER = "What do you know about this player?";
-const READ_GO = "Read it";
+const READ_GO = "Review before saving";
 const READ_BUSY = "Reading…";
-const READ_AGAIN = "Read it again";
 const READ_UNDERSTOOD = "Here's what we understood";
-const READ_CHIPS_NOTE =
-  "These are your own words, as we picked them up. Drop anything that isn't part of your read.";
-const READ_DROP = "Drop";
-const READ_ADD = "Add";
-const READ_DROPPED = "Dropped";
 const READ_EDIT = "Edit";
-const READ_LOOKS_RIGHT = "Looks right";
-const READ_CHANGED_NOTE =
-  "You changed what you said, so it has to be read again before it counts.";
-const READ_WOULD_READ = "This is what we would read:";
-const READ_BANKED_NOTE =
-  "Your words are saved already. Reading them again saves the shorter version beside them; nothing you wrote is thrown away.";
+const READ_LOOKS_RIGHT = "Confirm and save";
 const READ_NOTHING_FOUND =
   "We could not match that to anything we track yet. It is saved, and it will be graded like everything else.";
 const READ_EMPTY = "There is nothing to read yet. Say what you know first.";
 const READ_SAVED_TOAST = "Saved. We'll grade it after the game.";
 const READ_OFFLINE =
-  "The service is not answering, so nothing was read and nothing was saved. Your words are still in the box.";
+  "The reply was interrupted. Your read may have been saved. It will not be sent again automatically; check your saved reads before starting another.";
 const READ_DEMO =
   "Sample data — a fabricated slate does not write to the real service, so nothing is saved from here.";
 const READ_NO_PICK =
@@ -709,7 +698,8 @@ const LIVE_STATE_WORDS = {
   heating: "Heating",
   long_shot: "Long shot",
   cashed: "Hit",
-  lost: "Lost"
+  lost: "Lost",
+  push: "Push — stake back"
 };
 
 /* ...and the tone each one is drawn in (sec 3.1's live mapping:
@@ -720,7 +710,8 @@ const LIVE_STATE_TONE = {
   heating: "heating",
   long_shot: "muted",
   cashed: "positive",
-  lost: "muted"
+  lost: "muted",
+  push: "muted"
 };
 
 const LIVE_NEEDS = "Needs ";
@@ -980,11 +971,29 @@ const DEMO_SLATE_URL = "../demo/slate.demo.json";
 /* The one switch, read once. Anything but `?demo=1` is real mode. */
 const DEMO = (function () {
   try {
-    return window.location.search.indexOf("demo=1") !== -1;
+    return new URLSearchParams(window.location.search).get("demo") === "1";
   } catch (err) {
     return false;
   }
 })();
+
+const HOME_TIMELINE = (function () {
+  try {
+    return new URLSearchParams(window.location.search).get("home") !== "classic";
+  } catch (err) {
+    return false;
+  }
+})();
+
+const RESEARCH_REFERENCE = (function () {
+  try {
+    return new URLSearchParams(window.location.search).get("research") === "reference";
+  } catch (err) {
+    return false;
+  }
+})();
+
+function researchReset() { return DEMO && HOME_TIMELINE && !RESEARCH_REFERENCE; }
 
 const SLATE_URL = DEMO ? DEMO_SLATE_URL : REAL_SLATE_URL;
 
@@ -1792,7 +1801,9 @@ function plainNote(text) {
  * words on a box score and a reader knows them — with the one
  * exception sec 7 names: the initialism gets its meaning in the
  * tooltip, where it costs no width. */
-const LABEL_EXPANSIONS = { adot: "average depth of target" };
+const LABEL_EXPANSIONS = { adot: "average depth of target",
+  "rec yards": "Receiving yards", "rush yards": "Rushing yards",
+  "pass yards": "Passing yards", tds: "Touchdowns" };
 
 function labelTitle(label) {
   return LABEL_EXPANSIONS[String(label || "").toLowerCase()] || "";
@@ -2095,9 +2106,44 @@ const DEMO_ACCOUNT = {
  * stack the reader is standing in. */
 
 const ROUTES = {
+  discover: { tab: "home", hash: "#/discover", root: false },
+  livehub: { tab: "home", hash: "#/live", root: false },
+  you: { tab: "home", hash: "#/you", root: false },
+  "fh-dfs-scoreboard": {tab:"fantasy",hash:"#/fantasy/dfs/scoreboard",root:false},
+  "fh-rankings": {tab:"fantasy",hash:"#/fantasy/hub/rankings",root:false},
+  "fh-league": {tab:"fantasy",hash:"#/fantasy/hub/league",root:false},
+  "fh-team-value": {tab:"fantasy",hash:"#/fantasy/hub/team-value",root:false},
+
+  "fh-gut": {tab:"fantasy",hash:"#/fantasy/hub/gut",root:false},
+  "fh-read": {tab:"fantasy",hash:"#/fantasy/hub/read",root:false},
+  "fh-luck": {tab:"fantasy",hash:"#/fantasy/hub/luck",root:false},
+  "fh-roles": {tab:"fantasy",hash:"#/fantasy/hub/roles",root:false},
+  "fh-value": {tab:"fantasy",hash:"#/fantasy/hub/value",root:false},
+  "fh-player": {tab:"fantasy",hash:"#/fantasy/hub/player",root:false},
+  "fh-trade": {tab:"fantasy",hash:"#/fantasy/hub/trade",root:false},
+  "fh-lineup": {tab:"fantasy",hash:"#/fantasy/hub/lineup",root:false},
+  "fh-lineup-confirm": {tab:"fantasy",hash:"#/fantasy/hub/lineup-confirm",root:false},
+  "fh-legacy-team": {tab:"fantasy",hash:"#/fantasy/hub/legacy-team",root:false},
+  "fh-dfs-stories": {tab:"fantasy",hash:"#/fantasy/hub/dfs/stories",root:false},
+  "fh-dfs-story-read": {tab:"fantasy",hash:"#/fantasy/hub/dfs/story-read",root:false},
+  "fh-dfs-beliefs": {tab:"fantasy",hash:"#/fantasy/hub/dfs/beliefs",root:false},
+  "fh-dfs-close-calls": {tab:"fantasy",hash:"#/fantasy/hub/dfs/close-calls",root:false},
+  "fh-dfs-lineups": {tab:"fantasy",hash:"#/fantasy/hub/dfs/lineups",root:false},
+
   home: { tab: "home", hash: "#/home", root: true },
+  matchups: { tab: "home", hash: "#/home/matchups", root: false },
+  myteam: { tab: "home", hash: "#/home/my-team", root: false },
+  "your-record": {tab:"home",hash:"#/home/your-record",root:false},
+  "our-record": {tab:"home",hash:"#/home/our-record",root:false},
+  mybets: { tab: "home", hash: "#/home/my-bets", root: false },
+  edgebet: { tab: "home", hash: "#/home/my-bets/detail", root: false },
+  mypicks: { tab: "home", hash: "#/home/my-picks", root: false },
+  contextnews: { tab: "home", hash: "#/home/news", root: false },
+  bethistory: { tab: "home", hash: "#/home/my-picks/history", root: false },
+  fantasybrowse: { tab: "fantasy", hash: "#/fantasy/browse", root: true },
   season: { tab: "fantasy", hash: "#/fantasy/season-long", root: true },
   dfs: { tab: "fantasy", hash: "#/fantasy/dfs", root: true },
+  projectionrow: { tab: "projections", hash: "#/projections/comparison", root: false },
   projections: { tab: "projections", hash: "#/projections", root: true },
   /* U7's own detail: ONE player's whole breakdown, pushed onto the
    * Projections stack. It is a detail and not a root, so the chevron
@@ -2106,6 +2152,13 @@ const ROUTES = {
    * model's cross-tab move rather than a second router. */
   projection: { tab: "projections", hash: "#/projections/player",
     root: false },
+  betbuilder: { tab: "bets", hash: "#/bets/build", root: false },
+  betsparlay: { tab: "bets", hash: "#/bets/parlay", root: false },
+  betsleg: { tab: "bets", hash: "#/bets/parlay/edit", root: false },
+  betssim: { tab: "bets", hash: "#/bets/parlay/simulation", root: false },
+  betsrecommended: { tab: "bets", hash: "#/bets/recommended", root: false },
+  betssingle: { tab: "bets", hash: "#/bets/single/preview", root: false },
+  betspick: { tab: "bets", hash: "#/bets/sample-pick", root: false },
   screen: { tab: "bets", hash: "#/bets/screen", root: true },
   live: { tab: "bets", hash: "#/bets/live", root: true },
   picks: { tab: "bets", hash: "#/bets/my-picks", root: true },
@@ -2231,6 +2284,12 @@ const HERO_GLOW = 0.22;
  * the sign-in and sign-out paths own between them). */
 function freshUserScoped() {
   return {
+  homeContext: { view: "overview", mode: "betting", event: null, point: 3, provider: "ESPN", story: null },
+  homeSheet: { initial: true, expanded: true, feedScroll: 0, canvasScroll: 0 },
+  homeSearch: { query: "", priorExpanded: null, priorFeedScroll: 0 },
+  timeline: { filter: "all", open: {}, pending: false,
+    added: false },
+  personal: { mode: "line", point: { line: 3, price: 3 }, read: false },
     /* U3's: the service's answers once they have arrived (null means
      * "not asked or not answered", which is a drawn state, not an
      * empty list), and the slip being built, which is a draft and not
@@ -2238,6 +2297,7 @@ function freshUserScoped() {
     watch: null,
     slips: null,
     picksAsked: false,
+    picksRequest: 0,
     picksOffline: false,
     picksBusy: "",
     track: { input: "paste", text: "", legs: [], unparsed: [],
@@ -2295,6 +2355,7 @@ function freshUserScoped() {
     live: null,
     liveNote: null,
     liveAsked: false,
+    liveRequest: 0,
     liveOffline: false,
     liveBet: null,
     liveSwing: null,
@@ -2302,21 +2363,11 @@ function freshUserScoped() {
     livePollMs: null,
     series: {},
 
-    /* U6's, and it is the DRAFT plus what the service said about it.
-     *
-     * `text` is what he has typed (kept across a re-render so nothing
-     * eats a sentence). `saved` is the service's answer once it has
-     * one, which is what makes the read a banked thing rather than a
-     * draft. `spans` are HIS OWN WORDS as the service handed them
-     * back, and `dropped` is which of them he has taken off — an
-     * index set on the chips, never a taxonomy.
-     *
-     * THERE IS NO `read_p` HERE AND NO PLACE FOR ONE. Step 3 is the
-     * effect library's and is not mocked; a field waiting for it
-     * would be the mock. */
+    /* The local draft, its member-bound review snapshot, and the one
+     * returned service receipt. Resetting the member clears them all. */
     read: { player: null, market: null, line: null, side: null,
-      step: 1, text: "", saved: null, spans: [], dropped: {},
-      busy: false, note: "" },
+      step: 1, text: "", saved: null, spans: [], pending: null,
+      reviewMember: null, submitted: false, busy: false, note: "" },
 
     /* R1d's, and it is the service's answer held for the visit.
      *
@@ -2349,6 +2400,7 @@ function freshUserScoped() {
     scorecard: null,
     scorecardAsked: false,
     me: null,
+    meToken: "",
 
     /* A3's.
      *
@@ -2508,6 +2560,18 @@ const nav = {
   ...freshUserScoped()
 };
 
+/* A response belongs to the credential and member generation that began it.
+ * Token comparison also catches changes made by another browser tab. */
+let memberEpoch = 0;
+let alphaService = null;
+function memberSnapshot(token) {
+  return { epoch: memberEpoch, token: token === undefined
+    ? readToken() : token };
+}
+function memberCurrent(started) {
+  return started.epoch === memberEpoch && started.token === readToken();
+}
+
 /* THE ONE WAY A PERSON'S THINGS LEAVE THIS PAGE (finding 1).
  *
  * Called on a sign-out AND on any token change — a pasted key, a
@@ -2522,6 +2586,17 @@ const nav = {
  * is in the browser now — which is the defect this function exists to
  * prevent, arriving a minute later. */
 function resetUserScoped() {
+  memberEpoch += 1;
+  if (alphaService) alphaService.resetMember();
+  if (window.AlphaCompact) window.AlphaCompact.resetMember();
+  if (window.ConsumerExperience && window.ConsumerExperience.resetMember) window.ConsumerExperience.resetMember();
+  /* A sheet, toast or focused input can still expose the last member's
+   * draft even after its model is cleared. */
+  nav.sheet = false;
+  nav.toast = null;
+  if (document.activeElement && document.activeElement.blur) {
+    document.activeElement.blur();
+  }
   if (nav.livePoll) {
     window.clearInterval(nav.livePoll);
     nav.livePoll = null;
@@ -2570,7 +2645,27 @@ function icon(name, size, strokeWidth) {
  * sec 2.3 — the navigation model
  * ------------------------------------------------------------------ */
 
+function browseCreatePreview() { return personalPreview() && !RESEARCH_REFERENCE; }
+
+function browsePlayers() {
+  if (!browseCreatePreview()) return;
+  if (currentRoute() === "projections") return;
+  currentStack().push("projections");
+  closeSheet();
+  navigate("projections", "push");
+}
+
+function createBet(mode) {
+  const module = betsDemoModule();
+  if (!module || ["single", "parlay"].indexOf(mode) < 0) return;
+  module.state.mode = mode;
+  openIn("bets", "betbuilder");
+}
+
 function rootOf(tab) {
+  if (fantasyHubEnabled() && tab === "fantasy") return nav.subs.fantasy === "dfs" ? "dfs" : "season";
+  if (HOME_TIMELINE && tab === "fantasy") return "fantasybrowse";
+  if (HOME_TIMELINE && tab === "bets") return "screen";
   /* a tab with sub-views has no root of its own: its root is
    * whichever sub-view was last used */
   return TAB_SUBS[tab] ? nav.subs[tab] : tab;
@@ -2590,6 +2685,8 @@ function currentRoute() {
  * would make the tab bar a history control. */
 function selectTab(tab) {
   if (!nav.stacks[tab]) return;
+  if (HOME_TIMELINE && tab === "fantasy") nav.view = "fantasy";
+  if (HOME_TIMELINE && tab === "bets") nav.subs.bets = "screen";
   nav.tab = tab;
   nav.stacks[tab] = [rootOf(tab)];
   closeSheet();
@@ -2624,7 +2721,11 @@ function openIn(tab, route) {
 /* AND THE CHEVRON POPS. A root has nothing to pop to, so the chevron
  * is not drawn there. */
 function goBack() {
+  if(consumerEnabled()&&consumerModule().back())return;
   const stack = currentStack();
+  if (edgeEnabled() && nav.edgeReturn && nav.tab==='home' && stack.length===2 && ['mybets','myteam'].indexOf(currentRoute())>=0) {
+    const origin=nav.edgeReturn;nav.edgeReturn=null;nav.tab=origin.tab;nav.stacks[origin.tab]=origin.stack;navigate(currentRoute(),'pop');return;
+  }
   if (stack.length < 2) return;
   stack.pop();
   navigate(currentRoute(), "pop");
@@ -2654,7 +2755,7 @@ const TAB_HASHES = { "#/fantasy": "fantasy", "#/bets": "bets" };
 function routeFromHash() {
   const hash = String(window.location.hash || "");
   for (const name in ROUTES) {
-    if (ROUTES[name].hash === hash) return name;
+    if (ROUTES[name].hash === hash && (consumerEnabled() || !["discover","livehub","you"].includes(name))) return name;
   }
   if (TAB_HASHES[hash]) return rootOf(TAB_HASHES[hash]);
   return "home";
@@ -2693,6 +2794,7 @@ function navigate(route, motion) {
  * than fought with. */
 function applyHash() {
   const route = routeFromHash();
+  if (route === "fantasybrowse") nav.view = "fantasy";
   const stack = currentStack();
   if (stack[stack.length - 1] === route) return;
 
@@ -2738,17 +2840,29 @@ function closeToast() {
  * drawn; everything else about it — the scrim, the handle, the rise,
  * Escape, tapping away — is the same because it is the same
  * component. */
+let createMenuFocus = null;
 function openSheet(kind) {
+  if ((consumerEnabled() || browseCreatePreview() || fantasyHubEnabled()) && !kind) createMenuFocus = document.activeElement;
   nav.sheet = kind || "add";
   nav.toast = null;
   renderToast();
   renderSheet();
+  if ((consumerEnabled() || browseCreatePreview() || fantasyHubEnabled()) && nav.sheet === "add") {
+    const overlay = el("overlay");
+    const first = overlay && overlay.querySelector('[data-act="ac-create"], [data-act="fh-create"], [data-act="create-choice"]');
+    if (first) first.focus();
+  }
 }
 
 function closeSheet() {
   if (!nav.sheet) return;
   nav.sheet = false;
   renderSheet();
+  if (createMenuFocus) {
+    const returnTo = createMenuFocus.isConnected ? createMenuFocus : (document.querySelector && document.querySelector('[data-act="sheet-open"]'));
+    if (returnTo) returnTo.focus({preventScroll:true});
+  }
+  createMenuFocus = null;
 }
 
 /* ------------------------------------------------------------------
@@ -2880,6 +2994,8 @@ function stubRows(rows, mark, route) {
  * `no-store` because the file is rewritten on every deploy and a
  * cached yesterday is the one thing this screen must never show. */
 async function getJSON(url, options) {
+  if(scorecardActive()&&(String(url)===SERVICE_URL||String(url).indexOf(SERVICE_URL+"/")===0))throw new Error("Demo record uses no service requests.");
+  if (fantasyHubActive() && options && options.method && options.method.toUpperCase() !== "GET") throw new Error("Sample hub changes stay in this visit.");
   const controller = new AbortController();
   const timer = window.setTimeout(function () { controller.abort(); },
     FETCH_TIMEOUT_MS);
@@ -2935,13 +3051,27 @@ async function getJSON(url, options) {
  * to keep it. This is the lab's in-memory fallback, applied to the
  * one thing this app stores. */
 let heldToken = "";
+let tokenMemoryOnly = false;
+let observedToken = null;
 
 function readToken() {
+  let token;
   try {
-    return window.localStorage.getItem(PICKS_TOKEN_KEY) || heldToken;
+    token = tokenMemoryOnly ? heldToken
+      : (window.localStorage.getItem(PICKS_TOKEN_KEY) || "");
   } catch (err) {
-    return heldToken;
+    token = heldToken;
   }
+  if (observedToken !== null && observedToken !== token) {
+    /* Another tab changed the bearer without calling adoptToken here.
+     * Clear the old member before a private action can use the new one. */
+    observedToken = token;
+    resetUserScoped();
+    nav.hasToken = !!token;
+  } else if (observedToken === null) {
+    observedToken = token;
+  }
+  return token;
 }
 
 /* Returns whether the BROWSER kept it. The visit's copy is set either
@@ -2949,11 +3079,15 @@ function readToken() {
  * not "this token is lost" — and the one caller that can do something
  * about that does. */
 function writeToken(token) {
+  if (scorecardEnabled()) scorecardModule().resetMember();
   heldToken = token;
+  observedToken = token;
   try {
     window.localStorage.setItem(PICKS_TOKEN_KEY, token);
+    tokenMemoryOnly = false;
     return true;
   } catch (err) {
+    tokenMemoryOnly = true;
     return false;
   }
 }
@@ -3009,6 +3143,9 @@ function askToken() {
  * fetch, because a second one would be a second timeout and a second
  * error shape to get wrong. */
 async function picksAsk(path, token, body, method) {
+  if (DEMO) throw new Error("Sample data never calls the member service.");
+  if(scorecardActive())throw new Error("Demo record uses no service requests.");
+  if (fantasyHubActive()) throw new Error("Sample hub changes stay in this visit.");
   /* ONE DOOR TAKES NO TOKEN, and it is the only one: `POST /signup`,
    * where a person holding an invite code has no credential yet —
    * which is what the code is for. An empty token sends NO
@@ -3024,6 +3161,21 @@ async function picksAsk(path, token, body, method) {
   });
 }
 
+/* The adapter receives this existing transport and the resolved /me id.
+ * It neither owns credentials nor guesses identity from a stored token. */
+if (typeof AlphaService !== "undefined") {
+  alphaService = AlphaService.create({
+    request: picksAsk,
+    isDemo: function () { return DEMO; },
+    memberIdentity: function () {
+      const token = readToken();
+      return { token: token,
+        user_id: nav.meToken === token && nav.me && nav.me.user_id
+          ? nav.me.user_id : "" };
+    }
+  });
+}
+
 /* The segment asks ONCE per visit. A fabricated slate never writes to
  * the real service and never reads from it either: a demo page that
  * loaded somebody's real watchlist would be a sample screen showing
@@ -3032,6 +3184,7 @@ async function loadPicks(force) {
   if (DEMO) return;
   if (nav.picksAsked && !force) return;
   const token = readToken();
+  const started = memberSnapshot(token);
   nav.hasToken = !!token;
   if (!token) {
     nav.picksAsked = true;
@@ -3039,16 +3192,23 @@ async function loadPicks(force) {
     return;
   }
   nav.picksAsked = true;
+  const request = ++nav.picksRequest;
+  const current = function () {
+    return memberCurrent(started) && request === nav.picksRequest;
+  };
   try {
     const watch = await picksAsk("/watchlist", token, null);
+    if (!current()) return;
     /* m4.4 S1: THE SERVICE GRADES ON THIS GET. The legs come back
      * already carrying their marks, so a graded bet gains its result
      * in place and this page asks no second question about it. */
     const slips = await picksAsk("/slips", token, null);
+    if (!current()) return;
     nav.watch = (watch && watch.watchlist) || [];
     nav.slips = (slips && slips.slips) || [];
     nav.picksOffline = false;
   } catch (err) {
+    if (!current()) return;
     nav.picksOffline = true;
   }
   /* THE RECORD AND THE NAME GET THEIR OWN ATTEMPTS, and that is the
@@ -3056,8 +3216,10 @@ async function loadPicks(force) {
    * must not take a person's watchlist and slips off the screen with
    * it. Each one that fails simply draws nothing — the app's own
    * "no answer, no element" rule. */
-  await loadMe(token);
-  await loadScorecard(token);
+  await loadMe(token, current);
+  if (!current()) return;
+  await loadScorecard(token, current);
+  if (!current()) return;
   render();
 }
 
@@ -3065,11 +3227,17 @@ async function loadPicks(force) {
  * name field, landed in m4.4). Until the service served this, only
  * the owner could be named on the account screen: his own members
  * list carries his row and a member has no members list at all. */
-async function loadMe(token) {
+async function loadMe(token, refreshCurrent) {
+  const started = memberSnapshot(token);
   try {
-    nav.me = await picksAsk("/me", token, null);
+    const answer = await picksAsk("/me", token, null);
+    if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
+    nav.me = answer;
+    nav.meToken = answer && answer.user_id ? token : "";
   } catch (err) {
+    if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
     nav.me = null;
+    nav.meToken = "";
   }
 }
 
@@ -3077,16 +3245,21 @@ async function loadMe(token) {
  * and the week are the page's — the same two numbers every other
  * service call on this surface carries — and where the slate has not
  * arrived yet there is nothing to ask about, so nothing is asked. */
-async function loadScorecard(token) {
+async function loadScorecard(token, refreshCurrent) {
+  const started = memberSnapshot(token);
   const when = slateWeekNumbers();
   if (!when) return;
   try {
-    nav.scorecard = await picksAsk(
+    const answer = await picksAsk(
       "/scorecard?season=" + when.season + "&week=" + when.week,
       token, null);
+    if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
+    nav.scorecard = answer;
   } catch (err) {
+    if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
     nav.scorecard = null;
   }
+  if (!memberCurrent(started) || (refreshCurrent && !refreshCurrent())) return;
   nav.scorecardAsked = true;
 }
 
@@ -3129,6 +3302,7 @@ async function loadAccount(force) {
   }
   if (account.asked && !force) return;
   const token = readToken();
+  const started = memberSnapshot(token);
   if (!token) {
     account.asked = true;
     render();
@@ -3137,18 +3311,23 @@ async function loadAccount(force) {
   account.asked = true;
   try {
     const mine = await picksAsk("/invite-requests", token, null);
+    if (!memberCurrent(started)) return;
     account.requests = (mine && mine.requests) || [];
     account.admin = !!(mine && mine.admin);
     account.offline = false;
     if (account.admin) {
       const invites = await picksAsk("/invites", token, null);
+      if (!memberCurrent(started)) return;
       const members = await picksAsk("/members", token, null);
+      if (!memberCurrent(started)) return;
       account.invites = (invites && invites.invites) || [];
       account.members = (members && members.members) || [];
     }
   } catch (err) {
+    if (!memberCurrent(started)) return;
     account.offline = true;
   }
+  if (!memberCurrent(started)) return;
   render();
 }
 
@@ -3168,6 +3347,7 @@ async function submitSignup() {
   }
   const account = accountState();
   if (account.busy) return;
+  const started = memberSnapshot();
   account.busy = "signup";
   account.note = "";
   render();
@@ -3175,6 +3355,7 @@ async function submitSignup() {
     const made = await picksAsk("/signup", "", {
       code: account.code, name: account.name,
       phone: account.phone, email: account.email });
+    if (!memberCurrent(started)) return;
     /* A NEW TOKEN IS A NEW PERSON (finding 1). Everything the last
      * reader on this tab loaded goes before the first request is made
      * with this credential — and it takes the typed name, phone and
@@ -3196,6 +3377,7 @@ async function submitSignup() {
     loadAccount(true);
     loadPicks(true);
   } catch (err) {
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.note = serviceNote(err);
     render();
@@ -3215,12 +3397,14 @@ async function requestInvite() {
   if (account.busy) return;
   const token = readToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   account.busy = "invite";
   account.note = "";
   render();
   try {
     const asked = await picksAsk("/invite-requests", token,
       { friend_note: account.friend });
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.friend = "";
     account.asked = false;
@@ -3228,6 +3412,7 @@ async function requestInvite() {
     /* The service's own sentence about what it just did. */
     showToast(asked.note || "");
   } catch (err) {
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.note = serviceNote(err);
     render();
@@ -3247,6 +3432,7 @@ async function decideRequest(requestId, approve) {
   if (account.busy) return;
   const token = readToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   account.busy = "decide:" + requestId;
   account.note = "";
   render();
@@ -3254,6 +3440,7 @@ async function decideRequest(requestId, approve) {
     const said = await picksAsk("/invite-requests/decide", token,
       { request_id: requestId,
         decision: approve ? "approve" : "decline" });
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.minted = said.code
       ? { code: said.code, note: said.note || "",
@@ -3262,6 +3449,7 @@ async function decideRequest(requestId, approve) {
     account.asked = false;
     loadAccount(true);
   } catch (err) {
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.note = serviceNote(err);
     render();
@@ -3277,15 +3465,18 @@ async function withdrawInvite(inviteId) {
   if (account.busy) return;
   const token = readToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   account.busy = "withdraw:" + inviteId;
   account.note = "";
   render();
   try {
     await picksAsk("/invites/withdraw", token, { invite_id: inviteId });
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.asked = false;
     loadAccount(true);
   } catch (err) {
+    if (!memberCurrent(started)) return;
     account.busy = "";
     account.note = serviceNote(err);
     render();
@@ -3435,8 +3626,10 @@ async function syncPush() {
    * app directly on this screen would otherwise never have his device
    * asked. `loadAccount` reads it the same way, for the same reason. */
   if (DEMO || !readToken() || !pushSupported()) return;
+  const started = memberSnapshot();
   try {
     const held = await currentSubscription();
+    if (!memberCurrent(started)) return;
     /* A FACT ABOUT THE BROWSER, and it is filed as one. It is NOT
      * assigned to `on`: this session has not bound anything. */
     push.device = !!held;
@@ -3462,29 +3655,33 @@ async function togglePush() {
   }
   const token = readToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   push.busy = true;
   push.note = "";
   render();
   try {
     if (push.on) {
-      await turnPushOff(token);
+      await turnPushOff(token, started);
     } else {
-      await turnPushOn(token);
+      await turnPushOn(token, started);
     }
   } catch (err) {
+    if (!memberCurrent(started)) return;
     push.note = serviceNote(err);
   }
+  if (!memberCurrent(started)) return;
   push.busy = false;
   render();
 }
 
-async function turnPushOn(token) {
+async function turnPushOn(token, started) {
   const push = accountState().push;
   /* THE SERVICE IS ASKED FIRST, before the reader is asked anything.
    * A permission prompt is a real interruption, and asking for one to
    * turn on something that cannot be turned on yet would spend the
    * reader's only "yes" on nothing. */
   const key = await picksAsk("/push/key", token, null);
+  if (!memberCurrent(started)) return;
   push.ready = !!(key && key.ready);
   if (!push.ready) {
     /* The service's own sentence about when this arrives. */
@@ -3492,12 +3689,14 @@ async function turnPushOn(token) {
     return;
   }
   const allowed = await window.Notification.requestPermission();
+  if (!memberCurrent(started)) return;
   if (allowed !== "granted") {
     push.note = NOTIFY_DENIED;
     return;
   }
   const registration = await window.navigator.serviceWorker
     .register("./sw.js");
+  if (!memberCurrent(started)) return;
   /* A SUBSCRIPTION THIS DEVICE ALREADY HAS IS REUSED, not asked for
    * twice (finding 2). Where somebody else signed in on this tab
    * first, the browser is already subscribed and the thing that has
@@ -3508,9 +3707,11 @@ async function turnPushOn(token) {
     || await registration.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: keyBytes(key.public_key) });
+  if (!memberCurrent(started)) return;
   const shape = subscription.toJSON ? subscription.toJSON() : {};
   await picksAsk("/push/subscribe", token, {
     endpoint: subscription.endpoint, keys: shape.keys || {} });
+  if (!memberCurrent(started)) return;
   /* ONLY NOW. `on` means "this session bound this device to this
    * account and the service said so" — never "the browser has a
    * subscription", which is a different fact and is held in
@@ -3528,13 +3729,16 @@ async function turnPushOn(token) {
  * service refuses a request that does not name one, which is why this
  * reads it off the live subscription before unsubscribing rather than
  * after. */
-async function turnPushOff(token) {
+async function turnPushOff(token, started) {
   const push = accountState().push;
   const held = await currentSubscription();
+  if (!memberCurrent(started)) return;
   if (held) {
     await picksAsk("/push/unsubscribe", token,
       { endpoint: held.endpoint });
+    if (!memberCurrent(started)) return;
     await held.unsubscribe();
+    if (!memberCurrent(started)) return;
   }
   push.on = false;
   push.device = false;
@@ -3550,17 +3754,23 @@ async function toggleWatch(playerId, market, line, side) {
     showToast(SERVICE_DEMO);
     return;
   }
+  market = serviceMarket(market);
+  if (!market) { showToast("This statistic cannot be saved yet."); return; }
   const token = askToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   const held = watchedEntry(playerId, market);
   nav.picksBusy = playerId + "|" + market;
   render();
   try {
     if (held) {
+      // Removal addresses the persisted identity, including older display keys.
+      const storedMarket = held.market;
       await picksAsk("/watchlist/remove", token,
-        { player_id: playerId, market: market });
+        { player_id: playerId, market: storedMarket });
+      if (!memberCurrent(started)) return;
       nav.watch = (nav.watch || []).filter(function (row) {
-        return !(row.player_id === playerId && row.market === market);
+        return !(row.player_id === playerId && row.market === storedMarket);
       });
       nav.picksOffline = false;
       nav.picksBusy = "";
@@ -3570,6 +3780,7 @@ async function toggleWatch(playerId, market, line, side) {
     }
     const saved = await picksAsk("/watchlist", token, {
       player_id: playerId, market: market, line: line, side: side });
+    if (!memberCurrent(started)) return;
     nav.watch = [{
       watchlist_id: saved.watchlist_id, player_id: playerId,
       market: market, line: saved.line === undefined ? line : saved.line,
@@ -3583,6 +3794,7 @@ async function toggleWatch(playerId, market, line, side) {
     render();
     showToast(PICK_WATCH_SAVED);
   } catch (err) {
+    if (!memberCurrent(started)) return;
     /* Never a silent drop: the bookmark does not change and the line
      * under it says the service is not answering. */
     nav.picksOffline = true;
@@ -3599,130 +3811,97 @@ async function toggleWatch(playerId, market, line, side) {
  * so a read opened from a pick card arrives attached to that bet
  * without the service learning a new field for it.
  *
- * THE READ IS BANKED WHEN THE SERVICE SAYS SO, which is at "Read it"
- * and not at Confirm: the service interprets, validates and writes in
- * one transaction and only then answers, exactly as the lab's box has
- * always worked. So the confirm step is not a "do you want to save
- * this" gate — it is him checking that what we picked up is what he
- * meant, and the sheet says plainly that his words are already kept.
- *
- * DROPPING A CHIP IS THEREFORE AN EDIT, not a veto. The words come out
- * of the text and the shorter read is READ AGAIN — a second row beside
- * the first, because the ledger is append-only and a correction is a
- * thing that happened, not a thing that unhappens. The sheet says that
- * too, in one sentence, where he does it. */
+ * Review is local. Only Confirm sends the text; that single service
+ * transaction banks it and creates generation-bound scenarios. */
 
-function readOpen(playerId, market) {
+function readOpen(playerId, market, terms) {
   const person = playerOf(playerId);
-  const prop = person ? propOf(person, market) : null;
+  // Explicit owned terms must never fall back to a different key statistic.
+  const canonical = serviceMarket(market);
+  const prop = !person ? null : !market ? propOf(person) :
+    (person.props || []).find(function (row) {
+      return row.market === market || (canonical && serviceMarket(row.market) === canonical);
+    });
   nav.read = {
     player: playerId || null,
-    market: prop ? prop.market : (market || null),
-    line: prop ? numberOrNull(prop.line) : null,
-    side: prop ? prop.lean : null,
-    step: 1, text: "", saved: null, spans: [], dropped: {},
-    busy: false, note: ""
+    market: market ? (canonical || market) : prop ? (serviceMarket(prop.market) || prop.market) : null,
+    line: terms ? numberOrNull(terms.line) : prop ? numberOrNull(prop.line) : null,
+    side: terms ? terms.side : prop ? prop.lean : null,
+    step: 1, text: "", saved: null, spans: [], pending: null,
+    reviewMember: null, submitted: false, busy: false, note: ""
   };
   openSheet("read");
 }
 
-/* The chips he has NOT dropped, in the order they came back. */
-function readKept() {
-  return (nav.read.spans || []).filter(function (_span, index) {
-    return !nav.read.dropped[index];
-  });
-}
-
-function readHasDrops() {
-  return (nav.read.spans || []).some(function (_span, index) {
-    return !!nav.read.dropped[index];
-  });
-}
-
-/* WHAT A DROP DOES TO THE TEXT, and it is the least this page can do
- * to it: the dropped fragment is cut out of what he wrote and the
- * seam is tidied. Nothing is rewritten, nothing is re-ordered and no
- * word he did not type is added. */
-function readTextWithoutDrops() {
-  let text = String(nav.read.text || "");
-  /* NOTHING DROPPED, NOTHING TOUCHED. Even collapsing his spacing
-   * would be this page editing words he wrote. */
-  if (!readHasDrops()) return text;
-  (nav.read.spans || []).forEach(function (span, index) {
-    if (!nav.read.dropped[index]) return;
-    text = text.split(span).join(" ");
-  });
-  return text.replace(/\s+/g, " ").replace(/\s+([.,;!?])/g, "$1").trim();
-}
-
-/* THE SAVE. Synchronous from his side, the lab's rule: the sheet
- * moves to the confirm step only once the ledger has the read. */
-async function postRead() {
-  if (nav.read.busy) return;
+/* Review first; one POST after explicit confirmation. A lost reply can
+ * still mean a banked read, so this draft never silently retries it. */
+async function postRead(confirmed) {
+  if (fantasyHubActive()) return;
+  const token = readToken();
+  const draft = nav.read;
+  if (draft.busy || draft.saved || draft.submitted) return;
   if (DEMO) {
-    nav.read.note = READ_DEMO;
+    draft.note = READ_DEMO;
     renderSheet();
     return;
   }
-  const text = (nav.read.step === 2 ? readTextWithoutDrops()
-    : String(nav.read.text || "")).trim();
-  if (!text) {
-    nav.read.note = READ_EMPTY;
+  const text = String(draft.text || "").trim();
+  if (!text || !draft.player) {
+    draft.note = !text ? READ_EMPTY : READ_NO_PICK;
     renderSheet();
     return;
   }
-  if (!nav.read.player) {
-    nav.read.note = READ_NO_PICK;
+  if (!token) { askToken(); renderSheet(); return; }
+  if (confirmed !== true) {
+    const body = { player_id: draft.player, text: text };
+    if (draft.market) {
+      body.market = serviceMarket(draft.market);
+      if (!body.market) {
+        draft.note = "This statistic cannot be attached to an angle yet.";
+        renderSheet(); return;
+      }
+    }
+    if (draft.line !== null && draft.line !== undefined) body.line = draft.line;
+    if (draft.side) body.side = draft.side;
+    draft.pending = body;
+    draft.reviewMember = memberSnapshot(token);
+    draft.step = 2;
+    draft.note = "";
     renderSheet();
     return;
   }
-  const token = askToken();
-  if (!token) {
-    renderSheet();
-    return;
-  }
-  const body = { player_id: nav.read.player, text: text };
-  if (nav.read.market) body.market = nav.read.market;
-  if (nav.read.line !== null && nav.read.line !== undefined) {
-    body.line = nav.read.line;
-  }
-  if (nav.read.side) body.side = nav.read.side;
-  nav.read.busy = true;
-  nav.read.note = "";
+  if (draft.step !== 2 || !draft.pending || !memberCurrent(draft.reviewMember)) return;
+  const started = memberSnapshot(token);
+  const body = draft.pending;
+  draft.busy = true;
+  draft.submitted = true;
+  draft.note = "";
   renderSheet();
   try {
     const saved = await picksAsk("/read", token, body);
-    nav.read.saved = saved;
-    nav.read.text = saved && saved.text ? saved.text : text;
-    /* THE CHIPS ARE WHAT THE SERVICE SENT AND NOTHING ELSE. No span
-     * is worked out here: a page that split his sentence itself would
-     * be showing him its own reading under the words "what we
-     * understood". An answer with none is a real and drawn state. */
-    nav.read.spans = (saved && Array.isArray(saved.spans))
-      ? saved.spans : [];
-    nav.read.dropped = {};
-    nav.read.step = 2;
-    nav.read.note = nav.read.spans.length ? "" : READ_NOTHING_FOUND;
-    /* R1d: THE SAVE ALREADY CARRIES HIS NUMBER. `POST /read` computes
-     * and stores the scenarios before it answers, so the sheet shows
-     * them on the spot rather than making him go and look — and the
-     * rest of the app picks the same rows up on its next ask. */
+    if (!memberCurrent(started) || nav.read !== draft) return;
+    draft.saved = saved;
+    draft.text = saved && saved.text ? saved.text : body.text;
+    draft.spans = (saved && Array.isArray(saved.spans)) ? saved.spans : [];
+    draft.note = draft.spans.length ? "" : READ_NOTHING_FOUND;
     loadScenarios(true);
   } catch (err) {
-    /* Never a silent drop: the words stay in the box and the line
-     * under it says the service is not answering. */
-    nav.read.note = READ_OFFLINE;
+    if (!memberCurrent(started) || nav.read !== draft) return;
+    draft.note = READ_OFFLINE + (serviceNote(err) ? " " + serviceNote(err) : "");
   }
-  nav.read.busy = false;
+  if (!memberCurrent(started) || nav.read !== draft) return;
+  draft.busy = false;
   renderSheet();
 }
 
-/* CONFIRM. The read is already banked, so this closes the sheet and
- * says the one thing R0 can honestly say about it — a promise with a
- * moment attached, which is the credibility rule's shape. */
 function confirmRead() {
-  closeSheet();
-  showToast(READ_SAVED_TOAST);
+  if (DEMO) return;
+  if (nav.read.saved) {
+    closeSheet();
+    showToast(READ_SAVED_TOAST);
+    return;
+  }
+  return postRead(true);
 }
 
 /* ------------------------------------------------------------------
@@ -3762,6 +3941,7 @@ async function loadScenarios(force) {
     return;
   }
   const token = readToken();
+  const started = memberSnapshot(token);
   nav.hasToken = !!token;
   if (!token) return;
   const week = slateWeekNumbers();
@@ -3771,6 +3951,7 @@ async function loadScenarios(force) {
     const answer = await picksAsk(
       "/scenarios?season=" + encodeURIComponent(week.season) +
       "&week=" + encodeURIComponent(week.week), token, null);
+    if (!memberCurrent(started)) return;
     nav.scenarios = (answer && answer.scenarios) || [];
     /* THE SENTENCE IS THE SERVICE'S, WORD FOR WORD. Which of the
      * three facts is true is something only the service knows, and a
@@ -3778,11 +3959,13 @@ async function loadScenarios(force) {
      * its own authority. */
     nav.scenarioReason = (answer && answer.reason) || null;
   } catch (err) {
+    if (!memberCurrent(started)) return;
     /* Never a silent drop and never a number dressed as fresh: the
      * surfaces simply do not draw his number, and nothing invents one
      * in its place. */
     nav.scenarios = null;
   }
+  if (!memberCurrent(started)) return;
   render();
 }
 
@@ -3939,8 +4122,9 @@ function scenarioBoardNote() {
  *   held is not appended twice. Nothing is computed. */
 
 function liveOnScreen() {
+  if (researchReset() && currentRoute() === "live") return false;
   const route = currentRoute();
-  return route === "live" || route === "card";
+  return route === "live" || route === "card" || route === "livehub";
 }
 
 function liveHidden() {
@@ -4014,6 +4198,7 @@ async function loadLive(force) {
   if (DEMO) return;
   if (nav.liveAsked && !force) return;
   const token = readToken();
+  const started = memberSnapshot(token);
   nav.hasToken = !!token;
   if (!token) {
     nav.liveAsked = true;
@@ -4028,20 +4213,25 @@ async function loadLive(force) {
     return;
   }
   nav.liveAsked = true;
+  const request = ++nav.liveRequest;
   try {
     const answer = await picksAsk(
       "/live?season=" + encodeURIComponent(week.season) +
       "&week=" + encodeURIComponent(week.week), token, null);
+    if (!memberCurrent(started) || request !== nav.liveRequest) return;
     nav.live = answer;
     nav.liveNote = null;
     nav.liveOffline = false;
     accumulate(answer);
+    loadPicks(true);
   } catch (err) {
+    if (!memberCurrent(started) || request !== nav.liveRequest) return;
     /* Never a silent drop and never a stale number dressed as a fresh
      * one: the board says the service is not answering and the line
      * stops where the last update left it. */
     nav.liveOffline = true;
   }
+  if (!memberCurrent(started) || request !== nav.liveRequest) return;
   render();
 }
 
@@ -4124,8 +4314,10 @@ function readShot(file) {
  * clears the last reading: a preview of one picture beside the rows
  * of another is the worst screen this feature could draw. */
 function chooseShot(which, file) {
+  const started = memberSnapshot();
   nav.capture = { busy: "", note: "" };
   readShot(file).then(function (shot) {
+    if (!memberCurrent(started)) return;
     nav.shot[which] = shot;
     if (which === "team") {
       nav.team.slots = null;
@@ -4135,6 +4327,7 @@ function chooseShot(which, file) {
     }
     render();
   }).catch(function (err) {
+    if (!memberCurrent(started)) return;
     nav.shot[which] = null;
     nav.capture = { busy: "", note: err.message || SHOT_FAILED };
     render();
@@ -4145,6 +4338,7 @@ function chooseShot(which, file) {
  * the bearer token and the picture and nothing else about the
  * reader. The answer is a proposal and is drawn as one. */
 async function readPicture(which) {
+  if (fantasyHubActive()) return;
   if (DEMO) {
     showToast(SERVICE_DEMO);
     return;
@@ -4153,12 +4347,14 @@ async function readPicture(which) {
   if (!shot || nav.capture.busy) return;
   const token = askToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   nav.capture = { busy: which, note: "" };
   render();
   try {
     const answer = await picksAsk("/capture", token, {
       kind: which === "team" ? "lineup" : "slip",
       image_b64: shot.b64, media_type: shot.media });
+    if (!memberCurrent(started)) return;
     nav.capture = { busy: "", note: "" };
     nav.picksOffline = false;
     if (which === "team") {
@@ -4167,6 +4363,7 @@ async function readPicture(which) {
       takeSlipProposal(answer);
     }
   } catch (err) {
+    if (!memberCurrent(started)) return;
     /* Never a silent drop and never a half-read: the rows the reader
      * had stay as they were and the line under the button says what
      * happened. */
@@ -4225,7 +4422,7 @@ function takeTeamProposal(answer) {
       slot_label: slot.slot_label || "",
       player_id: slot.resolved ? slot.player_id : null,
       player_text: slot.player_text || "",
-      name: person ? person.name : "",
+      name: person ? person.name : (slot.player_text || slot.player_id || ""),
       salary: slot.salary === undefined ? null : slot.salary,
       opponent_text: slot.opponent_text || null,
       resolved: !!slot.resolved
@@ -4238,6 +4435,7 @@ function takeTeamProposal(answer) {
 /* THE CONFIRMATION. What is sent is what is on the screen after the
  * reader has edited it — never what the picture said. */
 async function saveTeam() {
+  if (fantasyHubActive()) return;
   if (DEMO) {
     showToast(SERVICE_DEMO);
     return;
@@ -4246,6 +4444,7 @@ async function saveTeam() {
   if (!slots.length || nav.picksBusy === "team") return;
   const token = askToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   const week = slateWeek();
   if (!week) return;
   nav.picksBusy = "team";
@@ -4267,6 +4466,7 @@ async function saveTeam() {
         };
       })
     });
+    if (!memberCurrent(started)) return;
     nav.team.saved = saved;
     nav.teams = null;
     nav.opponents = null;
@@ -4279,6 +4479,7 @@ async function saveTeam() {
     loadTeams(true);
     showToast(TEAM_SAVED);
   } catch (err) {
+    if (!memberCurrent(started)) return;
     nav.picksOffline = true;
     nav.picksBusy = "";
     render();
@@ -4291,9 +4492,11 @@ async function loadTeams(force) {
   if (DEMO) return;
   const token = readToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   if (nav.teams && !force) return;
   try {
     const answer = await picksAsk("/team", token, null);
+    if (!memberCurrent(started)) return;
     nav.teams = (answer && answer.teams) || {};
     /* U5: the other side of the same answer. An opponent nobody has
      * captured is simply absent from it, which is what the matchup
@@ -4301,8 +4504,10 @@ async function loadTeams(force) {
     nav.opponents = (answer && answer.opponents) || {};
     nav.picksOffline = false;
   } catch (err) {
+    if (!memberCurrent(started)) return;
     nav.picksOffline = true;
   }
+  if (!memberCurrent(started)) return;
   render();
 }
 
@@ -4337,6 +4542,8 @@ async function loadDfs() {
  * is drawn and nothing after it. A reader who never opens the tab
  * never fetches it. */
 function syncDfs() {
+  if (fantasyHubActive()) return;
+  if (researchReset()) return;
   if (nav.dfsAsked) return;
   if (currentRoute() !== "dfs") return;
   loadDfs();
@@ -4372,7 +4579,7 @@ async function loadProjections() {
 function syncProjections() {
   if (nav.projAsked) return;
   const route = currentRoute();
-  if (route !== "projections" && route !== "projection") return;
+  if (route !== "projections" && route !== "projection" && !(browseCreatePreview() && route === "fantasybrowse")) return;
   loadProjections();
 }
 
@@ -4394,40 +4601,71 @@ function slateWeek() {
  * computed and stored them; the preview this page drew before the
  * save is replaced by the stored answer rather than kept beside it. */
 async function saveSlip() {
+  if (fantasyHubActive()) return;
+  if (edgeEnabled()) {
+    const legs=nav.track.legs;
+    if (!legs.length || legs.some(function(l){return !l.player_id || !l.market || !Number.isFinite(l.line_placed);})) return;
+    const mapped=legs.map(function(l){return {player_id:l.player_id,player:l.name||l.text,market:l.market,side:l.side,line:l.line_placed,odds:null,p_at_line:Number.isFinite(l.p_at_placed)?l.p_at_placed:null};});
+    const payload={source:'Imported sample slip',kind:legs.length>1?'parlay':'single',legs:mapped};
+    const stakeText=String(nav.track.stake||'').trim(),multipleText=String(nav.track.payout||'').trim();
+    const stake=stakeText?Number(stakeText):null,multiple=multipleText?Number(multipleText):null;
+    if ((stake!==null&&(!Number.isFinite(stake)||stake<=0)) || (multiple!==null&&(!Number.isFinite(multiple)||multiple<=1)) || (stake!==null&&multiple!==null&&!Number.isFinite(stake*multiple))) {
+      nav.track.edgeNote='Enter a positive stake and a payout greater than 1, or leave them blank. The return must be finite.';render();return;
+    }
+    nav.track.edgeNote='';
+    if(stake!==null)payload.stake=stake;if(multiple!==null)payload.payout_multiple=multiple;if(stake!==null&&multiple!==null)payload.return_total=stake*multiple;
+    nav.track.edgeDecision=edgeModule().external('import:'+JSON.stringify([mapped,stake,nav.track.payout]),payload).id;
+    render();return;
+  }
   if (DEMO) {
     showToast(SERVICE_DEMO);
     return;
   }
+  /* Reconcile a token changed by another tab before touching this draft. */
+  readToken();
   const legs = nav.track.legs;
   if (!legs.length || nav.picksBusy === "slip") return;
+  /* This is the bet as it stood at the click. The identity lookup may
+   * take time, while the reader can keep editing the form. */
+  const draft = {
+    /* The three doors all submit the same contract, named here once. */
+    input: SLIP_INPUTS[nav.track.input] || "paste",
+    source: nav.track.source || null,
+    stake: numberOrNull(nav.track.stake),
+    payout_multiple: numberOrNull(nav.track.payout),
+    legs: legs.map(function (leg) {
+      return {
+        player_id: leg.player_id, player_text: leg.text,
+        market: leg.market, side: leg.side,
+        line_placed: leg.line_placed,
+        line_screened: leg.line_screened,
+        blind_spot: leg.blind_spot,
+        odds_american: leg.odds_american,
+        book: leg.book,
+        odds_source: leg.odds_source
+      };
+    })
+  };
   const token = askToken();
   if (!token) return;
+  const started = memberSnapshot(token);
   nav.picksBusy = "slip";
   render();
   try {
-    const saved = await picksAsk("/slips", token, {
-      /* WHICH DOOR THE SLIP CAME THROUGH, recorded because it is a
-       * fact about the slip. The three doors produce the same object
-       * and the same arithmetic prices it; which one it was is worth
-       * knowing when a leg turns out wrong. */
-      input: SLIP_INPUTS[nav.track.input] || "paste",
-      source: null,
-      stake: numberOrNull(nav.track.stake),
-      payout_multiple: numberOrNull(nav.track.payout),
-      legs: legs.map(function (leg) {
-        return {
-          player_id: leg.player_id, player_text: leg.text,
-          market: leg.market, side: leg.side,
-          line_placed: leg.line_placed,
-          line_screened: leg.line_screened,
-          p_at_screened: leg.p_at_screened,
-          p_at_placed: leg.p_at_placed,
-          /* What he saw at save time, stored as submitted. */
-          blind_spot: leg.blind_spot,
-          p_reason: leg.p_reason
-        };
-      })
-    });
+    if (nav.meToken !== token || !nav.me || !nav.me.user_id) {
+      await loadMe(token);
+      if (!memberCurrent(started)) return;
+      if (nav.meToken !== token || !nav.me || !nav.me.user_id) {
+        throw new Error("Member identity unavailable");
+      }
+    }
+    if (!alphaService) throw new Error("Service adapter unavailable");
+    if (alphaCompact() && !alphaCompact().reviewDraft(draft)) {
+      nav.picksBusy = "";render();return;
+    }
+    nav.track.saveError = "";
+    const saved = await alphaService.saveSlip(draft);
+    if (!memberCurrent(started) || !saved) return;
     nav.track.saved = saved;
     nav.slips = null;
     nav.picksAsked = false;
@@ -4436,6 +4674,8 @@ async function saveSlip() {
     render();
     showToast(TRACK_SAVED);
   } catch (err) {
+    if (!memberCurrent(started)) return;
+    nav.track.saveError = serviceNote(err);
     nav.picksOffline = true;
     nav.picksBusy = "";
     render();
@@ -4689,6 +4929,11 @@ function propOf(person, market) {
     : (list[0] || null);
 }
 
+function serviceMarket(market) {
+  return window.AlphaService ? window.AlphaService.marketKey(market)
+    : typeof market === "string" && /^player_[a-z0-9_]+$/.test(market) ? market : null;
+}
+
 /* The prop the pick card is standing on: the one the row named, or
  * this player's key prop when the address carries no market. */
 function pickProp() {
@@ -4755,7 +5000,8 @@ function watchedEntry(playerId, market) {
   const rows = nav.watch || [];
   for (let index = 0; index < rows.length; index += 1) {
     if (rows[index].player_id === playerId &&
-        rows[index].market === market && !rows[index].removed_at) {
+        (rows[index].market === market || (serviceMarket(market) &&
+          serviceMarket(rows[index].market) === serviceMarket(market))) && !rows[index].removed_at) {
       return rows[index];
     }
   }
@@ -5385,6 +5631,11 @@ function renderSearch() {
  * the screens
  * ------------------------------------------------------------------ */
 
+function scorecardEnabled(){return !!(DEMO&&window.ScorecardFixtures&&window.ScorecardFixtures.demo&&window.Scorecard);}
+function scorecardActive(){return scorecardEnabled()&&(['your-record','our-record'].includes(currentRoute())||(HOME_TIMELINE&&currentRoute()==='home'&&(!DEMO||nav.homeContext.view==='overview')));}
+function scorecardModule(){const m=window.Scorecard;if(!m)return null;m.configure({esc:esc,head:detailHead,render:function(){nav.motion=null;render();},open:function(route){openIn('home',route);},bets:function(){if(edgeEnabled())edgeOpenPersonal('mybets');else openIn('bets','picks');},lineup:function(){openIn('home','myteam');},dfs:function(){openIn('fantasy','fh-dfs-scoreboard');}});return m;}
+function servedGrade(g){return g&&scorecardEnabled()?scorecardModule().grade(g):'';}
+
 /* ------------------------------------------------------------------
  * m4.4 S3 — OUR RECORD (SCORECARD_SPEC sec 4, under D-145)
  * ------------------------------------------------------------------
@@ -5506,10 +5757,916 @@ function recordRows(rows) {
 }
 
 function renderHome() {
+  if (HOME_TIMELINE) return renderHomeTimeline();
   return '<div class="hero">' + heroArt() + heroTop() + heroRings() +
     '<div class="herofade"></div></div>' +
     (nav.slate ? matchCard() : matchStub()) +
     ourRecordBlock();
+}
+
+/* Illustrations for this visit only. Identities resolve through the bundled
+ * slate; no sample event is available outside the explicit demo preview. */
+function timelineEvents() {
+  if (!HOME_TIMELINE || !DEMO) return [];
+  const events = [
+    { id: "day-run", player: "demo-002", time: "Sun · 2:18 pm", tags: ["team"],
+      headline: "Wren gains 12 yards.", consequence: "+1.2 fantasy points",
+      detail: "In this sample play, Wren gains 12 rushing yards. Those yards add 1.2 points to the example fantasy lineup." },
+    { id: "day-opponent", player: "demo-008", time: "Sun · 2:12 pm", tags: ["team"],
+      headline: "Vestal throws a touchdown.", consequence: "Your matchup gets closer",
+      detail: "In this example, your opponent starts this passer. His passing touchdown closes the gap in your fantasy matchup." },
+    { id: "day-catch", player: "demo-004", time: "Sun · 2:09 pm", tags: ["bets"],
+      headline: "Renner makes a catch.", consequence: "Your receiving bet is in progress",
+      detail: "Renner makes a catch in this example. The game is still going, so this is progress toward a receiving bet, not a settled result." },
+    { id: "week-role", player: "demo-004", time: "Wed · 10:42 am", tags: ["team"],
+      headline: "More chances in the passing game.", consequence: "A player to review for your lineup",
+      detail: "This sample update illustrates a larger receiving role. Review the player's stored projection before deciding who to start; the example does not change it." },
+    { id: "week-line", player: "demo-004", time: "Wed · 10:30 am", tags: ["bets"],
+      headline: "Renner’s catches line moves up.", consequence: "Your saved bet stays at 4.5",
+      detail: "Illustrative Book now offers Over 5.5 catches at -110. Your example bet remains Over 4.5 at -103, with a $10 stake." },
+    { id: "week-review", player: "demo-001", time: "Tue · 4:18 pm", tags: ["team"],
+      headline: "A passer to review.", consequence: "Check your starting quarterback",
+      detail: "Shaw is in your example lineup. Review his stored player projection before setting your starting quarterback." }
+  ];
+  if (nav.timeline.added) events.unshift({ id: "day-new", player: "demo-004",
+    time: "Sun · 2:19 pm", tags: ["team", "bets"], headline: "Renner makes his fifth catch.",
+    consequence: "Bet still in progress",
+    detail: "Renner’s fifth catch gains no yards in this example. It adds 0.5 fantasy points and crosses your saved 4.5 line. The game has not finished and your bet has not been settled." });
+  return events.filter(function (event) {
+    return !!playerOf(event.player);
+  });
+}
+
+function timelineChoices(action, choices, selected, label) {
+  return '<div class="timeline-choices" role="group" aria-label="' + esc(label) + '">' +
+    choices.map(function (choice) {
+      return '<button data-act="' + esc(action) + '" data-value="' + esc(choice[0]) +
+        '" aria-pressed="' + (selected === choice[0]) + '">' + esc(choice[1]) + '</button>';
+    }).join("") + '</div>';
+}
+
+function timelineEvent(event) {
+  const person = playerOf(event.player);
+  const open = !!nav.timeline.open[event.id];
+  const prop = person.key_prop;
+  const destination = function (kind, label) {
+    return '<button data-act="timeline-destination" data-id="' + esc(event.id) +
+      '" data-destination="' + esc(kind) + '">' + esc(label) + '</button>';
+  };
+  const game = games().some(function (game) {
+    return playersIn(game).some(function (player) { return player.player_id === event.player; });
+  });
+  return '<li class="timeline-event' + (consumerEnabled()&&event.id==='day-new'?' cx-new-update':'') + (consumerEnabled() && window.ConsumerExperience.isRead(event.id)?' is-read':'') + (nav.homeContext.event === event.id ? ' is-selected' : '') + '"><button class="timeline-summary" ' +
+    'data-act="timeline-select" data-id="' + esc(event.id) + '" aria-pressed="' + (nav.homeContext.event === event.id) + '">' +
+    '<span class="timeline-meta"><span class="timeline-category ' + (consumerEnabled()&&event.id==='week-review'?'category-attention':event.id.indexOf('week-')===0?'category-news':'category-performance') + '">' + (consumerEnabled()?(event.id==='week-review'?'Attention':event.id.indexOf('week-')===0?'Change':'Event'):(event.id.indexOf('week-')===0?'News':'Performance')) + '</span><span>' + esc(event.time) + '</span><span>' +
+    esc(person.name + ' · ' + person.team) + '</span></span>' +
+    '<span class="timeline-headline">' + esc(event.headline) + '</span>' +
+    '<span class="timeline-consequence">' + esc(event.consequence) +
+    '<span class="timeline-chevron" aria-hidden="true">' + (open ? '−' : '+') + '</span></span></button>' +
+    '<button class="timeline-details-button" data-act="timeline-toggle" data-id="' + esc(event.id) + '" aria-expanded="' + open + '" aria-controls="timeline-detail-' + esc(event.id) + '">Details</button>' +
+    '<div class="timeline-detail" id="timeline-detail-' + esc(event.id) + '"' +
+    (open ? '' : ' hidden') + '><p>' + esc(event.detail) + '</p>' + (event.id === 'week-line' ? stakeReminder() : '') + '<div class="timeline-links">' +
+    (["week-line", "day-catch", "day-new"].indexOf(event.id) >= 0 ? destination("history", "Your bet history") :
+      (prop && prop.market ? destination("pick", "View player & pick") : '')) +
+    (game ? destination("matchup", "View matchup") : '') + '</div></div></li>';
+}
+
+function renderHomeTimeline() {
+  const expanded = nav.homeSheet.expanded;
+  const searching = homeSearchActive();
+  const canvas = '<div class="home-canvas" id="home-canvas" tabindex="0" aria-label="Home overview">' +
+    '<header class="home-preview-head"><div>' +
+    '<div class="home-wordmark">Fantasy Edge</div><div class="home-week">' + esc(slateWeekWord()) +
+    (DEMO ? (consumerEnabled()?' · Sample snapshot':' · Home preview') : '') + '</div></div>' +
+    (DEMO ? '' : '<button class="home-preview-label" data-act="ac-go" data-value="account">Your account</button>') + '</header>' +
+    (consumerEnabled()?consumerModule().homeLinks():"") +
+    (!DEMO && alphaCompact() ? alphaCompact().render("home-summary") : scorecardEnabled() && nav.homeContext.view==='overview' ? '<section id="home-context-canvas" tabindex="-1">'+scorecardModule().summary()+'</section>' : DEMO ? renderHomeContext() : '<nav class="home-shortcuts" aria-label="Quick access">' +
+      '<button data-act="sub" data-tab="fantasy" data-sub="season">My team</button>' +
+      '<button data-act="sub" data-tab="bets" data-sub="picks">My picks</button>' +
+      '<button data-act="open" data-route="matchups">Browse matchups</button></nav>') +
+    '<p class="home-access-note">' + esc(scorecardActive()?'Demo · historical examples':ALPHA_NOTE) + '</p></div>';
+  return '<div class="home-preview home-stage' + (DEMO && nav.homeContext.view !== 'overview' ? ' context-active' : '') + '" id="home-stage" data-sheet="' + (expanded ? 'expanded' : 'collapsed') +
+    '" data-sheet-initial="'+(consumerEnabled()&&nav.homeSheet.initial?'true':'false')+'" style="--home-sheet-size:' + (consumerEnabled() && nav.homeSheet.initial ? '45%' : expanded ? '70%' : consumerEnabled() ? '20%' : '15%') + '">' + canvas +
+    '<div class="home-floating-search" role="search">' +
+    '<input id="home-search" type="search" autocomplete="off" placeholder="Search" ' +
+    'aria-label="Search players &amp; picks" aria-controls="home-feed-scroll" value="' + esc(nav.homeSearch.query) + '">' +
+    '<button class="home-search-clear" id="home-search-clear" data-act="home-search-clear" aria-label="Clear search"' +
+    (searching ? '' : ' hidden') + '>Clear</button></div>' +
+    '<section class="home-timeline home-activity-sheet" id="home-activity-sheet" aria-labelledby="timeline-title">' +
+    '<button class="home-sheet-handle" id="home-sheet-handle" data-act="home-sheet-toggle" aria-expanded="' + expanded +
+    '" aria-controls="home-feed-scroll" aria-label="' + (expanded ? 'Collapse' : 'Expand') + ' activity feed">' +
+    '<span class="home-sheet-grabber" aria-hidden="true"></span><span class="home-sheet-title-row">' +
+    '<span class="home-sheet-title" id="timeline-title" role="heading" aria-level="1">' + (searching ? 'Search results' : 'While you were away') + '</span>' +
+    '<span class="home-sheet-arrow" aria-hidden="true">' + icon("chevron", 18) + '</span></span>' +
+    '<span class="home-sheet-latest" id="home-sheet-latest">' + esc(homeLatestLine()) + '</span></button>' +
+    '<div class="home-feed-scroll" id="home-feed-scroll" tabindex="0" aria-label="Activity feed">' +
+    (searching ? homeSearchBody() : homeActivityBody()) + '</div></section></div>';
+}
+
+function consumerActivityGroups(events){const groups=new Map();events.forEach(event=>{const key=event.player+'-'+(event.id.startsWith('week-')?'news':'game');if(!groups.has(key))groups.set(key,[]);groups.get(key).push(event);});return Array.from(groups.values()).map(rows=>timelineEvent(rows[0])+(rows.length>1?'<li class="cx-related"><details><summary><span class="timeline-category category-recap">Recap</span> '+String(rows.length)+' updates for '+esc(playerOf(rows[0].player).name)+'</summary><ol>'+rows.slice(1).map(timelineEvent).join('')+'</ol></details></li>':'')).join('');}
+function homeActivityBody() {
+  if (!DEMO && alphaCompact()) return alphaCompact().render("home-activity");
+  const state = nav.timeline;
+  const events = timelineEvents().filter(function (event) {
+    return state.filter === "all" || event.tags.indexOf(state.filter) !== -1;
+  });
+  return DEMO ?
+    '<p class="timeline-sample">Sample activity — illustrative, not live</p>' +
+    timelineChoices("timeline-filter", [["all", "For you"], ["team", "My team"], ["bets", "My bets"]], state.filter, "Activity filter") +
+    '<div class="timeline-announcement">' +
+    (state.pending ? '<button data-act="timeline-reveal">Show new activity · 1 update</button>' : '') + '</div>' +
+    (events.length ? '<ol class="timeline-list">' + (consumerEnabled()?consumerActivityGroups(events):events.map(timelineEvent).join("")) + '</ol>' :
+      '<p class="timeline-empty">No sample activity in this view. Try another filter.</p>') +
+    ('<button class="timeline-simulate" data-act="timeline-new"' +
+      (state.added ? ' disabled' : '') + '>' + (state.added ? 'Sample update added' : 'Preview a new update') + '</button>') +
+    '' : '<p class="timeline-empty">Activity history is not available in this preview. Explore your team, picks, or this week’s matchups above.</p>';
+}
+
+/* Fixed visual scenarios: chart geometry interpolates these illustrative values;
+ * it does not calculate forecasts, implied odds, or player probabilities. */
+const HOME_COMPARISON = Object.freeze({
+  times: Object.freeze(["Oct 4", "Oct 5", "Oct 6", "Oct 7"]),
+  notes: Object.freeze(["Opening example", "Your bet · 10:30 am", "Your read · 10:30 am", "Role news · 10:42 am"]),
+  elapsed: Object.freeze([0, 1440, 2880, 4332]),
+  betting: Object.freeze([48, 52, 56, 61]), book: Object.freeze([49, 50, 51, 53]),
+  fantasy: Object.freeze([10.2, 10.8, 11.6, 12.4]), espn: Object.freeze([10.5, 10.6, 10.9, 11.1])
+});
+
+function contextButton(act, value, label, selected) {
+  return '<button data-act="' + act + '" data-value="' + value + '"' +
+    (selected === undefined ? '' : ' aria-pressed="' + selected + '"') + '>' + label + '</button>';
+}
+
+function homeContextAction(act, target) {
+  if (!personalPreview() || ["home", "contextnews"].indexOf(currentRoute()) < 0) return;
+  const state = nav.homeContext, value = target.getAttribute("data-value");
+  if (act === "canvas-news") { state.story = null; openDetail("contextnews"); return; }
+  if (act === "canvas-story" && /^[0-3]$/.test(value || "")) {
+    state.story = currentRoute() === "home" ? Number(value) : state.story === Number(value) ? null : Number(value);
+    if (currentRoute() === "home") { openDetail("contextnews"); return; }
+  } else if (act === "canvas-view" && ["overview", "comparison", "live"].indexOf(value) >= 0) {
+    state.view = value; state.event = null; state.point = 3;
+    setHomeSheetSize(false);
+  } else if (act === "canvas-mode" && ["betting", "fantasy"].indexOf(value) >= 0) state.mode = value;
+  else if (act === "canvas-provider" && ["ESPN", "Yahoo", "DraftKings"].indexOf(value) >= 0) state.provider = value;
+  else if (act === "canvas-point" && /^[0-3]$/.test(value || "")) state.point = Number(value);
+  else return;
+  render();
+  if (act === "canvas-view") {
+    const canvas = el("home-canvas"); if (canvas) canvas.scrollTop = 0;
+    nav.homeSheet.canvasScroll = 0;
+  }
+  if (act === "canvas-view") { const context = el("home-context-canvas"); if (context) context.focus({preventScroll:true}); return; }
+  const screen = el("screen");
+  if (screen && screen.querySelectorAll) {
+    const buttons = screen.querySelectorAll('[data-act]');
+    for (const button of buttons) {
+      if (button.getAttribute("data-act") === act && button.getAttribute("data-value") === value) {
+        button.focus({preventScroll:true}); break;
+      }
+    }
+  }
+}
+
+function contextChart(series, other, labels, elapsed, max, unit, names, spread) {
+  const xs = elapsed.map(function (t) { return 48 + 250 * t / elapsed[elapsed.length - 1]; });
+  const y = function (value) { return 98 - value / max * 76; };
+  const curve = function (values, reverse) {
+    const positions = reverse ? xs.slice().reverse() : xs;
+    const points = reverse ? values.slice().reverse() : values;
+    let path = 'M' + positions[0] + ',' + y(points[0]);
+    for (let i = 1; i < values.length; i++) {
+      const third = (positions[i] - positions[i - 1]) / 3;
+      path += ' C' + (positions[i - 1] + third) + ',' + y(points[i - 1]) + ' ' +
+        (positions[i] - third) + ',' + y(points[i]) + ' ' + positions[i] + ',' + y(points[i]);
+    }
+    return path;
+  };
+  const selected = nav.homeContext.point;
+  const probabilityRange = spread && spread.kind === "probability";
+  const rangeLabel = probabilityRange ? "Illustrative estimate range" : "Possible final points";
+  const rangeUnit = probabilityRange ? "%" : " pts";
+  const band = spread ? '<path class="context-outcome-range" data-range-for="' + (probabilityRange?'probability-estimate':'our-projected-final') + '" d="' +
+    curve(spread.upper) + ' L' + curve(spread.lower, true).slice(1) + ' Z"/>' +
+    '<path class="context-range-boundary" d="' + curve(spread.upper) + '"/>' +
+    '<path class="context-range-boundary" d="' + curve(spread.lower) + '"/>' : '';
+  const legend = spread ? '<div class="context-chart-legend">' +
+    (spread.forecast ? '<span class="legend-actual">Actual points</span>' : '') +
+    '<span class="' + (spread.forecast?'legend-forecast':'legend-ours') + '">' + (probabilityRange?'Illustrative chance':spread.forecast?'Our projected final':'Our projection') + '</span>' + (other?'<span class="legend-provider">' + esc(names[1]) + '</span>':'') +
+    '<span class="legend-range">' + (probabilityRange?'Illustrative estimate range':'Example outcome range') + '</span></div>' : '';
+  const readout = spread ? '<p class="context-range-readout" aria-live="polite">' + esc(labels[selected]) +
+    ' · Illustrative <span>' + (probabilityRange?'Our estimate range':'Our final points range') + '</span><strong>' + spread.lower[selected] + '–' + spread.upper[selected] + rangeUnit + '</strong></p>' : '';
+  return '<div class="context-chart">' + readout + '<svg viewBox="0 0 320 120" role="img" aria-label="' +
+    esc('Illustrative ' + names.join(' versus ') + '. Values at each observation follow the chart.') + '">' +
+    [0, max / 2, max].map(function (v) { return '<line x1="48" x2="298" y1="' + y(v) + '" y2="' + y(v) + '" class="context-grid"/><text x="36" text-anchor="end" y="' + (y(v) + 3) + '">' + v + (unit === '%' ? '%' : '') + '</text>'; }).join('') +
+    band + '<path d="' + curve(series) + '" class="context-estimate' + (spread && spread.forecast?' context-actual':'') + '"/>' +
+    (spread && spread.forecast ? '<path d="' + curve(spread.forecast) + '" class="context-forecast"/>' : '') +
+    (other ? '<path d="' + curve(other) + '" class="context-reference"/>' : '') +
+    '<line class="context-selected-line" x1="' + xs[selected] + '" x2="' + xs[selected] + '" y1="17" y2="98"/>' +
+    series.map(function (v, i) { return '<circle cx="' + xs[i] + '" cy="' + y(v) + '" r="' + (selected === i ? 5 : 3) + '" class="context-point"/>'; }).join('') +
+    '</svg><div class="context-observations" aria-label="Chart observations">' + labels.map(function (label, i) {
+      const text = label + ': ' + names[0] + ' ' + series[i] + unit + (other ? ', ' + names[1] + ' ' + other[i] + unit : '') +
+        (spread ? ', ' + rangeLabel + ' ' + spread.lower[i] + ' to ' + spread.upper[i] + rangeUnit + (spread.forecast ? ', Our projected final ' + spread.forecast[i] : '') : '');
+      return '<button data-act="canvas-point" data-value="' + i + '" aria-pressed="' + (selected === i) + '" aria-label="' + esc(text) + '">' + esc(label) + '</button>';
+    }).join('') + '</div>' + legend + (spread ? '<p class="context-note">' + (probabilityRange?'Fixed sample probability estimates, not a measured confidence interval.':'Fixed example outcome range, not a confidence or accuracy measure.') + '</p>' : '') + '</div>';
+}
+
+/* All provider figures, play forecasts and accuracy samples below are invented
+ * presentation fixtures. They are never sourced scores or evaluated models. */
+const HOME_PLAYER_MOCKS = Object.freeze({
+  'demo-004': {actual:6.8, ours:[10.2,10.8,11.6,12.4], ESPN:[10.5,10.6,10.9,11.1], Yahoo:[10.1,10.4,11,11.8], DraftKings:[10.3,10.7,11.3,12], live:[1.7,3.6,5.2,6.8], quantity:4, unit:'catches'},
+  'demo-002': {actual:7.6, ours:[12.1,12.6,13.2,13.8], ESPN:[12,12.2,12.4,12.8], Yahoo:[11.8,12.1,12.7,13], DraftKings:[12.2,12.4,13,13.4], live:[2.1,4.3,6.4,7.6], quantity:64, unit:'rushing yards'},
+  'demo-008': {actual:15.2, ours:[18.1,18.4,19.2,20.1], ESPN:[18.4,18.6,19,19.5], Yahoo:[18,18.2,18.8,19.2], DraftKings:[18.2,18.7,19.3,19.8], live:[4.2,8.6,15.2,15.2], quantity:212, unit:'passing yards'},
+  'demo-001': {actual:12.8, ours:[17.2,17.6,18.2,18.8], ESPN:[17,17.2,17.6,18], Yahoo:[16.8,17.1,17.7,18.2], DraftKings:[17.3,17.5,18,18.5], live:[3.2,6.8,10.2,12.8], quantity:198, unit:'passing yards'}
+});
+/* Fixed outcome examples for this mock only; no intervals are inferred. */
+const HOME_OUTCOME_MOCKS = Object.freeze({
+  'demo-004': {comparison:{lower:[4,4.5,5,6],upper:[17,18,19,20]},live:{forecast:[10.2,11,11.8,12.4],lower:[4,5,6,7],upper:[18,19,20,20]},
+    outcomes:[0,1,2,3,4,5,6,7,8],weights:[[2,5,12,20,24,19,11,5,2],[1,3,8,17,25,23,14,7,2],[1,2,6,13,22,26,18,9,3],[1,1,4,10,19,27,22,12,4]],
+    liveOutcomes:[[1,2,3,4,5,6,7,8],[2,3,4,5,6,7,8],[3,4,5,6,7,8],[4,5,6,7,8]],liveWeights:[[4,10,20,26,21,12,5,2],[8,17,27,24,15,7,2],[12,24,29,21,10,4],[18,31,29,16,6]]},
+  'demo-002': {comparison:{lower:[6,6.5,7,7.5],upper:[20,21,22,23]},live:{forecast:[12.1,12.7,13.4,13.8],lower:[5,6,7,8],upper:[21,22,23,23]},
+    outcomes:[0,40,80,120,160],weights:[[7,25,35,23,10],[5,22,37,25,11],[4,19,37,28,12],[3,17,36,30,14]],
+    liveOutcomes:[[21,40,80,120,160],[43,60,80,120,160],[52,65,80,120,160],[64,80,100,130,160]],liveWeights:[[7,24,36,23,10],[8,20,35,25,12],[7,19,35,27,12],[12,28,32,21,7]]},
+  'demo-008': {comparison:{lower:[11,12,12.5,13],upper:[27,28,29,30]},live:{forecast:[18.1,18.5,19.6,20.1],lower:[8,11,16,17],upper:[27,28,29,30]},
+    outcomes:[80,160,240,320,400],weights:[[5,22,37,26,10],[4,20,36,28,12],[3,17,36,30,14],[2,15,34,32,17]],
+    liveOutcomes:[[70,140,210,280,350],[115,170,225,280,350],[180,220,270,320,370],[212,245,280,320,370]],liveWeights:[[5,20,36,27,12],[6,19,33,28,14],[8,21,33,26,12],[10,26,32,23,9]]},
+  'demo-001': {comparison:{lower:[10,10.5,11,12],upper:[25,26,27,28]},live:{forecast:[17.2,17.8,18.2,18.8],lower:[7,9,12,14],upper:[25,26,27,28]},
+    outcomes:[60,130,200,270,340],weights:[[6,24,36,24,10],[5,22,36,26,11],[4,20,36,28,12],[3,18,36,29,14]],
+    liveOutcomes:[[50,120,190,260,330],[108,155,205,255,330],[160,200,240,280,330],[198,225,255,290,330]],liveWeights:[[7,24,35,24,10],[9,22,33,25,11],[12,26,31,22,9],[15,30,29,19,7]]}
+});
+function contextRange() {
+  if (!personalPreview()) return null;
+  const fixture=HOME_OUTCOME_MOCKS[contextPlayerId()];
+  if (!fixture) return null;
+  if (nav.homeContext.view==='live' && contextPlayerId()==='demo-004' && nav.timeline.added)
+    return {forecast:[10.2,11,11.8,12.4],lower:[4,5,6,7.5],upper:[18,19,20,20]};
+  return nav.homeContext.view==='live'?fixture.live:fixture.comparison;
+}
+function contextProbabilityRange() {
+  if (!personalPreview()) return null;
+  const crossed=contextPlayerId()===PERSONAL_BET.player && nav.timeline.added;
+  return {kind:"probability",lower:[34,37,42,crossed?100:45],upper:[62,66,73,crossed?100:78]};
+}
+function contextDistributionFixture() {
+  if (!personalPreview()) return null;
+  const fixture=HOME_OUTCOME_MOCKS[contextPlayerId()], point=nav.homeContext.point;
+  if (!fixture) return null;
+  if (nav.homeContext.view==='live') {
+    if (contextPlayerId()==='demo-004' && nav.timeline.added && point===3)
+      return {outcomes:[5,6,7,8,9],weights:[30,34,23,10,3],discrete:true};
+    return {outcomes:fixture.liveOutcomes[point],weights:fixture.liveWeights[point],discrete:contextPlayerId()==='demo-004'};
+  }
+  return {outcomes:fixture.outcomes,weights:fixture.weights[point],discrete:contextPlayerId()==='demo-004'};
+}
+function renderContextDistribution() {
+  const fixture=contextDistributionFixture();if (!fixture) return '';
+  const target=contextTarget(), outcomes=fixture.outcomes, weights=fixture.weights;
+  const point=nav.homeContext.point;
+  const time=nav.homeContext.view==='comparison'?HOME_COMPARISON.times[point]:['2:00 pm','2:06 pm','2:12 pm',nav.timeline.added?'2:19 pm':'2:18 pm'][point];
+  const min=outcomes[0], max=outcomes[outcomes.length-1];
+  const x=function(value){return 28+264*(value-min)/(max-min);};
+  const top=Math.max.apply(null,weights);
+  const thresholdX=Math.max(17,Math.min(303,x(target.line)));
+  const bars=outcomes.map(function(value,i){
+    const height=weights[i]/top*64;
+    const selected=target.under?value<target.line:value>target.line;
+    return '<rect class="distribution-bar'+(selected?' is-target-side':'')+'" x="'+(x(value)-11)+'" y="'+(84-height)+'" width="22" height="'+height+'" rx="3"/>'+
+      '<text x="'+x(value)+'" y="100" text-anchor="middle">'+value+'</text>';
+  }).join('');
+  return '<section class="context-distribution"><div class="context-section-head"><h3>Possible final '+(fixture.discrete?'catches':'yards')+'</h3><span>'+time+'</span></div><p class="context-note">'+esc(target.label)+' · relative likelihood</p>'+
+    '<svg viewBox="0 0 320 113" role="img" aria-label="Illustrative final '+esc(contextMock().unit)+' shape at '+time+'. '+esc(target.label)+'. '+(fixture.discrete?'Discrete counts.':'Binned outcomes; displayed values are bin anchors.')+' Values: '+outcomes.map(function(v,i){return v+': relative weight '+weights[i];}).join(';')+'">'+bars+
+    '<line class="distribution-threshold" x1="'+thresholdX+'" x2="'+thresholdX+'" y1="9" y2="86"/><text class="distribution-target-label" x="'+thresholdX+'" y="8" text-anchor="middle">'+target.line+'</text></svg>'+
+    '<p class="context-note">'+(fixture.discrete?'Count outcomes':'Yard bins · labels are bin anchors')+' · '+(target.under?'Under':'Over')+' side highlighted. '+(target.line<min?'Target below displayed outcomes. ':'')+'Illustrative shape · separate from the sample hit chance</p></section>';
+}
+
+function contextPlayerId() {
+  const event=timelineEvents().find(function(item){return item.id===nav.homeContext.event;});
+  return event ? event.player : PERSONAL_BET.player;
+}
+function contextMock() { return HOME_PLAYER_MOCKS[contextPlayerId()] || HOME_PLAYER_MOCKS['demo-004']; }
+function contextTarget() {
+  const id=contextPlayerId(), person=playerOf(id), prop=person && person.key_prop;
+  const owned=id===PERSONAL_BET.player;
+  const under=!owned && prop && prop.lean==='less';
+  const line=owned?4.5:prop?prop.line:null;
+  const unit=contextMock().unit;
+  return {owned:owned,under:under,line:line,label:(under?'Under ':'Over ')+line+' '+unit,
+    explanation:owned?'Chance of finishing with 5+ catches':'Chance of finishing '+(under?'below ':'above ')+line+' '+unit};
+}
+function contextProviderControls() {
+  return '<div class="context-provider-controls" role="group" aria-label="Comparison provider">'+['ESPN','Yahoo','DraftKings'].map(function(name){
+    return contextButton('canvas-provider',name,name,nav.homeContext.provider===name);
+  }).join('')+'</div>';
+}
+function contextProviderRows() {
+  const data=contextMock();
+  return '<p class="context-note">Latest mock projections · ' + (nav.homeContext.view === 'comparison' ? 'Oct 7' : 'Current sample game') + '</p><div class="context-provider-table" aria-label="Latest mock projections">'+['Our projection','ESPN','Yahoo','DraftKings'].map(function(name){
+    const values=name==='Our projection'?data.ours:data[name];
+    return '<div><span>'+name+'</span><strong>'+values[3]+' pts</strong></div>';
+  }).join('')+'</div><p class="context-note">Mock comparison · same half-PPR scoring. Fictional figures, not native platform scoring or live feeds.</p>'+contextAccuracy();
+}
+function contextAccuracy() {
+  return '<section class="context-accuracy"><h3>Season accuracy · mock</h3><p class="context-note">Within 3 points · same 100 sample player-games</p>'+[
+    ['Our projection',64],['ESPN',66],['Yahoo',61],['DraftKings',63]
+  ].map(function(row){return '<div class="accuracy-row"><span>'+row[0]+'</span><div class="accuracy-track"><i style="width:'+row[1]+'%"></i></div><strong>'+row[1]+'%</strong></div>';}).join('')+
+    '<p class="context-note">Invented demonstration sample, not measured performance or this player’s probability.</p></section>';
+}
+function contextStories() {
+  const name=personalName(contextPlayerId());
+  return [
+    {time:'Oct 7 · 10:42 am',title:name+' · Role outlook updated',detail:'This fictional update explores additional opportunity. Its effect on the displayed projection is illustrative, with uncertainty.'},
+    {time:'Oct 6 · 10:30 am',title:name+' · Practice notes',detail:'A sample practice report describes routine participation. No real reporting or provider feed is connected.'},
+    {time:'Oct 5 · 10:30 am',title:name+' · Matchup preview',detail:'This invented preview explores the HOU–IND matchup and possible usage. It is not a claim about a real game.'},
+    {time:'Oct 4 · 10:30 am',title:name+' · Week opening outlook',detail:'The oldest fictional story establishes the starting point for this local visual comparison.'}
+  ];
+}
+function contextNewsSummary() {
+  return '<section class="context-news"><div class="context-section-head"><h3>Last 3 stories</h3><button data-act="canvas-news">All news '+icon('next',14)+'</button></div><p class="context-note">Sample stories · no publisher attribution</p>'+contextStories().slice(0,3).map(function(story,i){
+    return '<button class="context-news-row" data-act="canvas-story" data-value="'+i+'"><span>'+story.time+'</span><strong>'+esc(story.title)+'</strong>'+icon('next',14)+'</button>';
+  }).join('')+'</section>';
+}
+function renderContextNews() {
+  if (!personalPreview()) return personalUnavailable('News');
+  return personalPageHead('All news')+'<h1>'+esc(personalName(contextPlayerId()))+'</h1><p class="context-note">Sample stories · fictional, not sourced reporting</p>'+contextStories().map(function(story,i){
+    const open=nav.homeContext.story===i;
+    return '<section class="context-story"><button data-act="canvas-story" data-value="'+i+'" aria-expanded="'+open+'" aria-controls="sample-story-'+i+'"><span>'+story.time+'</span><strong>'+esc(story.title)+'</strong></button><p id="sample-story-'+i+'"'+(open?'':' hidden')+'>'+esc(story.detail)+'</p></section>';
+  }).join('')+'</div>';
+}
+function renderHomeContext() {
+  if (!personalPreview()) return '';
+  const state=nav.homeContext, player=contextPlayerId(), person=playerOf(player);
+  const event=timelineEvents().find(function(item){return item.id===state.event;});
+  const start='<section id="home-context-canvas" tabindex="-1" aria-label="Selected Home context" class="home-context" data-context="'+state.view+'">';
+  if (state.view==='overview' && edgeEnabled()) return start+edgeHomeOverview()+'</section>';
+  if (state.view==='overview') return start+personalHud()+'<div class="context-invitation"><span class="personal-kicker">Your week, in context</span><h2>Select an activity<span>See what changed. Follow the performance.</span></h2><p>News and play updates open a closer look above your feed.</p></div></section>';
+  const fantasy=state.mode==='fantasy';
+  const reason=fantasy?(state.view==='comparison'?'A closer look at the points outlook.':'Points so far and an illustrative finish.'):(event?event.headline:'Your player, in context.');
+  return start+'<div class="cx-context-heading"><div class="context-top">'+contextButton('canvas-view','overview',icon('back',14)+' Home')+'<span>Illustrative sample</span></div><h2 class="context-identity">'+esc(personalName(player))+'<span>HOU @ IND'+(person&&person.team==='IND'?' · Opponent':'')+'</span></h2><p class="context-reason">'+esc(reason)+'</p></div><div class="context-modes" role="group" aria-label="Canvas view">'+contextButton('canvas-mode','betting','Betting',!fantasy)+contextButton('canvas-mode','fantasy','Fantasy',fantasy)+'</div>'+(state.view==='comparison'?renderContextComparison():renderContextLive())+'</section>';
+}
+function renderContextComparison() {
+  const fantasy=nav.homeContext.mode==='fantasy', data=contextMock(), point=nav.homeContext.point, provider=nav.homeContext.provider;
+  const target=contextTarget();
+  const ours=fantasy?data.ours:HOME_COMPARISON.betting, other=fantasy?data[provider]:HOME_COMPARISON.book;
+  return (fantasy?contextProviderControls():'<h3 class="context-target-heading">'+esc(target.label)+'</h3><p class="context-note">'+esc(target.explanation)+' · both series</p>')+
+    '<div class="context-values"><div><span>'+(fantasy?'Our projection':'Our estimate')+'</span><strong>'+ours[point]+'<small>'+(fantasy?' pts':'%')+'</small></strong></div><div><span>'+(fantasy?provider:'Book')+'</span><strong>'+other[point]+'<small>'+(fantasy?' pts':'%')+'</small></strong></div></div>'+
+    contextChart(ours,other,HOME_COMPARISON.times,HOME_COMPARISON.elapsed,fantasy?30:100,fantasy?' pts':'%',[fantasy?'Our projection':'Our estimate',fantasy?provider:'Book'],fantasy?contextRange():null)+
+    (fantasy?contextProviderRows():renderContextDistribution()+'<p class="context-note">Fixed illustrative probabilities, not a sourced history.</p>'+(target.owned?'<div class="context-markers"><span>Oct 5 · Your bet</span><span>Oct 6 · Your read</span><span>Oct 7 · Role news</span></div><p class="context-owned">Your bet <strong>Over 4.5 · -103 · $10</strong></p>'+stakeReminder()+'<p class="context-note">Current main line: 5.5 at -110 · separate from this chart.</p>':'<p class="context-note">Player research · no saved wager in this example.</p>'))+contextNewsSummary();
+}
+function contextField() {
+  const down=nav.timeline.added?'2nd & 10':'1st & 10';
+  return '<div class="home-football-field" role="img" aria-label="Illustrative field: HOU possession, IND 38, '+esc(down)+', moving right."><span class="field-end field-hou">HOU</span><div class="field-lines"><span>20</span><span>40</span><span>50</span><span>40</span><span>20</span><i class="field-ball" aria-hidden="true"></i><b class="field-direction" aria-hidden="true">→</b></div><span class="field-end field-ind">IND</span></div><p class="context-field-label">HOU possession · IND 38 · '+esc(down)+' →</p>';
+}
+function contextPlays() {
+  const added=nav.timeline.added;
+  const content = '<section class="context-last-play"><h3>Last play</h3><p><span>'+(added?'Sun · 2:19 pm':'Sun · 2:18 pm')+'</span><strong>'+(added?'Renner catches for 0 yards.':'Wren runs for 12 yards.')+'</strong></p><p class="context-note">'+(added?'Fifth catch · +0.5 half-PPR points · HOU 2nd & 10 at IND 38.':'First down · +1.2 fantasy points · HOU 1st & 10 at IND 38.')+'</p></section><section class="context-next-play"><h3>Projected next play <strong>Pass</strong></h3><p class="context-note">Mock forecast · not modeled yet</p><div class="next-play-bar" role="img" aria-label="Illustrative pass '+(added?68:62)+' percent, run '+(added?32:38)+' percent"><span style="width:'+(added?68:62)+'%">Pass '+(added?68:62)+'%</span><span>Run '+(added?32:38)+'%</span></div><p class="context-note">HOU · '+(added?'2nd':'1st')+' & 10. A future model could use historical team and down-distance tendencies; these percentages are invented examples, not observed frequencies.</p></section>';
+  return consumerEnabled()?content.split('<section class="context-next-play">')[0]:content;
+}
+function contextWager() {
+  return '<div class="context-wager"><div><span>Wager</span><strong>$10</strong></div><div><span>Total return if won</span><strong>$19.71</strong></div></div>' + stakeReminder() + '<p class="context-note">Includes stake · Over 4.5 catches at -103 · Not settled</p>';
+}
+function contextRail() {
+  const actual=nav.timeline.added?5:4;
+  return '<div class="context-target-rail" role="img" aria-label="Actual '+actual+' catches; Your line 4.5; '+(actual===4?'needs 1 more':'line crossed, not settled')+'"><div class="target-track"><i style="width:'+(actual===4?'66.667':'83.333')+'%"></i><b class="target-threshold"><span>Your line 4.5</span></b><b class="target-actual" style="left:'+(actual===4?'66.667':'83.333')+'%"><span>Now '+actual+'</span></b></div><div class="target-ticks">'+[0,1,2,3,4,5,6].map(function(v){return '<span>'+v+'</span>';}).join('')+'</div><p class="context-note">'+(actual===4?'Next catch: 5 · Needs 1 more':'5 catches · Line crossed · Not settled')+'</p></div>';
+}
+function renderContextLive() {
+  const fantasy=nav.homeContext.mode==='fantasy', id=contextPlayerId(), data=contextMock(), target=contextTarget(), added=nav.timeline.added;
+  const actual=id==='demo-004'&&added?7.3:data.actual;
+  const live=data.live.slice();live[3]=actual;
+  const provider=nav.homeContext.provider, point=nav.homeContext.point;
+  const chances=target.owned&&added?[48,51,58,100]:[48,51,58,64];
+  return '<div class="context-scoreboard"><strong>HOU 17 <span>·</span> IND 14</strong><span>Q3 · '+(added?'6:20':'6:42')+' · Sample game</span></div>'+
+    (fantasy?'<div class="context-values"><div><span>Points now</span><strong>'+actual+'<small> pts</small></strong></div><div><span>Projected final</span><strong>'+data.ours[3]+'<small> pts</small></strong></div></div><p class="context-note">Mock comparison · same half-PPR scoring</p>'+contextProviderControls()+
+      contextChart(live,data[provider],['2:00','2:06','2:12',added?'2:19':'2:18'],[0,6,12,added?19:18],30,' pts',['Actual points',provider+' projected final'],contextRange()):
+      '<h3 class="context-target-heading">'+esc(target.label)+'</h3>'+(target.owned?contextWager():'<p class="context-note">Player research · no saved wager</p>')+'<div class="context-live-lead"><strong>'+(target.owned?(added?5:4):data.quantity)+' '+data.unit+'</strong><span>'+(target.owned?(added?'Line crossed · Not settled':'Needs 1 more'):'Game in progress')+'</span></div><div class="context-probability"><strong>'+(target.owned&&added&&point===3?'Crossed':chances[point]+'%')+'</strong><span>'+esc(target.explanation)+'</span></div>'+contextChart(chances,null,['2:00','2:06','2:12',added?'2:19':'2:18'],[0,6,12,added?19:18],100,'%',['Illustrative chance'],contextProbabilityRange()))+
+    contextField()+(fantasy?'':target.owned?contextRail():'')+contextPlays()+(fantasy?contextProviderRows():'');
+}
+
+function homeSearchActive() { return String(nav.homeSearch.query || "").trim() !== ""; }
+
+function homeLatestLine() {
+  if (homeSearchActive()) {
+    const count = homeSearchResults().length;
+    return count + (count === 1 ? ' match' : ' matches') + ' · Players & picks';
+  }
+  const selected = timelineEvents().find(function (event) { return event.id === nav.homeContext.event; });
+  if (selected) return selected.time + " · " + selected.headline;
+  const events = timelineEvents().filter(function (event) {
+    return nav.timeline.filter === "all" || event.tags.indexOf(nav.timeline.filter) !== -1;
+  });
+  return DEMO ? (events.length ? 'Sample · ' + events[0].time + ' · ' + events[0].headline :
+    'No sample activity in this view') : 'Activity history is not available yet';
+}
+
+function homeSearchResults() {
+  if (!HOME_TIMELINE || !homeSearchActive()) return [];
+  const query = nav.homeSearch.query.trim().toLowerCase();
+  const out = [];
+  const owned = playerOf(PERSONAL_BET.player);
+  if (personalPreview() && owned &&
+      [owned.name, owned.team, 'Your saved bet Over 4.5 catches receptions', '-103', '$10', PERSONAL_BET.book]
+        .join(' ').toLowerCase().indexOf(query) >= 0) {
+    out.push({ key: 'owned:renner', kind: 'owned', player: PERSONAL_BET.player,
+      name: owned.name, label: 'Your saved bet', description: 'Over 4.5 catches · -103 · $10' });
+  }
+  const people = (nav.slate && nav.slate.players) || {};
+  Object.keys(people).forEach(function (id) {
+    const person = people[id];
+    if (!person) return;
+    const prop = person.key_prop || {};
+    if ([person.name, person.team, prop.market, prop.market_label, prop.line].join(' ').toLowerCase().indexOf(query) < 0) return;
+    const game = games().findIndex(function (game) {
+      return playersIn(game).some(function (player) { return player.player_id === id; });
+    });
+    const market = prop.market || null;
+    if (!market && game < 0) return;
+    out.push({ key: 'player:' + id, kind: 'player', player: id, game: game, market: market,
+      name: person.name, label: market ? 'Player & pick' : 'Player matchup',
+      description: [person.team, prop.market_label || market, prop.line].filter(function (part) {
+        return part !== null && part !== undefined && part !== '';
+      }).join(' · ') });
+  });
+  return out;
+}
+
+function homeSearchBody() {
+  const results = homeSearchResults();
+  return (DEMO ? '<p class="timeline-sample">Sample players & picks · illustrative</p>' : '') +
+    '<div class="home-search-results" id="home-search-results">' +
+    (results.length ? results.map(function (result) {
+      return '<button class="home-search-result" data-act="home-search-result" data-key="' + esc(result.key) + '">' +
+        '<span class="home-search-kind">' + esc(result.label) + '</span><strong>' + esc(result.name) + '</strong>' +
+        '<span>' + esc(result.description) + '</span></button>';
+    }).join('') : '<p class="timeline-empty">No matching players or picks.</p>') + '</div>';
+}
+
+function updateHomeSearch(value) {
+  if (!HOME_TIMELINE || currentRoute() !== "home") return;
+  const wasActive = homeSearchActive();
+  const feed = el("home-feed-scroll"), stage = el("home-stage");
+  nav.homeSearch.query = String(value || "");
+  const active = homeSearchActive();
+  if (!wasActive && active) {
+    nav.homeSearch.priorExpanded = nav.homeSheet.expanded;
+    nav.homeSearch.priorFeedScroll = feed ? feed.scrollTop : nav.homeSheet.feedScroll;
+    setHomeSheetSize(true);
+  }
+  const restoring = wasActive && !active;
+  if (restoring) {
+    if (stage) stage.classList.add("is-restoring");
+    setHomeSheetSize(nav.homeSearch.priorExpanded === null ? nav.homeSheet.expanded : nav.homeSearch.priorExpanded);
+    nav.homeSearch.priorExpanded = null;
+  }
+  const position = restoring ? nav.homeSearch.priorFeedScroll : 0;
+  if (feed) {
+    feed.innerHTML = active ? homeSearchBody() : homeActivityBody();
+    feed.scrollTop = position;
+  }
+  nav.homeSheet.feedScroll = feed ? feed.scrollTop : position;
+  if (restoring && stage) {
+    void stage.offsetHeight;
+    stage.classList.remove("is-restoring");
+  }
+  const input = el("home-search"), clear = el("home-search-clear");
+  if (input && input.value !== nav.homeSearch.query) input.value = nav.homeSearch.query;
+  if (clear) clear.hidden = !active;
+  const title = el("timeline-title"), latest = el("home-sheet-latest");
+  if (title) title.textContent = active ? 'Search results' : 'While you were away';
+  if (latest) latest.textContent = homeLatestLine();
+  const status = el("timeline-status");
+  if (status) status.textContent = active ? homeLatestLine() : 'Activity feed restored.';
+}
+
+function clearHomeSearch() {
+  updateHomeSearch("");
+  const input = el("home-search");
+  if (input) input.focus({ preventScroll: true });
+}
+
+function openHomeSearchResult(key) {
+  if (!HOME_TIMELINE || currentRoute() !== "home") return;
+  const result = homeSearchResults().find(function (item) { return item.key === key; });
+  if (!result) return;
+  if (result.kind === "owned") openDetail("bethistory");
+  else if (result.market) openPick(result.player, result.market);
+  else if (result.game >= 0) {
+    nav.game = result.game; nav.exp = null;
+    openDetail("matchups");
+  }
+}
+
+/* One binding per rendered Home. Pointer capture keeps the drag on its
+ * handle; the feed and canvas retain ordinary, independent scrolling. */
+let homeSheetBinding = null;
+
+function setHomeSheetSize(expanded) {
+  nav.homeSheet.initial=false;
+  nav.homeSheet.expanded = !!expanded;
+  const stage = el("home-stage");
+  const handle = el("home-sheet-handle");
+  if (stage) {
+    stage.setAttribute("data-sheet-initial","false");
+    stage.style.setProperty("--home-sheet-size", expanded ? "70%" : consumerEnabled() ? "20%" : "15%");
+    stage.setAttribute("data-sheet", expanded ? "expanded" : "collapsed");
+  }
+  if (handle) {
+    handle.setAttribute("aria-expanded", String(!!expanded));
+    handle.setAttribute("aria-label", (expanded ? "Collapse" : "Expand") + " activity feed");
+  }
+}
+
+function toggleHomeSheet(event) {
+  if (!HOME_TIMELINE || currentRoute() !== "home") return;
+  if (homeSheetBinding && homeSheetBinding.suppressClick && event && event.detail > 0) {
+    homeSheetBinding.suppressClick = false;
+    return;
+  }
+  setHomeSheetSize(!nav.homeSheet.expanded);
+}
+
+function cleanupHomeSheet() {
+  if (!homeSheetBinding) return;
+  const binding = homeSheetBinding;
+  homeSheetBinding = null;
+  binding.cleanup();
+}
+
+function fitConsumerHomeSummary(stage,canvas){
+  if(!consumerEnabled()||!nav.homeSheet.initial||!stage||!canvas)return;
+  if(window.innerWidth>=1000)return;
+  const summary=canvas.querySelector&&canvas.querySelector('.cx-primary-performance');
+  if(!summary||!summary.getBoundingClientRect)return;
+  const bounds=stage.getBoundingClientRect(),content=summary.getBoundingClientRect();
+  if(!(bounds.height>0))return;
+  const reserved=content.bottom-bounds.top+76;
+  const height=Math.max(bounds.height*.2,Math.min(bounds.height*.7,bounds.height-reserved));
+  stage.style.setProperty('--home-sheet-size',height+'px');
+}
+
+function bindHomeSheet() {
+  cleanupHomeSheet();
+  if (!HOME_TIMELINE || currentRoute() !== "home") return;
+  const stage = el("home-stage"), handle = el("home-sheet-handle");
+  const feed = el("home-feed-scroll"), canvas = el("home-canvas");
+  if (!stage || !handle || !feed || !canvas) return;
+  if(!(consumerEnabled() && nav.homeSheet.initial))setHomeSheetSize(nav.homeSheet.expanded);
+  feed.scrollTop = nav.homeSheet.feedScroll;
+  canvas.scrollTop = nav.homeSheet.canvasScroll;
+  fitConsumerHomeSummary(stage,canvas);
+  const resizeSummary=function(){fitConsumerHomeSummary(stage,canvas);};
+  if(window.addEventListener)window.addEventListener("resize",resizeSummary);
+  let drag = null;
+  const binding = { suppressClick: false, cleanup: null };
+  const rememberFeed = function () { nav.homeSheet.feedScroll = feed.scrollTop; };
+  const rememberCanvas = function () { nav.homeSheet.canvasScroll = canvas.scrollTop; };
+  const finish = function (cancelled) {
+    if (!drag) return;
+    const ended = drag;
+    drag = null;
+    stage.classList.remove("is-dragging");
+    if(consumerEnabled()&&ended.initial&&(cancelled||!ended.moved)){nav.homeSheet.initial=true;nav.homeSheet.expanded=ended.expanded;stage.setAttribute("data-sheet-initial","true");stage.style.setProperty("--home-sheet-size",(ended.start*100)+"%");}
+    else setHomeSheetSize(cancelled || !ended.moved ? ended.expanded : ended.ratio >= 0.425);
+    binding.suppressClick = !cancelled && ended.moved;
+    try {
+      if (handle.hasPointerCapture(ended.id)) handle.releasePointerCapture(ended.id);
+    } catch (err) { /* A removed handle has already lost capture. */ }
+  };
+  const down = function (event) {
+    if (event.isPrimary === false || event.button !== 0 || drag) return;
+    const height = stage.getBoundingClientRect().height;
+    if (!(height > 0)) return;
+    binding.suppressClick = false;
+    const sheet=el("home-activity-sheet"),measured=sheet&&sheet.getBoundingClientRect?sheet.getBoundingClientRect().height/height:0;
+    const start=measured>0&&measured<=1?measured:nav.homeSheet.expanded?0.7:Math.max(consumerEnabled()?0.2:0.15,52/height);
+    drag = { id: event.pointerId, y: event.clientY, height: height,
+      expanded: nav.homeSheet.expanded, initial:consumerEnabled()&&nav.homeSheet.initial, start:start,
+      ratio:start, moved: false };
+    try { handle.setPointerCapture(event.pointerId); }
+    catch (err) { drag = null; }
+  };
+  const move = function (event) {
+    if (!drag || event.pointerId !== drag.id) return;
+    const distance = drag.y - event.clientY;
+    if (Math.abs(distance) > 5) drag.moved = true;
+    if (!drag.moved) return;
+    event.preventDefault();
+    nav.homeSheet.initial=false;stage.setAttribute("data-sheet-initial","false");
+    drag.ratio = Math.max(consumerEnabled()?0.2:0.15, 52 / drag.height, Math.min(0.7, drag.start + distance / drag.height));
+    stage.classList.add("is-dragging");
+    stage.style.setProperty("--home-sheet-size", (drag.ratio * 100) + "%");
+  };
+  const up = function (event) { if (drag && event.pointerId === drag.id) finish(false); };
+  const cancel = function (event) { if (drag && event.pointerId === drag.id) finish(true); };
+  const listeners = [["pointerdown", down], ["pointermove", move], ["pointerup", up],
+    ["pointercancel", cancel], ["lostpointercapture", cancel]];
+  listeners.forEach(function (pair) { handle.addEventListener(pair[0], pair[1]); });
+  feed.addEventListener("scroll", rememberFeed, { passive: true });
+  canvas.addEventListener("scroll", rememberCanvas, { passive: true });
+  binding.cleanup = function () {
+    if(window.removeEventListener)window.removeEventListener("resize",resizeSummary);
+    rememberFeed(); rememberCanvas();
+    listeners.forEach(function (pair) { handle.removeEventListener(pair[0], pair[1]); });
+    feed.removeEventListener("scroll", rememberFeed);
+    canvas.removeEventListener("scroll", rememberCanvas);
+    finish(true);
+  };
+  homeSheetBinding = binding;
+}
+
+function renderMatchups() {
+  if (!DEMO && !nav.slate) return '<div class="page">' + detailHead("Browse matchups") + '<p class="timeline-empty">' + esc(nav.slateNote || "Published matchups have not loaded. Try again when connected.") + '</p></div>';
+  return '<div class="home-matchups"><div class="page">' + detailHead("Browse matchups") +
+    (onFixtures() ? '<p class="legend">' + esc(SAMPLE_TAG) + '</p>' : '') +
+    '</div>' + (nav.slate ? matchCard() : matchStub()) + '</div>';
+}
+
+/* A saved illustration, deliberately separate from the slate's quotes.
+ * Exploring later quotes never mutates the terms the bettor owns. */
+const PERSONAL_BET = Object.freeze({ player: "demo-004", side: "Over",
+  line: 4.5, price: -103, stake: "$10", book: "Illustrative Book",
+  time: "Oct 5 · 10:30 am" });
+const PERSONAL_QUOTES = Object.freeze({
+  line: Object.freeze([
+    Object.freeze({ time: "Oct 4 · 10:30 am", side: "Over", line: 4.5, price: -105, y: 94 }),
+    Object.freeze({ time: "Oct 5 · 10:30 am", side: "Over", line: 4.5, price: -103, y: 94, marker: "Your bet" }),
+    Object.freeze({ time: "Oct 6 · 10:30 am", side: "Over", line: 4.5, price: -108, y: 94, marker: "Your read" }),
+    Object.freeze({ time: "Oct 7 · 10:30 am", side: "Over", line: 5.5, price: -110, y: 34 })
+  ]),
+  price: Object.freeze([
+    Object.freeze({ time: "Oct 4 · 10:30 am", side: "Over", line: 4.5, price: -105, y: 87 }),
+    Object.freeze({ time: "Oct 5 · 10:30 am", side: "Over", line: 4.5, price: -103, y: 94, marker: "Your bet" }),
+    Object.freeze({ time: "Oct 6 · 10:30 am", side: "Over", line: 4.5, price: -108, y: 76, marker: "Your read" }),
+    Object.freeze({ time: "Oct 7 · 10:30 am", side: "Over", line: 4.5, price: -120, y: 34 })
+  ])
+});
+
+function personalPreview() { return HOME_TIMELINE && DEMO; }
+
+function researchModeLink(route, reference) {
+  const query = new URLSearchParams(window.location.search);
+  if (reference) query.set("research", "reference");
+  else query.delete("research");
+  return '?' + query.toString() + ROUTES[route].hash;
+}
+
+function renderResearchParked(title, route) {
+  return '<div class="page research-parked"><div class="pagehead"><div class="pagetitle">' +
+    esc(title) + '</div></div><p>This view is set aside while we redesign it.</p>' +
+    '<a class="research-mode-link" href="' + esc(researchModeLink(route, true)) + '">Previous view</a></div>';
+}
+
+function researchReferenceBanner(route) {
+  if (!HOME_TIMELINE || !RESEARCH_REFERENCE ||
+      ["fantasybrowse", "season", "dfs", "screen", "live", "picks", "projections", "projection"].indexOf(route) < 0) return '';
+  return '<div class="research-reference"><span>Previous view</span><a class="research-mode-link" href="' +
+    esc(researchModeLink(route === "projection" ? "projections" : route, false)) + '">Return to preview</a></div>';
+}
+
+function personalName(id) {
+  const person = playerOf(id);
+  return person ? person.name : "Sample player";
+}
+
+function personalHud() {
+  return '<p class="personal-sample-label">Sample team & picks · illustrative</p>' +
+    '<nav class="personal-hud" aria-label="Your sample overview">' +
+    '<button data-act="open" data-route="myteam"><span class="hud-label">My team</span>' +
+    '<strong>' + (personalTeamScore() + ' <span class="hud-opponent">– 77.1</span>') +
+    '</strong><span class="hud-note">' + 'You’re ahead · game in progress' + '</span></button>' +
+    '<button data-act="open" data-route="mypicks"><span class="hud-label">My picks</span>' +
+    '<strong>' + '1 in progress' + '</strong>' +
+    '<span class="hud-note">' + 'Renner · over 4.5 catches' + '</span></button>' + (fantasyHubEnabled()?'<button data-act="fdss-open" aria-label="DFS scoreboard"><span class="hud-label">DFS</span><strong>Scoreboard</strong></button>':'') + '</nav>' +
+    '<button class="personal-browse" data-act="open" data-route="matchups">Browse matchups ' + icon("next", 16) + '</button>';
+}
+
+function personalTeamScore() { return nav.timeline.added ? "80.0" : "79.5"; }
+
+function personalUnavailable(title) {
+  return '<div class="page personal-page">' + detailHead(title) +
+    '<p class="timeline-empty">This personal view is available in the sample Home preview. Use the tabs to explore the current research.</p></div>';
+}
+
+function personalPageHead(title) {
+  return '<div class="page personal-page">' + detailHead(title) +
+    '<p class="timeline-sample">Sample personal activity — illustrative, not live</p>';
+}
+
+function renderPersonalTeam() {
+  if (fantasyHubEnabled()) return fantasyHubModule().render("personal");
+  if (!personalPreview()) return personalUnavailable("My team");
+  return personalPageHead(edgeEnabled()?"My lineup":"My team") + '<section class="personal-score"><span>' +
+    esc(slateWeekWord()) + ' · Your example lineup</span><h1>' +
+    (personalTeamScore() + ' <small>– 77.1</small>') + '</h1><p>' +
+    'Your team · Opponent<br>Game in progress. These are illustrative totals.' +
+    '</p></section><h2>Players to follow</h2><p class="personal-note">Three players from the example lineup. These rows are a partial view, not a sum of your team score.</p>' +
+    '<div class="personal-roster">' + ["demo-001", "demo-002", "demo-004"].map(function (id) {
+      const player = playerOf(id);
+      if (!player) return '';
+      return '<button data-act="player" data-player="' + esc(id) + '"><strong>' + esc(player.name) +
+        '</strong><span>' + esc(player.team + ' · ' + player.pos) + '</span>' + icon("next", 16) + '</button>';
+    }).join('') + '</div><button class="personal-research" data-act="tab" data-tab="fantasy">Browse fantasy matchups</button></div>';
+}
+
+function stakeReminder() { return '<span class="stake-reminder">Real bets placed elsewhere</span>'; }
+
+function ownedBetTerms() {
+  return '<section class="owned-bet"><span class="personal-kicker">Your saved bet · terms stay fixed</span>' +
+    '<h2>' + esc(personalName(PERSONAL_BET.player)) + ' · Over 4.5 catches</h2>' +
+    '<p><strong>' + esc(PERSONAL_BET.price) + '</strong> American price · <strong>' + esc(PERSONAL_BET.stake) +
+    '</strong> stake</p>' + stakeReminder() + '<p class="personal-note">' + esc(PERSONAL_BET.book + ' · ' + PERSONAL_BET.time) + '</p></section>';
+}
+
+function renderPersonalPicks() {
+  if (!personalPreview()) return personalUnavailable("My picks");
+  return personalPageHead("My picks") + '<h1>' + '1 in progress' +
+    '</h1>' + ownedBetTerms() + '<p class="personal-note">' +
+    'Game in progress. This bet has not been settled.' +
+    '</p><button class="personal-research" data-act="open" data-route="bethistory">View bet history & your read</button>' +
+    '<button class="personal-research" data-act="tab" data-tab="bets">Browse all betting opportunities</button></div>';
+}
+
+function renderFantasyBrowse() {
+  if (fantasyHubEnabled()) return renderHubRoot(nav.subs.fantasy === "dfs" ? "dfs" : "season");
+  if (edgeEnabled()) return '<div class="page browse-page"><div class="pagehead"><div class="pagetitle">Fantasy</div></div><p class="ef-sample">Sample player outlooks</p>'+edgeModule().strip('fantasy',edgeRoster())+'<button class="browse-link" data-act="browse-players">Find a player '+icon('next',18)+'</button>'+(nav.projections?projRoster(projPlayers()):'<p>Player outlooks load here when available.</p>')+'</div>';
+  if (browseCreatePreview()) return '<div class="page browse-page"><div class="pagehead"><div class="pagetitle">Fantasy</div></div>' +
+    '<p class="timeline-sample">Sample team · illustrative outlooks</p>' +
+    '<button class="browse-feature" data-act="browse-team"><span class="overline">My sample team</span><strong>' + personalTeamScore() + ' – 77.1</strong><span>View team and matchup ' + icon("next",16) + '</span></button>' +
+    '<div class="browse-section"><h2>Player outlooks</h2><p>Explore this week’s projected stats and ranges.</p><button class="browse-link" data-act="browse-players">Find a player ' + icon("next",18) + '</button></div>' +
+    (nav.projections ? '<div class="browse-outlooks">'+projRoster(projPlayers())+'</div>' : '<p class="personal-note">Player outlooks load here when available.</p>') + '</div>';
+  if (researchReset()) return renderResearchParked("Fantasy", "fantasybrowse");
+  if (!HOME_TIMELINE) return renderFantasySeason();
+  return '<div class="home-matchups"><div class="page"><div class="pagehead"><div class="pagetitle">Fantasy</div></div>' +
+    '<p class="personal-note">Explore player projections across this week’s matchups.</p>' +
+    (onFixtures() ? '<p class="timeline-sample">' + esc(SAMPLE_TAG) + '</p>' : '') +
+    '</div>' + (nav.slate ? matchCard() : matchStub()) + '</div>';
+}
+
+function personalQuotes() {
+  return personalPreview() ? PERSONAL_QUOTES[nav.personal.mode] : [];
+}
+
+function personalQuoteText(point) {
+  return point.time + ' · ' + point.side + ' ' + point.line + ' catches · ' + point.price +
+    ' American price · ' + PERSONAL_BET.book;
+}
+
+function personalHistoryChart() {
+  const points = personalQuotes();
+  const mode = nav.personal.mode;
+  const selected = nav.personal.point[mode];
+  const xs = [34, 106, 178, 250];
+  let path = 'M' + xs[0] + ' ' + points[0].y;
+  points.slice(1).forEach(function (point, index) { path += ' H' + xs[index + 1] + ' V' + point.y; });
+  return '<div class="history-legend"><span class="bet-marker">Your bet</span><span class="read-marker">Your read</span></div>' +
+    '<div class="history-chart"><svg viewBox="0 0 288 128" role="img" aria-label="' +
+    esc(mode === "line" ? 'Main catches line moves from 4.5 to 5.5. All four observations are listed below.' :
+      'Price for Over 4.5 catches moves from -105 to -120. All four observations are listed below.') + '">' +
+    '<path class="history-grid" d="M30 34H260 M30 94H260"></path>' +
+    '<text x="0" y="38">' + (mode === "line" ? '5.5' : '-120') + '</text>' +
+    '<text x="0" y="98">' + (mode === "line" ? '4.5' : '-103') + '</text>' +
+    '<path class="history-step" d="' + esc(path) + '"></path>' +
+    points.map(function (point, index) {
+      const mark = index === 1 ? ' bet-marker' : index === 2 ? ' read-marker' : '';
+      return '<circle class="history-dot' + mark + (selected === index ? ' selected' : '') +
+        '" cx="' + xs[index] + '" cy="' + point.y + '" r="' + (selected === index ? 6 : 4) + '"></circle>';
+    }).join('') + '<text x="34" y="122">Oct 4 · 10:30 am</text>' +
+    '<text x="260" y="122" text-anchor="end">Oct 7 · 10:30 am</text></svg>' +
+    points.map(function (point, index) {
+      if (!point.marker) return '';
+      return '<button class="history-chart-marker" data-act="history-point" data-value="' + index +
+        '" data-origin="chart" style="left:' + (xs[index] / 288 * 100) + '%;top:' + (point.y / 128 * 100) +
+        '%" aria-label="' + esc(point.marker + '. ' + personalQuoteText(point)) + '"></button>';
+    }).join('') + '</div>' +
+    '<p class="history-inspect" id="history-inspect">' + esc(personalQuoteText(points[selected])) + '</p>' +
+    '<div class="history-observations" role="group" aria-label="Inspect sample observations">' +
+    points.map(function (point, index) {
+      return '<button class="history-observation" data-act="history-point" data-origin="list" data-value="' + index + '" aria-pressed="' + (selected === index) +
+        '" aria-label="' + esc((point.marker ? point.marker + '. ' : '') + personalQuoteText(point)) + '">' +
+        '<span>' + esc(point.time) + '</span><strong>' + esc(point.side + ' ' + point.line + ' catches · ' + point.price) + '</strong>' +
+        (point.marker ? '<span class="history-marker-label ' + (index === 1 ? 'bet-marker' : 'read-marker') + '">' + esc(point.marker) + '</span>' : '') + '</button>';
+    }).join('') + '</div>';
+}
+
+function personalRead() {
+  return '<section class="personal-read"><button data-act="history-read" aria-expanded="' + nav.personal.read +
+    '" aria-controls="personal-read-body">Your read <span aria-hidden="true">' + (nav.personal.read ? '−' : '+') + '</span></button>' +
+    '<div id="personal-read-body"' + (nav.personal.read ? '' : ' hidden') + '><p class="personal-note">Saved sample words · Oct 6 · 10:30 am</p>' +
+    '<blockquote>“I think Renner gets more short targets if they trail early. His recent workload makes me comfortable with over 4.5 catches.”</blockquote>' +
+    '<p>The baseline already includes his recent workload. Your extra assumption is that an early deficit brings more short targets.</p>' +
+    '<div class="read-comparison"><div><span>Baseline</span><strong>52%</strong><small>Uncertainty: 43–61%</small></div>' +
+    '<div><span>Your scenario</span><strong>56%</strong><small>Uncertainty: 45–66%</small></div></div>' +
+    '<p class="personal-note">Both examples refer to Over 4.5 catches. These are fixed, illustrative numbers, not calculated from your words. The ranges overlap; the assumed change may not help.</p>' +
+    '<p>The team trailing early does not guarantee that Renner gets more targets, or that your bet wins. The read and the bet are separate outcomes.</p></div></section>';
+}
+
+function renderBetHistory() {
+  if (!personalPreview()) return personalUnavailable("Your bet history");
+  return personalPageHead("Your bet history") + ownedBetTerms() +
+    '<section class="personal-market"><span class="personal-kicker">Current main line · Oct 7, 10:30 am</span>' +
+    '<p><strong>Over 5.5 catches · -110</strong></p><p class="personal-note">Illustrative Book</p></section>' +
+    '<section class="personal-history"><h2>How the market moved</h2>' +
+    timelineChoices("history-mode", [["line", "Line"], ["price", "Price"]], nav.personal.mode, "History chart") +
+    '<p class="personal-note">' + (nav.personal.mode === "line" ? 'Main line · catches needed for the over' :
+      'Price for Over 4.5 catches only · American odds') + '</p>' + personalHistoryChart() +
+    '<p class="personal-note">A higher line changes the catches you need. A changed price changes the payout at the same line. Your saved bet stays the same.</p></section>' +
+    personalRead() + '</div>';
+}
+
+function personalHistoryAction(act, target) {
+  if (!personalPreview() || currentRoute() !== "bethistory") return;
+  const value = target.getAttribute("data-value");
+  const origin = target.getAttribute("data-origin");
+  if (act === "history-mode" && ["line", "price"].indexOf(value) >= 0) nav.personal.mode = value;
+  else if (act === "history-point" && /^[0-3]$/.test(value || "")) nav.personal.point[nav.personal.mode] = Number(value);
+  else if (act === "history-read") nav.personal.read = !nav.personal.read;
+  else return;
+  const viewport = el("viewport");
+  const scroll = viewport ? viewport.scrollTop : 0;
+  nav.motion = null;
+  render();
+  const screen = el("screen");
+  if (screen) {
+    const control = Array.from(screen.querySelectorAll('[data-act]')).find(function (button) {
+      return button.getAttribute("data-act") === act && button.getAttribute("data-value") === value &&
+        button.getAttribute("data-origin") === origin;
+    });
+    if (control) control.focus({ preventScroll: true });
+  }
+  if (viewport) viewport.scrollTop = scroll;
+  const status = el("timeline-status");
+  if (status && act !== "history-read") status.textContent = personalQuoteText(personalQuotes()[nav.personal.point[nav.personal.mode]]);
+}
+
+function timelineAction(act, target) {
+  if (!HOME_TIMELINE || !DEMO || currentRoute() !== "home") return;
+  const state = nav.timeline;
+  const value = target.getAttribute("data-value");
+  const id = target.getAttribute("data-id");
+  const event = timelineEvents().find(function (item) { return item.id === id; });
+  let announcement = "";
+  if (act === "timeline-filter" && ["all", "team", "bets"].indexOf(value) !== -1) state.filter = value;
+  else if (act === "timeline-select" && event) {
+    if(consumerEnabled())window.ConsumerExperience.markRead(id);
+    nav.homeContext.event = id;
+    nav.homeContext.view = id.indexOf("week-") === 0 ? "comparison" : "live";
+    nav.homeContext.point = 3;
+    nav.homeContext.mode = event.tags.indexOf("bets") >= 0 ? "betting" : "fantasy";
+    setHomeSheetSize(false);
+  }
+  else if (act === "timeline-toggle" && event) state.open[id] = !state.open[id];
+  else if (act === "timeline-new" && !state.added) {
+    state.pending = true;
+    announcement = "One new sample update is available. Choose Show new activity to reveal it.";
+  }
+  else if (act === "timeline-reveal" && state.pending) {
+    state.added = true;
+    state.pending = false;
+    announcement = "New sample activity added. Renner makes his fifth catch. Bet still in progress.";
+  } else if (act === "timeline-destination" && event) {
+    const destination = target.getAttribute("data-destination");
+    if (destination === "history" && ["week-line", "day-catch", "day-new"].indexOf(id) >= 0) {
+      openDetail("bethistory");
+    } else if (destination === "pick") {
+      const prop = playerOf(event.player).key_prop;
+      if (prop && prop.market) openPick(event.player, prop.market);
+    } else if (destination === "matchup") {
+      const index = games().findIndex(function (game) {
+        return playersIn(game).some(function (player) { return player.player_id === event.player; });
+      });
+      if (index >= 0) { nav.game = index; nav.exp = null; openDetail("matchups"); }
+    }
+    return;
+  } else return;
+  const viewport = el("viewport");
+  const y = viewport ? viewport.scrollTop : window.scrollY;
+  nav.motion = null;
+  render();
+  if (act === "timeline-select") { const canvas = el("home-canvas"); if (canvas) canvas.scrollTop = 0; nav.homeSheet.canvasScroll = 0; }
+  /* This live region belongs to the shell, so replacing the screen does
+   * not replace the node assistive technology is already listening to. */
+  const status = el("timeline-status");
+  if (status && announcement) status.textContent = announcement;
+  /* Keep keyboard focus on the replaced control and the viewport steady. */
+  const screen = el("screen");
+  if (screen) {
+    const buttons = screen.querySelectorAll('[data-act]');
+    let focusTarget = null;
+    for (const button of buttons) {
+      const revealed = act === "timeline-reveal" &&
+        button.getAttribute("data-act") === "timeline-toggle" &&
+        button.getAttribute("data-id") === "day-new";
+      if (revealed || (button.getAttribute("data-act") === act &&
+          button.getAttribute("data-id") === id && button.getAttribute("data-value") === value)) {
+        focusTarget = button; break;
+      }
+    }
+    /* Revealing removes its own button. Prefer the new disclosure;
+     * if it was filtered out, the focusable main is the safe return. */
+    if (act === "timeline-select") { const context = el("home-context-canvas"); if (context) context.focus({preventScroll:true}); }
+    else if (focusTarget) focusTarget.focus({ preventScroll: true });
+    else if (act === "timeline-reveal") screen.focus({ preventScroll: true });
+  }
+  if (viewport) viewport.scrollTop = y;
+  else if (window.scrollTo) window.scrollTo(0, y);
 }
 
 function lineupSkeleton() {
@@ -5895,6 +7052,11 @@ function flexSection(rows) {
 }
 
 function renderFantasySeason() {
+  if (fantasyHubEnabled()) return renderHubRoot("season");
+  return renderLegacyFantasySeason();
+}
+function renderLegacyFantasySeason(skipPark) {
+  if (researchReset() && !skipPark) return renderResearchParked("Fantasy", "season");
   const held = heldTeam("season_long");
   /* NO TEAM CAPTURED YET AND THE DOOR IS THE SCREEN (sec 6c). There
    * is no empty table, no zeroed total and no promise: the one thing
@@ -6180,6 +7342,8 @@ function dfsFooter() {
 }
 
 function renderFantasyDfs() {
+  if (fantasyHubEnabled()) return renderHubRoot("dfs");
+  if (researchReset()) return renderResearchParked("Fantasy", "dfs");
   if (!nav.dfs) {
     return '<div class="page">' + fantasyHead() +
       '<div class="card"><div class="cardhead">' +
@@ -6287,7 +7451,7 @@ function renderTeam() {
      * that does the reading, so it is said once per screen and it is
      * said where the act happens. */
     '<div class="cardbody">' + esc(TEAM_CONFIRM_BODY) + '</div>' +
-    (nav.team.surface
+    (DEMO && nav.team.surface
       ? '<div class="legend">' + esc(TEAM_FROM + nav.team.surface) +
         '</div>'
       : "") + '</div>' +
@@ -6395,7 +7559,7 @@ function projWhere(player) {
 /* sec 5.1's search, on this screen's own list. The idiom is the home
  * switcher's — a 16px input, a basis line under it that says what is
  * being matched, and the sec 8 empty state naming what was typed. */
-function projSearch() {
+function projSearch(compact) {
   const query = String(nav.proj.query || "");
   return '<div class="card projsearch">' +
     '<div class="searchbar">' + icon("search", 18, 2.5) +
@@ -6403,8 +7567,8 @@ function projSearch() {
     'autocomplete="off" placeholder="' +
     esc(PROJ_SEARCH_PLACEHOLDER) + '" aria-label="' +
     esc(PROJ_SEARCH_PLACEHOLDER) + '" value="' + esc(query) + '">' +
-    '</div><div class="searchbasis">' + esc(PROJ_SEARCH_BASIS) +
-    '</div></div>';
+    '</div>' + (compact ? '' : '<div class="searchbasis">' + esc(PROJ_SEARCH_BASIS) +
+    '</div>') + '</div>';
 }
 
 function projMatches() {
@@ -6437,7 +7601,7 @@ function projRoster(list) {
           index + '" data-act="projection" data-player="' +
           esc(player.player_id) + '" aria-label="' +
           esc(PROJ_FULL + ": " + player.name) + '">' +
-          '<span class="projname">' + esc(player.name) + '</span>' +
+          '<span class="projname">' + esc(player.name) + (edgeEnabled() && edgeModule().owned(player.player_id) ? '<small class="ef-row-owned">Taken</small>' : '') + '</span>' +
           '<span class="projteam">' + esc(player.team) + '</span>' +
           '</button>';
       }).join("") + '</div>';
@@ -6445,6 +7609,7 @@ function projRoster(list) {
 }
 
 function renderProjections() {
+  if (researchReset()) return renderProjectionsPreview();
   const head = '<div class="pagehead"><div class="pagetitle">' +
     esc(TITLE_PROJECTIONS) + '</div><div class="pagemeta">' +
     esc(nav.projections ? projMeta() : "") + '</div></div>';
@@ -6474,6 +7639,47 @@ function renderProjections() {
     '</div>' + explainer(SHORT_PROJECTIONS, [PROJ_SCOPE]) + '</div>';
 }
 
+function projectionPreviewEmpty(head, message) {
+  return '<div class="page">' + head + '<p class="cardbody">' + esc(message) + '</p></div>';
+}
+
+function comparisonEnabled() { return browseCreatePreview() && !!window.ProjectionComparison; }
+function comparisonModule() {
+  if (!comparisonEnabled()) return null;
+  const module=window.ProjectionComparison;
+  module.configure({esc:esc,head:function(title){return currentStack().length>1?detailHead(title):'<div class="pagehead"><div class="pagetitle">'+esc(title)+'</div></div>';},
+    render:function(){nav.motion=null;render();},back:goBack,open:function(route){openDetail(route);const view=el('viewport');if(view)view.scrollTop=0;},player:openProjection,
+    owned:function(){return edgeEnabled()?edgeModule().strip('projections',edgeRoster().filter(function(p){return !!projFind(p.player_id);})):'';}});
+  return module;
+}
+function renderProjectionComparisonRow() { return comparisonEnabled()?comparisonModule().render(true):projectionPreviewEmpty(detailHead('Stat comparison'),'Comparison unavailable.'); }
+function renderProjectionsPreview() {
+  if (comparisonEnabled()) return comparisonModule().render();
+  const head = browseCreatePreview() && currentStack().length > 1 ? detailHead('Find a player') : '<div class="pagehead"><div class="pagetitle">' + esc(TITLE_PROJECTIONS) +
+    '</div><div class="pagemeta">' + esc(nav.projections ? projMeta() : '') + '</div></div>';
+  if (!nav.projections) return projectionPreviewEmpty(head, 'Projections are unavailable right now.');
+  const game = projGame();
+  return '<div class="page">' + head + (DEMO ? '<p class="timeline-sample">' + esc(SAMPLE_TAG) + '</p>' : '') +
+    (edgeEnabled()?edgeModule().strip('projections',edgeRoster().filter(function(p){return !!projFind(p.player_id);})): '') +
+    (game ? '<div class="card projswitch">' + switcher(game.game, projGames(), nav.projGame, "proj-game", "") + '</div>' : '') +
+    projSearch(true) + '<div class="overline projpick">' + esc(PROJ_PICK_A_PLAYER) +
+    '</div><div class="projlist" id="projlist">' + projListBody() + '</div>' + projProvenance() + '</div>';
+}
+
+function renderProjectionPreview() {
+  const head = detailHead(TITLE_PROJECTIONS);
+  if (!nav.projections) return projectionPreviewEmpty(head, 'Projections are unavailable right now.');
+  const player = projSelected();
+  if (!player) return projectionPreviewEmpty(head, 'Player projection unavailable.');
+  const meta = [player.team, player.pos, projWhere(player), projMeta()].filter(Boolean);
+  return '<div class="page">' + head + (DEMO ? '<p class="timeline-sample">' + esc(SAMPLE_TAG) + '</p>' : '') +
+    '<div class="card playercard"><div class="exphead"><span class="pickname">' + esc(player.name) +
+    '</span><span class="expteam">' + esc(meta.join(' · ')) + '</span></div>' +
+    '<div class="overline">' + esc(PROJECTED) + '</div>' + projStatline(player) + '</div>' +
+    '<div class="card"><div class="overline">' + esc(PROJ_RESULTS_HEAD) + '</div>' +
+    projResults(player, true) + '</div>' + projProvenance() + '</div>';
+}
+
 /* The list under the search, and the sec 8 empty state that belongs
  * to whichever emptiness it is: nobody matched what was typed, or the
  * file carries nobody at all. It is its own function because the
@@ -6482,6 +7688,8 @@ function projListBody() {
   const list = projMatches();
   if (list.length) return projRoster(list);
   const typed = String(nav.proj.query || "").trim();
+  if (researchReset()) return '<div class="card"><div class="cardbody">' +
+    esc(typed ? 'No players match "' + typed + '".' : 'No player projections available.') + '</div></div>';
   return '<div class="card"><div class="cardbody">' +
     esc(typed ? PROJ_SEARCH_EMPTY + ' "' + typed + '"'
       : PROJ_NO_PLAYERS) + '</div></div>';
@@ -6500,7 +7708,7 @@ function projListBody() {
  * on this screen that has to be seen whole — or drop two of the five
  * points, which would be hiding a number the generation saved. The
  * block keeps every figure and puts the line at full width. */
-function projResults(player) {
+function projResults(player, compact) {
   const blocks = PROJ_STATS.filter(function (stat) {
     return numberOrNull((player.proj || {})[stat[1]]) !== null ||
       Array.isArray((player.stat_quantiles || {})[stat[1]]);
@@ -6514,7 +7722,7 @@ function projResults(player) {
     }).join("");
     return '<div class="pstat"><div class="pstathead">' +
       '<span class="pstatname">' + esc(stat[0]) + '</span>' +
-      projMoved(player, stat[1], stat[2]) +
+      projMoved(player, stat[1], stat[2], compact) +
       '<span class="pstatproj">' +
       esc(projNumber((player.proj || {})[stat[1]], stat[2])) +
       '</span></div>' +
@@ -6522,7 +7730,7 @@ function projResults(player) {
       '<div class="ppoints">' + spread + '</div></div>';
   }).join("");
   if (!blocks) {
-    return '<div class="cardbody">' + esc(PROJ_NO_RESULTS) + '</div>';
+    return '<div class="cardbody">' + esc(compact ? 'No projected stats available.' : PROJ_NO_RESULTS) + '</div>';
   }
   return '<div class="presults">' + blocks + '</div>';
 }
@@ -6583,11 +7791,11 @@ function projShare(value, top) {
   return Math.min(100, Math.max(0, part)).toFixed(2) + "%";
 }
 
-function projMoved(player, key, places) {
+function projMoved(player, key, places, compact) {
   const moved = numberOrNull((player.movement || {})[key]);
   const opened = numberOrNull((player.week_open || {})[key]);
   if (moved === null) {
-    return '<span class="pmv flat" title="' + esc(PROJ_NO_MOVE) +
+    return '<span class="pmv flat" title="' + esc(compact ? 'Change unavailable' : PROJ_NO_MOVE) +
       '">' + esc(DASH) + '</span>';
   }
   /* Rounded FIRST, then signed: a move of -0.004 carries shown to one
@@ -6598,7 +7806,7 @@ function projMoved(player, key, places) {
   const family = rounded > 0 ? "up" : (rounded < 0 ? "dn" : "flat");
   const from = opened === null ? DASH : opened.toFixed(places);
   return '<span class="pmv ' + family + '" title="' +
-    esc(PROJ_WEEK_OPEN + from + " · " + PROJ_MOVED_NOTE) + '">' +
+    esc(compact ? PROJ_WEEK_OPEN + from : PROJ_WEEK_OPEN + from + " · " + PROJ_MOVED_NOTE) + '">' +
     esc(shown) + '<span class="pmvsub">' + esc(PROJ_FROM + from) +
     '</span></span>';
 }
@@ -6742,6 +7950,7 @@ function projProvenance() {
 }
 
 function renderProjection() {
+  if (researchReset()) return renderProjectionPreview();
   const player = projSelected();
   const head = detailHead(TITLE_PROJECTIONS);
   if (!nav.projections) {
@@ -7019,7 +8228,68 @@ function screenRow(entry, index) {
     esc(gapText(prop)) + '</span></span></button>';
 }
 
+function edgeOpenPersonal(route) {
+  nav.edgeReturn = nav.tab !== 'home' ? {tab:nav.tab,stack:currentStack().slice()} : null;
+  openIn('home',route);
+}
+function edgeEnabled() { return browseCreatePreview() && !!window.EdgeFinder; }
+let edgeConfigured = false;
+function edgeModule() {
+  if (!edgeEnabled()) return null;
+  if (!edgeConfigured) {
+    window.EdgeFinder.configure({esc:esc,head:detailHead,render:function(){nav.motion=null;render();},route:currentRoute,
+      mybets:function(){edgeOpenPersonal("mybets");},lineup:function(){edgeOpenPersonal("myteam");},
+      detail:function(){if(currentRoute()!=="mybets")edgeOpenPersonal("mybets");openDetail("edgebet");},history:function(){openDetail("bethistory");},
+      recommended:function(){openIn("bets","betsrecommended");},reduced:function(){return !!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);},
+      customize:function(legs){betsDemoModule().prefill(legs);},recordEntry:function(){return scorecardEnabled()?scorecardModule().entry():'';},browse:function(){swapSub('bets','screen');},
+      singleDetail:function(d){return betsDemoModule().renderSavedSingle({leg:d.legs[0],totals:d.totals},d.id);}});
+    edgeConfigured=true;
+    if(window.BetsBuilder)window.BetsBuilder.state.picks.forEach(function(item){window.EdgeFinder.external('builder-single:'+JSON.stringify(item),{source:'Single builder',kind:'single',legs:[item.leg],stake:item.totals.stake,totals:item.totals});});
+  }
+  return window.EdgeFinder;
+}
+function edgeRoster() { return ["demo-001","demo-002","demo-004"].map(playerOf).filter(Boolean); }
+function edgeHomeOverview() {
+  const edge=edgeModule();
+  return '<section class="ef-home-overview"><p class="ef-sample">Personal overview · sample team / visit-only takes</p><div class="ef-home-score"><strong>'+personalTeamScore()+' <small>– 77.1</small></strong><span>Your sample team is ahead</span></div><nav aria-label="Your personal pages">'+
+    '<button data-act="ef-mybets"><span>My bets</span><strong>'+edge.state.decisions.length+' taken</strong></button><button data-act="ef-lineup"><span>My lineup</span><strong>View matchup</strong></button>'+ (fantasyHubEnabled()?'<button data-act="fdss-open" aria-label="DFS scoreboard"><span>DFS</span><strong>Scoreboard</strong></button>':'')+'</nav></section>';
+}
+function renderMyBets() {return edgeEnabled()?edgeModule().mybets():personalUnavailable('My bets');}
+function renderEdgeBet() {return edgeEnabled()?edgeModule().detail():personalUnavailable('My bet');}
+
+/* A narrow bridge keeps the owner-directed demo builder off default/reference routes. */
+function betsDemoEnabled() { return personalPreview() && !RESEARCH_REFERENCE && !!window.BetsBuilder; }
+let betsDemoConfigured = false;
+function betsDemoModule() {
+  if (!betsDemoEnabled()) return null;
+  if (!betsDemoConfigured) {
+    window.BetsBuilder.configure({esc:esc,statline:statline,disclosure:disclosure,
+      historyChart:function(leg,key){return edgeEnabled()?edgeModule().historyChart(leg,key):'';},
+      take:function(key,payload){return edgeEnabled()?edgeModule().external(key,payload):null;},
+      decisionPanel:function(id){return edgeEnabled()?edgeModule().prompt(id):'';},
+      mybets:function(){if(edgeEnabled())edgeOpenPersonal('mybets');else swapSub('bets','picks');},render:function(){nav.motion=null;render();},
+      open:openDetail,back:goBack,root:function(route){if(["betbuilder","betsparlay"].includes(route))openIn("bets",route);else swapSub("bets",route);},create:function(){openSheet();},players:browsePlayers,history:function(){openDetail("bethistory");},route:currentRoute,
+      reduced:function(){return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);}});
+    betsDemoConfigured=true;
+  }
+  return window.BetsBuilder;
+}
+function renderBetsDemoRoute() {
+  const module=betsDemoModule();
+  return module?module.render(currentRoute()):'<div class="page">'+detailHead('Bets preview')+'<p>This builder is available in the sample preview.</p></div>';
+}
+function betsDemoRoute(route) { return ["screen","live","picks","betbuilder","betsparlay","betsleg","betssim","betsrecommended","betssingle","betspick"].indexOf(route)>=0; }
+let betsDemoRenderedRoute = null;
+function betsDemoScrollTransition(route, viewport) {
+  const entering = betsDemoEnabled() && betsDemoRoute(route) && route !== betsDemoRenderedRoute;
+  betsDemoRenderedRoute = route;
+  if (entering && viewport) viewport.scrollTop = 0;
+}
+
 function renderBetsScreen() {
+  if (edgeEnabled()) return edgeModule().render();
+  if (betsDemoEnabled()) return betsDemoModule().render("screen");
+  if (researchReset()) return renderResearchParked("Bets", "screen");
   if (!nav.slate) {
     return '<div class="page">' + betsHead() +
       '<div class="cardhead offhead">' + esc(OFFLINE_HEAD) + '</div>' +
@@ -7206,6 +8476,8 @@ function betById(betId) {
 }
 
 function renderBetsLive() {
+  if (betsDemoEnabled()) return betsDemoModule().render("live");
+  if (researchReset()) return renderResearchParked("Bets", "live");
   const head = '<div class="page">' + betsHead() + liveHead() +
     '<div class="overline">' + esc(LIVE_OVERLINE) + '</div>';
   if (DEMO) {
@@ -7261,7 +8533,9 @@ function renderBetsLive() {
  * is new is the honest admission beside it that most people arriving
  * here will not have one. */
 function connectChoice() {
-  return '<button class="primary" data-act="connect">' +
+  const keyAction = !DEMO && currentRoute() === "account"
+    ? 'data-act="account-key"' : 'data-act="connect"';
+  return '<button class="primary" ' + keyAction + '>' +
     esc(CONNECT_HAVE_KEY) + '</button>' +
     '<div class="connector">' + esc(CONNECT_OR) + '</div>' +
     '<button class="ghost wide" data-act="invite-open">' +
@@ -7443,7 +8717,7 @@ function slipRows() {
     return '<div class="card' + growClass() + '" style="--i:' +
       Math.min(index, 8) + '">' +
       '<div class="overline">' + esc(PICKS_SLIPS) +
-      gradeMark(slip.grade) + '</div>' +
+      gradeMark(slip.grade) + '</div>' + gradeSentence(slip.grade) +
       '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
       '</span><span class="verdictvalue">' + esc(pct(slip.p_all_hit)) +
       '</span></div>' +
@@ -7493,6 +8767,8 @@ function slipRows() {
 }
 
 function renderBetsPicks() {
+  if (betsDemoEnabled()) return betsDemoModule().render("picks");
+  if (researchReset()) return renderResearchParked("Bets", "picks");
   const head = '<div class="page">' + betsHead() +
     '<div class="overline">' + esc(PICKS_OVERLINE) + '</div>';
   if (DEMO) {
@@ -7904,7 +9180,9 @@ function renderAccount() {
   }
   if (!nav.hasToken) {
     return head +
-      (account.door === "signup" ? signupStep() : codeStep()) + '</div>';
+      (account.door === "signup" ? signupStep() : account.door === "code" ? codeStep() :
+        account.door === "key" ? accountKeyStep() : connectCard()) +
+      (account.door ? '<button class="ghost wide" data-act="account-entry">Other ways to connect</button>' : '') + '</div>';
   }
   if (account.offline) {
     return head + '<div class="card"><div class="cardbody">' +
@@ -7917,11 +9195,38 @@ function renderAccount() {
     notifyCard() + adminView() + '</div>';
 }
 
+function accountKeyStep() {
+  return '<div class="card"><h2 class="cardhead">Connect with your key</h2>' +
+    '<p class="cardbody">Paste the key for your existing account.</p>' +
+    accountField("accountkey", "Your account key", "", "", "password") +
+    '<div role="alert">' + accountNote(accountState().note) + '</div>' +
+    '<button class="primary" data-act="account-connect">Connect your account</button></div>';
+}
+
+function connectAccountKey() {
+  if (DEMO || nav.hasToken) return;
+  const field = el("accountkey");
+  const token = field && String(field.value || "").trim();
+  if (!token) {
+    accountState().note = "Paste your account key to connect.";
+    render();
+    const input = el("accountkey");
+    if (input) input.focus();
+    return;
+  }
+  // Adopt through the same credential/reset authority as the established prompt.
+  field.value = "";
+  adoptToken(token);
+  render();
+  loadPicks(true);
+  loadAccount(true);
+}
+
 function detailHead(title) {
   return '<div class="pagehead">' +
     '<button class="backbtn" data-act="back" aria-label="Back">' +
     icon("back") + '</button>' +
-    '<div class="pagetitle">' + esc(title) + '</div></div>';
+    '<h1 class="pagetitle">' + esc(title) + '</h1></div>';
 }
 
 /* ------------------------------------------------------------------
@@ -8095,6 +9400,7 @@ function otherMarkets(person, prop) {
  * plainly, which is where somebody who followed the link can actually
  * read it. */
 function fullProjection(person) {
+  if (browseCreatePreview()) return '<button class="ghost wide" data-act="browse-players">Find player projections</button>';
   return '<button class="ghost wide" data-act="projection" ' +
     'data-player="' + esc(person.player_id) + '" aria-label="' +
     esc(PROJ_FULL + ": " + person.name) + '">' + esc(PROJ_FULL) +
@@ -8413,7 +9719,37 @@ function trackLegs() {
       : "");
 }
 
+/* Real terms remain a draft until the service returns a receipt. No joint
+ * chance, break-even, or recommendation is calculated on this path. */
+function realTrackTerms() {
+  const saved = nav.track.saved;
+  return '<div class="card"><div class="overline">Your slip terms</div>' +
+    '<div class="payouts">' +
+    '<label class="payoutcell"><span>' + esc(TRACK_PAYOUT) +
+    '</span><input class="payoutinput" id="slippayout" type="text" ' +
+    'inputmode="decimal" autocomplete="off" aria-label="' + esc(TRACK_PAYOUT) +
+    '" value="' + esc(saved ? saved.payout_multiple : nav.track.payout) + '"' + (saved ? ' readonly' : '') + '></label>' +
+    '<label class="payoutcell"><span>' + esc(TRACK_STAKE) +
+    '</span><input class="payoutinput" id="slipstake" type="text" ' +
+    'inputmode="decimal" autocomplete="off" aria-label="' + esc(TRACK_STAKE) +
+    '" value="' + esc(saved ? saved.stake : nav.track.stake) + '"' + (saved ? ' readonly' : '') + '></label></div>' +
+    stakeReminder() +
+    (saved ? '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
+      '</span><span class="verdictvalue">' + esc(pct(saved.p_all_hit)) + '</span></div>' +
+      '<div class="verdictrow"><span>' + esc(TRACK_BREAK_EVEN) +
+      '</span><span class="verdictvalue">' + esc(pct(saved.p_break_even)) + '</span></div>' +
+      (saved.independence_note ? '<p class="legend">' + esc(saved.independence_note) + '</p>' : '') +
+      (saved.p_reason ? '<p class="legend">' + esc(saved.p_reason) + '</p>' : '') +
+      '<p class="legend">' + esc(STORED_BY_SERVICE) + '</p>'
+      : '<p class="legend">Record these terms to see the service receipt.</p>' +
+      '<button class="primary" data-act="track-save"' +
+      (nav.track.legs.length && nav.picksBusy !== "slip" ? '' : ' disabled') + '>' +
+      esc(nav.picksBusy === "slip" ? '…' : TRACK_SAVE) + '</button>') +
+    (nav.picksOffline ? '<div class="legend">' + esc(SERVICE_OFFLINE) + '</div>' : '') + '</div>';
+}
+
 function trackVerdict() {
+  if (!DEMO) return realTrackTerms();
   const saved = nav.track.saved;
   const legs = nav.track.legs;
   const product = saved ? saved.p_all_hit : previewProduct(legs);
@@ -8437,6 +9773,7 @@ function trackVerdict() {
     'inputmode="decimal" autocomplete="off" aria-label="' +
     esc(TRACK_STAKE) + '" value="' + esc(nav.track.stake) +
     '"></label></div>' +
+    stakeReminder() +
     '<div class="verdictrow"><span>' + esc(TRACK_ALL_HIT) +
     '</span><span class="verdictvalue" id="vall">' + esc(pct(product)) +
     '</span></div>' +
@@ -8469,6 +9806,7 @@ function trackVerdict() {
  * own preview — both labelled underneath — and neither the legs nor
  * the fields around them are re-rendered, so the caret stays put. */
 function redrawVerdict() {
+  if (!DEMO) return;
   const all = el("vall");
   const even = el("veven");
   const say = el("vsay");
@@ -8493,7 +9831,7 @@ function redrawVerdict() {
 
 function renderTrack() {
   return '<div class="page">' + detailHead(TITLE_TRACK) +
-    trackInputs() + trackEntry() + trackLegs() + trackVerdict() +
+    trackInputs() + trackEntry() + trackLegs() + trackVerdict() + (edgeEnabled() && nav.track.edgeNote ? '<p role="alert">'+esc(nav.track.edgeNote)+'</p>' : "") + (edgeEnabled() && nav.track.edgeDecision ? edgeModule().prompt(nav.track.edgeDecision) : "") +
     '</div>';
 }
 
@@ -8671,12 +10009,66 @@ function renderReport() {
       STUB_REPORT) + '</div>';
 }
 
+
+function fantasyHubEnabled(){return !!(DEMO&&window.FantasyHub&&window.FantasyHubFixtures&&window.FantasyHubFixtures.demo);}
+function fantasyHubActive(){return fantasyHubEnabled()&&(['season','dfs','fantasybrowse','myteam'].includes(currentRoute())||currentRoute().indexOf('fh-')===0);}
+function hubRefresh(){nav.motion=null;render();}
+function hubOpen(page){const route='fh-'+page;if(ROUTES[route]){openDetail(route);const viewport=el('viewport');if(viewport)viewport.scrollTop=0;}}
+function fantasyHubModule(){const m=window.FantasyHub;if(!m)return null;m.configure({esc,statline,disclosure,render:hubRefresh,open:hubOpen,back:goBack,saveDfs:function(lineup){dfsScoreboardModule().save(lineup);},myteam:function(){openIn('home','myteam');},home:function(){selectTab('home');},legacyTeam:function(){hubOpen('legacy-team');}});return m;}
+function dfsScoreboardModule(){const m=window.DfsScoreboard;if(!m||!window.FantasyHubFixtures)return null;m.configure({fixture:window.FantasyHubFixtures.dfs,esc,statline,disclosure,back:goBack,open:function(){hubOpen('dfs-scoreboard');},build:function(){openIn('fantasy','fh-dfs-stories');}});if(window.FantasyHub)m.migrate(window.FantasyHub.state.saved);return m;}
+function fantasyDfsModule(){const m=window.FantasyDfs;if(!m)return null;m.configure({fixture:window.FantasyHubFixtures.dfs,esc,statline,disclosure,render:hubRefresh,open:function(page){if(page==='dfs')swapSub('fantasy','dfs');else hubOpen('dfs-'+page);},back:goBack,viewSaved:function(){hubOpen('dfs-scoreboard');},saveLineup:function(lineup){dfsScoreboardModule().save(lineup);},legacy:function(){const t=window.FantasyHubFixtures.dfs.tables;return t?(stackCards(t.stacks)+gapRows(t.gaps)+boomRows(t.boom)).replace(/correlation/gi,'rides together'):'';}});return m;}
+function hubToggle(){return '<div class="fh-subnav">'+['season','dfs'].map(p=>'<button data-act="sub" data-tab="fantasy" data-sub="'+p+'" aria-pressed="'+(nav.subs.fantasy===p)+'">'+(p==='season'?'Season long':'DFS')+'</button>').join('')+'</div>';}
+function renderHubRoot(page){const content=page==='dfs'?(fantasyDfsModule()?'<div class="page fh-page">'+fantasyDfsModule().render('dfs')+'</div>':''):fantasyHubModule().render('home');return '<header class="fh-root-head"><h1>Fantasy</h1></header>'+hubToggle()+content;}
+function renderHubRoute(){const route=currentRoute();if(route==='fh-legacy-team')return heldTeam('season_long')?renderLegacyFantasySeason(true):fantasyHubModule().render('matchup');return route.indexOf('fh-dfs-')===0?'<div class="page fh-page">'+fantasyDfsModule().render(route.slice(7))+'</div>':fantasyHubModule().render(route.slice(3));}
+
 const SCREENS = {
+  "your-record":function(){return scorecardModule().member();},
+  "our-record":function(){return scorecardModule().publicRecord();},
+  "fh-dfs-scoreboard": function(){return '<div class="page fh-page">'+dfsScoreboardModule().render()+'</div>';},
+  "fh-rankings": renderHubRoute,
+  "fh-league": renderHubRoute,
+  "fh-team-value": renderHubRoute,
+
+  "fh-gut": renderHubRoute,
+  "fh-read": renderHubRoute,
+  "fh-luck": renderHubRoute,
+  "fh-roles": renderHubRoute,
+  "fh-value": renderHubRoute,
+  "fh-player": renderHubRoute,
+  "fh-trade": renderHubRoute,
+  "fh-lineup": renderHubRoute,
+  "fh-lineup-confirm": renderHubRoute,
+  "fh-legacy-team": renderHubRoute,
+  "fh-dfs-stories": renderHubRoute,
+  "fh-dfs-story-read": renderHubRoute,
+  "fh-dfs-beliefs": renderHubRoute,
+  "fh-dfs-close-calls": renderHubRoute,
+  "fh-dfs-lineups": renderHubRoute,
+
+  discover: () => consumerModule().landing("discover"),
+  livehub: () => consumerModule().landing("live"),
+  you: () => consumerModule().landing("you"),
   home: renderHome,
+  matchups: renderMatchups,
+  mybets: renderMyBets,
+  edgebet: renderEdgeBet,
+  betbuilder: renderBetsDemoRoute,
+  betsparlay: renderBetsDemoRoute,
+  betsleg: renderBetsDemoRoute,
+  betssim: renderBetsDemoRoute,
+  betsrecommended: renderBetsDemoRoute,
+  betssingle: renderBetsDemoRoute,
+  betspick: renderBetsDemoRoute,
+  contextnews: renderContextNews,
+  myteam: renderPersonalTeam,
+  mypicks: renderPersonalPicks,
+  bethistory: renderBetHistory,
+  fantasybrowse: renderFantasyBrowse,
   season: renderFantasySeason,
   dfs: renderFantasyDfs,
   projections: renderProjections,
   projection: renderProjection,
+  projectionrow: renderProjectionComparisonRow,
   screen: renderBetsScreen,
   live: renderBetsLive,
   picks: renderBetsPicks,
@@ -8692,9 +10084,43 @@ const SCREENS = {
  * the chrome
  * ------------------------------------------------------------------ */
 
+function consumerEnabled(){return !!(HOME_TIMELINE && window.ConsumerExperience);}
+function consumerModule(){return window.ConsumerExperience.configure({demo:DEMO,landingProvider:function(route){return alphaCompact().render(route);},esc,icon,nav,currentRoute,rootOf,openIn,selectTab,openSheet,render,scorecard:scorecardModule,events:timelineEvents,player:playerOf,tracked:function(){const rows=[];if(edgeEnabled())edgeModule().state.decisions.forEach(d=>rows.push({id:d.id,kind:'bet',title:d.legs.map(l=>l.player).join(' + '),value:d.legs.length===1?d.legs[0].side+' '+d.legs[0].line+' '+d.legs[0].market:d.legs.length+' legs',note:'Recorded · placement unconfirmed · live score not connected'}));const dfs=dfsScoreboardModule();if(dfs)dfs.state.saved.forEach((l,i)=>{const r=dfs.receipt(l);rows.push({id:l.id,kind:'dfs',title:'DFS lineup '+(i+1),value:r?r.actual_points+' points':'Score unavailable',note:r?'Sample '+r.status+' · '+(r.rank==null?'Not ranked':'#'+r.rank+' of '+r.field_size):'Sample score receipt unavailable'});});return rows;},snapshot:function(event){const d=HOME_PLAYER_MOCKS[event.player];const bet=event.tags.includes('bets');return{headline:bet?(nav.timeline.added?'5':'4')+' catches':d.actual+' points',outlook:bet?(nav.timeline.added?'Line crossed · Not settled':'Needs 1 more · Over 4.5 catches'):'Projected final '+d.ours[3]+' points',status:'HOU 17 · IND 14 · Q3 '+(nav.timeline.added?'6:20':'6:42')};},go:function(route){const owner=ROUTES[route].tab;if(ROUTES[route].root){nav.tab=owner;if(TAB_SUBS[owner])nav.subs[owner]=route;nav.stacks[owner]=[route];navigate(route,"tab");}else openIn(owner,route);},selectEvent:function(id){nav.homeContext.point=3;nav.homeContext.event=id;const event=timelineEvents().find(e=>e.id===id);nav.homeContext.view=id.indexOf("week-")===0?"comparison":"live";nav.homeContext.mode=event&&event.tags.includes("bets")?"betting":"fantasy";nav.homeSheet.expanded=false;nav.homeSheet.initial=false;selectTab("home");}});}
+
+function alphaCompact() {
+  if (!window.AlphaCompact) return null;
+  return window.AlphaCompact.configure({
+    isDemo:function(){return DEMO;},nav:nav,service:function(){return alphaService;},
+    esc:esc,props:allProps,render:function(){nav.motion=null;render();},route:currentRoute,
+    head:detailHead,readToken:readToken,
+    identityReady:function(){const token=readToken();return !!(token&&nav.meToken===token&&nav.me&&nav.me.user_id);},
+    loadMe:loadMe,loadPicks:loadPicks,snapshot:memberSnapshot,current:memberCurrent,note:serviceNote,
+    request:picksAsk,week:slateWeekNumbers,labelTitle:labelTitle,loadLive:loadLive,
+    liveChart:liveChart,liveSwings:liveSwings,liveState:stateWord,statline:statline,
+    yourNumber:yourNumber,plainNote:plainNote,dfsBucket:bucketWords,
+    loadRecord:loadRecord,loadTeams:loadTeams,
+    currentProjections:renderProjections,currentProjection:renderProjection,
+    teamConfirmation:renderTeam,
+    go:function(route){consumerModule().action("go",route);},
+    connect:function(){openIn("bets","account");},openRead:readOpen,formatChance:pct
+  });
+}
+
+function realCompactScreen(route) {
+  if (DEMO || !alphaCompact()) return null;
+  const page = alphaCompact().render(route);
+  if (page !== null) return page;
+  if (route === "track") return renderTrack() + alphaCompact().render("legacy-save-status");
+  if (route === "livehub") return renderBetsLive();
+  if (route === "myteam" || route === "fantasybrowse") return renderFantasySeason();
+  if (route === "edgebet") return alphaCompact().render("mybets");
+  return null;
+}
+
 function renderTabBar() {
   const bar = el("tabbar");
   if (!bar) return;
+  if(consumerEnabled()){bar.innerHTML=consumerModule().navigation();return;}
   bar.innerHTML = TAB_SLOTS.map(function (slot) {
     if (!slot.tab) {
       return '<div class="tabadd"><button class="addbtn" ' +
@@ -8809,62 +10235,44 @@ function readYourNumber() {
   const rows = Array.isArray(saved.scenarios) ? saved.scenarios : [];
   if (rows.length) {
     return rows.map(function (row) {
-      return yourNumber(row);
+      return yourNumber(row) + (row.generation_id ? '<p class="legend">Published version: ' + esc(row.generation_id) + '</p>' : "");
     }).join("");
   }
   return scenarioReasonNote(saved.scenario_reason);
 }
 
-/* STEP 2 — the chips, and they are HIS OWN WORDS (brief Addendum 2 as
- * sec 1 reconciles it). No node path, no category name, no
- * confidence: the service sends none of those and this step draws
- * what the service sent. */
+/* Review displays the exact outgoing words. Returned spans are read-only:
+ * another POST would create another banked read, not edit this one. */
 function readConfirmStep() {
-  const chips = (nav.read.spans || []).map(function (span, index) {
-    const gone = !!nav.read.dropped[index];
-    return '<span class="readchip' + (gone ? " dropped" : "") + '">' +
-      '<span class="readspan">' + esc(span) + '</span>' +
-      (gone ? '<span class="readgone">' + esc(READ_DROPPED) +
-        '</span>' : "") +
-      '<button class="readchipbtn" data-act="' +
-      (gone ? "read-add" : "read-drop") + '" data-span="' + index +
-      '" aria-label="' + esc((gone ? READ_ADD : READ_DROP) + " " +
-        span) + '">' + esc(gone ? READ_ADD : READ_DROP) +
-      '</button></span>';
-  }).join("");
-  const changed = readHasDrops();
-  return '<div class="cardhead">' + esc(READ_UNDERSTOOD) + '</div>' +
-    (chips
-      ? '<div class="cardbody">' + esc(READ_CHIPS_NOTE) + '</div>' +
-        '<div class="readchips">' + chips + '</div>'
-      : "") + readNote() + readYourNumber() +
-    /* NOTHING IS SENT UNSEEN. Taking a fragment out of the middle of
-     * a sentence leaves a seam — a stray "and", a comma — and this
-     * page does not tidy it, because tidying it would mean rewriting
-     * words he wrote. So it SHOWS him the read that would go, and
-     * Edit is right there beside it. */
-    (changed
-      ? '<div class="readwould"><span class="overline">' +
-        esc(READ_WOULD_READ) + '</span><span class="readwouldtext">' +
-        esc(readTextWithoutDrops()) + '</span></div>'
-      : "") +
-    '<div class="readactions">' +
-    '<button class="ghost" data-act="read-edit">' + esc(READ_EDIT) +
-    '</button>' +
-    (changed
-      ? '<button class="primary" data-act="read-go"' +
-        (nav.read.busy ? " disabled" : "") + '>' +
-        esc(nav.read.busy ? READ_BUSY : READ_AGAIN) + '</button>'
-      : '<button class="primary" data-act="read-confirm">' +
-        esc(READ_LOOKS_RIGHT) + '</button>') +
-    '</div>' +
-    (changed
-      ? '<div class="legend">' + esc(READ_CHANGED_NOTE) + ' ' +
-        esc(READ_BANKED_NOTE) + '</div>'
-      : "");
+  if (nav.read.saved) {
+    return '<div class="cardhead">Saved read</div><p>' + esc(nav.read.text) + '</p>' +
+      '<div class="cardhead">' + esc(READ_UNDERSTOOD) + '</div>' +
+      '<div class="readchips">' + (nav.read.spans || []).map(function (span) {
+        return '<span class="readchip">' + esc(span) + '</span>';
+      }).join("") + '</div>' + readNote() + readYourNumber() +
+      '<button class="primary" data-act="read-confirm">Done</button>';
+  }
+  return '<div class="cardhead">Review your angle</div><p>' +
+    esc(nav.read.pending ? nav.read.pending.text : nav.read.text) + '</p>' +
+    '<p>' + esc((nav.read.side === "less" ? "Under " : "Over ") + nav.read.line + " " +
+      (window.AlphaCompact ? alphaCompact().marketWord(nav.read.market) : nav.read.market)) + '</p>' +
+    '<p>Confirming saves this read and asks the service for its effect.</p>' + readNote() +
+    (nav.read.submitted ? (nav.read.busy ? '<p>' + esc(READ_BUSY) + '</p>' : '') :
+      '<div class="readactions"><button class="ghost" data-act="read-edit">' + esc(READ_EDIT) +
+      '</button><button class="primary" data-act="read-confirm">' + esc(READ_LOOKS_RIGHT) + '</button></div>');
 }
 
 function addSheet() {
+  if (!DEMO && consumerEnabled()) return '<div class="sheet create-sheet" role="dialog" aria-modal="true" aria-label="Create"><div class="handle"></div><div class="sheettitle">Create</div><button class="action" data-act="ac-create" data-value="screen">Single bet</button><button class="action" data-act="sheet-track">Record a slip</button><button class="action" data-act="ac-create" data-value="team">Season-long lineup</button><button class="action" data-act="ac-create" data-value="dfs">DFS tournament tables</button><button class="action" data-act="sheet-read">Add an angle</button></div>';
+  if (fantasyHubEnabled() && !browseCreatePreview()) return '<div class="sheet create-sheet" role="dialog" aria-modal="true" aria-label="Create"><div class="sheettitle">Create</div><button class="action" data-act="fh-create" data-value="lineup">Season-long lineup</button><button class="action" data-act="fh-create" data-value="stories">DFS lineup</button><button class="action" data-act="sheet-track">Track a bet</button></div>';
+  if (browseCreatePreview()) {
+    const bets = [{title:"Single bet",mode:"single"},{title:"Parlay",mode:"parlay"}];
+    const fantasy = [{title:"Season-long lineup",hub:"lineup"},{title:"DFS lineup",hub:"stories"}];
+    const choices = nav.tab === "fantasy" ? fantasy.concat(bets) : bets.concat(fantasy);
+    return '<div class="sheet create-sheet" role="dialog" aria-modal="true" aria-label="Create"><div class="handle"></div><div class="sheettitle">Create</div>' + choices.map(function(choice){
+      return '<button class="action" ' + (choice.mode ? 'data-act="create-choice" data-mode="'+choice.mode+'"' : fantasyHubEnabled() ? 'data-act="fh-create" data-value="'+choice.hub+'"' : 'disabled') + '><span class="actioncol"><span class="actiontitle">'+choice.title+'</span><span class="actionsub">'+(choice.mode ? 'Build a sample bet' : fantasyHubEnabled() ? 'Create a sample lineup' : 'Next to build')+'</span></span>'+icon("next",18)+'</button>';
+    }).join('') + '</div>';
+  }
   const actions = [
     { title: ADD_READ, sub: ADD_READ_SUB, colour: "var(--read)",
       act: "sheet-read" },
@@ -8887,7 +10295,10 @@ function addSheet() {
 
 function renderAlpha() {
   const node = el("alpha");
-  if (node) node.textContent = ALPHA_NOTE;
+  if (node) {
+    node.textContent = ALPHA_NOTE;
+    node.hidden = DEMO || scorecardActive() || fantasyHubActive() || (edgeEnabled() && ["mybets","edgebet"].indexOf(currentRoute()) >= 0) || (browseCreatePreview() && ["fantasybrowse","projections","projection"].indexOf(currentRoute()) >= 0) || (HOME_TIMELINE && currentRoute() === "home") || (betsDemoEnabled() && betsDemoRoute(currentRoute()));
+  }
 }
 
 const MOTION_CLASS = {
@@ -8903,12 +10314,40 @@ function growClass() {
   return nav.booted ? " grow" : "";
 }
 
+function applyPreviewTheme() {
+  const app = el("app");
+  if (!app) return;
+  if (comparisonEnabled() && ["projections","projectionrow"].includes(currentRoute())) app.classList.add("pc-wide");
+  else app.classList.remove("pc-wide");
+  if (HOME_TIMELINE || fantasyHubActive() || scorecardActive()) app.classList.add("preview-gold");
+  else app.classList.remove("preview-gold");
+  if(consumerEnabled())app.classList.add("consumer-app");
+  else app.classList.remove("consumer-app");
+}
+
 function render() {
+  if (edgeEnabled()) edgeModule().cleanup();
+  if (betsDemoEnabled()) window.BetsBuilder.captureLadderScroll();
+  applyPreviewTheme();
   const route = currentRoute();
   const screen = el("screen");
   if (!screen) return;
+  cleanupHomeSheet();
   screen.className = "screen";
-  screen.innerHTML = SCREENS[route]();
+  const homeStage = HOME_TIMELINE && route === "home";
+  if (homeStage) screen.classList.add("home-screen");
+  const viewport = el("viewport");
+  if (viewport) {
+    if (homeStage) viewport.classList.add("home-viewport");
+    else viewport.classList.remove("home-viewport");
+  }
+  const compactPage = realCompactScreen(route);
+  screen.innerHTML = (consumerEnabled()?consumerModule().sectionHeader(route):"") + researchReferenceBanner(route) + (compactPage === null ? SCREENS[route]() : compactPage);
+  if(consumerEnabled())consumerModule().sync(route);
+  if (!DEMO && alphaCompact()) alphaCompact().sync(route);
+  betsDemoScrollTransition(route, viewport);
+  bindHomeSheet();
+  if (window.BetsBuilder) { const module=betsDemoModule(); if (module) module.sync(route); else window.BetsBuilder.cancel(); }
   /* THE BOOT GUARD IS `booted`, NOT the motion value. A deep link —
    * an address that names a route the shell is not already standing
    * on — reconciles the stack BEFORE the first render and sets a
@@ -8920,6 +10359,10 @@ function render() {
   if (motion) restart(screen, motion);
   renderTabBar();
   renderAlpha();
+  if (edgeEnabled()) edgeModule().sync(currentRoute());
+  if (comparisonEnabled()) comparisonModule().sync(currentRoute());
+  if(fantasyHubEnabled() && window.DfsScoreboard) window.DfsScoreboard.sync(currentRoute());
+  if(scorecardEnabled())scorecardModule().sync(currentRoute());
   renderToast();
   renderSheet();
   renderSearch();
@@ -9034,8 +10477,35 @@ function onClick(event) {
   const target = event.target.closest ? event.target.closest("[data-act]") : null;
   if (!target) return;
   const act = target.getAttribute("data-act");
+  if (!DEMO && act && act.indexOf("ac-") === 0 && alphaCompact()) {
+    if (act === "ac-create") {closeSheet();consumerModule().action("go",target.getAttribute("data-value"));}
+    else alphaCompact().action(act.slice(3),target.getAttribute("data-value"));
+    return;
+  }
+  if(consumerEnabled() && act && act.indexOf("cx-")===0){consumerModule().action(act.slice(3),target.getAttribute("data-value"));return;}
+  if(scorecardEnabled()&&act&&act.indexOf("sc-")===0){scorecardModule().action(act.slice(3),target.getAttribute("data-value"));return;}
+  if (fantasyHubEnabled() && act === "fh-create") {closeSheet();openIn("fantasy",target.getAttribute("data-value")==="stories"?"fh-dfs-stories":"fh-lineup");return;}
+  if (fantasyHubEnabled() && act && act.indexOf("fh-")===0) {fantasyHubModule().action(act.slice(3),target.getAttribute("data-value"));return;}
+  if (fantasyHubEnabled() && act && act.indexOf("fdss-")===0) {dfsScoreboardModule().action(act,target.getAttribute("data-value"));return;}
+  if (fantasyHubEnabled() && act && act.indexOf("fdfs-")===0) {fantasyDfsModule().action(act,target.getAttribute("data-value"));return;}
+  if (act && act.indexOf("pc-")===0 && comparisonEnabled()) {comparisonModule().action(act.slice(3),target.getAttribute("data-value"));return;}
+  if (act && act.indexOf("ef-")===0 && edgeEnabled()) {edgeModule().action(act.slice(3),target.getAttribute("data-value"),target.getAttribute("data-delta"));return;}
 
-  if (act === "tab") {
+  if (act.indexOf("bb-") === 0 && betsDemoEnabled() && (betsDemoRoute(currentRoute()) || (edgeEnabled() && currentRoute()==="edgebet"))) {
+    betsDemoModule().action(act.slice(3),target.getAttribute("data-value"));
+  } else if (act.indexOf("canvas-") === 0) {
+    homeContextAction(act, target);
+  } else if (act === "home-search-clear") {
+    clearHomeSearch();
+  } else if (act === "home-search-result") {
+    openHomeSearchResult(target.getAttribute("data-key"));
+  } else if (act === "home-sheet-toggle") {
+    toggleHomeSheet(event);
+  } else if (act.indexOf("history-") === 0) {
+    personalHistoryAction(act, target);
+  } else if (act.indexOf("timeline-") === 0) {
+    timelineAction(act, target);
+  } else if (act === "tab") {
     selectTab(target.getAttribute("data-tab"));
   } else if (act === "open") {
     openDetail(target.getAttribute("data-route"));
@@ -9064,6 +10534,12 @@ function onClick(event) {
     pickGame(Number(target.getAttribute("data-game")) || 0);
   } else if (act === "note") {
     showToast(target.getAttribute("data-note"));
+  } else if (act === "create-choice" && browseCreatePreview()) {
+    createBet(target.getAttribute("data-mode"));
+  } else if (act === "browse-players" && browseCreatePreview()) {
+    browsePlayers();
+  } else if (act === "browse-team" && browseCreatePreview()) {
+    openDetail("myteam");
   } else if (act === "sheet-open") {
     openSheet();
   } else if (act === "sheet-close") {
@@ -9086,19 +10562,10 @@ function onClick(event) {
       target.getAttribute("data-market"));
   } else if (act === "read-go") {
     postRead();
-  } else if (act === "read-drop") {
-    nav.read.dropped[Number(target.getAttribute("data-span"))] = true;
-    renderSheet();
-  } else if (act === "read-add") {
-    delete nav.read.dropped[Number(target.getAttribute("data-span"))];
-    renderSheet();
   } else if (act === "read-edit") {
-    /* Back to his own words, with whatever he dropped already taken
-     * out of them, so Edit and Drop are the same correction from two
-     * directions rather than two rules. */
-    nav.read.text = readTextWithoutDrops();
+    if (nav.read.submitted || nav.read.saved || nav.read.busy) return;
     nav.read.step = 1;
-    nav.read.dropped = {};
+    nav.read.pending = null;
     nav.read.note = "";
     renderSheet();
   } else if (act === "read-confirm") {
@@ -9218,6 +10685,14 @@ function onClick(event) {
     accountState().door = "code";
     accountState().note = "";
     openDetail("account");
+  } else if (act === "account-key" || act === "account-entry") {
+    accountState().door = act === "account-key" ? "key" : "";
+    accountState().note = "";
+    render();
+    const input = el("accountkey");
+    if (input) input.focus();
+  } else if (act === "account-connect") {
+    connectAccountKey();
   } else if (act === "account-open") {
     openDetail("account");
   } else if (act === "account-retry") {
@@ -9327,6 +10802,7 @@ function openProjection(playerId) {
       nav.proj.query = "";
     }
   }
+  if (browseCreatePreview()) { openDetail("projection"); return; }
   openIn("projections", "projection");
 }
 
@@ -9387,7 +10863,23 @@ function addManualLeg(text) {
  * take the caret with it, so only the RESULTS are redrawn. */
 function onInput(event) {
   const target = event.target;
+  if (!DEMO && target && target.getAttribute && target.getAttribute("data-ac-field") && alphaCompact()) {
+    alphaCompact().input(target.getAttribute("data-ac-field"),target.value);return;
+  }
+  if(scorecardEnabled()&&target&&target.getAttribute&&target.getAttribute("data-sc-field")){scorecardModule().input(target.getAttribute("data-sc-field"),target.value);return;}
+  if (fantasyHubEnabled() && target && target.getAttribute && target.getAttribute("data-fh-field")) {fantasyHubModule().input(target.getAttribute("data-fh-field"),target.value,target.id);return;}
+  if (fantasyHubEnabled() && target && target.getAttribute && target.getAttribute("data-fdfs-field")) {fantasyDfsModule().input(target.getAttribute("data-fdfs-field"),target.value,target.getAttribute("data-fdfs-id")||target.id);return;}
+  if (target && target.getAttribute && target.getAttribute("data-pc-field") && comparisonEnabled()) {comparisonModule().input(target.getAttribute("data-pc-field"),target.value,target.id);return;}
+  if (target && target.getAttribute && target.getAttribute("data-ef-field") && edgeEnabled()) {edgeModule().input(target.getAttribute("data-ef-field"),target.type==="checkbox"?target.checked:target.value,target.getAttribute("data-id"));return;}
   if (!target) return;
+  if (target.getAttribute && target.getAttribute("data-bb-field") && betsDemoEnabled() && betsDemoRoute(currentRoute())) {
+    betsDemoModule().input(target.getAttribute("data-bb-field"),target.value,target.id);
+    return;
+  }
+  if (target.id === "home-search") {
+    updateHomeSearch(target.value);
+    return;
+  }
   /* U3's four fields keep their own text in the shell's state and are
    * NOT re-rendered on each keystroke: only the verdict numbers
    * change as a payout is typed, and re-drawing the field under the
@@ -9469,6 +10961,9 @@ function onInput(event) {
  * inline handler per control. */
 function onChange(event) {
   const target = event.target;
+  if (target && target.getAttribute && target.getAttribute("data-ac-field") && !DEMO && alphaCompact()) {
+    alphaCompact().input(target.getAttribute("data-ac-field"),target.value);return;
+  }
   if (!target || !target.files) return;
   if (target.id === "slipshot") {
     chooseShot("slip", target.files[0]);
@@ -9478,7 +10973,27 @@ function onChange(event) {
 }
 
 function onKeyDown(event) {
+  if (event.key === "Enter" && event.target && event.target.id === "accountkey") {
+    event.preventDefault(); connectAccountKey(); return;
+  }
+  if (fantasyHubEnabled() && window.DfsScoreboard && window.DfsScoreboard.key(event)) return;
+  if (edgeEnabled() && edgeModule().sheetKey(event)) return;
+  if ((consumerEnabled() || browseCreatePreview() || fantasyHubEnabled()) && nav.sheet === "add" && event.key === "Tab") {
+    const overlay = el("overlay");
+    const controls = overlay && Array.from(overlay.querySelectorAll('button:not(:disabled)'));
+    if (controls && controls.length) {
+      const first=controls[0],last=controls[controls.length-1];
+      if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();}
+      else if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();}
+    }
+    return;
+  }
   if (event.key !== "Escape") return;
+  if (HOME_TIMELINE && currentRoute() === "home" && homeSearchActive() && !nav.search && !nav.sheet) {
+    event.preventDefault();
+    clearHomeSearch();
+    return;
+  }
   if (nav.search) {
     closeSearch();
     return;
@@ -9490,6 +11005,20 @@ function onHashChange() {
   applyHash();
   render();
   normalizeHash();
+  const screen = el("screen");
+  if (screen && screen.focus) screen.focus({preventScroll:true});
+}
+
+function onTokenStorageChange(event) {
+  if (event.key !== PICKS_TOKEN_KEY && event.key !== null) return;
+  /* A tab holding a visit-only token must still yield to a credential
+   * this browser reports was changed elsewhere. */
+  tokenMemoryOnly = false;
+  const before = memberEpoch;
+  const token = readToken();
+  if (memberEpoch === before) return;
+  nav.hasToken = !!token;
+  render();
 }
 
 /* ------------------------------------------------------------------
@@ -9501,6 +11030,7 @@ document.addEventListener("input", onInput);
 document.addEventListener("change", onChange);
 document.addEventListener("keydown", onKeyDown);
 window.addEventListener("hashchange", onHashChange);
+window.addEventListener("storage", onTokenStorageChange);
 
 /* U4's own listener, and the whole of the "pause when hidden" rule: a
  * backgrounded tab asks a service nothing, and a tab brought back
@@ -9537,6 +11067,7 @@ nav.booted = true;
  * app rather than a blank page, and a network that never answers shows
  * the honest arm rather than a spinner that means nothing. */
 loadSlate();
+if (alphaCompact()) alphaCompact().loadCapabilities();
 
 /* ...and the model's public record, which needs no token and is
  * therefore reconciled on EVERY boot, signed in or not. It is the one

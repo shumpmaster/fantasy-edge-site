@@ -1,0 +1,72 @@
+/* Analytical workspaces: results lead, evidence opens on request. */
+.ae-workspace-intro {margin:14px 0 24px;}
+.ae-workspace-intro>span,.ae-module-label {font-size:11px;letter-spacing:.09em;font-weight:650;text-transform:uppercase;color:#626c66;}
+.ae-workspace-intro h2 {font-size:27px;line-height:1.12;letter-spacing:-.7px;margin:8px 0;}
+.ae-workspace-intro p {color:#626c66;font-size:14px;line-height:1.5;margin:0;}
+.fh-module-grid.ae-module-grid {display:grid;grid-template-columns:1fr;gap:0;}
+.ae-module-grid .fh-module-tile {background:transparent;border:0;border-bottom:1px solid #23292320;border-radius:0;padding:20px 0;text-align:left;display:flex;flex-direction:column;align-items:stretch;gap:10px;min-width:0;}
+.ae-module-grid .fh-module-tile>strong {font-size:20px;line-height:1.2;letter-spacing:-.3px;}
+.ae-module-grid .fh-module-tile>small {font-size:12px;color:#626c66;line-height:1.5;}
+.ae-module-label {display:flex;justify-content:space-between;gap:12px;}
+.ae-ranking-preview {display:grid;gap:10px;}
+.ae-ranking-preview>span {display:grid;grid-template-columns:24px 1fr 38px 28px;align-items:center;gap:7px;font-size:14px;}
+.ae-ranking-preview b {font-size:19px;text-align:right;font-variant-numeric:tabular-nums;}
+.ae-ranking-preview small {color:#626c66;font-size:11px;}
+.ae-pair-preview {display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.ae-pair-preview>span {font-size:13px;display:grid;gap:4px;}
+.ae-pair-preview b,.ae-preview-stat {font-size:28px;font-weight:650;letter-spacing:-.7px;font-variant-numeric:tabular-nums;}
+.ae-pair-preview b small,.ae-preview-stat small {font-size:12px;font-weight:400;letter-spacing:0;color:#626c66;}
+.fh-league-entry.ae-league-preview {margin-top:24px;background:#779a8718;border:1px solid #779a8730;padding:20px;border-radius:18px;}
+.ae-league-preview h2 {font-size:23px;line-height:1.2;margin:12px 0;}
+.ae-league-preview p {font-size:14px;line-height:1.5;}
+.pc-page article.pc-reference-row {cursor:default;background:#f7f5ef;margin:0;padding:12px 0;border:0;border-bottom:1px solid #23292320;border-radius:0;}
+.pc-page .ae-stat-detail {display:flex;align-items:center;justify-content:space-between;min-height:44px;width:100%;background:transparent;border:0;padding:0;text-align:left;color:#232923;}
+.pc-page .ae-stat-detail strong {font-size:14px;}
+.ae-comparison {display:grid;grid-template-columns:1fr 1fr 1.25fr;column-gap:12px;align-items:start;}
+.pc-page .ae-comparison .pc-hero-pair {display:contents;}
+.pc-page .ae-comparison .pc-hero-number>strong {font-size:29px;font-variant-numeric:tabular-nums;line-height:1.1;letter-spacing:-1px;}
+.pc-page .ae-comparison .pc-hero-number>span {font-size:11px;color:#626c66;}
+.pc-page .ae-comparison .pc-hero-result {display:flex;flex-direction:column;gap:5px;margin:0;border:0;padding:0;}
+.pc-page .ae-comparison .pc-error-answer {font-size:15px;line-height:1.3;color:#232923;}
+.pc-page .ae-comparison .pc-error-answer small {display:block;font-size:11px;font-weight:400;color:#626c66;margin-bottom:5px;}
+.pc-page .ae-comparison .pc-closing-answer {font-size:10px;line-height:1.4;}
+.ae-market-references {grid-column:1/-1;border-top:1px solid #23292312;margin-top:8px;font-size:12px;}
+.ae-market-references summary {min-height:44px;display:flex;align-items:center;gap:8px;color:#626c66;cursor:pointer;}
+.ae-market-references summary::before {content:'+';font-size:17px;}
+.ae-market-references[open] summary::before {content:'−';}
+.ae-market-references p {font-size:11px;color:#626c66;line-height:1.4;}
+.ae-adjustment-answer {display:grid;gap:5px;font-size:13px;line-height:1.3;}
+.ae-adjustment-answer small {font-size:11px;color:#626c66;}
+.ae-adjustment-answer strong {font-weight:650;}
+.ae-distribution-note {font-size:12px;line-height:1.5;color:#626c66;margin:8px 0 16px;}
+.ae-bias-title {font-size:16px;margin-bottom:6px;}
+.ae-lineup-impact {display:grid;gap:6px;font-size:12px;line-height:1.4;padding:12px 0;color:#626c66;border-top:1px solid #23292315;}
+.ae-lineup-impact b {color:#232923;font-size:15px;font-variant-numeric:tabular-nums;}
+.ae-lock-impact {font-size:12px;color:#626c66;border-top:1px solid #23292312;padding-top:10px;margin:10px 0 0;}
+.ae-lock-impact strong {color:#232923;}
+.ae-dfs-candidates {min-width:0;}
+@media(min-width:1000px){
+ .fh-module-grid.ae-module-grid {grid-template-columns:1fr 1fr;gap:0 32px;}
+ .ae-module-grid .fh-module-tile {padding:24px 0;}
+ .ae-dfs-workspace {display:grid;grid-template-columns:minmax(240px,.8fr) minmax(300px,1.2fr);gap:24px;align-items:start;}
+ .ae-dfs-workspace>.ft-budget {position:static;align-self:start;min-width:0;}
+}
+@media(max-width:350px){.pc-page .ae-comparison .pc-hero-number>strong{font-size:25px}.ae-comparison{column-gap:8px}.pc-page .ae-comparison .pc-error-answer{font-size:13px}}
+.ae-distance-bars {display:grid;gap:12px;margin:12px 0 24px;}
+.ae-distance-bars>div {display:grid;grid-template-columns:40px minmax(0,1fr) 72px;gap:10px;align-items:center;font-size:12px;}
+.ae-distance-bars b {font-size:12px;text-align:right;font-variant-numeric:tabular-nums;}
+.ae-distance-track {height:8px;background:#2329230b;border-radius:4px;overflow:hidden;}
+.ae-distance-track i {display:block;height:100%;background:#779a87;border-radius:4px;}
+.fdss-entry {background:#f7f5ef;border:1px solid #23292318;box-shadow:0 5px 18px #23292306;}
+.fdss-entry .fdss-entry-head strong {font-size:18px;}
+.fdss-score strong {letter-spacing:-1.5px;}
+.fdss-movement[data-direction="up"] {color:#37664f;}
+.fdss-movement[data-direction="down"] {color:#a44943;}
+.ae-league-status {display:flex;flex-wrap:wrap;gap:8px 16px;padding:8px 0 12px;font-size:12px;color:#626c66;}
+.ae-league-status b {color:#232923;}
+.ae-league-review {display:grid;gap:12px;width:100%;padding:14px 0;margin-bottom:12px;text-align:left;background:transparent;border:0;border-top:1px solid #23292318;border-bottom:1px solid #23292318;border-radius:0;}
+.ae-league-review>small {font-size:12px;color:#626c66;}
+.ae-league-comparison {display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ae-league-comparison>span {display:grid;gap:4px;font-size:12px;}
+.ae-league-comparison b {font-size:21px;}
+.ae-league-comparison small {font-size:10px;font-weight:400;}
