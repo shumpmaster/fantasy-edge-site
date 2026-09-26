@@ -124,7 +124,7 @@ const NOT_PICKS =
 /* Kept as ONE contiguous string: it is the sentinel the site test
  * looks for, and a concatenation would let it drift silently. */
 const THIRDPARTY_BANNER =
-  "Week {week} — ESPN's projections (third-party), not the fantasy-edge engine.";
+  "Week {week} — ESPN's projections (third-party), not the Angles engine.";
 
 const EARLY_BLURB =
   "EARLY — fitted on fewer than three completed weeks of this " +

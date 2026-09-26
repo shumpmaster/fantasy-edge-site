@@ -2,8 +2,8 @@
  * fixture bank; client arithmetic is limited to payout and display geometry. */
 (function () {
   'use strict';
-  const F=window.BetsBuilderFixtures;
-  let host=null,timer=null,media=null;
+  function createInstance(F=window.BetsBuilderFixtures,edge) {
+  let host=null,timer=null,media=null,mediaListener=null;
   const state={legDraft:null,legIndex:null,pricingMode:'standard',mode:'parlay',player:0,side:'Over',line:F.catalog[0].book_line,odds:String(F.catalog[0].book_odds),stake:String(F.config.stake),legs:[],message:'',sort:'edge',record:null,frame:0,scenario:'live',expanded:null,explanations:{},ladders:{},ladderScroll:{},picks:[],single:null,pick:0,externalSingles:{},activeDecision:null,recExpanded:null,recDecisions:{}};
   const copy=x=>JSON.parse(JSON.stringify(x));
   const esc=x=>host.esc(x==null?'':x);
@@ -17,7 +17,8 @@
   function editorLeg(){const leg=legAt();if(!leg||!validOdds(state.odds))return null;leg.odds=number(state.odds);leg.forecast_source={kind:"catalog"};return leg;}
   function sourceRung(leg){
     if(leg.forecast_source&&leg.forecast_source.kind==='edge'){
-      const card=(window.EdgeFinderFixtures.cards||[]).find(c=>c.id===leg.forecast_source.card_id&&c.player_id===leg.player_id&&c.market===leg.market);
+      const cards=edge?.visible?.()||window.EdgeFinderFixtures?.cards||[];
+      const card=cards.find(c=>c.id===leg.forecast_source.card_id&&c.player_id===leg.player_id&&c.market===leg.market);
       return card&&card.ladder.find(r=>r.side===leg.side&&r.line===leg.line&&r.valid_side&&Number.isFinite(r.p_at_line))||null;
     }
     const pair=F.rungs[leg.player]&&F.rungs[leg.player][Number(leg.line).toFixed(1)],r=pair&&pair[leg.side];
@@ -40,7 +41,8 @@
     const probabilities=state.legs.map(l=>l.p_at_line).sort((a,b)=>a-b);
     const standard=probabilities.every(p=>[.2,.3,.4,.5,.6,.7,.8].includes(p));
     const key=standard?probabilities.map(p=>p*10).join(','):null;
-    const stored=standard&&state.pricingMode!=='exact'?F.bank[key]:(window.EdgeFinder&&window.EdgeFinder.exactPrice(state.legs));if(!stored)return null;
+    const engine=edge||window.EdgeFinder;
+    const stored=standard&&state.pricingMode!=='exact'?F.bank[key]:(engine&&engine.exactPrice(state.legs));if(!stored)return null;
     return Object.assign(copy(stored),{legs:state.legs.map(l=>Object.assign({},l,{odds:number(l.odds)})),break_even:totals.break_even,totals:copy(totals)});
   }
   function cancel(){if(timer!==null){clearTimeout(timer);timer=null;}}
@@ -62,7 +64,8 @@
     if(timer!==null||state.frame>=state.record.trace.length-1)return;
     timer=setTimeout(function(){timer=null;if(host.route()!=='betssim')return;state.frame++;refresh();sync(host.route());},F.config.tick_ms);
   }
-  function configure(api){host=api;if(!media&&window.matchMedia){media=window.matchMedia('(prefers-reduced-motion: reduce)');const changed=()=>{if(media.matches&&host.route()==='betssim'){finish();refresh();}};if(media.addEventListener)media.addEventListener('change',changed);}}
+  function configure(api){host=api;if(!media&&window.matchMedia){media=window.matchMedia('(prefers-reduced-motion: reduce)');mediaListener=()=>{if(media.matches&&host?.route()==='betssim'){finish();refresh();}};if(media.addEventListener)media.addEventListener('change',mediaListener);}}
+  function dispose(){cancel();if(media?.removeEventListener&&mediaListener)media.removeEventListener('change',mediaListener);media=null;mediaListener=null;host=null;}
   function refresh(focusId,control){
     captureLadderScroll();
     const active=document.activeElement;
@@ -273,5 +276,8 @@
   }
   function picks(){return header('My sample picks',false)+navigation('picks')+'<p class="bb-meta">This visit only · not saved after reload.</p>'+(state.picks.length?state.picks.map((p,i)=>'<article class="bb-leg"><h2>'+legName(p.leg)+'</h2><p>'+money(p.totals.stake)+' stake · '+esc(p.leg.odds)+' odds</p>'+stakeReminder()+button('pick','View sample detail',String(i))+'</article>').join(''):'<p class="bb-empty">Preview a single bet and add it here.</p>')+button('root','View separate tracked parlay example','live',false,' class="bb-link"');}
   function render(route){const body=route==='betsparlay'?parlaySummary():route==='betsleg'?legEditor():route==='screen'?browse():route==='betssim'?simulation():route==='betsrecommended'?recommended():route==='live'?tracking():route==='picks'?picks():route==='betssingle'?header('Sample bet preview',true)+singleSummary(state.single,true):route==='betspick'?header('Sample pick detail',true)+singleSummary(state.picks[state.pick],false):builder();return '<div class="page bb-page">'+body+'<p class="bb-status" role="status">'+esc(state.message)+'</p></div>';}
-  window.BetsBuilder={prefill:function(legs){state.pricingMode='exact';state.mode='parlay';state.legs=copy(legs);state.message='';state.record=null;state.legDraft=null;host.root('betsparlay');},renderSavedSingle:function(item,id){const key='external-'+id;state.externalSingles[key]=item;return singleSummary(item,false,key);},sourceRung,editCandidate,matchup,configure,state,input,action,render,price,payout,sorted,sync,cancel,finish,captureLadderScroll};
+  return {prefill:function(legs){state.pricingMode='exact';state.mode='parlay';state.legs=copy(legs);state.message='';state.record=null;state.legDraft=null;host.root('betsparlay');},renderSavedSingle:function(item,id){const key='external-'+id;state.externalSingles[key]=item;return singleSummary(item,false,key);},sourceRung,editCandidate,matchup,configure,dispose,state,input,action,render,price,payout,sorted,sync,cancel,finish,captureLadderScroll};
+  }
+  window.BetsBuilder=createInstance();
+  window.BetsBuilder.createInstance=createInstance;
 }());

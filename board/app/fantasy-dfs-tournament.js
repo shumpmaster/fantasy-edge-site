@@ -1,5 +1,6 @@
 /* Player-first tournament preview. Completions and swaps are supplied fixture records. */
 (function(){'use strict';
+function createInstance(){
 let host,source,f;
 const state={tab:'core',locks:[],expanded:null,lineup:null,preview:null,message:'',saved:[]};
 const e=x=>host.esc(x==null?'':x),n=x=>Number.isFinite(x)?String(Math.round(x*10)/10):'—',money=x=>'$'+Number(x).toLocaleString('en-US'),p=id=>source.players[id];
@@ -20,5 +21,8 @@ function completed(){const l=current(),pr=profile();if(!l)return '<p>Choose your
 function render(page){const root=page==='dfs',title=page==='lineups'?'Your lineup':root?f.slate:'Build lineup';return '<section class="ft"><header class="ft-pagehead '+(root?'ft-root-head':'')+'"><div class="ft-title-row">'+(!root&&host.back?button('back','‹','',' class="ft-back" aria-label="Back"'):'')+(root?'<h2>':'<h1>')+e(title)+(root?'</h2>':'</h1>')+(page!=='lineups'?button('saved','Scoreboard','',' class="ft-scoreboard-link" aria-label="DFS scoreboard"'):'')+'</div><p class="ft-platform">DraftKings · tournaments</p><span class="ft-demo">Demo · fictional numbers · this visit only</span></header>'+(state.message?'<p class="ft-message" role="status">'+e(state.message)+'</p>':'')+(page==='lineups'?completed():builder())+'</section>';}
 
 function action(act,value){if(!act.startsWith('fdfs-t-'))return false;act=act.slice(7);state.message='';if(act==='back'&&host.back){host.back();return true;}if(act==='tab'&&['core','upside'].includes(value))state.tab=value;else if(act==='expand'&&p(value))state.expanded=state.expanded===value?null:value;else if(act==='lock'){if(!f.candidates.some(c=>c.player_id===value)){state.message='Choose a player from this sample slate.';}else if(state.locks.includes(value)){state.locks=state.locks.filter(id=>id!==value);state.lineup=null;state.preview=null;}else{const why=reason(value);if(why)state.message=why;else{state.locks.push(value);state.lineup=null;state.preview=null;}}}else if(act==='complete'){const pr=profile();if(pr){state.lineup=pr.lineup_ids[0];state.preview=null;host.open('lineups');return true;}state.message='Choose a supported set of sample players first.';}else if(act==='build'){host.open('stories');return true;}else if(act==='preview'){const l=current(),pr=profile();if(l&&pr.swaps[l.id+'>'+value])state.preview=state.preview===value?null:value;}else if(act==='cancel')state.preview=null;else if(act==='apply'){const l=current(),pr=profile();if(l&&pr.swaps[l.id+'>'+state.preview]){state.lineup=state.preview;state.preview=null;}}else if(act==='save'){const l=current();if(l&&!state.saved.includes(l.id)){host.saveLineup(l);state.saved.push(l.id);}}else if(act==='saved'&&host.viewSaved){host.viewSaved();return true;}refresh();return true;}
-window.FantasyDfsTournament={configure,render,action,state,profile,current,reason,tray};
+return {configure,render,action,state,profile,current,reason,tray};
+}
+window.FantasyDfsTournament=createInstance();
+window.FantasyDfsTournament.createInstance=createInstance;
 })();

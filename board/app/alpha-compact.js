@@ -162,19 +162,37 @@
     h.render();
   }
 
+  function quoteFor(prop) {
+    const side = prop.lean === 'less' ? 'less' : 'more';
+    const odds = Array.isArray(prop.odds) ? Number(prop.odds[side === 'less' ? 1 : 0]) : null;
+    return { line: prop.line, side, odds: Number.isInteger(odds) && Math.abs(odds) >= 100 ? odds : null,
+      book: prop.book || null, odds_snapshot_ts: prop.odds_snapshot_ts || null };
+  }
+  function quoteTime(value) {
+    if (!value) return 'Capture time unavailable';
+    const date = new Date(value);
+    return Number.isFinite(date.getTime()) ? date.toISOString().slice(0, 16).replace('T', ' ') + ' UTC'
+      : 'Capture time unavailable';
+  }
+  function quoteText(quote) {
+    return (quote.book || 'Book unavailable') + ' · ' +
+      (quote.odds == null ? 'Odds unavailable' : price(quote.odds)) + ' · ' + quoteTime(quote.odds_snapshot_ts);
+  }
   function select(index) {
     const row = props()[Number(index)];
     /* A played line is not a bet you can still take, whatever the
      * page was showing when it was tapped. */
     if (!row || started(row)) return;
+    const quote = quoteFor(row.prop);
     state.selected = {id: row.id, market: row.prop.market};
     state.form = {player_id: row.id, player_text: row.person.name,
       /* m4.7 B2 — the leg carries the game it was offered on, so the
        * service never has to infer it from a team and a clock. */
       game_id: (row.game && row.game.game_id) || null,
       market: row.prop.market, line_screened: row.prop.line,
-      side: row.prop.lean === 'less' ? 'less' : 'more',
-      line: String(row.prop.line == null ? '' : row.prop.line), odds: '', book: '', stake: ''};
+      side: quote.side, quote,
+      line: String(row.prop.line == null ? '' : row.prop.line),
+      odds: quote.odds == null ? '' : String(quote.odds), book: quote.book || '', stake: ''};
     state.errors = {}; state.error = ''; state.receipt = null; state.conflict = false; state.legacyDraft = null;
   }
   function selectedRow() {
@@ -307,6 +325,8 @@
     if (!state.form) return '';
     const f = state.form;
     return '<section class="ac-record" aria-label="Record exact personal terms"><h2>Your terms</h2><p>Saved here. Real bets are placed elsewhere.</p>' +
+      '<p class="ac-quote">Starting quote · ' + esc(sideWord(f.quote.side) + ' ' + f.quote.line + ' ' + marketWord(f.market)) +
+      ' · ' + esc(quoteText(f.quote)) + '</p><p>Change these fields to match the offer you have. Your terms stay separate from the starting quote.</p>' +
       '<div class="ef-edit"><label class="ac-field" for="ac-side">Your side<select id="ac-side" data-ac-field="side"><option value="more"' + (f.side === 'more' ? ' selected' : '') + '>Over</option><option value="less"' + (f.side === 'less' ? ' selected' : '') + '>Under</option></select></label>' +
       field('line', 'Your line', 'text', ' inputmode="decimal"') + field('odds', 'Your American odds', 'text', ' inputmode="text"') +
       field('book', 'Your book', 'text', ' maxlength="40"') + field('stake', 'Your stake (optional)', 'text', ' inputmode="decimal"') + '</div>' +
@@ -333,8 +353,10 @@
   }
   function card(row, index) {
     const p = row.prop, open = state.selected && state.selected.id === row.id && state.selected.market === p.market;
+    const quote = quoteFor(p);
     return '<article class="ef-card" data-player-id="' + esc(row.id) + '"><button class="ef-card-toggle" data-act="ac-select" data-value="' + index + '" aria-expanded="' + !!open + '" aria-controls="ac-body-' + index + '">' +
       '<span class="ef-card-name">' + esc(row.person.name) + '</span><span class="ef-card-line">' + esc(sideWord(p.lean) + ' ' + p.line + ' ' + marketWord(p.market_label || p.market)) + '</span>' +
+      '<span class="ac-quote">Starting quote · ' + esc(quoteText(quote)) + '</span>' +
       '<span class="ef-card-rating"><span class="ef-assessment">Published estimate</span><span class="ef-card-chance"><strong>' + chance(p.model_p) + '</strong><small>Estimated chance</small></span></span>' +
       '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></button>' +
       outlook({player_id: row.id, market: p.market}) +
