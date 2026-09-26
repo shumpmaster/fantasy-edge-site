@@ -93,10 +93,15 @@
     if (!present(state.season) && week) state.season = week.season;
     if (!present(state.week) && week) state.week = week.week;
   }
+  /* m4.9 V1 — NO SIGN-IN GATE. `/history` is public (D-165 item 6) and
+   * the service answers it without a token; the gate here was a
+   * leftover of the member-only build choice D-165 superseded. The
+   * member snapshot is still taken, so an answer that arrives after the
+   * reader on this tab changed is still dropped. */
   async function loadHistory(h) {
     bind(h); historyDefaults();
+    if (h.isDemo()) return;
     const token = h.readToken();
-    if (!token || h.isDemo()) return;
     const key = historyKey(), sequence = ++requestSequence, snapshot = h.snapshot(token);
     const season = Number(state.season), week = Number(state.week);
     state.history = null; state.selected = null; state.historyKey = key; state.historyError = '';
@@ -109,9 +114,6 @@
     state.historyBusy = true; h.render();
     const current = () => sequence === requestSequence && key === historyKey() && h.current(snapshot);
     try {
-      if (!h.identityReady()) await h.loadMe(token);
-      if (!current()) return;
-      if (!h.identityReady()) throw {reason:'Connect your account to load projection history.'};
       const answer = await h.service().loadHistory(season, week);
       if (!current()) return;
       if (answer) state.history = answer;
@@ -142,7 +144,6 @@
   }
   function historyBody(detail) {
     const answer = state.history;
-    if (!host.readToken()) return text('Connect to see projection history.') + button('connect','Connect your account');
     if (state.historyBusy) return text('Loading projection history…');
     if (state.historyError) return '<p role="alert">' + esc(state.historyError) + '</p>';
     if (!answer) return text('Choose a week to see the projections published before kickoff and the actual results.');
@@ -237,7 +238,7 @@
     else if (act === 'ready-history-load') return loadHistory(h);
     else if (act === 'ready-view' && ['current','history'].includes(value)) {
       state.view = value; historyDefaults();
-      if (value === 'history' && !state.historyKey && h.readToken()) return loadHistory(h);
+      if (value === 'history' && !state.historyKey) return loadHistory(h);
     } else if (act === 'ready-history-row') {
       if (!list(state.history && state.history.rows).some(row => rowKey(row) === value)) return;
       state.selected = value; h.go('projectionrow'); return;

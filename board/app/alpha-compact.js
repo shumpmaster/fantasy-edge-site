@@ -214,16 +214,33 @@
       ? ' (likely ' + tidy(found.lo) + '–' + tidy(found.hi) + ')' : '';
     return 'We projected ' + tidy(found.mean) + ' ' + statWordOf(hrow) + range + '.';
   }
+  /* THE WITHIN-RANGE TEST ITSELF, in one place, on the numbers the
+   * reader is shown. `'inside'`, `'above'` or `'below'`, and null when
+   * either end or the value is absent — which is not a verdict and is
+   * never drawn as one. m4.9's chart dots and live cells colour by
+   * this, and the sentence below reads it, so a colour and a sentence
+   * about the same game cannot disagree. */
+  function rangeSide(low, high, value) {
+    /* ABSENT FIRST, COERCED SECOND. `Number(null)` is zero, so an end
+     * that was never published has to be refused before any rounding
+     * touches it — `numberOr` is that refusal. */
+    if (numberOr(low) === null || numberOr(high) === null ||
+        numberOr(value) === null) return null;
+    const lo = shown(low), hi = shown(high), landed = shown(value);
+    if (lo === null || hi === null || landed === null) return null;
+    if (landed > hi) return 'above';
+    if (landed < lo) return 'below';
+    return 'inside';
+  }
   /* ONE FACTUAL SENTENCE, and only when there is a range AND a final
    * to hold against it. It is a statement about this one line; there
    * is no count of them anywhere and never will be here. */
   function rangeWords(hrow) {
-    const found = forecastOf(hrow), actual = finalActual(hrow);
-    if (!found || found.lo === null || found.hi === null || actual === null) return '';
-    // THE NUMBERS ON THE CARD, not the ones behind them.
-    const lo = shown(found.lo), hi = shown(found.hi), landed = shown(actual);
-    if (lo === null || hi === null || landed === null) return '';
-    return landed >= lo && landed <= hi
+    const found = forecastOf(hrow);
+    if (!found) return '';
+    const side = rangeSide(found.lo, found.hi, finalActual(hrow));
+    if (side === null) return '';
+    return side === 'inside'
       ? 'That landed inside our range.' : 'That landed outside our range.';
   }
   const PLAYED_AWAITING = 'The result arrives after the final whistle.';
@@ -624,8 +641,15 @@
     const provider = providers.get(route);
     if (provider && provider.sync) provider.sync(h);
   }
+  /* m4.9 — THE D-185 HELPERS, SHARED RATHER THAN COPIED. The played
+   * card and the player page's past-games card say the same things
+   * about the same `/history` rows, so they say them with the same
+   * functions: one rounding, one reading of a published forecast, one
+   * within-range test. A second copy is how two surfaces come to
+   * disagree about one game. */
   const api = {configure,register,resetMember,state,capability,reason,loadCapabilities,select,input,
     selectedChance,pending,save,retry,receipt,render,action,sync,marketWord,reviewDraft,unavailable,
-    started,playedWords,playedBody};
+    started,playedWords,playedBody,
+    shown,tidy,numberOr,forecastOf,statWordOf,projectionWords,rangeWords,rangeSide};
   root.AlphaCompact = api;
 })(typeof window !== 'undefined' ? window : globalThis);

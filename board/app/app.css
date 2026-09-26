@@ -1835,6 +1835,102 @@ body{
 }
 
 /* --------------------------------------------------------------------
+   m4.9 — THE RICHER LIST, PAST GAMES AND THE LIVE ROW (D-189)
+   --------------------------------------------------------------------
+   The list row becomes two lines rather than wider: at 320px a name, a
+   stat, a number, a move and a strip do not fit one line, and the one
+   thing that must be seen whole is the strip. The chart is an inline
+   drawing at full card width, so it scales instead of scrolling.
+   -------------------------------------------------------------------- */
+
+.projcontrols{display:flex;flex-wrap:wrap;gap:6px;padding:8px 4px 0}
+.projcontrols .seg{flex:1 1 auto;min-width:0}
+.projrow.rich{
+  flex-direction:column;align-items:stretch;gap:5px;
+  padding:8px 2px;min-height:64px;
+}
+.projtop{display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.projhead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.projstatname{font-size:var(--type-meta);color:var(--muted)}
+.projstatval{
+  font-size:15px;font-weight:var(--w-semibold);
+  font-variant-numeric:tabular-nums;
+}
+.projsofar{
+  font-size:var(--type-meta);color:var(--text-2);
+  font-variant-numeric:tabular-nums;
+}
+
+/* THE LIVE MARK on a likeliness line: the read colour is the reader's
+   own material, so what the GAME has banked takes the heating tone
+   while it is running and the ink once it is over. */
+/* The strip on a list row: the same track and the same marks, without
+   the label and the zero that belong beside a strip being studied. */
+.like.compact{gap:0}
+.like.compact .liketrack{min-width:0}
+
+.likelive{
+  position:absolute;top:0;width:8px;height:8px;margin-left:-4px;
+  border-radius:4px;background:var(--ink);
+}
+.likelive.now{background:var(--heating)}
+
+/* PAST GAMES */
+.pastchart{display:block;width:100%;height:auto;padding-top:6px}
+.pastgrid{stroke:var(--rule);stroke-width:1}
+.pastlab{fill:var(--muted);font-size:9px}
+.pastbar{stroke:var(--track);stroke-width:6;stroke-linecap:round}
+.pasttick{stroke:var(--ink);stroke-width:2}
+.pastdot.in{fill:var(--ink)}
+.pastdot.up{fill:var(--positive)}
+.pastdot.dn{fill:var(--negative)}
+.pastchips,.pastweeks{display:flex;flex-wrap:wrap;gap:4px;padding-top:6px}
+.pastchip,.pastweek{
+  min-height:44px;min-width:44px;padding:0 12px;
+  border:1px solid var(--rule-2);background:transparent;
+  color:var(--text-2);font-family:inherit;font-size:var(--type-meta);
+  cursor:pointer;
+}
+.pastchip{border-radius:var(--r-full)}
+.pastweek{border-radius:var(--r-button)}
+.pastchip[aria-pressed="true"],.pastweek.on{
+  background:var(--ink);color:var(--surface);border-color:var(--ink);
+  font-weight:var(--w-semibold);
+}
+.pastcap{
+  padding-top:8px;font-size:var(--type-cell);color:var(--text-2);
+  line-height:1.45;
+}
+.pasttable{display:flex;flex-direction:column;gap:6px;padding-top:10px}
+.pastrow{
+  display:flex;flex-wrap:wrap;gap:2px 8px;
+  font-size:var(--type-meta);color:var(--muted);line-height:1.45;
+}
+.pastrowwk{font-weight:var(--w-semibold);color:var(--ink)}
+
+/* THE LIVE ROW under the projected statline. */
+.pliveheads{padding-top:10px}
+.plive{display:flex;flex-wrap:wrap;gap:6px 14px;padding-top:2px}
+.plivecell{display:flex;flex-direction:column;gap:1px;min-width:54px;max-width:100%}
+.plivelab{
+  font-size:10px;font-weight:var(--w-semibold);letter-spacing:.04em;
+  text-transform:uppercase;color:var(--muted);
+}
+.plivenum{
+  font-size:16px;font-weight:var(--w-semibold);
+  font-variant-numeric:tabular-nums;
+}
+.plivenum.up{color:var(--positive-text)}
+.plivenum.dn{color:var(--negative-text)}
+.plivenote{
+  font-size:var(--type-meta);color:var(--muted);line-height:1.45;
+  padding-top:6px;
+}
+/* ...and the same sentence inside a cell of the row is that cell's
+   value, so it sits where a number would and wraps inside it. */
+.plivecell .plivenote{padding-top:0;max-width:160px}
+
+/* --------------------------------------------------------------------
    A1 — THE OUTLOOK IF YOUR ANGLE HOLDS (ANGLES_A1_SPEC sec 4.2)
    --------------------------------------------------------------------
    ONE BLOCK FOR THE ONE COMPONENT, drawn identically on the Bets

@@ -174,10 +174,17 @@
       }
     }
 
+    /* m4.9 V1 — THE PUBLIC DOOR IS ASKED PUBLICLY. `/history` takes no
+     * user and never did: the forecast side is the published
+     * pre-kickoff snapshot and the result side is the league's box
+     * score, and both say the same thing to the owner, a member and a
+     * stranger. A missing token is therefore an anonymous call, not a
+     * refusal — evidence you have to sign in to check is not evidence.
+     * The member's token still rides the call when there is one, so the
+     * epoch and member guards below keep their exact meaning. */
     async function loadHistory(season, week) {
       if (isDemo()) return null;
       const member = identityOf(memberIdentity);
-      if (!member.token) return null;
       const started = epoch;
       try {
         const answer = await request("/history?season=" +

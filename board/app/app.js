@@ -996,6 +996,55 @@ const PROJ_NOT_IN_FILE =
 const PROJ_GENERATED = "Our numbers from ";
 
 /* ------------------------------------------------------------------
+ * m4.9 — THE RICHER LIST, PAST GAMES, AND THE LIVE ROW (D-189)
+ * ------------------------------------------------------------------
+ * Three additions to this screen, and every one of them draws only
+ * numbers something else computed: the list gains the headline stat
+ * and its strip, the player page gains what happened in his finished
+ * games, and — for a reader with an account — what he has banked in
+ * the game that is running. There is no total, no average and no
+ * count of how often a range held anywhere in any of them. */
+
+/* V3's two controls. All keeps today's grouping by position, and the
+ * order is applied WITHIN each group so unlike stats are never ranked
+ * against each other. */
+const PROJ_POS_ALL = "All";
+const PROJ_FILTER_LABEL = "Position";
+const PROJ_ORDER_LABEL = "Order";
+const PROJ_ORDER_PROJECTION = "Projection";
+/* THE SECOND ORDER, and its word is deliberately not the mockup's.
+ * D-075 sec 0 deleted that mockup's own sort by name and the suite pins
+ * the name out of this tree; what D-189 asks for is the ORDER, so the
+ * order is here under the words a reader would use for it. */
+const PROJ_ORDER_MOVED = "Biggest moves";
+const PROJ_SO_FAR = "So far ";
+
+/* V1's card. A man with no finished game yet is a fact about the
+ * season: the card says so rather than hiding or reading as an
+ * error. */
+const PROJ_PAST_HEAD = "Past games";
+const PROJ_PAST_NONE =
+  "Past games appear here once his first game this season is final.";
+const PROJ_PAST_LOADING = "Looking up his past games…";
+const PROJ_PAST_OFFLINE = "Past games aren't available right now.";
+const PROJ_PAST_SAID = "We projected ";
+const PROJ_PAST_LIKELY = "likely ";
+const PROJ_PAST_ACTUAL = "Actual ";
+const PROJ_PAST_INSIDE = "inside our range";
+const PROJ_PAST_ABOVE = "above our range";
+const PROJ_PAST_BELOW = "below our range";
+const PROJ_WEEK_SHORT = "Wk ";
+
+/* V2's row: "So far" while the game is running, "Final" once it is
+ * over, and one line in place of both for a reader with no account —
+ * the live board is per-person by design. */
+const PROJ_LIVE_SO_FAR = "So far";
+const PROJ_LIVE_FINAL = "Final";
+const PROJ_LIVE_CONNECT =
+  "Sign in to follow his game live against our projection.";
+const PROJ_LIVE_CONNECT_ACTION = "Connect your account";
+
+/* ------------------------------------------------------------------
  * U2 — THE SLATE DOCUMENT
  * ------------------------------------------------------------------
  * THE TWO PATHS, the lab's idiom exactly. Real is the default; the
@@ -1085,6 +1134,45 @@ const PROJ_STATS = [
 /* The positions a roster is grouped into, in the order they are
  * drawn. Anything else keeps its own name and sorts after them. */
 const PROJ_POS_ORDER = ["QB", "RB", "WR", "TE", "FB"];
+
+/* m4.9 V3 — THE HEADLINE STAT, one per position: the number a reader
+ * looking down a list of that position is looking for, and the one the
+ * row's figure, its change and its strip are all about. A position
+ * this table does not name takes rush yards and then the first stat the
+ * run carried anything for, so a row is never blank because a position
+ * was not thought of. */
+const PROJ_HEADLINE = { QB: "pass_yds", RB: "rush_yds",
+  WR: "rec_yds", TE: "rec_yds" };
+const PROJ_HEADLINE_OTHER = "rush_yds";
+
+/* The four positions the filter offers, beside All. */
+const PROJ_POS_FILTER = ["QB", "RB", "WR", "TE"];
+
+/* ...and the two orders, each with the word on its button. */
+const PROJ_ORDERS = [["projection", PROJ_ORDER_PROJECTION],
+  ["moved", PROJ_ORDER_MOVED]];
+
+/* m4.9 V1 — the past-games chart's default stat per position, in the
+ * PAST WEEK's vocabulary rather than this run's: `/history` names its
+ * rows the way the markets do, and this screen does not invent a
+ * second spelling of one stat. */
+const PROJ_PAST_HEADLINE = { QB: "player_pass_yds",
+  RB: "player_rush_yds", WR: "player_reception_yds",
+  TE: "player_reception_yds" };
+
+/* What a finished game did against the range it was held up to. The
+ * test itself is the shared one; these are its three words. */
+const PROJ_PAST_SIDE = { inside: PROJ_PAST_INSIDE,
+  above: PROJ_PAST_ABOVE, below: PROJ_PAST_BELOW };
+
+/* m4.9 V2 — the live answer's statline labels, against this run's own
+ * stat keys. The labels are the service's; the keys are the document's;
+ * and this is the one place the two are joined. */
+const PROJ_BANKED_LABELS = { "Pass yards": "pass_yds",
+  "Pass TDs": "pass_tds", "Rush yards": "rush_yds",
+  "Carries": "rush_att", "Receptions": "receptions",
+  "Rec yards": "rec_yds", "Targets": "targets",
+  "TDs": "anytime_td" };
 
 /* ------------------------------------------------------------------
  * U3 — THE PICKS SERVICE
@@ -2571,6 +2659,34 @@ function freshUserScoped() {
     livePollMs: null,
     series: {},
 
+    /* m4.9 V2's. `projLive` is the live answer for the ONE man whose
+     * page is open — the same board, asked one extra question — and it
+     * is HIS READER'S, not the player's: `/live` is per-person by
+     * design, so it drops with the token like every other member
+     * answer. `projLiveKey` is the (slate, player) it was asked for, so
+     * a block for the last man opened is never drawn beside this one;
+     * `projLivePoll` is the interval handle and is the second field in
+     * here that must be STOPPED rather than merely dropped. */
+    projLive: null,
+    projLiveKey: null,
+    projLiveAsked: false,
+    projLiveRequest: 0,
+    projLivePoll: null,
+    projLivePollMs: null,
+
+    /* ...and the LIST'S own board answer, which is a different question
+     * from the Live screen's. That screen asks about the slate the rest
+     * of it is drawn from; this list asks about the week the projections
+     * beside the numbers belong to, and the two documents are exported
+     * on different cadences. One answer held for both would put last
+     * week's banked totals next to this week's projections, so there are
+     * two, each asked for by the week it is about. `projListKey` is the
+     * (season, week) this one was asked for. */
+    projList: null,
+    projListKey: null,
+    projListAsked: false,
+    projListRequest: 0,
+
     /* The local draft, its member-bound review snapshot, and the one
      * returned service receipt. Resetting the member clears them all. */
     read: { player: null, market: null, line: null, side: null,
@@ -2789,7 +2905,21 @@ const nav = {
   projNote: null,
   projAsked: false,
   projGame: 0,
-  proj: { player: null, query: "" },
+  /* `proj` is which player the detail is open on, what has been typed
+   * into the roster search and — since m4.9 — how the list is filtered
+   * and ordered, plus his PAST GAMES.
+   *
+   * THE PAST GAMES BELONG TO NOBODY, which is why they live here beside
+   * the public document rather than in the member block: `/history` is
+   * a public door (D-165 item 6), its answer is identical for the
+   * owner, a member and a stranger, and a sign-out has nothing of
+   * anyone's to drop from it. `cache` holds one entry per (season,
+   * player) for the visit, so walking back to a man already looked up
+   * asks nothing a second time. */
+  proj: { player: null, query: "", pos: PROJ_POS_ALL,
+    sort: "projection",
+    past: { key: null, rows: null, notes: null, busy: false,
+      failed: false, stat: null, week: null, cache: {} } },
 
   /* ...AND EVERYTHING THAT BELONGS TO THE SIGNED-IN READER, from its
    * one definition above. This is the half that is dropped, whole,
@@ -2838,6 +2968,10 @@ function resetUserScoped() {
   if (nav.livePoll) {
     window.clearInterval(nav.livePoll);
     nav.livePoll = null;
+  }
+  if (nav.projLivePoll) {
+    window.clearInterval(nav.projLivePoll);
+    nav.projLivePoll = null;
   }
   const fresh = freshUserScoped();
   USER_SCOPED_KEYS.forEach(function (key) {
@@ -8029,13 +8163,106 @@ function projSearch(compact) {
     '</div>') + '</div>';
 }
 
+/* m4.9 V3 — the chosen position, then what was typed. The search
+ * filters WITHIN the position, because a reader who has narrowed to
+ * receivers and then types a name is asking about a receiver. */
 function projMatches() {
   const query = String(nav.proj.query || "").trim().toLowerCase();
-  const all = projPlayers();
+  const chosen = projPos();
+  const all = chosen === PROJ_POS_ALL ? projPlayers()
+    : projPlayers().filter(function (player) {
+      return String(player.pos || "").toUpperCase() === chosen;
+    });
   if (!query) return all;
   return all.filter(function (player) {
     return String(player.name || "").toLowerCase().indexOf(query) !== -1;
   });
+}
+
+function projPos() { return String(nav.proj.pos || PROJ_POS_ALL); }
+function projOrder() {
+  return nav.proj.sort === "moved" ? "moved" : "projection";
+}
+
+/* m4.9 V3 — THE HEADLINE STAT for one man. A named position's stat is
+ * its own whatever the run carried for it: a receiver with no receiving
+ * yards is a receiver with no number, which the row says by drawing
+ * none. Only an UNNAMED position falls through to the first stat the
+ * run carried, so a row is never blank merely because nobody thought
+ * about that position. */
+function projHeadlineKey(player) {
+  const pos = String((player || {}).pos || "").toUpperCase();
+  if (PROJ_HEADLINE[pos]) return PROJ_HEADLINE[pos];
+  const proj = (player || {}).proj || {};
+  if (numberOrNull(proj[PROJ_HEADLINE_OTHER]) !== null) {
+    return PROJ_HEADLINE_OTHER;
+  }
+  for (let index = 0; index < PROJ_STATS.length; index += 1) {
+    if (numberOrNull(proj[PROJ_STATS[index][1]]) !== null) {
+      return PROJ_STATS[index][1];
+    }
+  }
+  return PROJ_HEADLINE_OTHER;
+}
+
+/* The label and decimals that stat already reads in, from the one
+ * table the statline and the results blocks read them from. */
+function projStatOf(key) {
+  for (let index = 0; index < PROJ_STATS.length; index += 1) {
+    if (PROJ_STATS[index][1] === key) return PROJ_STATS[index];
+  }
+  return [String(key || ""), key, 1];
+}
+
+/* THE ORDER'S OWN NUMBER, and both of them are the generation's: the
+ * headline projection, or how far it has moved since the week opened.
+ * Neither is computed here beyond taking the size of a stored move. */
+function projOrderValue(player, order) {
+  const key = projHeadlineKey(player);
+  if (order === "moved") {
+    const moved = numberOrNull((player.movement || {})[key]);
+    return moved === null ? null : Math.abs(moved);
+  }
+  return numberOrNull((player.proj || {})[key]);
+}
+
+/* ONE POSITION GROUP, ordered. A man with no number for the chosen
+ * order sorts LAST rather than as a zero, and ties fall back to the
+ * name so the list never reshuffles between two identical renders. */
+function projSorted(list) {
+  if (DEMO) return list;
+  const order = projOrder();
+  const name = function (player) { return String(player.name || ""); };
+  return list.slice().sort(function (left, right) {
+    const one = projOrderValue(left, order);
+    const two = projOrderValue(right, order);
+    if (one === null && two === null) return name(left).localeCompare(name(right));
+    if (one === null) return 1;
+    if (two === null) return -1;
+    if (one !== two) return two - one;
+    return name(left).localeCompare(name(right));
+  });
+}
+
+/* The position filter and the order, above the list. They are the sec 4
+ * segmented control, twice, in a row that WRAPS rather than scrolls:
+ * five buttons and two more do not fit 320px side by side, and a
+ * control half off the screen is a control nobody can reach. */
+function projControls() {
+  const seg = function (label, rows, chosen, act, attribute) {
+    return '<div class="seg" role="group" aria-label="' + esc(label) +
+      '">' + rows.map(function (row) {
+        return '<button data-act="' + act + '" data-' + attribute +
+          '="' + esc(row[0]) + '" aria-pressed="' +
+          (chosen === row[0]) + '">' + esc(row[1]) + '</button>';
+      }).join("") + '</div>';
+  };
+  const positions = [[PROJ_POS_ALL, PROJ_POS_ALL]].concat(
+    PROJ_POS_FILTER.map(function (pos) { return [pos, pos]; }));
+  return '<div class="projcontrols">' +
+    seg(PROJ_FILTER_LABEL, positions, projPos(), "proj-pos", "pos") +
+    seg(PROJ_ORDER_LABEL, PROJ_ORDERS, projOrder(), "proj-sort", "sort") +
+    '</div>';
 }
 
 /* The roster, grouped by position the way the file lists it. Each row
@@ -8054,16 +8281,60 @@ function projRoster(list) {
   }).sort());
   return order.map(function (pos) {
     return '<div class="card projgroup"><div class="overline">' +
-      esc(pos) + '</div>' + groups[pos].map(function (player, index) {
-        return '<button class="projrow' + growClass() + '" style="--i:' +
-          index + '" data-act="projection" data-player="' +
-          esc(player.player_id) + '" aria-label="' +
-          esc(PROJ_FULL + ": " + player.name) + '">' +
-          '<span class="projname">' + esc(player.name) + (edgeEnabled() && edgeModule().owned(player.player_id) ? '<small class="ef-row-owned">Taken</small>' : '') + '</span>' +
-          '<span class="projteam">' + esc(player.team) + '</span>' +
-          '</button>';
+      esc(pos) + '</div>' +
+      projSorted(groups[pos]).map(function (player, index) {
+        /* ONE DOOR, on the attribute it has always been: the row is a
+         * button and it opens that player's breakdown. */
+        return projListRow(player, index, 'data-act="projection" ' +
+          'data-player="' + esc(player.player_id) + '"');
       }).join("") + '</div>';
   }).join("");
+}
+
+/* ONE ROW, AND IT IS STILL ONE BUTTON (m4.9 V3): his name and team,
+ * then the headline stat's word and number, how far that number has
+ * moved since the week opened, and the same range strip the detail page
+ * draws. A member whose game is running also gets what he has banked.
+ *
+ * THE OLD ROW IS STILL THE ROW IN THE FIXTURE WORKSPACE. The sample
+ * document is a designer's slice and its screens are pinned as they
+ * are, so the richer row is the real file's only. */
+function projListRow(player, index, door) {
+  const taken = edgeEnabled() && edgeModule().owned(player.player_id)
+    ? '<small class="ef-row-owned">Taken</small>' : "";
+  const open = '<button class="projrow' + (DEMO ? "" : " rich") +
+    growClass() + '" style="--i:' + index + '" ' + door +
+    ' aria-label="' + esc(PROJ_FULL + ": " + player.name) + '">';
+  const name = '<span class="projname">' + esc(player.name) + taken +
+    '</span><span class="projteam">' + esc(player.team) + '</span>';
+  if (DEMO) return open + name + '</button>';
+  const key = projHeadlineKey(player);
+  const stat = projStatOf(key);
+  const value = numberOrNull((player.proj || {})[key]);
+  const banked = projBankedOf(projListStatline(player.player_id), key);
+  return open + '<span class="projtop">' + name + '</span>' +
+    '<span class="projhead"><span class="projstatname">' +
+    esc(stat[0]) + '</span><span class="projstatval">' +
+    esc(projNumber(value, stat[2])) + '</span>' +
+    projListMoved(player, key, stat[2]) +
+    (banked === null ? ""
+      : '<span class="projsofar">' +
+        esc(PROJ_SO_FAR + projNumber(banked, stat[2])) + '</span>') +
+    '</span>' +
+    projLikely((player.stat_quantiles || {})[key], value, banked,
+      projListRunning(player.player_id), true) + '</button>';
+}
+
+/* THE CHANGE SINCE THE WEEK OPENED, and only when there is one to
+ * report: rounded first and drawn only if the rounded figure is not
+ * zero, because "+0.0" is not a move and reads as one. */
+function projListMoved(player, key, places) {
+  const moved = numberOrNull((player.movement || {})[key]);
+  if (moved === null) return "";
+  const rounded = Number(moved.toFixed(places));
+  if (rounded === 0) return "";
+  return '<span class="pmv ' + (rounded > 0 ? "up" : "dn") + '">' +
+    esc((rounded > 0 ? "+" : "") + rounded.toFixed(places)) + '</span>';
 }
 
 function renderProjections() {
@@ -8092,6 +8363,8 @@ function renderProjections() {
           "") + '</div>'
       : "") +
     projSearch() +
+    /* m4.9 V3: the position filter and the order, above the list. */
+    (DEMO ? "" : projControls()) +
     '<div class="overline projpick">' + esc(PROJ_PICK_A_PLAYER) +
     '</div><div class="projlist" id="projlist">' + projListBody() +
     '</div>' + explainer(SHORT_PROJECTIONS, [PROJ_SCOPE]) + '</div>';
@@ -8184,7 +8457,12 @@ function projResults(player, compact) {
       '<span class="pstatproj">' +
       esc(projNumber((player.proj || {})[stat[1]], stat[2])) +
       '</span></div>' +
-      projLikely(points, (player.proj || {})[stat[1]]) +
+      /* m4.9 V2: the banked figure rides the strip it belongs to, in
+       * the live tone while the game is running and the ink tone once
+       * it is over. Nothing about the strip's own marks changes. */
+      projLikely(points, (player.proj || {})[stat[1]],
+        DEMO ? null : projBankedOf(projPlayerStatline(player), stat[1]),
+        !DEMO && projPlayerRunning()) +
       '<div class="ppoints">' + spread + '</div></div>';
   }).join("");
   if (!blocks) {
@@ -8211,7 +8489,7 @@ function projNumber(value, places) {
  * end equal to the high end — the Any TD row whose whole visible
  * range is 0 — would each draw a strip asserting a spread the
  * generation never produced. Every one of them returns "". */
-function projLikely(points, mean) {
+function projLikely(points, mean, banked, running, compact) {
   if (!Array.isArray(points)) return "";
   const low = numberOrNull(points[0]);
   const lowMid = numberOrNull(points[1]);
@@ -8224,10 +8502,22 @@ function projLikely(points, mean) {
     if (marks[index] === null) return "";
   }
   if (low === high) return "";
-  const top = Math.max(high, centre);
+  /* m4.9 V2 — THE LIVE DOT. What he has actually banked, on the scale
+   * the strip already has, and the scale is widened to hold it when it
+   * lands above the high end: a mark clamped to the end of the track
+   * would say he was at the top of the range when he is past it. An
+   * absent banked figure adds no mark and never a mark at zero. */
+  const live = numberOrNull(banked);
+  const top = Math.max(high, centre, live === null ? 0 : live);
   if (!(top > 0)) return "";
-  return '<div class="like"><span class="plikelab">' +
-    esc(PROJ_LIKELY) + '</span><span class="likezero">0</span>' +
+  /* ON A LIST ROW THE WORDS COME OFF. The label and the zero marker
+   * explain a strip a reader is studying; sat next to each other on one
+   * line of a roster they read as the phrase "how likely 0", which is
+   * not a thing anybody said. The strip's geometry and tokens are
+   * exactly the detail page's, which keeps the two the same drawing. */
+  return '<span class="like' + (compact ? " compact" : "") + '">' +
+    (compact ? "" : '<span class="plikelab">' + esc(PROJ_LIKELY) +
+      '</span><span class="likezero">0</span>') +
     '<span class="liketrack">' +
     '<span class="likespan" style="left:' + projShare(low, top) +
     ';width:' + projShare(high - low, top) + '"></span>' +
@@ -8236,7 +8526,11 @@ function projLikely(points, mean) {
     '<span class="liketick" style="left:' + projShare(middle, top) +
     '"></span>' +
     '<span class="likedot" style="left:' + projShare(centre, top) +
-    '"></span></span></div>';
+    '"></span>' +
+    (live === null ? ""
+      : '<span class="likelive' + (running ? " now" : "") +
+        '" style="left:' + projShare(live, top) + '"></span>') +
+    '</span></span>';
 }
 
 /* ONE MARK'S PLACE on one row's scale, as a CSS percentage. It is
@@ -8399,6 +8693,653 @@ function projStatline(player) {
   return entries.length ? statline(entries) : "";
 }
 
+/* ------------------------------------------------------------------
+ * m4.9 V2 — LIVE AGAINST THE PROJECTION, FOR ANY PLAYER
+ * ------------------------------------------------------------------
+ * `/live` already carried the statline — projected beside what has
+ * been banked so far — for every prop on the slate. What it could not
+ * answer was "and this man, who has no line": V2's `player_id` asks
+ * that question, and this is the half of it that draws.
+ *
+ * EVERY NUMBER IS THE SERVICE'S. The page places marks, chooses a
+ * word and colours a cell by the shared within-range test; it works
+ * out no pace, no projection of a final and no chance of anything. */
+
+/* Which slate to ask about, and it is THE PROJECTIONS FILE'S OWN. The
+ * projection on screen is that run's, so the banked figures put beside
+ * it are asked for by that run's season and week and by nothing else.
+ *
+ * IT DOES NOT CONSULT `slate.json`. The two documents are written on
+ * different cadences, so requiring them to agree meant one stale export
+ * silently took the whole row away — the signed-out line with it, which
+ * is the one thing a reader without an account was owed here. */
+function projLiveWeek() {
+  const run = (nav.projections && nav.projections.run) || {};
+  const season = numberOrNull(run.season);
+  const week = numberOrNull(run.week);
+  if (season === null || week === null) return null;
+  return { season: season, week: week };
+}
+
+/* Whether his game has started, off the file's OWN kickoff stamp and
+ * the page's one clock. A file with no stamp for the game has not said
+ * it started, so nothing is drawn. */
+function projKickedOff(player) {
+  const found = player ? projFind(player.player_id) : null;
+  const block = found ? projGames()[found.game] : null;
+  const game = (block && block.game) || {};
+  const at = game.kickoff ? Date.parse(game.kickoff) : NaN;
+  return Number.isFinite(at) && appNow() >= at;
+}
+
+/* The block the service answered for THIS man, and never for the last
+ * one looked at: an answer that named somebody else is not his. */
+function projLiveBlock(player) {
+  const block = nav.projLive && nav.projLive.player;
+  if (!player || !block) return null;
+  return block.player_id === player.player_id ? block : null;
+}
+
+function projPlayerStatline(player) {
+  const block = projLiveBlock(player);
+  return block ? block.statline : null;
+}
+
+function projLiveGame(player) {
+  const block = projLiveBlock(player);
+  return (block && block.game) || null;
+}
+
+function projLiveDone(game) {
+  return !!game && game.status === "post";
+}
+
+function projPlayerRunning() {
+  const game = projLiveGame(projSelected());
+  return !!game && !projLiveDone(game);
+}
+
+/* The list's own dots come off ONE whole-board answer for the page,
+ * keyed by player over the statlines it carries. A man the board does
+ * not carry simply has no dot; there is no second request per row.
+ *
+ * AND THE ANSWER HAS TO BE ABOUT THE WEEK ON SCREEN. It is checked
+ * against the projections run rather than trusted: a board for another
+ * week would put banked totals from that week beside these projections,
+ * which is a wrong number rather than a missing one. An answer that does
+ * not say which slate it is for is not used either. */
+function projListBoard() {
+  const week = projLiveWeek();
+  const answer = nav.projList;
+  if (!week || !answer) return null;
+  if (numberOrNull(answer.season) !== week.season) return null;
+  if (numberOrNull(answer.week) !== week.week) return null;
+  return answer;
+}
+
+function projListBets(playerId) {
+  const board = projListBoard();
+  return ((board && board.bets) || []).filter(function (bet) {
+    return bet.player_id === playerId;
+  });
+}
+
+function projListStatline(playerId) {
+  const bets = projListBets(playerId);
+  for (let index = 0; index < bets.length; index += 1) {
+    if ((bets[index].statline || []).length) return bets[index].statline;
+  }
+  return null;
+}
+
+function projListRunning(playerId) {
+  const bets = projListBets(playerId);
+  return bets.length ? !projLiveDone(bets[0].game || null) : false;
+}
+
+/* THE LIST'S ONE ASK, through the door every other request goes
+ * through, for the PROJECTIONS run's season and week. It is asked once
+ * per slate per visit and it does not poll: the dots are a glance at the
+ * board, and the page that follows the game tick by tick is the player's
+ * own (V2) and the Live screen.
+ *
+ * IT IS NOT THE LIVE SCREEN'S LOAD. That one asks about the slate and
+ * fills `nav.live`, which the Live screen draws; this one fills
+ * `nav.projList` and nothing else reads it. Two questions, two answers,
+ * neither standing in for the other. */
+async function loadProjList(force) {
+  if (DEMO) return;
+  const week = projLiveWeek();
+  const token = readToken();
+  if (!week || !token) return;
+  const key = String(week.season) + ":" + String(week.week);
+  if (nav.projListKey === key && nav.projListAsked && !force) return;
+  if (nav.projListKey !== key) nav.projList = null;
+  nav.projListKey = key;
+  nav.projListAsked = true;
+  const started = memberSnapshot(token);
+  const request = ++nav.projListRequest;
+  try {
+    const answer = await picksAsk(
+      "/live?season=" + encodeURIComponent(week.season) +
+      "&week=" + encodeURIComponent(week.week), token, null);
+    if (!memberCurrent(started) || request !== nav.projListRequest ||
+        nav.projListKey !== key) return;
+    nav.projList = answer;
+  } catch (err) {
+    /* No dots rather than stale ones, and the list itself is unharmed:
+     * every number on it came off the projections document. */
+    if (!memberCurrent(started) || request !== nav.projListRequest) return;
+  }
+  if (!memberCurrent(started) || request !== nav.projListRequest) return;
+  render();
+}
+
+/* ONE STAT'S BANKED FIGURE off a statline, through the declared label
+ * table. A row the update cannot carry is null here and stays null all
+ * the way to the screen. */
+function projBankedOf(statline, key) {
+  const rows = statline || [];
+  for (let index = 0; index < rows.length; index += 1) {
+    if (PROJ_BANKED_LABELS[rows[index].label] === key) {
+      return numberOrNull(rows[index].banked);
+    }
+  }
+  return null;
+}
+
+/* THE ROW UNDER THE PROJECTED STATLINE. Its heading is what the game
+ * is — running or over — and each cell is what he has banked.
+ *
+ * COLOUR ONLY AT FINAL, and it is the shared within-range test against
+ * that stat's own published range. While the game is running every cell
+ * is neutral: a receiver on 40 yards at half time is not "behind", and
+ * a colour saying so would be pace arithmetic this page will not do. */
+function projLiveRow(player) {
+  if (DEMO || !player || !projLiveWeek() || !projKickedOff(player)) {
+    return "";
+  }
+  if (!readToken()) {
+    return '<div class="plivenote">' + esc(PROJ_LIVE_CONNECT) +
+      '</div><button class="ghost" data-act="ac-connect">' +
+      esc(PROJ_LIVE_CONNECT_ACTION) + '</button>';
+  }
+  const block = projLiveBlock(player);
+  if (!block) return "";
+  const game = block.game || null;
+  if (!block.statline) {
+    return block.reason
+      ? '<div class="plivenote">' + esc(plainNote(block.reason)) +
+        '</div>'
+      : "";
+  }
+  const done = projLiveDone(game);
+  const shared = projShared();
+  const cells = PROJ_STATS.filter(function (stat) {
+    return projBankedOf(block.statline, stat[1]) !== null ||
+      projBankedReason(block.statline, stat[1]) !== null;
+  }).map(function (stat) {
+    const banked = projBankedOf(block.statline, stat[1]);
+    if (banked === null) {
+      const reason = projBankedReason(block.statline, stat[1]);
+      return '<span class="plivecell"><span class="plivelab">' +
+        esc(stat[0]) + '</span><span class="plivenote">' +
+        esc(plainNote(reason)) + '</span></span>';
+    }
+    const points = (player.stat_quantiles || {})[stat[1]];
+    const side = done && shared && Array.isArray(points)
+      ? shared.rangeSide(points[0], points[4], banked) : null;
+    const tone = side === "above" ? " up" : (side === "below" ? " dn" : "");
+    return '<span class="plivecell"><span class="plivelab">' +
+      esc(stat[0]) + '</span><span class="plivenum' + tone + '">' +
+      esc(projNumber(banked, stat[2])) + '</span></span>';
+  }).join("");
+  if (!cells) return "";
+  return '<div class="overline pliveheads">' +
+    esc(done ? PROJ_LIVE_FINAL : PROJ_LIVE_SO_FAR) + '</div>' +
+    '<div class="plive">' + cells + '</div>';
+}
+
+/* The service's own sentence for a row it cannot put a number on. It is
+ * drawn in place of the figure, never as a zero. */
+function projBankedReason(statline, key) {
+  const rows = statline || [];
+  for (let index = 0; index < rows.length; index += 1) {
+    if (PROJ_BANKED_LABELS[rows[index].label] === key) {
+      return rows[index].banked_reason || null;
+    }
+  }
+  return null;
+}
+
+/* THE ASK, once per (slate, player), and the poll after it. The cadence
+ * is the SERVICE'S — `poll_interval_s` rides the answer — and it stops
+ * the moment the game is final, the tab is hidden or the reader leaves
+ * the page. */
+async function loadProjLive(force) {
+  if (DEMO) return;
+  const player = projSelected();
+  const week = projLiveWeek();
+  const token = readToken();
+  if (!player || !week || !token || !projKickedOff(player)) return;
+  const key = String(week.season) + ":" + String(week.week) + ":" +
+    String(player.player_id);
+  if (nav.projLiveKey === key && nav.projLiveAsked && !force) return;
+  if (nav.projLiveKey !== key) nav.projLive = null;
+  nav.projLiveKey = key;
+  nav.projLiveAsked = true;
+  const started = memberSnapshot(token);
+  const request = ++nav.projLiveRequest;
+  try {
+    const answer = await picksAsk(
+      "/live?season=" + encodeURIComponent(week.season) +
+      "&week=" + encodeURIComponent(week.week) + "&player_id=" +
+      encodeURIComponent(player.player_id), token, null);
+    if (!memberCurrent(started) || request !== nav.projLiveRequest ||
+        nav.projLiveKey !== key) return;
+    nav.projLive = answer;
+  } catch (err) {
+    /* The last update stands where it stopped. Nothing is carried
+     * forward and nothing is guessed in its place. */
+    if (!memberCurrent(started) || request !== nav.projLiveRequest) return;
+  }
+  if (!memberCurrent(started) || request !== nav.projLiveRequest) return;
+  render();
+}
+
+function projLivePollMs() {
+  const stated = nav.projLive && numberOrNull(nav.projLive.poll_interval_s);
+  return stated === null ? LIVE_POLL_MS : stated * 1000;
+}
+
+function stopProjLivePoll() {
+  if (nav.projLivePoll) {
+    window.clearInterval(nav.projLivePoll);
+    nav.projLivePoll = null;
+  }
+}
+
+/* THE ONE PLACE THE PLAYER PAGE'S POLL IS TURNED ON OR OFF, on the same
+ * rule as the Live segment's: `render()` reconciles it on every screen
+ * change AND the visibility listener calls it when the tab is hidden or
+ * shown, so there is no path that leaves an interval running behind a
+ * page nobody is on — and none that leaves a page showing a clock that
+ * stopped when the tab went away. The list's own board read rides here
+ * too, asked for the projections week. */
+function syncProjLive() {
+  if (DEMO) return;
+  const route = currentRoute();
+  if (route === "projections") loadProjList(false);
+  const player = route === "projection" ? projSelected() : null;
+  if (!player || !projLiveWeek() || !readToken() ||
+      !projKickedOff(player)) {
+    stopProjLivePoll();
+    return;
+  }
+  loadProjLive(false);
+  if (projLiveDone(projLiveGame(player)) || liveHidden()) {
+    stopProjLivePoll();
+    return;
+  }
+  const every = projLivePollMs();
+  if (nav.projLivePoll && nav.projLivePollMs !== every) stopProjLivePoll();
+  if (!nav.projLivePoll) {
+    nav.projLivePollMs = every;
+    nav.projLivePoll = window.setInterval(function () {
+      loadProjLive(true);
+    }, every);
+  }
+}
+
+/* ------------------------------------------------------------------
+ * m4.9 V1 — PAST GAMES, FOR ANY PLAYER
+ * ------------------------------------------------------------------
+ * One card under the results: what we said before each of his finished
+ * games this season, and what he actually did. Every number in it is
+ * the service's — `/history` is a public door, the forecast side is the
+ * snapshot fixed BEFORE that kickoff (D-083) and the result side is the
+ * banked box score.
+ *
+ * THERE IS NO SCORE HERE, and that is the point rather than a caveat:
+ * no hit count, no "inside the range N of M", no average miss. Each
+ * game is its own record, and the service's own sentence saying so
+ * rides the card's "How to read this".
+ *
+ * ABSENCE IS NOT ZERO. A missing end, a missing actual or a week with
+ * no answer draws no mark. */
+
+/* The shared D-185 helpers, reached rather than copied
+ * (BETS_PLAYED_M47_SPEC §B4): one rounding, one reading of a published
+ * forecast and one within-range test, so the played card and this card
+ * can never disagree about one game. */
+function projShared() { return window.AlphaCompact || null; }
+
+/* One entry per (season, player). The season is the RUN'S OWN, so the
+ * sealed exam season is never asked for from here. */
+function projPastKey(player) {
+  const run = (nav.projections && nav.projections.run) || {};
+  const season = numberOrNull(run.season);
+  if (season === null || !player || !player.player_id) return null;
+  return String(season) + ":" + String(player.player_id);
+}
+
+/* THE READ: one week at a time, in sequence, for every completed week
+ * of this season — week 1 up to the week before the run's own. A week
+ * the service answers empty is left out; a week that fails is counted,
+ * and only a card with nothing at all says so out loud. */
+async function loadProjPast(player) {
+  if (DEMO) return;
+  const run = (nav.projections && nav.projections.run) || {};
+  const season = numberOrNull(run.season);
+  const week = numberOrNull(run.week);
+  const key = projPastKey(player);
+  const past = nav.proj.past;
+  if (!key || week === null || past.key === key) return;
+  const held = past.cache[key];
+  if (held) {
+    past.key = key; past.rows = held.rows; past.notes = held.notes;
+    past.failed = held.failed; past.busy = false;
+    past.stat = held.stat; past.week = null;
+    render();
+    return;
+  }
+  past.key = key; past.rows = null; past.notes = null;
+  past.failed = false; past.busy = true; past.stat = null;
+  past.week = null;
+  render();
+  const rows = [];
+  let notes = null;
+  let failures = 0;
+  for (let ask = 1; ask < week; ask += 1) {
+    let answer = null;
+    try {
+      answer = await picksAsk("/history?season=" +
+        encodeURIComponent(season) + "&week=" + encodeURIComponent(ask) +
+        "&player_id=" + encodeURIComponent(player.player_id),
+        readToken() || "", null);
+    } catch (err) {
+      failures += 1;
+    }
+    /* He may have walked off this man while the weeks were arriving. */
+    if (nav.proj.past.key !== key) return;
+    if (!answer) continue;
+    if (!notes) notes = projPastNotes(answer);
+    (answer.rows || []).forEach(function (row) {
+      if (row && row.player_id === player.player_id) {
+        rows.push(Object.assign({ week: ask }, row));
+      }
+    });
+  }
+  const failed = !rows.length && failures > 0;
+  const stat = projPastDefaultStat(player, rows);
+  past.cache[key] = { rows: rows, notes: notes, failed: failed,
+    stat: stat };
+  past.rows = rows; past.notes = notes; past.failed = failed;
+  past.busy = false; past.stat = stat;
+  render();
+}
+
+/* The four fixed sentences that ride every answer, kept as the service
+ * wrote them. */
+function projPastNotes(answer) {
+  return [answer.range_note, answer.forecast_note, answer.scope_note,
+    answer.source_note];
+}
+
+/* Asked for on the same rule as the document itself: once, the first
+ * time a reader opens a man's page. */
+function syncProjPast() {
+  if (DEMO || currentRoute() !== "projection") return;
+  const player = projSelected();
+  if (player) loadProjPast(player);
+}
+
+/* The stats his rows actually carry, in the order the service listed
+ * them, each with the service's own word for it. */
+function projPastStats(rows) {
+  const seen = [];
+  (rows || []).forEach(function (row) {
+    const found = seen.some(function (held) {
+      return held.stat === row.stat;
+    });
+    if (!found) seen.push({ stat: row.stat, word: projPastWord(row) });
+  });
+  return seen;
+}
+
+function projPastWord(row) {
+  const shared = projShared();
+  return shared ? shared.statWordOf(row) : String(row.stat || "");
+}
+
+function projPastDefaultStat(player, rows) {
+  const stats = projPastStats(rows);
+  const wanted = PROJ_PAST_HEADLINE[
+    String((player || {}).pos || "").toUpperCase()];
+  const has = stats.some(function (held) { return held.stat === wanted; });
+  if (wanted && has) return wanted;
+  return stats.length ? stats[0].stat : null;
+}
+
+/* ONE WEEK, SAID IN WORDS, and the same words are the chart mark's
+ * label, the button's label and the caption. A week with no actual says
+ * the service's own sentence about why. */
+function projPastWords(row) {
+  const shared = projShared();
+  if (!shared) return "";
+  const found = shared.forecastOf(row);
+  const bits = [WEEK_WORD + row.week];
+  if (found && found.mean !== null) {
+    bits.push(PROJ_PAST_SAID + shared.tidy(found.mean) +
+      (found.lo !== null && found.hi !== null
+        ? " (" + PROJ_PAST_LIKELY + shared.tidy(found.lo) + "–" +
+          shared.tidy(found.hi) + ")"
+        : ""));
+  }
+  const actual = shared.numberOr(row.actual);
+  if (actual === null) {
+    if (row.sentence) bits.push(row.sentence);
+  } else {
+    bits.push(PROJ_PAST_ACTUAL + shared.tidy(actual));
+    const side = found
+      ? shared.rangeSide(found.lo, found.hi, actual) : null;
+    if (side) bits.push(PROJ_PAST_SIDE[side]);
+  }
+  return bits.join(" · ");
+}
+
+/* THE CHART: one inline drawing, no library, and its own scale — zero
+ * to the widest of the high ends and the actuals, with a tenth of head
+ * room. A bar from the low end to the high end, a tick at the middle
+ * and the actual as a dot coloured by the shared within-range test.
+ *
+ * EVERY MARK IS OPTIONAL AND INDEPENDENT. A week awaiting its result
+ * draws its bar and tick with no dot; a week we had no projection for
+ * draws the dot alone; a week with neither draws its label and nothing
+ * else. Nothing is filled in at zero. */
+const PROJ_CHART_W = 300;
+const PROJ_CHART_H = 136;
+const PROJ_CHART_LEFT = 30;
+const PROJ_CHART_TOP = 8;
+const PROJ_CHART_FOOT = 20;
+
+/* A SCALE WITH ROUND NUMBERS UP ITS SIDE. The three labelled values are
+ * zero, half the top and the top, so the top is picked off a short
+ * ladder of round steps — 1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8 and 10 at
+ * whatever size the numbers are — and the first rung at or above the
+ * padded maximum wins. Every rung halves to a round number too, so
+ * "0 / 75 / 150" is drawn where "0 / 61.6 / 123.2" used to be.
+ *
+ * IT CHANGES NO MARK'S MEANING. It is the axis the marks are placed
+ * against; where each bar, tick and dot sits is still that week's own
+ * stored number over this scale. */
+const PROJ_NICE_STEPS = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+
+function projNiceTop(value) {
+  if (!(value > 0)) return 0;
+  const size = Math.pow(10, Math.floor(Math.log10(value)));
+  for (let index = 0; index < PROJ_NICE_STEPS.length; index += 1) {
+    const rung = PROJ_NICE_STEPS[index] * size;
+    if (rung >= value) return rung;
+  }
+  return size * 10;
+}
+
+function projPastChart(weeks) {
+  const shared = projShared();
+  if (!shared || !weeks.length) return "";
+  let peak = 0;
+  weeks.forEach(function (row) {
+    const found = shared.forecastOf(row);
+    if (found && found.hi !== null) peak = Math.max(peak, found.hi);
+    /* The tick is the published middle, so the scale holds it too: a
+     * middle above its own high end would otherwise mark the very top
+     * of the track whatever its value. */
+    if (found && found.mean !== null) peak = Math.max(peak, found.mean);
+    const actual = shared.numberOr(row.actual);
+    if (actual !== null) peak = Math.max(peak, actual);
+  });
+  if (!(peak > 0)) return "";
+  const top = projNiceTop(peak * 1.1);
+  const span = PROJ_CHART_W - PROJ_CHART_LEFT - 8;
+  const base = PROJ_CHART_H - PROJ_CHART_FOOT;
+  const step = span / weeks.length;
+  const place = function (value) {
+    const part = Math.max(0, Math.min(1, value / top));
+    return (base - part * (base - PROJ_CHART_TOP)).toFixed(1);
+  };
+  const grid = [1, 0.5, 0].map(function (part) {
+    /* THE LINE IS DRAWN AT THE NUMBER BESIDE IT. A label rounds to one
+     * decimal, so the gridline takes the rounded value rather than the
+     * exact half — otherwise a half of 0.125 draws a line at 0.125 and
+     * writes "0.1" next to it. */
+    const value = shared.shown(top * part);
+    return '<line class="pastgrid" x1="' + PROJ_CHART_LEFT + '" y1="' +
+      place(value) + '" x2="' + (PROJ_CHART_LEFT + span) + '" y2="' +
+      place(value) + '"></line><text class="pastlab" x="' +
+      (PROJ_CHART_LEFT - 4) + '" y="' + (Number(place(value)) + 3) +
+      '" text-anchor="end">' + esc(shared.tidy(value)) + '</text>';
+  }).join("");
+  const marks = weeks.map(function (row, index) {
+    const at = PROJ_CHART_LEFT + step * (index + 0.5);
+    const found = shared.forecastOf(row);
+    /* THE TICK MARKS THE NUMBER THE WORDS STATE. The caption and the
+     * line under the chart both say the published middle — the mean —
+     * so the tick is that, and the stored midpoint only stands in where
+     * the generation published no mean. A tick at one number beside a
+     * sentence quoting another is the chart arguing with itself. */
+    const middle = found && found.mean !== null ? found.mean
+      : shared.numberOr(row.forecast && row.forecast.p50);
+    const actual = shared.numberOr(row.actual);
+    const side = found ? shared.rangeSide(found.lo, found.hi, actual) : null;
+    const bar = found && found.lo !== null && found.hi !== null
+      ? '<line class="pastbar" x1="' + at.toFixed(1) + '" y1="' +
+        place(found.hi) + '" x2="' + at.toFixed(1) + '" y2="' +
+        place(found.lo) + '"></line>' : "";
+    const tick = middle === null ? ""
+      : '<line class="pasttick" x1="' + (at - 7).toFixed(1) + '" y1="' +
+        place(middle) + '" x2="' + (at + 7).toFixed(1) + '" y2="' +
+        place(middle) + '"></line>';
+    const dot = actual === null ? ""
+      : '<circle class="pastdot ' + (side === "above" ? "up"
+        : side === "below" ? "dn" : "in") + '" cx="' + at.toFixed(1) +
+        '" cy="' + place(actual) + '" r="3.5"></circle>';
+    return '<g role="img" aria-label="' + esc(projPastWords(row)) +
+      '">' + bar + tick + dot + '<text class="pastlab" x="' +
+      at.toFixed(1) + '" y="' + (PROJ_CHART_H - 6) +
+      '" text-anchor="middle">' + esc(PROJ_WEEK_SHORT + row.week) +
+      '</text></g>';
+  }).join("");
+  return '<svg class="pastchart" viewBox="0 0 ' + PROJ_CHART_W + ' ' +
+    PROJ_CHART_H + '" role="group" aria-label="' + esc(PROJ_PAST_HEAD) +
+    '">' + grid + marks + '</svg>';
+}
+
+/* The weeks as real buttons under the chart, and the caption for the
+ * one chosen. The newest week is the one shown until he taps another. */
+function projPastWeeks(weeks) {
+  const chosen = projPastWeek(weeks);
+  const row = weeks.filter(function (held) {
+    return held.week === chosen;
+  })[0];
+  return '<div class="pastweeks">' + weeks.map(function (held) {
+    return '<button class="pastweek' +
+      (held.week === chosen ? " on" : "") +
+      '" data-act="proj-week" data-week="' + esc(held.week) +
+      '" aria-pressed="' + (held.week === chosen) + '" aria-label="' +
+      esc(projPastWords(held)) + '">' +
+      esc(PROJ_WEEK_SHORT + held.week) + '</button>';
+  }).join("") + '</div>' +
+    (row ? '<div class="pastcap">' + esc(projPastWords(row)) + '</div>'
+      : "");
+}
+
+function projPastWeek(weeks) {
+  const held = numberOrNull(nav.proj.past.week);
+  const there = weeks.some(function (row) { return row.week === held; });
+  if (there) return held;
+  return weeks.length ? weeks[weeks.length - 1].week : null;
+}
+
+/* THE LINE PER WEEK, in the D-185 helpers' own words — the same
+ * sentences the played card says about the same rows. */
+function projPastTable(weeks) {
+  const shared = projShared();
+  if (!shared) return "";
+  return '<div class="pasttable">' + weeks.map(function (row) {
+    const said = shared.projectionWords(row);
+    const actual = shared.numberOr(row.actual);
+    return '<div class="pastrow"><span class="pastrowwk">' +
+      esc(WEEK_WORD + row.week) + '</span>' +
+      (said ? '<span>' + esc(said) + '</span>' : "") +
+      (actual === null
+        ? (row.sentence ? '<span>' + esc(row.sentence) + '</span>' : "")
+        : '<span>' + esc(PROJ_PAST_ACTUAL + shared.tidy(actual)) +
+          '</span>') +
+      (shared.rangeWords(row)
+        ? '<span>' + esc(shared.rangeWords(row)) + '</span>' : "") +
+      '</div>';
+  }).join("") + '</div>';
+}
+
+function projPastChips(stats, chosen) {
+  if (stats.length < 2) return "";
+  return '<div class="pastchips" role="group" aria-label="' +
+    esc(PROJ_PAST_HEAD) + '">' + stats.map(function (held) {
+      return '<button class="pastchip" data-act="proj-stat" ' +
+        'data-stat="' + esc(held.stat) + '" aria-pressed="' +
+        (held.stat === chosen) + '">' + esc(held.word) + '</button>';
+    }).join("") + '</div>';
+}
+
+function projPast(player) {
+  if (DEMO || !projShared()) return "";
+  const past = nav.proj.past;
+  const head = '<div class="card"><div class="overline">' +
+    esc(PROJ_PAST_HEAD) + '</div>';
+  const body = function (line) {
+    return head + '<div class="cardbody">' + esc(line) + '</div></div>';
+  };
+  const key = projPastKey(player);
+  /* No season on the run is no season to ask about, and a card that sat
+   * on "looking it up" for ever would be a lie about what is happening. */
+  if (!key) return "";
+  if (past.key !== key || past.busy) return body(PROJ_PAST_LOADING);
+  if (past.failed) return body(PROJ_PAST_OFFLINE);
+  const rows = past.rows || [];
+  if (!rows.length) return body(PROJ_PAST_NONE);
+  const stats = projPastStats(rows);
+  const chosen = stats.some(function (held) {
+    return held.stat === past.stat;
+  }) ? past.stat : projPastDefaultStat(player, rows);
+  const weeks = rows.filter(function (row) {
+    return row.stat === chosen;
+  }).sort(function (left, right) { return left.week - right.week; });
+  return head + projPastChips(stats, chosen) + projPastChart(weeks) +
+    projPastWeeks(weeks) + projPastTable(weeks) +
+    disclosure(past.notes || []) + '</div>';
+}
+
 function projProvenance() {
   const run = (nav.projections && nav.projections.run) || {};
   if (!run.generated_ts) return "";
@@ -8433,13 +9374,19 @@ function renderProjection() {
     esc(player.name) + '</span><span class="expteam">' +
     esc(meta.join(" · ")) + '</span></div>' +
     '<div class="overline">' + esc(PROJECTED) + '</div>' +
-    projStatline(player) + '</div>' +
+    projStatline(player) +
+    /* m4.9 V2: what he has actually banked, directly under what we
+     * projected, while his game is running or once it is over. */
+    projLiveRow(player) + '</div>' +
     '<div class="card"><div class="overline">' +
     esc(PROJ_RESULTS_HEAD) + '</div>' +
     /* sec 8a: two paragraphs explaining a chart the reader can see
      * become one line and a tap. Both sentences are inside, whole. */
     explainer(SHORT_BREAKDOWN, [PROJ_MOVED_NOTE, PROJ_LIKELY_NOTE]) +
     projResults(player) + '</div>' +
+    /* m4.9 V1: and what happened in the games he has already played,
+     * after the results card the spec places it under. */
+    projPast(player) +
     projContext(player) + projChain(player) + projProvenance() +
     '</div>';
 }
@@ -11459,6 +12406,10 @@ function render() {
   syncDfs();
   /* U7: and the breakdown document, on the same rule. */
   syncProjections();
+  /* m4.9: his past games, asked for once when his page is opened, and
+   * the live board behind the list and his own live row. */
+  syncProjPast();
+  syncProjLive();
   /* A3: and the account, on the same rule again — asked for ONCE,
    * the first time that screen is drawn, so a reader who never opens
    * it never asks the service who he is. */
@@ -11530,6 +12481,41 @@ function pickGame(index) {
  * roster and the search are scoped to the game on screen, so changing
  * the game clears what was typed: a query that survived the move
  * would be filtering a roster the reader never chose. */
+/* m4.9 V3's two controls, and V1's two. Each is a choice about what is
+ * DRAWN — none of them asks the service anything, and none of them
+ * changes a number. */
+function setProjPos(pos) {
+  const wanted = String(pos || "");
+  if (wanted !== PROJ_POS_ALL && PROJ_POS_FILTER.indexOf(wanted) === -1) {
+    return;
+  }
+  if (nav.proj.pos === wanted) return;
+  nav.proj.pos = wanted;
+  render();
+}
+
+function setProjOrder(sort) {
+  const known = PROJ_ORDERS.some(function (row) { return row[0] === sort; });
+  if (!known || nav.proj.sort === sort) return;
+  nav.proj.sort = sort;
+  render();
+}
+
+function setProjPastStat(stat) {
+  const rows = nav.proj.past.rows || [];
+  if (!rows.some(function (row) { return row.stat === stat; })) return;
+  nav.proj.past.stat = stat;
+  nav.proj.past.week = null;
+  render();
+}
+
+function setProjPastWeek(week) {
+  const rows = nav.proj.past.rows || [];
+  if (!rows.some(function (row) { return row.week === week; })) return;
+  nav.proj.past.week = week;
+  render();
+}
+
 function stepProjGame(step) {
   const count = projGames().length;
   if (!count) return;
@@ -11603,6 +12589,14 @@ function onClick(event) {
     stepGame(Number(target.getAttribute("data-step")) || 1);
   } else if (act === "proj-game") {
     stepProjGame(Number(target.getAttribute("data-step")) || 1);
+  } else if (act === "proj-pos") {
+    setProjPos(target.getAttribute("data-pos"));
+  } else if (act === "proj-sort") {
+    setProjOrder(target.getAttribute("data-sort"));
+  } else if (act === "proj-stat") {
+    setProjPastStat(target.getAttribute("data-stat"));
+  } else if (act === "proj-week") {
+    setProjPastWeek(Number(target.getAttribute("data-week")));
   } else if (act === "view") {
     setView(target.getAttribute("data-view"));
   } else if (act === "row") {
@@ -12163,6 +13157,11 @@ document.addEventListener("visibilitychange", function () {
   onboardingPreview?.visibility();
   syncLivePoll();
   syncRecord();
+  /* m4.9 V2: the player page's poll follows the tab as well as the
+   * screen. A tick that lands while the tab is hidden clears the
+   * interval, so without this the game stopped updating for good the
+   * first time somebody looked at something else. */
+  syncProjLive();
 });
 
 /* Boot order matters: the address is reconciled and normalised

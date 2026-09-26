@@ -7,9 +7,9 @@
     "snapshot_kind": "refresh",
     "source": "engine",
     "engine_version": "m1.2b-2 (D-070 build; live shadow m1.2e / D-074; D-084 adopt) + C2 pass rate (m1.2x) + YPA per attempt (m1.2z) + E-SP-2 prior + E-SP-3a K + E-SP-T tripwire + Layer A repaired (Nacua clause) + m1.2y roster rule + m1.2i top-cell raise x1.0434",
-    "generation_id": "2026w03-20260925T175628Z",
-    "generated_ts": "2026-09-25T17:56:28.708032+00:00",
-    "cutoff_ts": "2026-09-25T17:56:28.708032+00:00",
+    "generation_id": "2026w03-20260926T170748Z",
+    "generated_ts": "2026-09-26T17:07:48.376254+00:00",
+    "cutoff_ts": "2026-09-26T17:07:48.376254+00:00",
     "disclosure": "Known bias (D-070): top-tier rushing runs ~2-4% low (star carry share \u22125.6%). Corrections are tested weekly against live results before adoption.",
     "week_open_generation_id": "2026w03-20260922T173711Z",
     "week_open_generated_ts": "2026-09-22T17:37:11.575115+00:00"
@@ -90,7 +90,7 @@
       "td_rate_rushing"
     ],
     "pooled_label": "league rate",
-    "generation_id": "2026w03-20260925T175628Z",
+    "generation_id": "2026w03-20260926T170748Z",
     "absent_reason": null
   },
   "players": [
@@ -294,7 +294,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.225
+      "p_ceiling": 0.23
     },
     {
       "player_id": "00-0036265",
@@ -698,7 +698,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2175
+      "p_ceiling": 0.22
     },
     {
       "player_id": "00-0037005",
@@ -900,7 +900,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0525
+      "p_ceiling": 0.0575
     },
     {
       "player_id": "00-0038102",
@@ -1304,7 +1304,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.1525
+      "p_ceiling": 0.15
     },
     {
       "player_id": "00-0039342",
@@ -1411,11 +1411,11 @@
           "reason": null
         },
         "injury_designation": {
-          "value": "listed",
+          "value": "Questionable",
           "reason": null
         },
         "injury_trend": {
-          "value": "dnp_flat",
+          "value": "lp_up",
           "reason": null
         },
         "line_label": {
@@ -1506,7 +1506,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.06
+      "p_ceiling": 0.0475
     },
     {
       "player_id": "00-0039344",
@@ -1708,7 +1708,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0625
+      "p_ceiling": 0.0575
     },
     {
       "player_id": "00-0039491",
@@ -1815,11 +1815,11 @@
           "reason": null
         },
         "injury_designation": {
-          "value": "listed",
+          "value": "Questionable",
           "reason": null
         },
         "injury_trend": {
-          "value": "dnp_down",
+          "value": "lp_flat",
           "reason": null
         },
         "line_label": {
@@ -1910,7 +1910,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.34
+      "p_ceiling": 0.3
     },
     {
       "player_id": "00-0040124",
@@ -2112,7 +2112,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.3375
+      "p_ceiling": 0.315
     },
     {
       "player_id": "00-0040187",
@@ -2314,7 +2314,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.0125
+      "p_ceiling": 0.015
     },
     {
       "player_id": "00-0033537",
@@ -2516,7 +2516,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.12
+      "p_ceiling": 0.135
     },
     {
       "player_id": "00-0036407",
@@ -2920,7 +2920,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.005
+      "p_ceiling": 0.0075
     },
     {
       "player_id": "00-0038794",
@@ -3122,7 +3122,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.005
+      "p_ceiling": 0.0025
     },
     {
       "player_id": "00-0040466",
@@ -3526,7 +3526,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2425
+      "p_ceiling": 0.24
     },
     {
       "player_id": "00-0040782",
@@ -3728,7 +3728,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.02
+      "p_ceiling": 0.0225
     },
     {
       "player_id": "00-0040784",
@@ -3839,7 +3839,7 @@
           "reason": null
         },
         "injury_trend": {
-          "value": "lp_flat",
+          "value": "fp_up",
           "reason": null
         },
         "line_label": {
@@ -3930,7 +3930,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2225
+      "p_ceiling": 0.1975
     },
     {
       "player_id": "00-0041037",
@@ -4132,7 +4132,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.29
+      "p_ceiling": 0.2475
     },
     {
       "player_id": "00-0041547",
@@ -4334,7 +4334,7 @@
         }
       },
       "td_rates_pooled": true,
-      "p_ceiling": 0.2125
+      "p_ceiling": 0.1975
     }
   ]
 }
