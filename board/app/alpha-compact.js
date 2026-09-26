@@ -6,7 +6,8 @@
   const providers = new Map();
   const fresh = () => ({selected: null, form: null, error: "", errors: {},
     busy: false, receipt: null, conflict: false, legacyDraft: null, query: "", capabilities: null,
-    playedOpen: false, playedAsked: false, playedFailed: false, played: null});
+    playedOpen: false, playedAsked: false, playedFailed: false, played: null,
+    playedCards: {}});
   const state = fresh();
   const copy = value => JSON.parse(JSON.stringify(value));
   const esc = value => h.esc(value);
@@ -144,6 +145,89 @@
       : found.actual < line ? 'went Under' : 'landed on the line · push';
     return word + ' ' + p.line + ' → ' + plainNumber(found.actual) + ' · ' + landed;
   }
+  /* m4.7 B4 — TAP A PLAYED CARD TO SEE OUR PROJECTION AGAINST IT
+   * (owner, 2026-09-26, D-185).
+   *
+   * Everything below reads the SAME `/history` answer the section
+   * already loaded. There is no second request, no new endpoint and
+   * no arithmetic beyond two declared display rules: the rounding
+   * these numbers are shown at, and whether the final sits between
+   * the two published ends of the range. Both are comparisons of
+   * numbers the service published; neither derives a probability.
+   *
+   * A played card still cannot be selected and still has no bet
+   * control. It opens, and that is all it does. */
+
+  /* THE ROUNDING, DECLARED, AND THERE IS ONLY ONE OF IT. The archive
+   * publishes means to many places and nobody reads "231.37 passing
+   * yards" as a projection, so a number is shown to one decimal, as a
+   * whole number when the decimal is zero.
+   *
+   * `shown` IS THE NUMBER AND `tidy` IS ITS TEXT, and everything that
+   * compares these values compares what `shown` returns. A card that
+   * rounded 4.96 to "5" for the reader and then judged an actual of 5
+   * against 4.96 said "likely 2–5" and "outside our range" one line
+   * apart (PR #425). The two cannot diverge while there is one
+   * helper and the comparison uses it. */
+  function shown(value) {
+    const number = Math.round(Number(value) * 10) / 10;
+    return Number.isFinite(number) ? number : null;
+  }
+  function tidy(value) {
+    const number = shown(value);
+    return number === null ? '' : String(number);
+  }
+  function playedStats(row) {
+    const person = state.played && state.played[String(row.id)];
+    return person ? person.stats : null;
+  }
+  function statWordOf(hrow) {
+    return String((hrow && hrow.stat_word) || marketWord(hrow && hrow.stat) || '');
+  }
+  /* `Number(null)` IS ZERO, and the service says "no number" with a
+   * null: `history.quantiles_of_row` returns `{p10: null, p90: null}`
+   * for a stat whose generation stored no draws. Coerced, that prints
+   * a range of 0 to 0 — a published range, invented. Absent is
+   * absent, and it is checked before anything is coerced. */
+  function numberOr(value) {
+    if (value === null || value === undefined || value === '') return null;
+    const number = Number(value);
+    return Number.isFinite(number) ? number : null;
+  }
+  function forecastOf(hrow) {
+    const held = hrow && hrow.forecast;
+    if (!held) return null;
+    return {mean: numberOr(held.mean), lo: numberOr(held.p10),
+      hi: numberOr(held.p90)};
+  }
+  function finalActual(hrow) {
+    if (!hrow || hrow.status !== 'final') return null;
+    return numberOr(hrow.actual);
+  }
+  /* "We projected 231 passing yards (likely 180–285)." A published
+   * middle with no published ends says the middle and nothing about
+   * a range, rather than inventing one. */
+  function projectionWords(hrow) {
+    const found = forecastOf(hrow);
+    if (!found || found.mean === null) return '';
+    const range = found.lo !== null && found.hi !== null
+      ? ' (likely ' + tidy(found.lo) + '–' + tidy(found.hi) + ')' : '';
+    return 'We projected ' + tidy(found.mean) + ' ' + statWordOf(hrow) + range + '.';
+  }
+  /* ONE FACTUAL SENTENCE, and only when there is a range AND a final
+   * to hold against it. It is a statement about this one line; there
+   * is no count of them anywhere and never will be here. */
+  function rangeWords(hrow) {
+    const found = forecastOf(hrow), actual = finalActual(hrow);
+    if (!found || found.lo === null || found.hi === null || actual === null) return '';
+    // THE NUMBERS ON THE CARD, not the ones behind them.
+    const lo = shown(found.lo), hi = shown(found.hi), landed = shown(actual);
+    if (lo === null || hi === null || landed === null) return '';
+    return landed >= lo && landed <= hi
+      ? 'That landed inside our range.' : 'That landed outside our range.';
+  }
+  const PLAYED_AWAITING = 'The result arrives after the final whistle.';
+
   async function loadPlayed() {
     if (h.isDemo() || state.playedAsked || !h.request || !h.week) return;
     const week = h.week();
@@ -362,16 +446,63 @@
       outlook({player_id: row.id, market: p.market}) +
       '<div class="ef-card-body" id="ac-body-' + index + '"' + (open ? '' : ' hidden') + '>' + (open ? form() : '') + '</div></article>';
   }
-  /* The played card is the same face with no control on it: no
-   * toggle, no select, no body to open. */
-  function playedCard(row) {
-    const p = row.prop;
+  /* m4.7 B4 — WHAT AN OPEN PLAYED CARD SAYS.
+   *
+   * Our projection for the line's own stat, the one factual sentence
+   * about the range, and the rest of that player's week. Every value
+   * comes off the `/history` rows already in hand. */
+  function playedRow(row) {
+    const stats = playedStats(row);
+    return stats ? stats[marketOf(row)] : null;
+  }
+  function otherStats(row) {
+    const stats = playedStats(row);
+    if (!stats) return '';
+    const mine = marketOf(row);
+    const rest = Object.keys(stats).filter(key => key !== mine).map(key => stats[key]);
+    if (!rest.length) return '';
+    return '<h4 class="ac-played-more-head">More from this game</h4><ul class="ac-played-more">' +
+      rest.map(hrow => {
+        const found = forecastOf(hrow), actual = finalActual(hrow);
+        const said = actual !== null && found && found.mean !== null
+          ? 'projected ' + tidy(found.mean) + ' · actual ' + tidy(actual)
+          /* NOT A ZERO, EVER. A row the service could not settle
+           * carries its own sentence and that sentence is shown. */
+          : String(hrow.sentence || '');
+        return '<li data-stat="' + esc(hrow.stat) + '"><span class="ac-played-more-stat">' +
+          esc(statWordOf(hrow)) + '</span><span class="ac-played-more-said">' + esc(said) + '</span></li>';
+      }).join('') + '</ul>';
+  }
+  function playedBody(row) {
+    const found = playedResult(row);
+    /* Nothing was read, so nothing is said beyond the face's own
+     * sentence. A projection with no result beside it would read as
+     * an answer. */
+    if (found.state === 'unknown') return '';
+    const hrow = playedRow(row);
+    const lines = [projectionWords(hrow)];
+    if (found.state === 'pending') lines.push(PLAYED_AWAITING);
+    else if (found.state === 'none') lines.push(String((hrow && hrow.sentence) || PLAYED_NONE));
+    else lines.push(rangeWords(hrow));
+    return lines.filter(Boolean).map(said => '<p>' + esc(said) + '</p>').join('') +
+      (found.state === 'unknown' ? '' : otherStats(row));
+  }
+  /* The played card OPENS, and opening is all it does: the control
+   * carries its own action, never `ac-select`, so no path from here
+   * reaches a bet. */
+  function playedKey(row) { return String(row.id) + '|' + String(row.prop.market); }
+  function playedCard(row, index) {
+    const p = row.prop, open = !!state.playedCards[playedKey(row)];
+    const body = 'ac-played-body-' + index;
     return '<article class="ef-card ac-played-card" data-played="true" data-player-id="' + esc(row.id) + '" data-market="' + esc(p.market) + '">' +
-      '<div class="ef-card-toggle ac-played-face">' +
+      '<button class="ef-card-toggle ac-played-face" data-act="ac-played-open" data-value="' + esc(playedKey(row)) +
+      '" aria-expanded="' + open + '" aria-controls="' + body + '">' +
       '<span class="ef-card-name">' + esc(row.person.name) + '</span><span class="ef-card-line">' + esc(sideWord(p.lean) + ' ' + p.line + ' ' + marketWord(p.market_label || p.market)) + '</span>' +
       '<span class="ef-card-rating"><span class="ef-assessment">Published estimate</span><span class="ef-card-chance"><strong>' + chance(p.model_p) + '</strong><small>Estimated chance</small></span></span>' +
-      '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></div>' +
-      '<p class="ac-played-result">' + esc(playedWords(row)) + '</p></article>';
+      '<span class="ef-market-context"><span class="ac-team-pill">' + esc(row.person.team) + '</span><span>' + esc(row.game.away + ' at ' + row.game.home) + '</span></span></button>' +
+      '<p class="ac-played-result">' + esc(playedWords(row)) + '</p>' +
+      '<div class="ef-card-body ac-played-body" id="' + body + '"' + (open ? '' : ' hidden') + '>' +
+      (open ? playedBody(row) : '') + '</div></article>';
   }
   function playedSection(played) {
     if (!played.length) return '';
@@ -380,7 +511,7 @@
       '<h2 class="ac-played-heading">' + button('played-toggle', '<span>Already played · ' + played.length + '</span>',
         null, ' class="ac-played-toggle" aria-expanded="' + open + '" aria-controls="ac-played-list"') + '</h2>' +
       '<div class="ac-played-list" id="ac-played-list"' + (open ? '' : ' hidden') + '>' +
-      played.map(({row}) => playedCard(row)).join('') + '</div></section>';
+      played.map(({row}, at) => playedCard(row, at)).join('') + '</div></section>';
   }
   /* The empty Upcoming list says WHICH emptiness it is: a week that
    * has finished naming when the next one arrives, or a search that
@@ -458,6 +589,14 @@
     else if (act === 'read' && state.form) h.openRead(state.form.player_id, state.form.market, {line:Number(state.form.line),side:state.form.side});
     else if (act === 'refresh') return h.loadPicks(true);
     else if (act === 'search') h.render();
+    else if (act === 'played-open') {
+      /* Tap opens, tap again closes, and the set lives for the
+       * session only — nothing about it is stored anywhere. */
+      const key = String(value);
+      if (state.playedCards[key]) delete state.playedCards[key];
+      else state.playedCards[key] = true;
+      h.render();
+    }
     else if (act === 'played-toggle') {
       state.playedOpen = !state.playedOpen;
       /* OPENING THE SECTION IS THE RETRY, and it is the whole of it:
@@ -487,6 +626,6 @@
   }
   const api = {configure,register,resetMember,state,capability,reason,loadCapabilities,select,input,
     selectedChance,pending,save,retry,receipt,render,action,sync,marketWord,reviewDraft,unavailable,
-    started,playedWords};
+    started,playedWords,playedBody};
   root.AlphaCompact = api;
 })(typeof window !== 'undefined' ? window : globalThis);

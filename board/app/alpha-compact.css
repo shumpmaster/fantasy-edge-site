@@ -52,3 +52,14 @@
 .consumer-app .ef-page .ac-played-card{background:none;border:1px solid var(--rule);opacity:.82}
 .consumer-app .ef-page .ac-played-card :is(.ef-card-name,.ef-card-line,.ef-card-chance strong){color:var(--muted)}
 .consumer-app .ac-played-result{margin:0;padding:0 12px 11px;font-size:13px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
+/* m4.7 B4 — an opened played card: our projection against what
+   happened, and the rest of that player's game. No control in here
+   leads to a bet. */
+.consumer-app .ef-page .ac-played-card .ac-played-face{width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0}
+.consumer-app .ac-played-body:not([hidden]){padding:0 12px 12px;border-top:1px solid var(--rule);margin-top:2px}
+.consumer-app .ac-played-body p{margin:9px 0 0;font-size:13px;line-height:1.5;color:var(--ink);overflow-wrap:anywhere}
+.consumer-app .ac-played-more-head{margin:13px 0 5px;font-size:12px;font-weight:600;color:var(--muted)}
+.consumer-app .ac-played-more{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.consumer-app .ac-played-more li{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:space-between;font-size:12px;line-height:1.45}
+.consumer-app .ac-played-more-stat{font-weight:600;color:var(--ink)}
+.consumer-app .ac-played-more-said{color:var(--muted);text-align:right;min-width:0;overflow-wrap:anywhere}
