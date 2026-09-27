@@ -2,7 +2,7 @@
 .consumer-app .ac-search{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 22px}
 .ac-search label{flex-basis:100%;font-size:12px;color:var(--muted)}
 .ac-search input{flex:1;min-width:0;border:1px solid var(--rule);border-radius:12px;padding:11px;background:#fffdf7;color:var(--ink)}
-.ac-search button,.ac-recovery button{min-height:44px;border:1px solid var(--rule);border-radius:10px;padding:10px 14px;background:#e5eddf;color:#234436}
+.ac-search button,.ac-recovery button,.consumer-app .ef-page .ac-clear{min-height:44px;border:1px solid var(--rule);border-radius:10px;padding:10px 14px;background:#e5eddf;color:#234436}
 .consumer-app .ac-team-pill{display:inline-flex;align-items:center;justify-content:center;min-height:24px;min-width:38px;padding:2px 9px;border-radius:20px;background:#e1eadd;color:#264735;font-weight:600}
 .ac-record{padding:8px 0 12px}.ac-record h2{font-size:20px;margin:6px 0}.ac-record>p{font-size:12px;line-height:1.5}
 .ac-record .ef-edit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -63,3 +63,57 @@
 .consumer-app .ac-played-more li{display:flex;flex-wrap:wrap;gap:4px 10px;justify-content:space-between;font-size:12px;line-height:1.45}
 .consumer-app .ac-played-more-stat{font-weight:600;color:var(--ink)}
 .consumer-app .ac-played-more-said{color:var(--muted);text-align:right;min-width:0;overflow-wrap:anywhere}
+/* m4.10 C1/C2/C3 + S1/F1/F2 — the Bets page's card visuals and its one
+   row of controls. The visuals sit outside the card's toggle, so the
+   tap target is still the card's face; the chart's tap targets are real
+   buttons over the drawing, the way the outlook history chart's are. */
+.consumer-app .ac-controls{display:flex;flex-direction:column;gap:8px;margin:0 0 16px}
+.consumer-app .ac-controls .seg{flex-wrap:wrap}
+.consumer-app .ac-sort button,.consumer-app .ac-chips button{min-height:44px;font-size:13px}
+/* The two selects share a row where there is room, and stack where
+   there is not, so the controls leave the first card on the screen. */
+.consumer-app .ac-picks{display:grid;grid-template-columns:1fr;gap:8px}
+@media(min-width:360px){.consumer-app .ac-picks{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.consumer-app .ac-filter{font-size:12px;color:var(--muted);gap:4px}
+.consumer-app .ac-filter select{min-height:44px}
+.consumer-app .ac-filters-on{margin:0;font-size:12px;line-height:1.5;color:var(--ink);overflow-wrap:anywhere}
+.consumer-app .ac-clear{align-self:flex-start}
+/* The visuals keep the card header's own horizontal padding, so the
+   caption and the bars start where the player's name does. */
+.consumer-app .ef-page .ac-visuals{display:flex;flex-direction:column;gap:2px;padding:0 12px 10px}
+.consumer-app .ac-shape{display:flex;flex-direction:column;gap:2px}
+.consumer-app .ac-shape .ef-caption{font-size:var(--type-meta);line-height:1.3}
+/* THE SHAPE FILLS THE CARD. The drawing is asked for at a card's width
+   and scaled to whatever the phone is; the line's label rides over its
+   own mark. Both are scoped to this block, so the pre-alpha Screen's
+   inline shapes are the size they always were. */
+.consumer-app .ac-shape-plot{position:relative;display:block;width:100%;padding-top:15px}
+.consumer-app .ac-shape-plot :is(.hist,.rangebar){display:block;width:100%}
+.consumer-app .ac-shape-plot svg{display:block;width:100%;height:auto}
+.consumer-app .ac-shape-line{position:absolute;top:0;font-size:var(--type-meta);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;transform:translateX(-50%)}
+.consumer-app .ac-shape-line.at-start{transform:none}
+.consumer-app .ac-shape-line.at-end{transform:translateX(-100%)}
+.consumer-app .ac-chances{display:flex;flex-direction:column}
+/* The card stays compact: these bars sit UNDER the headline chance and
+   must not push the next card off the screen at 320px. */
+.consumer-app .ac-chances .probrow{padding-top:3px;gap:2px}
+.consumer-app .ac-chances .probtrack{height:9px}
+.consumer-app .ac-chances .probband{height:9px}
+.consumer-app .ac-chances .probfill{top:2px;height:5px}
+.consumer-app .ac-chances .probtick{top:-2px;height:13px}
+.consumer-app .ac-chances .gapline{padding-top:4px;font-size:var(--type-meta)}
+.consumer-app .ac-chances .blindnote{padding-top:2px}
+.consumer-app .ac-ladder{padding:4px 0 10px}
+.consumer-app .ac-ladder h3{font-size:14px;font-weight:600;margin:0 0 6px}
+.consumer-app .ac-ladder-chart{position:relative;width:100%;aspect-ratio:288/118}
+.consumer-app .ac-ladder-chart svg{display:block;width:100%;height:100%;overflow:visible}
+.consumer-app .ac-ladder-chart text{font-family:inherit;font-size:10px;fill:var(--muted)}
+.consumer-app .ac-ladder-grid{stroke:var(--rule);stroke-width:1}
+.consumer-app .ac-ladder-main-mark{stroke:var(--heating);stroke-width:1.5;stroke-dasharray:3 2}
+.consumer-app .ac-ladder-curve{fill:none;stroke:var(--ink);stroke-width:2}
+.consumer-app .ac-ladder-dot{fill:var(--ink);stroke:none}
+.consumer-app .ac-ladder-dot.main{fill:var(--surface);stroke:var(--heating);stroke-width:2.5}
+.consumer-app .ac-ladder-dot.chosen{fill:var(--ink);stroke:var(--ink)}
+.consumer-app .ac-ladder-mark{position:absolute;top:0;height:70%;width:18px;margin-left:-9px;min-height:44px;border:0;padding:0;background:transparent;cursor:pointer}
+.consumer-app .ac-ladder-said{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--ink)}
+@media(prefers-reduced-motion:reduce){.consumer-app .ac-ladder-chart{transition:none!important;animation:none!important}}

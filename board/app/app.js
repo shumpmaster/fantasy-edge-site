@@ -996,7 +996,8 @@ const PROJ_NOT_IN_FILE =
 const PROJ_GENERATED = "Our numbers from ";
 
 /* ------------------------------------------------------------------
- * m4.9 — THE RICHER LIST, PAST GAMES, AND THE LIVE ROW (D-189)
+ * m4.9 — THE RICHER LIST, PAST GAMES, AND THE LIVE ROW
+ * (the m4.9 spec, docs/plan/PROJECTIONS_VISUALS_M49_SPEC.md)
  * ------------------------------------------------------------------
  * Three additions to this screen, and every one of them draws only
  * numbers something else computed: the list gains the headline stat
@@ -1014,7 +1015,8 @@ const PROJ_ORDER_LABEL = "Order";
 const PROJ_ORDER_PROJECTION = "Projection";
 /* THE SECOND ORDER, and its word is deliberately not the mockup's.
  * D-075 sec 0 deleted that mockup's own sort by name and the suite pins
- * the name out of this tree; what D-189 asks for is the ORDER, so the
+ * the name out of this tree; what the m4.9 spec
+ * (docs/plan/PROJECTIONS_VISUALS_M49_SPEC.md) asks for is the ORDER, so the
  * order is here under the words a reader would use for it. */
 const PROJ_ORDER_MOVED = "Biggest moves";
 const PROJ_SO_FAR = "So far ";
@@ -9424,11 +9426,34 @@ const HIST_W = 76;
 const HIST_H = 26;
 const HIST_GAP = 1;
 
-function histogram(prop, tall) {
+/* m4.10 C1 — WHERE THE LINE'S MARKER SITS, as a fraction of the
+ * drawing's width. Both shapes below place their marker with it and
+ * the Bets card puts the line's own label under the mark with it, so a
+ * label and the mark it names cannot come to point at different
+ * places. It is geometry: a published line on a published scale. */
+function shapeLineShare(prop) {
+  if (!prop) return null;
+  if (prop.distribution) {
+    const bars = prop.distribution;
+    if (!bars.length) return null;
+    return Math.min(bars.length, Math.ceil(prop.line)) / bars.length;
+  }
+  const band = prop.floor_median_ceiling;
+  if (!band || band.p10 === null || band.p90 === null) return null;
+  const lo = Math.min(band.p10, prop.line);
+  const hi = Math.max(band.p90, prop.line);
+  const span = (hi - lo) || 1;
+  return (prop.line - lo) / span;
+}
+
+/* `wide` is m4.10's one addition: a caller that has a full card to draw
+ * on may ask for the drawing at its own width. Left out, every number
+ * below is the one it always was. */
+function histogram(prop, tall, wide) {
   const bars = (prop && prop.distribution) || [];
   if (!bars.length) return "";
   const height = tall ? 120 : HIST_H;
-  const width = tall ? 300 : HIST_W;
+  const width = wide || (tall ? 300 : HIST_W);
   const peak = bars.reduce(function (held, bar) {
     return Math.max(held, bar.p);
   }, 0) || 1;
@@ -9448,10 +9473,8 @@ function histogram(prop, tall) {
       '" height="' + size.toFixed(1) + '" rx="1" fill="' +
       (past ? "var(--ink)" : "var(--track)") + '"></rect>';
   }).join("");
-  const marker = '<line x1="' +
-    (Math.min(bars.length, Math.ceil(prop.line)) * step).toFixed(1) +
-    '" y1="0" x2="' +
-    (Math.min(bars.length, Math.ceil(prop.line)) * step).toFixed(1) +
+  const markerAt = (shapeLineShare(prop) * width).toFixed(1);
+  const marker = '<line x1="' + markerAt + '" y1="0" x2="' + markerAt +
     '" y2="' + height + '" stroke="var(--heating)" ' +
     'stroke-width="1.5" stroke-dasharray="3 2"></line>';
   const labels = tall
@@ -9471,10 +9494,10 @@ function histogram(prop, tall) {
 /* sec 4's range bar, for the markets that carry no P(k): the 10th to
  * 90th percentile as a segment with the median as a dot. Every number
  * in it is one the exporter read off the grid. */
-function rangeBar(prop, tall) {
+function rangeBar(prop, tall, wide) {
   const band = prop && prop.floor_median_ceiling;
   if (!band || band.p10 === null || band.p90 === null) return "";
-  const width = tall ? 300 : HIST_W;
+  const width = wide || (tall ? 300 : HIST_W);
   const height = tall ? 34 : HIST_H;
   const lo = Math.min(band.p10, prop.line);
   const hi = Math.max(band.p90, prop.line);
@@ -9499,14 +9522,32 @@ function rangeBar(prop, tall) {
     '<circle cx="' + at(band.p50) + '" cy="' + mid +
     '" r="4" fill="var(--ink)"></circle>' +
     '<line x1="' + at(prop.line) + '" y1="2" x2="' + at(prop.line) +
+    /* ...and the marker's own place is `shapeLineShare`'s, which `at`
+     * restates for this drawing's inset track. */
     '" y2="' + (height - 2) + '" stroke="var(--heating)" ' +
     'stroke-width="1.5" stroke-dasharray="3 2"></line>' +
     '</svg></span>';
 }
 
-function shapeFor(prop, tall) {
-  if (prop && prop.distribution) return histogram(prop, tall);
-  return rangeBar(prop, tall);
+/* m4.10 C1 — THE RANGE BAR'S OWN CAPTION, IN WORDS. The three ends the
+ * bar draws, said in the words this file already uses for them, so the
+ * caption on a card and the label a screen reader speaks cannot come to
+ * describe different numbers. An end the generation did not publish is
+ * left out rather than printed as a nought. */
+function rangeEndsText(prop) {
+  const band = prop && prop.floor_median_ceiling;
+  if (!band) return "";
+  return [[PICK_FLOOR, band.p10], [PICK_MEDIAN, band.p50],
+    [PICK_CEILING, band.p90]]
+    .filter(function (pair) { return numberOrNull(pair[1]) !== null; })
+    .map(function (pair) {
+      return pair[0].toLowerCase() + " " + num(pair[1]);
+    }).join(" · ");
+}
+
+function shapeFor(prop, tall, wide) {
+  if (prop && prop.distribution) return histogram(prop, tall, wide);
+  return rangeBar(prop, tall, wide);
 }
 
 /* sec 4's probability bar: a track, the value as a fill, the
@@ -9581,8 +9622,12 @@ function screenRows() {
  * Biggest-gap order, or nowhere. In the Model-chance view the rows are
  * interleaved by design and there is no band to head, so the divider
  * does not appear at all. */
-function blindSpotDividerAt(rows) {
-  if (nav.sort !== SORT_GAP) return -1;
+function blindSpotDividerAt(rows, sort) {
+  /* m4.10 — A VIEW MAY NAME ITS OWN ORDER. The real Bets page keeps
+   * its sort in its own state rather than in `nav`, so it says which
+   * view it is drawing; the legacy Screen passes nothing and is read
+   * off `nav` exactly as before. */
+  if (sort === undefined ? nav.sort !== SORT_GAP : sort !== SORT_GAP) return -1;
   for (let index = 0; index < rows.length; index += 1) {
     if (isBlindSpot(rows[index].prop)) return index;
   }
@@ -11970,6 +12015,19 @@ function alphaCompact() {
     liveChart:liveChart,liveSwings:liveSwings,liveState:stateWord,statline:statline,
     angleOutlook:angleOutlook,scenarioMatches:scenarioMatches,
     scenariosOf:scenariosOf,angleMarker:ANGLE_MARKER,plainNote:plainNote,dfsBucket:bucketWords,
+    /* m4.10 — THE DRAWN PIECES AND THE RULES, REACHED RATHER THAN
+     * COPIED. The Bets page's cards, sort and blind-spot divider are
+     * the SAME drawings and the SAME thresholds the pre-alpha Screen
+     * and Pick used: one `isEdge`, one `isBlindSpot`, one `gapText`,
+     * one histogram, one range bar, one probability bar, and one rung
+     * lookup that never interpolates. A second copy of any of them is
+     * how two surfaces come to disagree about one line. */
+    histogram:histogram,rangeBar:rangeBar,shapeFor:shapeFor,probBar:probBar,
+    isEdge:isEdge,gapText:gapText,isBlindSpot:isBlindSpot,gapBand:gapBand,
+    blindSpotDividerAt:blindSpotDividerAt,blindSpotNote:BLIND_SPOT_NOTE,
+    shapeLineShare:shapeLineShare,
+    blindSpotDivider:BLIND_SPOT_DIVIDER,rungAt:rungAt,rungChance:rungChance,
+    sortGap:SORT_GAP,sortChance:SORT_CHANCE,rangeEndsText:rangeEndsText,
     loadRecord:loadRecord,loadTeams:loadTeams,
     currentProjections:renderProjections,currentProjection:renderProjection,
     teamConfirmation:renderTeam,

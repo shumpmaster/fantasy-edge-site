@@ -1835,7 +1835,8 @@ body{
 }
 
 /* --------------------------------------------------------------------
-   m4.9 — THE RICHER LIST, PAST GAMES AND THE LIVE ROW (D-189)
+   m4.9 — THE RICHER LIST, PAST GAMES AND THE LIVE ROW
+   (the m4.9 spec, docs/plan/PROJECTIONS_VISUALS_M49_SPEC.md)
    --------------------------------------------------------------------
    The list row becomes two lines rather than wider: at 320px a name, a
    stat, a number, a move and a strip do not fit one line, and the one
