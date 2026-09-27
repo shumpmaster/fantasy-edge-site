@@ -716,6 +716,11 @@
    * line the exporter quoted at the ends. Without them a reader has a
    * shape and no way to say what any point on it is. */
   const LADDER_W = 288, LADDER_H = 118;
+  /* The one target's id, so the key handler knows the reader is on
+   * the chart and a redraw can put his focus back where it was. Only
+   * one card is open at a time, so one id is one element. */
+  const LADDER_ID = 'ac-ladder-mark';
+  const LADDER_KEYS = 'Use the left and right arrow keys to move between lines.';
   const PLOT_L = 34, PLOT_R = 282, PLOT_T = 10, PLOT_B = 82;
   /* The two gridlines, as published chances rather than as decoration:
    * a quarter and three quarters of the 0-to-100 scale the curve is
@@ -734,30 +739,108 @@
     if (value === null) return '';
     return 'At ' + line + ', our chance of ' + sideWord(p.lean) + ' is ' + chance(value) + '.';
   }
+  /* ONE FRAME, shared by the drawing and by the reader's finger. The
+   * dots are placed with `x` and the tap is resolved with the same
+   * `x`, so the rung a tap lands on is the rung the reader saw. */
+  function ladderFrame(points) {
+    const lines = points.map(point => point.line);
+    const lo = Math.min.apply(null, lines), hi = Math.max.apply(null, lines);
+    const span = (hi - lo) || 1;
+    /* GEOMETRY, AND ONLY GEOMETRY: a published line and a published
+     * chance placed on a scale. It produces no quantity. */
+    return {lo: lo, hi: hi, lines: lines,
+      x: value => (((value - lo) / span) * (PLOT_R - PLOT_L) + PLOT_L),
+      y: value => PLOT_B - Math.max(0, Math.min(1, value)) * (PLOT_B - PLOT_T)};
+  }
+  /* Which rung the card is standing on: the one the reader last chose,
+   * else the main line's own, else the lowest published. */
+  function ladderAt(p, points) {
+    if (state.rung !== null && h.rungAt(p, state.rung)) return state.rung;
+    return h.rungAt(p, p.line) ? p.line : points[0].line;
+  }
+  /* THE POINTER'S OWN RUNG: the published rung whose mark is nearest
+   * the place the reader touched, measured on the same scale the marks
+   * were drawn on. A TIE GOES TO THE LOWER LINE, so the answer never
+   * turns on which way a rounding fell.
+   *
+   * IT PICKS A PUBLISHED RUNG AND NOTHING ELSE. Halfway between two
+   * rungs is not half a chance; it is the nearer rung's own chance,
+   * and on a dead heat the lower rung's (UI_ALPHA_SPEC §4). */
+  function rungAtX(p, plotX) {
+    const points = rungs(p);
+    if (!points.length) return null;
+    const frame = ladderFrame(points);
+    let found = null, nearest = null;
+    points.forEach(point => {
+      /* AGAINST THE MARK THAT WAS DRAWN, rounded exactly as the circle
+       * was. Measuring against an unrounded place would put the answer
+       * a hair away from the dot the reader aimed at, and on a dense
+       * ladder a hair is half a rung. */
+      const gap = Math.abs(Number(frame.x(point.line).toFixed(1)) - plotX);
+      /* A DEAD HEAT IS DECIDED, NOT LEFT TO THE ARITHMETIC. Two marks
+       * the same distance away are the same distance away however the
+       * last bit of a double happened to fall, so the tie is read with
+       * a tolerance and always goes to the LOWER line. */
+      const tie = nearest !== null && Math.abs(gap - nearest) <= 1e-9;
+      if (nearest === null || (!tie && gap < nearest) || (tie && point.line < found))
+        { nearest = gap; found = point.line; }
+    });
+    return found;
+  }
+  /* WHERE A TAP LANDED, as a share of the target's own width. The
+   * element measures itself, so the answer is right at any phone
+   * width and after any zoom. */
+  function ladderShare(event) {
+    const node = root.document && root.document.getElementById(LADDER_ID);
+    const box = node && node.getBoundingClientRect && node.getBoundingClientRect();
+    if (!box || !(box.width > 0) || !event || typeof event.clientX !== 'number') return null;
+    return Math.max(0, Math.min(1, (event.clientX - box.left) / box.width));
+  }
+  /* m4.10 C3 — THE ARROW KEYS. Left and Right step to the rung before
+   * and after, Home and End go to the ends, and none of them wraps:
+   * the ladder has two ends and the reader should feel them. The
+   * sentence below the chart is a live region, so what the key chose
+   * is spoken as well as shown. */
+  function ladderKey(event) {
+    if (!event || !event.target || event.target.id !== LADDER_ID) return false;
+    const row = selectedRow();
+    if (!row) return false;
+    const points = rungs(row.prop);
+    if (points.length < LADDER_MIN) return false;
+    const lines = points.map(point => point.line);
+    const here = Math.max(0, lines.indexOf(ladderAt(row.prop, points)));
+    const step = {ArrowLeft: here - 1, ArrowRight: here + 1,
+      Home: 0, End: lines.length - 1}[event.key];
+    if (step === undefined) return false;
+    if (event.preventDefault) event.preventDefault();
+    state.rung = lines[Math.max(0, Math.min(lines.length - 1, step))];
+    h.render(); focus(LADDER_ID);
+    return true;
+  }
   function ladderBlock(p) {
     const points = rungs(p);
     if (points.length < LADDER_MIN) {
       const why = p.ladder_reason;
       return why ? '<p class="ef-caption">' + esc(h.plainNote(why)) + '</p>' : '';
     }
-    const lines = points.map(point => point.line);
-    const lo = Math.min.apply(null, lines), hi = Math.max.apply(null, lines);
-    const span = (hi - lo) || 1;
-    /* GEOMETRY, AND ONLY GEOMETRY: a published line and a published
-     * chance placed on a scale. It produces no quantity. */
-    const x = value => (((value - lo) / span) * (PLOT_R - PLOT_L) + PLOT_L);
-    const y = value => PLOT_B - Math.max(0, Math.min(1, value)) * (PLOT_B - PLOT_T);
-    const at = state.rung !== null && h.rungAt(p, state.rung) ? state.rung
-      : h.rungAt(p, p.line) ? p.line : points[0].line;
+    const frame = ladderFrame(points), x = frame.x, y = frame.y;
+    const at = ladderAt(p, points);
     const said = rungWords(p, at);
     const main = h.rungAt(p, p.line) ? p.line : null;
     const text = (place, value, anchor, words) =>
       '<text x="' + place.toFixed(1) + '" y="' + value + '"' +
       (anchor ? ' text-anchor="' + anchor + '"' : '') + '>' + esc(words) + '</text>';
+    /* The chart's whole description. It rides the TARGET rather than
+     * the drawing, because the target is the thing a reader reaches
+     * and it should say what it is before he touches it; the drawing
+     * behind it is then decoration and says nothing twice. */
+    const spoken = LADDER_HEAD + ': ' + points.map(point =>
+      point.line + ' ' + chance(point.chance)).join(', ') + '. Main line ' + p.line +
+      '. ' + LADDER_KEYS;
+    const share = value => (value / LADDER_W * 100).toFixed(3);
     return '<section class="ac-ladder"><h3>' + esc(LADDER_HEAD) + '</h3>' +
       '<div class="ac-ladder-chart"><svg viewBox="0 0 ' + LADDER_W + ' ' + LADDER_H +
-      '" role="img" aria-label="' + esc(LADDER_HEAD + ': ' + points.map(point =>
-        point.line + ' ' + chance(point.chance)).join(', ') + '. Main line ' + p.line) + '">' +
+      '" aria-hidden="true" focusable="false">' +
       /* The two gridlines and what each one is, said as a chance. */
       LADDER_GRID.map(mark => '<line class="ac-ladder-grid" x1="' + PLOT_L + '" y1="' +
         y(mark).toFixed(1) + '" x2="' + PLOT_R + '" y2="' + y(mark).toFixed(1) + '"></line>' +
@@ -771,7 +854,7 @@
         x(point.line).toFixed(1) + ',' + y(point.chance).toFixed(1)).join(' ') + '"></polyline>' +
       /* A DENSE LADDER GETS SMALLER MARKS. Forty rungs at the size
        * three would carry cover the curve they are on; the two marks
-       * that name something — the main line and the tapped rung —
+       * that name something — the main line and the chosen rung —
        * keep their size whatever the crowd around them. */
       points.map(point => '<circle class="ac-ladder-dot' +
         (point.line === p.line ? ' main' : '') + (point.line === at ? ' chosen' : '') +
@@ -781,19 +864,23 @@
       '<g class="ac-ladder-axis">' +
       (main === null ? '' : text(Math.min(PLOT_R - 12, Math.max(PLOT_L + 12, x(main))),
         PLOT_B + 14, 'middle', String(main))) +
-      text(PLOT_L, LADDER_H - 4, 'start', String(lo)) +
-      text(PLOT_R, LADDER_H - 4, 'end', String(hi)) + '</g>' +
+      text(PLOT_L, LADDER_H - 4, 'start', String(frame.lo)) +
+      text(PLOT_R, LADDER_H - 4, 'end', String(frame.hi)) + '</g>' +
       '</svg>' +
-      /* THE TAPS ARE REAL BUTTONS over the drawing, the way the
-       * outlook history chart's are. Only the main line's holds a
-       * keyboard stop: forty of them would bury the rest of the card,
-       * and the chart's own label already speaks every rung. */
-      points.map(point => '<button class="ac-ladder-mark" data-act="ac-rung" data-value="' +
-        esc(point.line) + '"' + (point.line === p.line ? '' : ' tabindex="-1"') +
-        ' aria-pressed="' + (point.line === at) + '" style="left:' +
-        (x(point.line) / LADDER_W * 100).toFixed(2) + '%" aria-label="' +
-        esc(rungWords(p, point.line)) + '"></button>').join('') + '</div>' +
-      (said ? '<p class="ac-ladder-said" id="ac-ladder-said">' + esc(said) + '</p>' : '') +
+      /* THE TAP TARGET IS ONE BUTTON OVER THE WHOLE PLOT, and that is
+       * the whole of the fix. Forty-one targets, however carefully
+       * tiled, are six pixels wide apiece and a finger cannot pick one
+       * (the handoff's §9 floor is 44 by 44, PR #437). So there is ONE
+       * target the width of the plot and at least 44px tall, and the
+       * rung is worked out from WHERE the tap landed rather than from
+       * which box it hit. The drawn dots do not move. */
+      '<button class="ac-ladder-mark" id="' + LADDER_ID + '" data-act="ac-rung" style="left:' +
+      share(PLOT_L) + '%;width:' + share(PLOT_R - PLOT_L) + '%;top:' +
+      (PLOT_T / LADDER_H * 100).toFixed(3) + '%;height:' +
+      ((PLOT_B - PLOT_T) / LADDER_H * 100).toFixed(3) + '%" aria-label="' +
+      esc(spoken) + '"></button></div>' +
+      (said ? '<p class="ac-ladder-said" id="ac-ladder-said" aria-live="polite">' +
+        esc(said) + '</p>' : '') +
       '</section>';
   }
 
@@ -968,7 +1055,13 @@
     if (route.startsWith('fh-')) return unavailable('Fantasy', route.startsWith('fh-dfs-') ? 'dfs.tournament' : 'fantasy.rankings');
     return null;
   }
-  function action(act, value) {
+  /* THE EVENT RIDES ALONG. A tap on the chance chart has to know
+   * WHERE it landed, and the shell's one delegated click handler is
+   * already holding the event — so it hands it over rather than a
+   * second listener being wired to this one element. Every other
+   * action ignores it, and a caller with nothing to pass may still
+   * call with two arguments. */
+  function action(act, value, event) {
     if (act === 'select') {select(value);h.render();focus('ac-side');}
     else if (act === 'save') return save();
     else if (act === 'retry') return retry();
@@ -989,11 +1082,13 @@
       FILTER_FIELDS.forEach(field => {state[field] = '';});
       h.render();
     }
-    /* m4.10 C3 — a tapped rung SAYS what it is. The form's line is not
-     * touched here, and there is no path from here to one. */
+    /* m4.10 C3 — a tap on the chart SAYS which line it landed nearest.
+     * The reader's own bet form is not touched here, and there is no
+     * path from here to one. */
     else if (act === 'rung') {
-      const line = numberOr(value);
-      if (line !== null) {state.rung = line;h.render();}
+      const row = selectedRow(), share = ladderShare(event);
+      const line = row && share !== null ? rungAtX(row.prop, PLOT_L + share * (PLOT_R - PLOT_L)) : null;
+      if (line !== null) {state.rung = line;h.render();focus(LADDER_ID);}
     }
     else if (act === 'played-open') {
       /* Tap opens, tap again closes, and the set lives for the
@@ -1043,6 +1138,6 @@
     /* m4.10 — the sort, the filters and the card's three visuals, named
      * so the suite can read each one on its own. */
     sortKey,sorts,ordered,keeps,filtersOn,dayOf,statOf,gameOf,countWords,
-    shapeBlock,chanceBlock,ladderBlock,rungWords};
+    shapeBlock,chanceBlock,ladderBlock,rungWords,rungAtX,ladderKey,ladderAt};
   root.AlphaCompact = api;
 })(typeof window !== 'undefined' ? window : globalThis);

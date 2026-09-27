@@ -114,6 +114,10 @@
 .consumer-app .ac-ladder-dot{fill:var(--ink);stroke:none}
 .consumer-app .ac-ladder-dot.main{fill:var(--surface);stroke:var(--heating);stroke-width:2.5}
 .consumer-app .ac-ladder-dot.chosen{fill:var(--ink);stroke:var(--ink)}
-.consumer-app .ac-ladder-mark{position:absolute;top:0;height:70%;width:18px;margin-left:-9px;min-height:44px;border:0;padding:0;background:transparent;cursor:pointer}
+/* ONE target over the whole plot, sized inline from the chart's own
+   frame and never narrower or shorter than the handoff's 44px floor.
+   Forty-one targets tiled across this plot were six pixels wide and a
+   finger could not pick one. */
+.consumer-app .ac-ladder-mark{position:absolute;min-width:44px;min-height:44px;border:0;padding:0;background:transparent;cursor:pointer}
 .consumer-app .ac-ladder-said{margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--ink)}
 @media(prefers-reduced-motion:reduce){.consumer-app .ac-ladder-chart{transition:none!important;animation:none!important}}

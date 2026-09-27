@@ -12609,7 +12609,12 @@ function onClick(event) {
   if (act === "onboarding-replay") { void onboardingTour?.start({replay:true}); return; }
   if (!DEMO && act && act.indexOf("ac-") === 0 && alphaCompact()) {
     if (act === "ac-create") {closeSheet();consumerModule().action("go",target.getAttribute("data-value"));}
-    else alphaCompact().action(act.slice(3),target.getAttribute("data-value"));
+    /* m4.10 C3 — THE EVENT GOES WITH THE ACTION. The chance chart's one
+     * target has to know where on itself the tap landed, and this
+     * handler is already holding that; passing it is smaller than a
+     * second listener on one element, and every other action ignores
+     * it. */
+    else alphaCompact().action(act.slice(3),target.getAttribute("data-value"),event);
     return;
   }
   if(consumerEnabled() && act && act.indexOf("cx-")===0){consumerModule().action(act.slice(3),target.getAttribute("data-value"));return;}
@@ -13150,6 +13155,10 @@ function onKeyDown(event) {
   }
   if (fantasyHubEnabled() && window.DfsScoreboard && window.DfsScoreboard.key(event)) return;
   if (edgeEnabled() && edgeModule().sheetKey(event)) return;
+  /* m4.10 C3 — the chance chart's arrow keys, asked for the same way
+   * the scoreboard's and the sheet's are: the module says whether the
+   * key was its own. */
+  if (!DEMO && alphaCompact() && alphaCompact().ladderKey(event)) return;
   if ((consumerEnabled() || browseCreatePreview() || fantasyHubEnabled()) && nav.sheet === "add" && event.key === "Tab") {
     const overlay = el("overlay");
     const controls = overlay && Array.from(overlay.querySelectorAll('button:not(:disabled)'));
