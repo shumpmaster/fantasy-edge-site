@@ -2,16 +2,16 @@
   "dfs_schema": "dfs-1",
   "run": {
     "season": 2026,
-    "week": 3,
+    "week": 4,
     "built_at": "",
     "generation_id": null,
     "snapshot_kind": null,
-    "source": "research/shape/alpha/ALPHA_2026w03.json",
+    "source": "research/shape/alpha/ALPHA_2026w04.json",
     "ledger_block": "",
     "label": "",
     "ownership_present": false,
     "complete": true,
-    "reason": "No committed sheet was found at 'research/shape/alpha/ALPHA_2026w03.json'. The three tables say so and the run completed: a week the shape lineage has not published yet is not a failed export."
+    "reason": "No committed sheet was found at 'research/shape/alpha/ALPHA_2026w04.json'. The three tables say so and the run completed: a week the shape lineage has not published yet is not a failed export."
   },
   "evidence_classes": {},
   "sentences": {},
@@ -24,7 +24,7 @@
       "counts": {},
       "n_rows": 0,
       "absence": [
-        "No weekly sheet for 2026 week 03 is committed at 'research/shape/alpha/ALPHA_2026w03.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
+        "No weekly sheet for 2026 week 04 is committed at 'research/shape/alpha/ALPHA_2026w04.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
       ],
       "rows": []
     },
@@ -35,7 +35,7 @@
       "counts": {},
       "n_rows": 0,
       "absence": [
-        "No weekly sheet for 2026 week 03 is committed at 'research/shape/alpha/ALPHA_2026w03.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
+        "No weekly sheet for 2026 week 04 is committed at 'research/shape/alpha/ALPHA_2026w04.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
       ],
       "rows": []
     },
@@ -46,7 +46,7 @@
       "counts": {},
       "n_rows": 0,
       "absence": [
-        "No weekly sheet for 2026 week 03 is committed at 'research/shape/alpha/ALPHA_2026w03.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
+        "No weekly sheet for 2026 week 04 is committed at 'research/shape/alpha/ALPHA_2026w04.json', so this table has nothing to show. The committed sheet is the only source this view reads and nothing is computed in its place."
       ],
       "rows": []
     }
